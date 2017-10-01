@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HealthManager.View.InputBasicDataView">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Margin="30">
+                <Label Text="名前" />
+                <Entry Placeholder="名前を入力してください" Text="{Binding Name}" IsEnabled="{Binding IsDisable}"  />
+                <Label Text="性別" />
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="男性" />
+                    <Switch IsToggled="{Binding Man}" IsEnabled="{Binding IsDisable}"  />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="女性" />
+                    <Switch IsToggled="{Binding Woman}" IsEnabled="{Binding IsDisable}"  />
+                </StackLayout>
+                <Label Text="年齢" />
+                <Entry Text="{Binding Age}" IsEnabled="{Binding IsDisable}"  />
+                <Label Text="身長(cm)" />
+                <Entry Text="{Binding Height}" IsEnabled="{Binding IsDisable}"  />
+                <Label Text="体重(kg)" />
+                <Entry Text="{Binding BodyWeight}" IsEnabled="{Binding IsDisable}"  />
+                <Label Text="BMI" />
+                <Label Text="{Binding Bmi}" IsEnabled="{Binding IsDisable}"  />
+                <Label Text="血圧" />
+                <Entry Text="{Binding MaxBloodPressure} " IsEnabled="{Binding IsDisable}"  />
+                <Entry Text="{Binding MinBloodPressure}" IsEnabled="{Binding IsDisable}"  />
+                <Label HorizontalOptions="Center" Text="データを保存しています..." IsVisible="{Binding IsLoading}" />
+                <ActivityIndicator IsRunning="{Binding IsLoading}" />
+                <Button IsEnabled="{Binding IsDisable}" Text="保存" Command="{Binding SaveBaisicDataCommand}" />
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
