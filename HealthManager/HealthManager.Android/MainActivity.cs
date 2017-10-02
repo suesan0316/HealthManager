@@ -1,5 +1,6 @@
 ﻿using System;
-
+using System.IO;
+using System.Threading.Tasks;
 using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
@@ -22,6 +23,10 @@ namespace HealthManager.Droid
             global::Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new App());
         }
+
+        // Field, property, and method for Picture Picker
+        public static readonly int PickImageId = 1000;
+        public TaskCompletionSource<Stream> PickImageTaskCompletionSource { set; get; }
     }
 }
 

@@ -22,15 +22,15 @@ namespace HealthManager.ViewModel
         // 女性
         private bool _woman;
         // 年齢
-        private int _age;
+        private int? _age;
         // 身長
-        private double _height;
+        private double? _height;
         // 体重
-        private double _bodyWeight;
+        private double? _bodyWeight;
         // 上の血圧
-        private int _maxBloodPressure;
+        private int? _maxBloodPressure;
         // 下の血圧
-        private int _minBloodPressure;
+        private int? _minBloodPressure;
 
         private bool _isLoading = false;
 
@@ -91,13 +91,13 @@ namespace HealthManager.ViewModel
                 }
             }
         }
-        public int Age
+        public int? Age
         {
             get { return _age; }
             set { _age = value; }
         }
 
-        public double Height
+        public double? Height
         {
             get { return _height; }
             set
@@ -108,7 +108,7 @@ namespace HealthManager.ViewModel
             }
         }
 
-        public double BodyWeight
+        public double? BodyWeight
         {
             get { return _bodyWeight; }
             set
@@ -125,7 +125,7 @@ namespace HealthManager.ViewModel
             {
                 try
                 {
-                    var tmp = _bodyWeight / Math.Pow((_height / 100f), 2);
+                    var tmp = (double)(_bodyWeight / Math.Pow((((double)_height) / 100f), 2));
                     return double.IsNaN(tmp) ? 0 : tmp;
                 }
                 catch (Exception)
@@ -135,13 +135,13 @@ namespace HealthManager.ViewModel
             }
         }
 
-        public int MaxBloodPressure
+        public int? MaxBloodPressure
         {
             get { return _maxBloodPressure; }
             set { _maxBloodPressure = value; }
         }
 
-        public int MinBloodPressure
+        public int? MinBloodPressure
         {
             get { return _minBloodPressure; }
             set { _minBloodPressure = value; }
