@@ -3,6 +3,8 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using HealthManager.Annotations;
+using HealthManager.Model.Service;
+using HealthManager.View;
 using Xamarin.Forms;
 
 namespace HealthManager.ViewModel
@@ -15,25 +17,6 @@ namespace HealthManager.ViewModel
             SaveBaisicDataCommand = new Command(async  ()=> await SaveBasicData());
         }
 
-        // 名前
-        private string _name;
-        // 男性
-        private bool _man = true;
-        // 女性
-        private bool _woman;
-        // 年齢
-        private int? _age;
-        // 身長
-        private double? _height;
-        // 体重
-        private double? _bodyWeight;
-        // 上の血圧
-        private int? _maxBloodPressure;
-        // 下の血圧
-        private int? _minBloodPressure;
-
-        private bool _isLoading = false;
-
         public Command SaveBaisicDataCommand { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -44,25 +27,25 @@ namespace HealthManager.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public string Name
-        {
-            get { return _name; }
-            set { _name = value; }
-        }
+        // 名前
+        public string Name { get; set; }
 
+
+        // 男性
+        private bool _man = true;
         public bool Man
         {
-            get { return _man; }
+            get => _man;
             set
             {
                 _man = value;
                 if (value)
                 {
-                    Woman = !value;
+                    Woman = false;
                     OnPropertyChanged(nameof(Man));
                     OnPropertyChanged(nameof(Woman));
                 }
-                else if(!value && !Woman)
+                else if(!Woman)
                 {
                     Woman = true;
                     OnPropertyChanged(nameof(Man));
@@ -71,19 +54,21 @@ namespace HealthManager.ViewModel
             }
         }
 
+        // 女性
+        private bool _woman;
         public bool Woman
         {
-            get { return _woman; }
+            get => _woman;
             set
             {
                 _woman = value;
                 if (value)
                 {
-                    Man = !value;
+                    Man = false;
                     OnPropertyChanged(nameof(Woman));
                     OnPropertyChanged(nameof(Man));
                 }
-                else if(!value && !Man)
+                else if(!Man)
                 {
                     Man = true;
                     OnPropertyChanged(nameof(Woman));
@@ -91,15 +76,15 @@ namespace HealthManager.ViewModel
                 }
             }
         }
-        public int? Age
-        {
-            get { return _age; }
-            set { _age = value; }
-        }
 
-        public double? Height
+        // 年齢
+        public int Age { get; set; }
+
+        // 身長
+        private double _height;
+        public double Height
         {
-            get { return _height; }
+            get => _height;
             set
             {
                 _height = value; 
@@ -108,9 +93,11 @@ namespace HealthManager.ViewModel
             }
         }
 
-        public double? BodyWeight
+        // 体重
+        private double _bodyWeight;
+        public double BodyWeight
         {
-            get { return _bodyWeight; }
+            get => _bodyWeight;
             set
             {
                 _bodyWeight = value; 
@@ -125,7 +112,7 @@ namespace HealthManager.ViewModel
             {
                 try
                 {
-                    var tmp = (double)(_bodyWeight / Math.Pow((((double)_height) / 100f), 2));
+                    var tmp = _bodyWeight / Math.Pow(_height / 100f, 2);
                     return double.IsNaN(tmp) ? 0 : tmp;
                 }
                 catch (Exception)
@@ -135,21 +122,18 @@ namespace HealthManager.ViewModel
             }
         }
 
-        public int? MaxBloodPressure
-        {
-            get { return _maxBloodPressure; }
-            set { _maxBloodPressure = value; }
-        }
+        // 上の血圧
+        public int MaxBloodPressure { get; set; }
 
-        public int? MinBloodPressure
-        {
-            get { return _minBloodPressure; }
-            set { _minBloodPressure = value; }
-        }
+        // 下の血圧
+        public int MinBloodPressure { get; set; }
 
+
+        // 読み込み中フラグ
+        private bool _isLoading;
         public bool IsLoading
         {
-            get { return _isLoading; }
+            get => _isLoading;
             set
             {
                 _isLoading = value;
@@ -158,17 +142,17 @@ namespace HealthManager.ViewModel
             }
         }
 
-        public bool IsDisable
-        {
-            get { return !_isLoading; }
-        }
+        public bool IsDisable => !_isLoading;
 
-        async  Task SaveBasicData()
+        private async  Task SaveBasicData()
         {
             IsLoading = true;
             await Task.Delay(4000);
+             //InputBasicDataService.RegistBasicData(name: Name, sex: Man, height: Height, age: Age,
+                //bodyWeight:BodyWeight, maxBloodPressure: MaxBloodPressure, minBloodPressure: MinBloodPressure);
             IsLoading = false;
             await Application.Current.MainPage.DisplayAlert("完了", "保存が完了しました。","OK");
+            ((App)Application.Current).ChangeScreen(new HomeView());
         }
     }
 }

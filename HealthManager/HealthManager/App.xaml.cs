@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using HealthManager.View;
+﻿using HealthManager.View;
 using Xamarin.Forms;
 
 namespace HealthManager
@@ -29,6 +25,10 @@ namespace HealthManager
         protected override void OnResume()
         {
             // Handle when your app resumes
+        }
+        public void ChangeScreen(Page page)
+        {
+            MainPage = page;
         }
     }
 }
