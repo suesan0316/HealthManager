@@ -11,6 +11,7 @@
     <StackLayout VerticalOptions="FillAndExpand">
             <Button Text="体の写真を登録" Command="{Binding RegistBodyImageCommand}"></Button>
         <Image Source="{Binding BodyImage}"></Image>
+            <Label Text="{Binding BodyImageRegistedDateString}"></Label>
         <ActivityIndicator IsRunning="{Binding IsLoading}" />
 
         <ListView ItemsSource="{Binding Items}">

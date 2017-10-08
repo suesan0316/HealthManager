@@ -35,8 +35,10 @@ namespace HealthManager.ViewModel
                 Device.OpenUri(new Uri(ItemsDictionary[item]));
             });
 
-            var imageAsBytes = Convert.FromBase64String(BodyImageService.GetBodyImage().ImageBase64String);
+            var bodyImageModel = BodyImageService.GetBodyImage();
+            var imageAsBytes = Convert.FromBase64String(bodyImageModel.ImageBase64String);
             BodyImage = ImageSource.FromStream(() => new MemoryStream(imageAsBytes));
+            BodyImageRegistedDateString ="登録日時 : " + (bodyImageModel.RegistedDate.ToString());
 
             SetNewsSourceTask();
         }
@@ -59,6 +61,18 @@ namespace HealthManager.ViewModel
             {
                 _bodyImage = value;
                 OnPropertyChanged(nameof(BodyImage));
+            }
+        }
+
+
+        private string _bodyImageRegistedDateString;
+        public string BodyImageRegistedDateString
+        {
+            get => _bodyImageRegistedDateString;
+            set
+            {
+                _bodyImageRegistedDateString = value;
+                OnPropertyChanged(nameof(BodyImageRegistedDateString));
             }
         }
 
