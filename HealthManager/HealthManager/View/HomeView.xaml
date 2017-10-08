@@ -7,13 +7,9 @@
     <ContentPage.BindingContext>
         <vm:HomeViewModel />
     </ContentPage.BindingContext>
-    
-    <StackLayout>
-        <Image ></Image>
-        
-    </StackLayout>
-
+<ScrollView>
     <StackLayout VerticalOptions="FillAndExpand">
+        <Image Source="{Binding BodyImage}"></Image>
         <ActivityIndicator IsRunning="{Binding IsLoading}" />
 
         <ListView ItemsSource="{Binding Items}">
@@ -22,4 +18,5 @@
         </ListView.Behaviors>
     </ListView>
     </StackLayout>
+</ScrollView>
 </ContentPage>

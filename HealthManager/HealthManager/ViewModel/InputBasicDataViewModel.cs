@@ -146,7 +146,7 @@ namespace HealthManager.ViewModel
         private async  Task SaveBasicData()
         {
             IsLoading = true;
-            await Task.Delay(4000);
+            await Task.Delay(1000);
              //BasicDataService.RegistBasicData(name: Name, sex: Man, height: Height, age: Age,
                 //bodyWeight:BodyWeight, maxBloodPressure: MaxBloodPressure, minBloodPressure: MinBloodPressure);
             IsLoading = false;

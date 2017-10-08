@@ -1,6 +1,4 @@
 ﻿using System;
-using System.IO;
-using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.Provider;
@@ -25,12 +23,10 @@ namespace HealthManager.Droid.DependencyImplement
         }
         public void BringUpCamera()
         {
-            /*var intent = new Intent(MediaStore.ActionImageCapture);
-            ((Activity)Forms.Context).StartActivityForResult(intent, 1);*/
-            var intent = new Intent(MediaStore.ActionImageCapture);                  // ①
+            var intent = new Intent(MediaStore.ActionImageCapture); 
 
-            MainActivity._file = new Java.IO.File(MainActivity._dir, $"myPhoto_{Guid.NewGuid()}.jpg");   // ②
-            intent.PutExtra(MediaStore.ExtraOutput, Android.Net.Uri.FromFile(MainActivity._file));   // ③
+            MainActivity.File = new Java.IO.File(MainActivity.Dir, $"myPhoto_{Guid.NewGuid()}.jpg");
+            intent.PutExtra(MediaStore.ExtraOutput, Android.Net.Uri.FromFile(MainActivity.File));
             ((Activity)Forms.Context).StartActivityForResult(intent, 0);
         }
     }

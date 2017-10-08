@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using HealthManager.Annotations;
 using HealthManager.Extention;
 using HealthManager.Logic.News.Factory;
+using HealthManager.Model.Service;
 using Xamarin.Forms;
 
 namespace HealthManager.ViewModel
@@ -29,6 +31,9 @@ namespace HealthManager.ViewModel
                 Device.OpenUri(new Uri(ItemsDictionary[item]));
             });
 
+            var imageAsBytes = Convert.FromBase64String(BodyImageService.GetBodyImage().ImageBase64String);
+            BodyImage = ImageSource.FromStream(() => new MemoryStream(imageAsBytes));
+
             SetNewsSourceTask();
         }
 
@@ -39,6 +44,18 @@ namespace HealthManager.ViewModel
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private  ImageSource _bodyImage;
+
+        public ImageSource BodyImage
+        {
+            get => _bodyImage;
+            set
+            {
+                _bodyImage = value;
+                OnPropertyChanged(nameof(BodyImage));
+            }
         }
 
         // 読み込み中フラグ

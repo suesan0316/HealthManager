@@ -4,7 +4,7 @@ using SQLite;
 namespace HealthManager.Model
 {
     [Table("BodyImageModel")]
-    class BodyImageModel
+    public class BodyImageModel
     {
         [Column("ImageBase64String")]
         public string ImageBase64String { get; set; }
