@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using HealthManager.DependencyInterface;
 using HealthManager.ViewModel;
 using Xamarin.Forms;
@@ -27,7 +28,11 @@ namespace HealthManager.View
                 Device.BeginInvokeOnMainThread(() =>
                 {
                     //Set the source of the image view with the byte array
+                    //testImage.Source = ImageSource.FromStream(() => new MemoryStream((byte[])args));
+                    string base64String = Convert.ToBase64String((byte[]) args);
+                    byte[] imageAsBytes =  Convert.FromBase64String(base64String);
                     testImage.Source = ImageSource.FromStream(() => new MemoryStream((byte[])args));
+
                     int i = 0;
                 });
             });
