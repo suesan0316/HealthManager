@@ -7,11 +7,11 @@ using HealthManager.iOS.DependencyImplement;
 using UIKit;
 using Xamarin.Forms;
 
-[assembly: Dependency(typeof(PicturePickerImplementation))]
+[assembly: Dependency(typeof(CameraDependencyServiceImplementation))]
 
 namespace HealthManager.iOS.DependencyImplement
 {
-    public class PicturePickerImplementation : IPicturePicker
+    public class CameraDependencyServiceImplementation : ICameraDependencyService
     {
         TaskCompletionSource<Stream> taskCompletionSource;
         UIImagePickerController imagePicker;

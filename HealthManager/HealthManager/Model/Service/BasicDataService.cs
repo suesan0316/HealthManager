@@ -4,7 +4,7 @@ using Xamarin.Forms;
 
 namespace HealthManager.Model.Service
 {
-    public class InputBasicDataService
+    public class BasicDataService
     {
         public static bool RegistBasicData(string name, bool sex, int age, double height, double bodyWeight,
             int maxBloodPressure, int minBloodPressure)

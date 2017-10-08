@@ -151,7 +151,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DependencyImplement\PicturePickerImplementation.cs" />
+    <Compile Include="DependencyImplement\BitmapWorkerTask.cs" />
+    <Compile Include="DependencyImplement\CameraDependencyServiceImplementation.cs" />
     <Compile Include="DependencyImplement\SqliteDeviceInformImplementation.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />

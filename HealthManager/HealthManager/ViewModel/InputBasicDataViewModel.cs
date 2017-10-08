@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using HealthManager.Annotations;
-using HealthManager.Model.Service;
 using HealthManager.View;
 using Xamarin.Forms;
 
@@ -148,7 +147,7 @@ namespace HealthManager.ViewModel
         {
             IsLoading = true;
             await Task.Delay(4000);
-             //InputBasicDataService.RegistBasicData(name: Name, sex: Man, height: Height, age: Age,
+             //BasicDataService.RegistBasicData(name: Name, sex: Man, height: Height, age: Age,
                 //bodyWeight:BodyWeight, maxBloodPressure: MaxBloodPressure, minBloodPressure: MinBloodPressure);
             IsLoading = false;
             await Application.Current.MainPage.DisplayAlert("完了", "保存が完了しました。","OK");

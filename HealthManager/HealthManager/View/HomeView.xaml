@@ -7,11 +7,16 @@
     <ContentPage.BindingContext>
         <vm:HomeViewModel />
     </ContentPage.BindingContext>
+    
+    <StackLayout>
+        <Image ></Image>
+        
+    </StackLayout>
 
     <StackLayout VerticalOptions="FillAndExpand">
-        <Button Command="{Binding TestCommnad}"></Button>
-    
-    <ListView ItemsSource="{Binding Items}">
+        <ActivityIndicator IsRunning="{Binding IsLoading}" />
+
+        <ListView ItemsSource="{Binding Items}">
         <ListView.Behaviors>
             <b:ItemTappedBehavior Command="{Binding ItemTappedCommand}"/>
         </ListView.Behaviors>

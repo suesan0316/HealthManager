@@ -89,7 +89,7 @@
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="DependencyImplement\PicturePickerImplementation.cs" />
+    <Compile Include="DependencyImplement\CameraDependencyServiceImplementation.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <None Include="app.config" />

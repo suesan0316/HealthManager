@@ -35,6 +35,8 @@
                 <ActivityIndicator IsRunning="{Binding IsLoading}" />
                 <Button IsEnabled="{Binding IsDisable}" Text="保存" Command="{Binding SaveBaisicDataCommand}" />
                 <Button x:Name="pickPictureButton" />
+                <Button x:Name="takePictureButton" />
+                <Image x:Name="testImage"></Image>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

@@ -42,16 +42,18 @@
     <Compile Include="Common\Html\HtmlConst.cs" />
     <Compile Include="Common\Html\HtmlTagUtil.cs" />
     <Compile Include="DependencyInterface\ISqliteDeviceInform.cs" />
-    <Compile Include="DependencyInterface\IPicturePicker.cs" />
+    <Compile Include="DependencyInterface\ICameraDependencyService.cs" />
     <Compile Include="Extention\EnumerableExtensions.cs" />
     <Compile Include="Extention\ItemTappedBehavior.cs" />
+    <Compile Include="Logic\News\Factory\NewsServiceFactory.cs" />
     <Compile Include="Logic\News\Implement\YomiuriNewsService.cs" />
     <Compile Include="Logic\News\Service\INewsService.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\BasicDataModel.cs" />
-    <Compile Include="Model\Service\InputBasicDataService.cs" />
+    <Compile Include="Model\BodyImageModel.cs" />
+    <Compile Include="Model\Service\BasicDataService.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\HomeViewModel.cs" />

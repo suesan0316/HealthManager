@@ -14,36 +14,23 @@ namespace HealthManager.View
             InitializeComponent();
             BindingContext = new InputBasicDataViewModel();
 
-
             //テスト
-            pickPictureButton.Clicked += async (sender, e) =>
+            pickPictureButton.Clicked += async (sender, e) => DependencyService.Get<ICameraDependencyService>().BringUpCamera();
+
+            takePictureButton.Clicked += async (sender, e) =>
+                DependencyService.Get<ICameraDependencyService>().BringUpPhotoGallery();
+
+            Image imageView = new Image();
+
+            MessagingCenter.Subscribe<byte[]>(this, "ImageSelected", (args) =>
             {
-                pickPictureButton.IsEnabled = false;
-                Stream stream = await DependencyService.Get<IPicturePicker>().GetImageStreamAsync();
-
-                if (stream != null)
+                Device.BeginInvokeOnMainThread(() =>
                 {
-                    Image image = new Image
-                    {
-                        Source = ImageSource.FromStream(() => stream),
-                        BackgroundColor = Color.Gray
-                    };
-
-                    TapGestureRecognizer recognizer = new TapGestureRecognizer();
-                    /*recognizer.Tapped += (sender2, args) =>
-                    {
-                        (MainPage as ContentPage).Content = stack;
-                        pickPictureButton.IsEnabled = true;
-                    };
-                    image.GestureRecognizers.Add(recognizer);
-
-                    (MainPage as ContentPage).Content = image;*/
-                }
-                else
-                {
-                    pickPictureButton.IsEnabled = true;
-                }
-            };
+                    //Set the source of the image view with the byte array
+                    testImage.Source = ImageSource.FromStream(() => new MemoryStream((byte[])args));
+                    int i = 0;
+                });
+            });
         }
     }
 }
