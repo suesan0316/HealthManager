@@ -10,6 +10,7 @@ using HealthManager.Annotations;
 using HealthManager.Extention;
 using HealthManager.Logic.News.Factory;
 using HealthManager.Model.Service;
+using HealthManager.View;
 using Xamarin.Forms;
 
 namespace HealthManager.ViewModel
@@ -22,10 +23,13 @@ namespace HealthManager.ViewModel
         public Dictionary<string, string> ItemsDictionary;
 
         public ICommand ItemTappedCommand { get; set; }
+        public ICommand RegistBodyImageCommand { get; set; }
 
         public HomeViewModel()
         {
             
+            RegistBodyImageCommand = new Command(RegistBodyImage);
+
             ItemTappedCommand = new Command<string>((item) =>
             {
                 Device.OpenUri(new Uri(ItemsDictionary[item]));
@@ -83,6 +87,12 @@ namespace HealthManager.ViewModel
             IsLoading = false;
 
         }
+
+        private void RegistBodyImage()
+        {
+            ((App)Application.Current).ChangeScreen(new RegistBodyImageView());
+        }
+
     }
 }
 

@@ -9,6 +9,7 @@
     </ContentPage.BindingContext>
 <ScrollView>
     <StackLayout VerticalOptions="FillAndExpand">
+            <Button Text="体の写真を登録" Command="{Binding RegistBodyImageCommand}"></Button>
         <Image Source="{Binding BodyImage}"></Image>
         <ActivityIndicator IsRunning="{Binding IsLoading}" />
 
