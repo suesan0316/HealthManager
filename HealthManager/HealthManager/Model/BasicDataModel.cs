@@ -9,10 +9,12 @@ namespace HealthManager.Model
         public string Name { get; set; }
         public bool Sex { get; set; }
         public int Age { get; set; }
-        public double Height { get; set; }
-        public double BodyWeight { get; set; }
+        public float Height { get; set; }
+        public float BodyWeight { get; set; }
+        public float BodyFatPercentage { get; set; }
         public int MaxBloodPressure { get; set; }
         public int MinBloodPressure { get; set; }
+        public int BasalMetabolism { get; set; }
         public DateTime RegistedDate { get; set; }
     }
 }

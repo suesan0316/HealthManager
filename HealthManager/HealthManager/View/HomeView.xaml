@@ -12,7 +12,32 @@
             <Button Text="体の写真を登録" Command="{Binding RegistBodyImageCommand}"></Button>
         <Image Source="{Binding BodyImage}"></Image>
             <Label Text="{Binding BodyImageRegistedDateString}"></Label>
-        <ActivityIndicator IsRunning="{Binding IsLoading}" />
+
+            <Label Text="名前" />
+            <Label Text="{Binding Name}" />
+            <Label Text="性別" />
+            <Label Text="年齢" />
+            <Label Text="{Binding Age}" />
+            <Label Text="身長(cm)" />
+            <Label Text="{Binding Height}" />
+            <Label Text="体重(kg)" />
+            <Label Text="{Binding BodyWeight}"  />
+            <Label Text="BMI" />
+            <Label Text="{Binding Bmi}"/>
+            <Label Text ="体脂肪率"></Label>
+            <Label Text="{Binding BodyFatPercentage}" ></Label>
+            <Label Text="血圧" />
+            <StackLayout Orientation="Horizontal">
+                <Label WidthRequest="100" Text="{Binding MaxBloodPressure} "  />
+                <Label Text="/"  VerticalOptions="End"/>
+                <Label Text="{Binding MinBloodPressure}"  />
+            </StackLayout>
+            <Label Text ="基礎代謝"></Label>
+            <Label Text="{Binding BasalMetabolism}" ></Label>
+            <Button Text="基本データを更新" Command="{Binding RegistBasicDataCommand}"></Button>
+        <Button Text="体脂肪率遷移" Command="{Binding ViewDataChartCommand}"></Button>
+
+            <ActivityIndicator IsRunning="{Binding IsLoading}" />
 
         <ListView ItemsSource="{Binding Items}">
         <ListView.Behaviors>

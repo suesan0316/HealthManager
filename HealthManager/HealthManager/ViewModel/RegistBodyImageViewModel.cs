@@ -17,6 +17,7 @@ namespace HealthManager.ViewModel
         public ICommand TakeImageCameraCommand { get; set; }
         public ICommand TakeImageLibraryaCommand { get; set; }
         public ICommand RegistBodyImageCommand { get; set; }
+        public ICommand BackHomeCommand { get; set; }
 
         private string _base64String;
 
@@ -26,6 +27,7 @@ namespace HealthManager.ViewModel
             TakeImageCameraCommand = new Command(TakeImageCamera);
             TakeImageLibraryaCommand = new Command(TakeImageLibrary);
             RegistBodyImageCommand = new Command(RegistBodyImage);
+            BackHomeCommand = new Command(BackHome);
 
             MessagingCenter.Subscribe<byte[]>(this, "ImageSelected", (args) =>
             {
@@ -77,6 +79,11 @@ namespace HealthManager.ViewModel
         private void RegistBodyImage()
         {
             BodyImageService.RegistBodyImage(_base64String);
+            ((App)Application.Current).ChangeScreen(new HomeView());
+        }
+
+        private void BackHome()
+        {
             ((App)Application.Current).ChangeScreen(new HomeView());
         }
 

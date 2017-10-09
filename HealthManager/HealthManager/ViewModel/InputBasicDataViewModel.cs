@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using HealthManager.Annotations;
+using HealthManager.Model.Service;
 using HealthManager.View;
 using Xamarin.Forms;
 
@@ -10,28 +11,55 @@ namespace HealthManager.ViewModel
 {
     public class InputBasicDataViewModel : INotifyPropertyChanged
     {
+        // 体重
+        private float _bodyWeight;
+
+        // 身長
+        private float _height;
+
+        // 読み込み中フラグ
+        private bool _isLoading;
+
+        // 男性
+        private bool _man = true;
+
+        // 女性
+        private bool _woman;
+
+        private bool _cancelButtonIsVisible;
 
         public InputBasicDataViewModel()
         {
-            SaveBaisicDataCommand = new Command(async  ()=> await SaveBasicData());
+            SaveBaisicDataCommand = new Command(async () => await SaveBasicData());
+            CancleCommand = new Command(Cancel);
+
+            CancelButtonIsVisible = true;
+
+            try
+            {
+                var model = BasicDataService.GetBasicData();
+                Name = model.Name;
+                Man = model.Sex;
+                Age = model.Age;
+                Height = model.Height;
+                BodyWeight = model.BodyWeight;
+                BodyFatPercentage = model.BodyFatPercentage;
+                MaxBloodPressure = model.MaxBloodPressure;
+                MinBloodPressure = model.MinBloodPressure;
+                BasalMetabolism = model.BasalMetabolism;
+            }
+            catch (Exception e)
+            {
+                CancelButtonIsVisible = false;
+            }
         }
 
         public Command SaveBaisicDataCommand { get; }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        public Command CancleCommand { get; }
 
         // 名前
         public string Name { get; set; }
 
-
-        // 男性
-        private bool _man = true;
         public bool Man
         {
             get => _man;
@@ -44,7 +72,7 @@ namespace HealthManager.ViewModel
                     OnPropertyChanged(nameof(Man));
                     OnPropertyChanged(nameof(Woman));
                 }
-                else if(!Woman)
+                else if (!Woman)
                 {
                     Woman = true;
                     OnPropertyChanged(nameof(Man));
@@ -53,8 +81,6 @@ namespace HealthManager.ViewModel
             }
         }
 
-        // 女性
-        private bool _woman;
         public bool Woman
         {
             get => _woman;
@@ -67,7 +93,7 @@ namespace HealthManager.ViewModel
                     OnPropertyChanged(nameof(Woman));
                     OnPropertyChanged(nameof(Man));
                 }
-                else if(!Man)
+                else if (!Man)
                 {
                     Man = true;
                     OnPropertyChanged(nameof(Woman));
@@ -79,32 +105,29 @@ namespace HealthManager.ViewModel
         // 年齢
         public int Age { get; set; }
 
-        // 身長
-        private double _height;
-        public double Height
+        public float Height
         {
             get => _height;
             set
             {
-                _height = value; 
+                _height = value;
                 OnPropertyChanged(nameof(Height));
                 OnPropertyChanged(nameof(Bmi));
             }
         }
 
-        // 体重
-        private double _bodyWeight;
-        public double BodyWeight
+        public float BodyWeight
         {
             get => _bodyWeight;
             set
             {
-                _bodyWeight = value; 
+                _bodyWeight = value;
                 OnPropertyChanged(nameof(BodyWeight));
                 OnPropertyChanged(nameof(Bmi));
             }
         }
 
+        // BMI
         public double Bmi
         {
             get
@@ -121,15 +144,18 @@ namespace HealthManager.ViewModel
             }
         }
 
+        // 体脂肪率
+        public float BodyFatPercentage { get; set; }
+
         // 上の血圧
         public int MaxBloodPressure { get; set; }
 
         // 下の血圧
         public int MinBloodPressure { get; set; }
 
+        // 基礎代謝
+        public int BasalMetabolism { get; set; }
 
-        // 読み込み中フラグ
-        private bool _isLoading;
         public bool IsLoading
         {
             get => _isLoading;
@@ -141,17 +167,42 @@ namespace HealthManager.ViewModel
             }
         }
 
+        public bool CancelButtonIsVisible
+        {
+            get => _cancelButtonIsVisible;
+            set
+            {
+                _cancelButtonIsVisible = value;
+                OnPropertyChanged(nameof(CancelButtonIsVisible));
+            }
+        }
+
         public bool IsDisable => !_isLoading;
 
-        private async  Task SaveBasicData()
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private async Task SaveBasicData()
         {
             IsLoading = true;
             await Task.Delay(1000);
-             //BasicDataService.RegistBasicData(name: Name, sex: Man, height: Height, age: Age,
-                //bodyWeight:BodyWeight, maxBloodPressure: MaxBloodPressure, minBloodPressure: MinBloodPressure);
+            BasicDataService.RegistBasicData(Name, Man, height: Height, age: Age,
+                bodyWeight: BodyWeight, bodyFatPercentage: BodyFatPercentage, maxBloodPressure: MaxBloodPressure,
+                minBloodPressure: MinBloodPressure, basalMetabolism: BasalMetabolism);
             IsLoading = false;
-            await Application.Current.MainPage.DisplayAlert("完了", "保存が完了しました。","OK");
+            await Application.Current.MainPage.DisplayAlert("完了", "保存が完了しました。", "OK");
+            ((App) Application.Current).ChangeScreen(new HomeView());
+        }
+
+        private void Cancel()
+        {
             ((App)Application.Current).ChangeScreen(new HomeView());
         }
+
     }
 }

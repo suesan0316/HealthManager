@@ -9,6 +9,7 @@
             <Button Text="ライブラリから選択する" Command="{Binding TakeImageLibraryaCommand}"></Button>
             <Image Source="{Binding BodyImage}"></Image>
             <Button Text="登録" IsVisible="{Binding RegistButtonIsVisible}" Command="{Binding RegistBodyImageCommand}"></Button>
+            <Button Text="キャンセル" Command="{Binding BackHomeCommand}"></Button>
         </StackLayout>
         </ScrollView>
     </ContentPage.Content>
