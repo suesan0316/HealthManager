@@ -1,5 +1,7 @@
-﻿using HealthManager.DependencyInterface;
+﻿using System;
+using HealthManager.DependencyInterface;
 using HealthManager.Model;
+using HealthManager.Model.Service;
 using HealthManager.View;
 using SQLite;
 using Xamarin.Forms;
@@ -11,8 +13,6 @@ namespace HealthManager
         public App()
         {
             InitializeComponent();
-
-            MainPage = new InputBasicDataView();
 
             var db = new SQLiteConnection(DependencyService.Get<ISqliteDeviceInform>().GetDbPath());
 
@@ -36,6 +36,17 @@ namespace HealthManager
             catch (NotNullConstraintViolationException e)
             {
                 
+            }
+
+            try
+            {
+                BasicDataService.GetBasicData();
+
+                MainPage = new HomeView();
+            }
+            catch (Exception e)
+            {
+                MainPage = new InputBasicDataView();
             }
 
         }

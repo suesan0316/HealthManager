@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using HealthManager.DependencyInterface;
 using SQLite;
 using Xamarin.Forms;
@@ -25,6 +26,13 @@ namespace HealthManager.Model.Service
             var db = new SQLiteConnection(DependencyService.Get<ISqliteDeviceInform>().GetDbPath());
             var result = from record in db.Table<BodyImageModel>() orderby record.RegistedDate descending select record;
             return result.First();
+        }
+
+        public static List<BodyImageModel> GetBodyImageList()
+        {
+            var db = new SQLiteConnection(DependencyService.Get<ISqliteDeviceInform>().GetDbPath());
+            var result = from record in db.Table<BodyImageModel>() orderby record.RegistedDate ascending select record;
+            return result.ToList();
         }
     }
 }

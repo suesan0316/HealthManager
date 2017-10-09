@@ -58,10 +58,15 @@
     <Compile Include="Model\Service\BasicDataService.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\BodyImageViewModel.cs" />
     <Compile Include="ViewModel\DataChartViewModel.cs" />
     <Compile Include="ViewModel\HomeViewModel.cs" />
     <Compile Include="ViewModel\InputBasicDataViewModel.cs" />
+    <Compile Include="ViewModel\NewsWebViewModel.cs" />
     <Compile Include="ViewModel\RegistBodyImageViewModel.cs" />
+    <Compile Include="View\BodyImageView.xaml.cs">
+      <DependentUpon>BodyImageView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\DataChartView.xaml.cs">
       <DependentUpon>DataChartView.xaml</DependentUpon>
     </Compile>
@@ -70,6 +75,9 @@
     </Compile>
     <Compile Include="View\InputBasicDataView.xaml.cs">
       <DependentUpon>InputBasicDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\NewsWebView.xaml.cs">
+      <DependentUpon>NewsWebView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\RegistBodyImageView.xaml.cs">
       <DependentUpon>RegistBodyImageView.xaml</DependentUpon>
@@ -149,6 +157,18 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="View\DataChartView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="View\BodyImageView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="View\NewsWebView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

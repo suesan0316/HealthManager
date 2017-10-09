@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:HealthManager.ViewModel"
@@ -7,43 +8,44 @@
     <ContentPage.BindingContext>
         <vm:HomeViewModel />
     </ContentPage.BindingContext>
-<ScrollView>
-    <StackLayout VerticalOptions="FillAndExpand">
-            <Button Text="体の写真を登録" Command="{Binding RegistBodyImageCommand}"></Button>
-        <Image Source="{Binding BodyImage}"></Image>
-            <Label Text="{Binding BodyImageRegistedDateString}"></Label>
-
-            <Label Text="名前" />
-            <Label Text="{Binding Name}" />
-            <Label Text="性別" />
-            <Label Text="年齢" />
-            <Label Text="{Binding Age}" />
-            <Label Text="身長(cm)" />
-            <Label Text="{Binding Height}" />
-            <Label Text="体重(kg)" />
-            <Label Text="{Binding BodyWeight}"  />
-            <Label Text="BMI" />
-            <Label Text="{Binding Bmi}"/>
-            <Label Text ="体脂肪率"></Label>
-            <Label Text="{Binding BodyFatPercentage}" ></Label>
-            <Label Text="血圧" />
-            <StackLayout Orientation="Horizontal">
-                <Label WidthRequest="100" Text="{Binding MaxBloodPressure} "  />
-                <Label Text="/"  VerticalOptions="End"/>
-                <Label Text="{Binding MinBloodPressure}"  />
+    <StackLayout>
+        <ScrollView>
+            <StackLayout Margin="30" VerticalOptions="FillAndExpand">
+                <Button Text="体の写真を登録" Command="{Binding RegistBodyImageCommand}" />
+                <Image Source="{Binding BodyImage}" HeightRequest="400" />
+                <Label Text="{Binding BodyImageRegistedDateString}" />
+                <Button Text="体の遷移を見る" Command="{Binding ViewBodyImageListCommand}" />
+                <Label Text="名前" />
+                <Label Text="{Binding Name}" />
+                <Label Text="性別" />
+                <Label Text="年齢" />
+                <Label Text="{Binding Age}" />
+                <Label Text="身長(cm)" />
+                <Label Text="{Binding Height}" />
+                <Label Text="体重(kg)" />
+                <Label Text="{Binding BodyWeight}" />
+                <Button Text="体重遷移" Command="{Binding ViewBodyWeightChartCommand}" />
+                <Label Text="BMI" />
+                <Label Text="{Binding Bmi}" />
+                <Label Text="体脂肪率" />
+                <Label Text="{Binding BodyFatPercentage}" />
+                <Button Text="体脂肪率遷移" Command="{Binding ViewBodyFatPercentageChartCommand}" />
+                <Label Text="血圧" />
+                <StackLayout Orientation="Horizontal">
+                    <Label WidthRequest="100" Text="{Binding MaxBloodPressure} " />
+                    <Label Text="/" VerticalOptions="End" />
+                    <Label Text="{Binding MinBloodPressure}" />
+                </StackLayout>
+                <Label Text="基礎代謝" />
+                <Label Text="{Binding BasalMetabolism}" />
+                <Button Text="基本データを更新" Command="{Binding RegistBasicDataCommand}" />
             </StackLayout>
-            <Label Text ="基礎代謝"></Label>
-            <Label Text="{Binding BasalMetabolism}" ></Label>
-            <Button Text="基本データを更新" Command="{Binding RegistBasicDataCommand}"></Button>
-        <Button Text="体脂肪率遷移" Command="{Binding ViewDataChartCommand}"></Button>
-
-            <ActivityIndicator IsRunning="{Binding IsLoading}" />
-
-        <ListView ItemsSource="{Binding Items}">
-        <ListView.Behaviors>
-            <b:ItemTappedBehavior Command="{Binding ItemTappedCommand}"/>
-        </ListView.Behaviors>
-    </ListView>
+        </ScrollView>
+        <ActivityIndicator IsRunning="{Binding IsLoading}" />
+        <ListView ItemsSource="{Binding Items}" VerticalOptions="FillAndExpand">
+            <ListView.Behaviors>
+                <b:ItemTappedBehavior Command="{Binding ItemTappedCommand}" />
+            </ListView.Behaviors>
+        </ListView>
     </StackLayout>
-</ScrollView>
 </ContentPage>

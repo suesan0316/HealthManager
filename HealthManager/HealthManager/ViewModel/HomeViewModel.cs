@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using HealthManager.Annotations;
+using HealthManager.Common;
 using HealthManager.Extention;
 using HealthManager.Logic.News.Factory;
 using HealthManager.Model.Service;
@@ -17,26 +18,32 @@ namespace HealthManager.ViewModel
 {
     public class HomeViewModel : INotifyPropertyChanged
     {
+        private ImageSource _bodyImage;
 
-        public ObservableCollection<string> Items { protected set; get; } = new ObservableCollection<string>();
+
+        private string _bodyImageRegistedDateString;
+
+        private float _bodyWeight;
+
+        private float _height;
+
+        // 読み込み中フラグ
+        private bool _isLoading;
 
         public Dictionary<string, string> ItemsDictionary;
 
-        public ICommand ItemTappedCommand { get; set; }
-        public ICommand RegistBodyImageCommand { get; set; }
-        public ICommand RegistBasicDataCommand { get; set; }
-        public ICommand ViewDataChartCommand { get; set; }
-
         public HomeViewModel()
         {
-            
             RegistBodyImageCommand = new Command(RegistBodyImage);
             RegistBasicDataCommand = new Command(RegistBasicData);
-            ViewDataChartCommand = new Command(ViewDataChart);
+            ViewBodyFatPercentageChartCommand = new Command(ViewBodyFatPercentageChart);
+            ViewBodyImageListCommand = new Command(ViewBodyImageList);
+            ViewBodyWeightChartCommand = new Command(ViewBodyWeightChart);
 
-            ItemTappedCommand = new Command<string>((item) =>
+            ItemTappedCommand = new Command<string>(item =>
             {
-                Device.OpenUri(new Uri(ItemsDictionary[item]));
+                //Device.OpenUri(new Uri(ItemsDictionary[item]));
+                ((App) Application.Current).ChangeScreen(new NewsWebView(ItemsDictionary[item]));
             });
 
             try
@@ -44,11 +51,10 @@ namespace HealthManager.ViewModel
                 var bodyImageModel = BodyImageService.GetBodyImage();
                 var imageAsBytes = Convert.FromBase64String(bodyImageModel.ImageBase64String);
                 BodyImage = ImageSource.FromStream(() => new MemoryStream(imageAsBytes));
-                BodyImageRegistedDateString = "登録日時 : " + (bodyImageModel.RegistedDate.ToString());
+                BodyImageRegistedDateString = "登録日時 : " + bodyImageModel.RegistedDate;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                
             }
 
             try
@@ -71,16 +77,14 @@ namespace HealthManager.ViewModel
             SetNewsSourceTask();
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public ObservableCollection<string> Items { protected set; get; } = new ObservableCollection<string>();
 
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        private  ImageSource _bodyImage;
+        public ICommand ItemTappedCommand { get; set; }
+        public ICommand RegistBodyImageCommand { get; set; }
+        public ICommand RegistBasicDataCommand { get; set; }
+        public ICommand ViewBodyWeightChartCommand { get; set; }
+        public ICommand ViewBodyFatPercentageChartCommand { get; set; }
+        public ICommand ViewBodyImageListCommand { get; set; }
 
         public ImageSource BodyImage
         {
@@ -92,8 +96,6 @@ namespace HealthManager.ViewModel
             }
         }
 
-
-        private string _bodyImageRegistedDateString;
         public string BodyImageRegistedDateString
         {
             get => _bodyImageRegistedDateString;
@@ -114,7 +116,6 @@ namespace HealthManager.ViewModel
         // 年齢
         public int Age { get; set; }
 
-        private float _height;
         public float Height
         {
             get => _height;
@@ -126,7 +127,6 @@ namespace HealthManager.ViewModel
             }
         }
 
-        private float _bodyWeight;
         public float BodyWeight
         {
             get => _bodyWeight;
@@ -167,8 +167,6 @@ namespace HealthManager.ViewModel
         // 基礎代謝
         public int BasalMetabolism { get; set; }
 
-        // 読み込み中フラグ
-        private bool _isLoading;
         public bool IsLoading
         {
             get => _isLoading;
@@ -177,6 +175,15 @@ namespace HealthManager.ViewModel
                 _isLoading = value;
                 OnPropertyChanged(nameof(IsLoading));
             }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private async Task SetNewsSourceTask()
@@ -190,23 +197,31 @@ namespace HealthManager.ViewModel
             ItemsDictionary.ForEach(data => Items.Add(data.Key));
 
             IsLoading = false;
-
         }
 
         private void RegistBodyImage()
         {
-            ((App)Application.Current).ChangeScreen(new RegistBodyImageView());
+            ((App) Application.Current).ChangeScreen(new RegistBodyImageView());
         }
 
         private void RegistBasicData()
         {
-            ((App)Application.Current).ChangeScreen(new InputBasicDataView());
+            ((App) Application.Current).ChangeScreen(new InputBasicDataView());
         }
 
-        private void ViewDataChart()
+        private void ViewBodyWeightChart()
         {
-            ((App)Application.Current).ChangeScreen(new DataChartView());
+            ((App) Application.Current).ChangeScreen(new DataChartView(BasicDataEnum.BodyWeight));
+        }
+
+        private void ViewBodyFatPercentageChart()
+        {
+            ((App) Application.Current).ChangeScreen(new DataChartView(BasicDataEnum.BodyFatPercentage));
+        }
+
+        private void ViewBodyImageList()
+        {
+            ((App) Application.Current).ChangeScreen(new BodyImageView());
         }
     }
 }
-
