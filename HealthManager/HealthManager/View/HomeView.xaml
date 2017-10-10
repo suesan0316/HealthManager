@@ -32,7 +32,7 @@
                 <Button Text="体脂肪率遷移" Command="{Binding ViewBodyFatPercentageChartCommand}" />
                 <Label Text="血圧" />
                 <StackLayout Orientation="Horizontal">
-                    <Label WidthRequest="100" Text="{Binding MaxBloodPressure} " />
+                    <Label Text="{Binding MaxBloodPressure} " />
                     <Label Text="/" VerticalOptions="End" />
                     <Label Text="{Binding MinBloodPressure}" />
                 </StackLayout>

@@ -6,5 +6,9 @@
     <StackLayout>
         <Button Text="戻る" Command="{Binding BackHomeCommand}"></Button>
     <forms:ChartView  x:Name="DataChart" HeightRequest="150"/>
+
+        <ListView x:Name="DataList" VerticalOptions="FillAndExpand">
+        </ListView>
+
     </StackLayout>
 </ContentPage>
