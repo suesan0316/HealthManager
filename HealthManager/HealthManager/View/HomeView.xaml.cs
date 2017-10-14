@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-using HealthManager.Model.Service;
-using HealthManager.ViewModel;
+﻿using HealthManager.ViewModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

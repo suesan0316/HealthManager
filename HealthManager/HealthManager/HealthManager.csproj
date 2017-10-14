@@ -47,8 +47,11 @@
     <Compile Include="Extention\EnumerableExtensions.cs" />
     <Compile Include="Extention\ItemTappedBehavior.cs" />
     <Compile Include="Logic\News\Factory\NewsServiceFactory.cs" />
+    <Compile Include="Logic\News\Implement\NewsService.cs" />
+    <Compile Include="Logic\News\Implement\ZaikeiNewsService.cs" />
     <Compile Include="Logic\News\Implement\YomiuriNewsService.cs" />
     <Compile Include="Logic\News\Service\INewsService.cs" />
+    <Compile Include="Logic\News\Service\INewsSourceService.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

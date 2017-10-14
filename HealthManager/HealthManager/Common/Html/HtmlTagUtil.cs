@@ -32,5 +32,20 @@
             return text;
         }
 
+        public static string GetATagLabelValue(string text)
+        {
+            System.Text.RegularExpressions.Regex r = new System.Text.RegularExpressions.Regex(
+                @"<a href=""(.*?)"">(.*?)</a>",
+                System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+
+            var m = r.Match(text);
+
+            while (m.Success)
+            {
+                return m.Groups[2].Value;
+            }
+            return text;
+        }
+
     }
 }

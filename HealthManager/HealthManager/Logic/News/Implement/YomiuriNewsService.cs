@@ -7,9 +7,9 @@ using HealthManager.Logic.News.Service;
 
 namespace HealthManager.Logic.News.Implement
 {
-    class YomiuriNewsService : INewsService
+    class YomiuriNewsService : INewsSourceService
     {
-        public async Task<Dictionary<string, string>> GetNewsDictionary()
+        public async Task<Dictionary<string, string>> GetNewsSourceDictionary()
         {
 
             var httpClient = new HttpClient();

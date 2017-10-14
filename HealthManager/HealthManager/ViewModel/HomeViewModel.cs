@@ -53,7 +53,7 @@ namespace HealthManager.ViewModel
                 BodyImage = ImageSource.FromStream(() => new MemoryStream(imageAsBytes));
                 BodyImageRegistedDateString = "登録日時 : " + bodyImageModel.RegistedDate;
             }
-            catch (Exception e)
+            catch (Exception)
             {
             }
 
@@ -190,7 +190,7 @@ namespace HealthManager.ViewModel
         {
             IsLoading = true;
 
-            var service = NewsServiceFactory.CreateYomiuriNewsService();
+            var service = NewsServiceFactory.CreateNewsService();
 
             ItemsDictionary = await service.GetNewsDictionary();
 
