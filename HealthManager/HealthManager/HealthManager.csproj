@@ -54,9 +54,6 @@
     <Compile Include="Logic\News\Implement\YomiuriNewsService.cs" />
     <Compile Include="Logic\News\Service\INewsService.cs" />
     <Compile Include="Logic\News\Service\INewsSourceService.cs" />
-    <Compile Include="MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Model\BasicDataModel.cs" />
     <Compile Include="Model\BodyImageModel.cs" />
     <Compile Include="Model\Service\BodyImageService.cs" />
@@ -89,10 +86,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="MainPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Include="App.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>

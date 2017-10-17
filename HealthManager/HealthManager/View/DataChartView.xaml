@@ -5,11 +5,11 @@
              x:Class="HealthManager.View.DataChartView">
     <StackLayout>
         <Button Text="戻る" Command="{Binding BackHomeCommand}" />
-        <forms:ChartView x:Name="DataChart" HeightRequest="150" />
-        <Label x:Name="Term" />
-        <Label x:Name="TermMax" />
-        <Label x:Name="TermMin" />
-        <Label x:Name="TermAverage" />
-        <ListView x:Name="DataList" VerticalOptions="FillAndExpand" />
+        <forms:ChartView  HeightRequest="150" Chart="{Binding Chart}" />
+        <Label  Text="{Binding TermText}" />
+        <Label  Text="{Binding TermMaxText}" />
+        <Label Text="{Binding TermMinText}" />
+        <Label Text="{Binding TermAverageText}" />
+        <ListView ItemsSource="{Binding DataList}" VerticalOptions="FillAndExpand" />
     </StackLayout>
 </ContentPage>

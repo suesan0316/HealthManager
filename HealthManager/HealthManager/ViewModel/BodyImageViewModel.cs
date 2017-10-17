@@ -3,7 +3,6 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using HealthManager.Annotations;
 using HealthManager.Common;
-using HealthManager.View;
 using Xamarin.Forms;
 
 namespace HealthManager.ViewModel
