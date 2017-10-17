@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using HealthManager.Annotations;
+using HealthManager.Common;
 using HealthManager.View;
 using Xamarin.Forms;
 
@@ -14,7 +15,7 @@ namespace HealthManager.ViewModel
 
         public BodyImageViewModel()
         {
-            BackHomeCommand = new Command(BackHome);
+            BackHomeCommand = new Command(ViewModelCommonUtil.BackHome);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -24,11 +25,5 @@ namespace HealthManager.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        private void BackHome()
-        {
-            ((App)Application.Current).ChangeScreen(new HomeView());
-        }
-
     }
 }
