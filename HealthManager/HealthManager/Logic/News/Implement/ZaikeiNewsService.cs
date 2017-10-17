@@ -1,22 +1,21 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using HealthManager.Common.Html;
 using HealthManager.Logic.News.Service;
 
 namespace HealthManager.Logic.News.Implement
 {
-    class ZaikeiNewsService : INewsSourceService
+    internal class ZaikeiNewsService : INewsSourceService
     {
         public async Task<Dictionary<string, string>> GetNewsSourceDictionary()
         {
-
             var httpClient = new HttpClient();
 
             var stream =
                 await httpClient.GetStreamAsync("http://www.zaikei.co.jp/news/topics/363/");
-
 
             var sr = new StreamReader(stream);
 
@@ -34,28 +33,24 @@ namespace HealthManager.Logic.News.Implement
                     var text2 = sr.ReadLine();
                     if (text2.Contains("<p class=\"link\">"))
                     {
-                        //var text3 = sr.ReadLine();
+                        var r = new Regex(
+                            @"<p class=""link""><a href=""(.*?)"">(.*?)</a></p>",
+                            RegexOptions.IgnoreCase);
 
-                            var r = new System.Text.RegularExpressions.Regex(
-                                @"<p class=""link""><a href=""(.*?)"">(.*?)</a></p>",
-                                System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+                        var m = r.Match(text2);
 
-                            var m = r.Match(text2);
+                        var keyText = "";
 
-                            string keyText = "";
+                        if (m.Success) keyText = m.Groups[2].Value;
 
-                            if (m.Success) keyText = m.Groups[2].Value;
-
-                            itemsDictionary.Add(HtmlTagUtil.GetATagLabelValue(keyText),
-                                "http://www.zaikei.co.jp" + HtmlTagUtil.GetATagHrefValue(text2));
-
-
-                    }else if (text2.Contains("<div class=\"sub\">"))
-                        {
-                            endFlg = true;
-                            break;
-                        }
-
+                        itemsDictionary.Add(HtmlTagUtil.GetATagLabelValue(keyText),
+                            "http://www.zaikei.co.jp" + HtmlTagUtil.GetATagHrefValue(text2));
+                    }
+                    else if (text2.Contains("<div class=\"sub\">"))
+                    {
+                        endFlg = true;
+                        break;
+                    }
                 }
                 if (endFlg) break;
             }

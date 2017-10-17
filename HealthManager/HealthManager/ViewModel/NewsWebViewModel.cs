@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using HealthManager.Annotations;
+using HealthManager.Common;
 using HealthManager.View;
 using Xamarin.Forms;
 
@@ -14,12 +15,12 @@ namespace HealthManager.ViewModel
 
         public NewsWebViewModel()
         {
-            BackHomeCommand = new Command(BackHome);
+            BackHomeCommand = new Command(ViewModelCommonUtil.BackHome);
         }
 
         public NewsWebViewModel(string url)
         {
-            BackHomeCommand = new Command(BackHome);
+            BackHomeCommand = new Command(ViewModelCommonUtil.BackHome);
             WebSource = url;
         }
 
@@ -41,11 +42,6 @@ namespace HealthManager.ViewModel
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        private void BackHome()
-        {
-            ((App) Application.Current).ChangeScreen(new HomeView());
         }
     }
 }

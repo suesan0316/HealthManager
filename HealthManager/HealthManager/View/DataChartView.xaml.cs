@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using HealthManager.Common;
 using HealthManager.Extention;
@@ -19,56 +20,47 @@ namespace HealthManager.View
         public DataChartView()
         {
             InitializeComponent();
-
             BindingContext = new DataChartViewModel();
         }
 
         public DataChartView(BasicDataEnum target)
         {
             InitializeComponent();
-
             BindingContext = new DataChartViewModel();
 
             var list = BasicDataService.GetBasicDataList();
-
-            List<Entry> entries = null;
-
-            var dataList = new List<string>();
+            var entries = new List<Entry>();
 
             switch (target)
             {
                 case BasicDataEnum.BodyWeight:
-                    entries = list.Select(value => new Entry(value.BodyWeight)
-                        {
-                            Color = SKColor.Parse("#00CED1"),
-                            Label = value.RegistedDate.ToString(),
-                            ValueLabel = value.BodyWeight.ToString()
-                        }
-                    )
+                    entries = list.Select(value => CreateNewEntry(value.BodyWeight, value.RegistedDate))
                         .ToList();
-
-                    list.ForEach(data => dataList.Add(data.RegistedDate + "    " + data.BodyWeight + "Kg"));
-
                     break;
 
                 case BasicDataEnum.BodyFatPercentage:
-                    entries = list.Select(value => new Entry(value.BodyFatPercentage)
-                        {
-                            Color = SKColor.Parse("#00CED1"),
-                            Label = value.RegistedDate.ToString(),
-                            ValueLabel = value.BodyFatPercentage.ToString()
-                        })
+                    entries = list.Select(value => CreateNewEntry(value.BodyFatPercentage,value.RegistedDate))
                         .ToList();
-
-                    list.ForEach(data => dataList.Add(data.RegistedDate + "    " + data.BodyFatPercentage + "%"));
-
                     break;
-
-                    default: break;
             }
 
+            Term.Text = "期間 : " + entries.Min(data => data.Label) + "~" + entries.Max(data => data.Label);
+            TermMin.Text = "期間中最小 : " + entries.Min(data=> data.Value) + target.DisplayUnit();
+            TermMax.Text = "期間中最大 : " + entries.Max(data => data.Value) + target.DisplayUnit();
+            TermAverage.Text = "期間中平均 : " + entries.Average(data=>data.Value)+ target.DisplayUnit();
+
             DataChart.Chart = new LineChart { Entries = entries };
-            DataList.ItemsSource = dataList;
+            DataList.ItemsSource = entries.Select(data => data.Label + "  " + data.Value + target.DisplayUnit() );
         }
-    }
+
+        private Entry CreateNewEntry(float value, DateTime registedDateTime)
+        {
+            return new Entry(value)
+            {
+                Color = SKColor.Parse("#00CED1"),
+                Label = registedDateTime.ToString(),
+                ValueLabel = value.ToString()
+            };
+        }
+    }  
 }

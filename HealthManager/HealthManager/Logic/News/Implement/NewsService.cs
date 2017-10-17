@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using HealthManager.Logic.News.Service;
 using HealthManager.Extention;
+using HealthManager.Logic.News.Service;
 
 namespace HealthManager.Logic.News.Implement
 {
@@ -12,17 +12,15 @@ namespace HealthManager.Logic.News.Implement
             var yomiuriNewsService = new YomiuriNewsService();
             var zaikeiNewsService = new ZaikeiNewsService();
 
-            var newsDictionary = new Dictionary<string,string>();
+            var newsDictionary = new Dictionary<string, string>();
 
             var yomiuriNewsDictionary = await yomiuriNewsService.GetNewsSourceDictionary();
-            var zaikeiNewsDictionary = await  zaikeiNewsService.GetNewsSourceDictionary();
+            var zaikeiNewsDictionary = await zaikeiNewsService.GetNewsSourceDictionary();
 
-            yomiuriNewsDictionary.ForEach(data=> newsDictionary.Add(data.Key,data.Value));
+            yomiuriNewsDictionary.ForEach(data => newsDictionary.Add(data.Key, data.Value));
             zaikeiNewsDictionary.ForEach(data => newsDictionary.Add(data.Key, data.Value));
 
-
             return newsDictionary;
-
         }
     }
 }

@@ -11,12 +11,10 @@ namespace HealthManager.Logic.News.Implement
     {
         public async Task<Dictionary<string, string>> GetNewsSourceDictionary()
         {
-
             var httpClient = new HttpClient();
 
             var stream =
                 await httpClient.GetStreamAsync("https://yomidr.yomiuri.co.jp/news-kaisetsu/news/kenko-news/");
-
 
             var sr = new StreamReader(stream);
 

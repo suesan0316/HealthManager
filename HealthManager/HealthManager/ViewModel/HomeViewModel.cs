@@ -42,7 +42,6 @@ namespace HealthManager.ViewModel
 
             ItemTappedCommand = new Command<string>(item =>
             {
-                //Device.OpenUri(new Uri(ItemsDictionary[item]));
                 ((App) Application.Current).ChangeScreen(new NewsWebView(ItemsDictionary[item]));
             });
 
@@ -70,7 +69,7 @@ namespace HealthManager.ViewModel
                 MinBloodPressure = model.MinBloodPressure;
                 BasalMetabolism = model.BasalMetabolism;
             }
-            catch (Exception e)
+            catch (Exception)
             {
             }
 
@@ -139,18 +138,18 @@ namespace HealthManager.ViewModel
         }
 
         // BMI
-        public double Bmi
+        public String Bmi
         {
             get
             {
                 try
                 {
                     var tmp = _bodyWeight / Math.Pow(_height / 100f, 2);
-                    return double.IsNaN(tmp) ? 0 : tmp;
+                    return CommonUtil.GetDecimalFormatString( double.IsNaN(tmp) ? 0 : tmp);
                 }
                 catch (Exception)
                 {
-                    return 0;
+                    return "0";
                 }
             }
         }

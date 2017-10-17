@@ -42,8 +42,10 @@
     <Compile Include="Common\CommonUtil.cs" />
     <Compile Include="Common\Html\HtmlConst.cs" />
     <Compile Include="Common\Html\HtmlTagUtil.cs" />
+    <Compile Include="Common\ViewModelCommonUtil.cs" />
     <Compile Include="DependencyInterface\ISqliteDeviceInform.cs" />
     <Compile Include="DependencyInterface\ICameraDependencyService.cs" />
+    <Compile Include="Extention\BasciDataEnumExt.cs" />
     <Compile Include="Extention\EnumerableExtensions.cs" />
     <Compile Include="Extention\ItemTappedBehavior.cs" />
     <Compile Include="Logic\News\Factory\NewsServiceFactory.cs" />

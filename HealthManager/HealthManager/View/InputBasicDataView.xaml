@@ -2,7 +2,11 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:HealthManager.ViewModel"
              x:Class="HealthManager.View.InputBasicDataView">
+    <ContentPage.BindingContext>
+        <vm:InputBasicDataViewModel />
+    </ContentPage.BindingContext>
     <ContentPage.Content>
         <ScrollView>
             <StackLayout Margin="30">
@@ -18,27 +22,34 @@
                     <Switch IsToggled="{Binding Woman}" IsEnabled="{Binding IsDisable}" />
                 </StackLayout>
                 <Label Text="年齢" />
-                <Entry Placeholder="年齢を入力してください" Keyboard="Numeric" Text="{Binding Age}" IsEnabled="{Binding IsDisable}" />
+                <Entry Placeholder="年齢を入力してください" Keyboard="Numeric" Text="{Binding Age}"
+                       IsEnabled="{Binding IsDisable}" />
                 <Label Text="身長(cm)" />
-                <Entry  Placeholder="身長をcmで入力してください"  Keyboard="Numeric" Text="{Binding Height}" IsEnabled="{Binding IsDisable}" />
+                <Entry Placeholder="身長をcmで入力してください" Keyboard="Numeric" Text="{Binding Height}"
+                       IsEnabled="{Binding IsDisable}" />
                 <Label Text="体重(kg)" />
-                <Entry  Placeholder="体重をkgで入力してください" Keyboard="Numeric" Text="{Binding BodyWeight}" IsEnabled="{Binding IsDisable}" />
+                <Entry Placeholder="体重をkgで入力してください" Keyboard="Numeric" Text="{Binding BodyWeight}"
+                       IsEnabled="{Binding IsDisable}" />
                 <Label Text="BMI" />
-                <Label Text="{Binding Bmi}"/>
-                <Label Text ="体脂肪率"></Label>
-                <Entry Placeholder="体脂肪率を入力してください" Keyboard="Numeric" Text="{Binding BodyFatPercentage}" IsEnabled="{Binding IsDisable}"></Entry>
+                <Label Text="{Binding Bmi}" />
+                <Label Text="体脂肪率" />
+                <Entry Placeholder="体脂肪率を入力してください" Keyboard="Numeric" Text="{Binding BodyFatPercentage}"
+                       IsEnabled="{Binding IsDisable}" />
                 <Label Text="血圧" />
                 <StackLayout Orientation="Horizontal">
-                    <Entry Placeholder="上の血圧" Keyboard="Numeric"  WidthRequest="100" Text="{Binding MaxBloodPressure} " IsEnabled="{Binding IsDisable}" />
-                    <Label Text="/"  VerticalOptions="End"/>
-                    <Entry Placeholder="下の血圧" Keyboard="Numeric"  WidthRequest="100" Text="{Binding MinBloodPressure}" IsEnabled="{Binding IsDisable}" />
+                    <Entry Placeholder="上の血圧" Keyboard="Numeric" WidthRequest="100" Text="{Binding MaxBloodPressure} "
+                           IsEnabled="{Binding IsDisable}" />
+                    <Label Text="/" VerticalOptions="End" />
+                    <Entry Placeholder="下の血圧" Keyboard="Numeric" WidthRequest="100" Text="{Binding MinBloodPressure}"
+                           IsEnabled="{Binding IsDisable}" />
                 </StackLayout>
-                <Label Text ="基礎代謝"></Label>
-                <Entry Placeholder="基礎代謝を入力してください" Keyboard="Numeric" Text="{Binding BasalMetabolism}" IsEnabled="{Binding IsDisable}"></Entry>
+                <Label Text="基礎代謝" />
+                <Entry Placeholder="基礎代謝を入力してください" Keyboard="Numeric" Text="{Binding BasalMetabolism}"
+                       IsEnabled="{Binding IsDisable}" />
                 <Label HorizontalOptions="Center" Text="データを保存しています..." IsVisible="{Binding IsLoading}" />
                 <ActivityIndicator IsRunning="{Binding IsLoading}" />
                 <Button IsEnabled="{Binding IsDisable}" Text="保存" Command="{Binding SaveBaisicDataCommand}" />
-                <Button Text="キャンセル" Command="{Binding CancleCommand}" IsVisible="{Binding CancelButtonIsVisible}"></Button>
+                <Button Text="キャンセル" Command="{Binding CancleCommand}" IsVisible="{Binding CancelButtonIsVisible}" />
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

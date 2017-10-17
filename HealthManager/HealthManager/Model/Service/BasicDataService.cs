@@ -38,7 +38,7 @@ namespace HealthManager.Model.Service
         public static List<BasicDataModel> GetBasicDataList()
         {
             var db = new SQLiteConnection(DependencyService.Get<ISqliteDeviceInform>().GetDbPath());
-            var result = from record in db.Table<BasicDataModel>() orderby record.RegistedDate ascending select record;
+            var result = from record in db.Table<BasicDataModel>() orderby record.RegistedDate  select record;
             return result.ToList();
         }
     }

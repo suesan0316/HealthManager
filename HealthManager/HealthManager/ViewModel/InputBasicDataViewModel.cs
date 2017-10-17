@@ -2,9 +2,10 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using HealthManager.Annotations;
+using HealthManager.Common;
 using HealthManager.Model.Service;
-using HealthManager.View;
 using Xamarin.Forms;
 
 namespace HealthManager.ViewModel
@@ -13,6 +14,9 @@ namespace HealthManager.ViewModel
     {
         // 体重
         private float _bodyWeight;
+
+        // キャンセルボタン表示フラグ
+        private bool _cancelButtonIsVisible;
 
         // 身長
         private float _height;
@@ -25,13 +29,15 @@ namespace HealthManager.ViewModel
 
         // 女性
         private bool _woman;
-
-        private bool _cancelButtonIsVisible;
-
+        
+        /// <summary>
+        /// コンストラクタ
+        /// 基本データが存在しない場合はキャンセルボタンを非表示
+        /// </summary>
         public InputBasicDataViewModel()
         {
             SaveBaisicDataCommand = new Command(async () => await SaveBasicData());
-            CancleCommand = new Command(Cancel);
+            CancleCommand = new Command(ViewModelCommonUtil.BackHome);
 
             CancelButtonIsVisible = true;
 
@@ -48,14 +54,14 @@ namespace HealthManager.ViewModel
                 MinBloodPressure = model.MinBloodPressure;
                 BasalMetabolism = model.BasalMetabolism;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 CancelButtonIsVisible = false;
             }
         }
 
-        public Command SaveBaisicDataCommand { get; }
-        public Command CancleCommand { get; }
+        public ICommand SaveBaisicDataCommand { get; }
+        public ICommand CancleCommand { get; }
 
         // 名前
         public string Name { get; set; }
@@ -128,18 +134,18 @@ namespace HealthManager.ViewModel
         }
 
         // BMI
-        public double Bmi
+        public string Bmi
         {
             get
             {
                 try
                 {
                     var tmp = _bodyWeight / Math.Pow(_height / 100f, 2);
-                    return double.IsNaN(tmp) ? 0 : tmp;
+                    return CommonUtil.GetDecimalFormatString(double.IsNaN(tmp) ? 0 : tmp);
                 }
                 catch (Exception)
                 {
-                    return 0;
+                    return "0";
                 }
             }
         }
@@ -187,22 +193,19 @@ namespace HealthManager.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        /// <summary>
+        ///     基本データ保存アクション
+        /// </summary>
+        /// <returns></returns>
         private async Task SaveBasicData()
         {
             IsLoading = true;
-            await Task.Delay(1000);
             BasicDataService.RegistBasicData(Name, Man, height: Height, age: Age,
                 bodyWeight: BodyWeight, bodyFatPercentage: BodyFatPercentage, maxBloodPressure: MaxBloodPressure,
                 minBloodPressure: MinBloodPressure, basalMetabolism: BasalMetabolism);
             IsLoading = false;
             await Application.Current.MainPage.DisplayAlert("完了", "保存が完了しました。", "OK");
-            ((App) Application.Current).ChangeScreen(new HomeView());
+            ViewModelCommonUtil.BackHome();
         }
-
-        private void Cancel()
-        {
-            ((App)Application.Current).ChangeScreen(new HomeView());
-        }
-
     }
 }
