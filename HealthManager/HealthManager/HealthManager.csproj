@@ -46,6 +46,7 @@
     <Compile Include="DependencyInterface\ISqliteDeviceInform.cs" />
     <Compile Include="DependencyInterface\ICameraDependencyService.cs" />
     <Compile Include="Extention\BasciDataEnumExt.cs" />
+    <Compile Include="Extention\BindableStackLayout.cs" />
     <Compile Include="Extention\EnumerableExtensions.cs" />
     <Compile Include="Extention\ItemTappedBehavior.cs" />
     <Compile Include="Logic\News\Factory\NewsServiceFactory.cs" />

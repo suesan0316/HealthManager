@@ -19,14 +19,9 @@ namespace HealthManager.ViewModel
     public class HomeViewModel : INotifyPropertyChanged
     {
         private ImageSource _bodyImage;
-
-
         private string _bodyImageRegistedDateString;
-
         private float _bodyWeight;
-
         private float _height;
-
         // 読み込み中フラグ
         private bool _isLoading;
 
@@ -39,41 +34,28 @@ namespace HealthManager.ViewModel
             ViewBodyFatPercentageChartCommand = new Command(ViewBodyFatPercentageChart);
             ViewBodyImageListCommand = new Command(ViewBodyImageList);
             ViewBodyWeightChartCommand = new Command(ViewBodyWeightChart);
-
             ItemTappedCommand = new Command<string>(item =>
             {
                 ((App) Application.Current).ChangeScreen(new NewsWebView(ItemsDictionary[item]));
             });
 
-            try
-            {
-                var bodyImageModel = BodyImageService.GetBodyImage();
-                var imageAsBytes = Convert.FromBase64String(bodyImageModel.ImageBase64String);
-                BodyImage = ImageSource.FromStream(() => new MemoryStream(imageAsBytes));
-                BodyImageRegistedDateString = "登録日時 : " + bodyImageModel.RegistedDate;
-            }
-            catch (Exception)
-            {
-            }
+            var bodyImageModel = BodyImageService.GetBodyImage();
+            var imageAsBytes = Convert.FromBase64String(bodyImageModel.ImageBase64String);
+            BodyImage = ImageSource.FromStream(() => new MemoryStream(imageAsBytes));
+            BodyImageRegistedDateString = "登録日時 : " + bodyImageModel.RegistedDate;
 
-            try
-            {
-                var model = BasicDataService.GetBasicData();
-                Name = model.Name;
-                Man = model.Sex;
-                Age = model.Age;
-                Height = model.Height;
-                BodyWeight = model.BodyWeight;
-                BodyFatPercentage = model.BodyFatPercentage;
-                MaxBloodPressure = model.MaxBloodPressure;
-                MinBloodPressure = model.MinBloodPressure;
-                BasalMetabolism = model.BasalMetabolism;
-            }
-            catch (Exception)
-            {
-            }
+            var model = BasicDataService.GetBasicData();
+            Name = model.Name;
+            Man = model.Sex;
+            Age = model.Age;
+            Height = model.Height;
+            BodyWeight = model.BodyWeight;
+            BodyFatPercentage = model.BodyFatPercentage;
+            MaxBloodPressure = model.MaxBloodPressure;
+            MinBloodPressure = model.MinBloodPressure;
+            BasalMetabolism = model.BasalMetabolism;
 
-            SetNewsSourceTask();
+            Task.Run(SetNewsSourceTask);
         }
 
         public ObservableCollection<string> Items { protected set; get; } = new ObservableCollection<string>();
@@ -110,8 +92,6 @@ namespace HealthManager.ViewModel
 
         public bool Man { get; }
 
-        public bool Woman { get; }
-
         // 年齢
         public int Age { get; set; }
 
@@ -138,14 +118,14 @@ namespace HealthManager.ViewModel
         }
 
         // BMI
-        public String Bmi
+        public string Bmi
         {
             get
             {
                 try
                 {
                     var tmp = _bodyWeight / Math.Pow(_height / 100f, 2);
-                    return CommonUtil.GetDecimalFormatString( double.IsNaN(tmp) ? 0 : tmp);
+                    return CommonUtil.GetDecimalFormatString(double.IsNaN(tmp) ? 0 : tmp);
                 }
                 catch (Exception)
                 {
