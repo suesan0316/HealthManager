@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using HealthManager.Annotations;
 using HealthManager.Common;
@@ -16,13 +17,20 @@ namespace HealthManager.ViewModel
         private string _base64String;
 
         private ImageSource _bodyImage;
+        private readonly int _id;
 
         public RegistBodyImageViewModel()
         {
             TakeImageCameraCommand = new Command(TakeImageCamera);
             TakeImageLibraryaCommand = new Command(TakeImageLibrary);
-            RegistBodyImageCommand = new Command(RegistBodyImage);
+            RegistBodyImageCommand = new Command(async () => await RegistBodyImage());
             BackHomeCommand = new Command(ViewModelCommonUtil.BackHome);
+
+            var model = BodyImageService.GetBodyImage();
+            if (model != null)
+                _id = model.Id;
+            else
+                _id = 0;
 
             MessagingCenter.Subscribe<byte[]>(this, "ImageSelected", args =>
             {
@@ -72,9 +80,19 @@ namespace HealthManager.ViewModel
             DependencyService.Get<ICameraDependencyService>().BringUpPhotoGallery();
         }
 
-        private void RegistBodyImage()
+        private async Task RegistBodyImage()
         {
-            BodyImageService.RegistBodyImage(_base64String);
+            if (BodyImageService.CheckExitTargetDayData(DateTime.Now))
+            {
+                var result =
+                    await Application.Current.MainPage.DisplayAlert("確認", "本日は既にデータを登録しています。更新しますか？", "OK", "キャンセル");
+                if (result)
+                    BodyImageService.UpdateBodyImage(_id, _base64String);
+            }
+            else
+            {
+                BodyImageService.RegistBodyImage(_base64String);
+            }
             ViewModelCommonUtil.BackHome();
         }
     }

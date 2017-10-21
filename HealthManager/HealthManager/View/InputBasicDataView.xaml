@@ -46,7 +46,7 @@
                 <Label Text="基礎代謝" />
                 <Entry Placeholder="基礎代謝を入力してください" Keyboard="Numeric" Text="{Binding BasalMetabolism}"
                        IsEnabled="{Binding IsDisable}" />
-                <Label HorizontalOptions="Center" Text="データを保存しています..." IsVisible="{Binding IsLoading}" />
+                <Label HorizontalOptions="Center" Text="処理中です..." IsVisible="{Binding IsLoading}" />
                 <ActivityIndicator IsRunning="{Binding IsLoading}" />
                 <Button IsEnabled="{Binding IsDisable}" Text="保存" Command="{Binding SaveBaisicDataCommand}" />
                 <Button Text="キャンセル" Command="{Binding CancleCommand}" IsVisible="{Binding CancelButtonIsVisible}" />

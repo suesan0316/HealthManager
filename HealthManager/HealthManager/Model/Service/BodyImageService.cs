@@ -46,7 +46,7 @@ namespace HealthManager.Model.Service
                 var result = from record in db.Table<BodyImageModel>()
                     orderby record.RegistedDate descending
                     select record;
-                return result.Count() != 0 ? result.First() : null;
+                return result.Any() ? result.First() : null;
             }
         }
 
@@ -55,7 +55,7 @@ namespace HealthManager.Model.Service
             using (var db = new SQLiteConnection(DbConst.DBPath))
             {
                 var result = from record in db.Table<BodyImageModel>() orderby record.RegistedDate select record;
-                return result.Count() != 0 ? result.ToList() : new List<BodyImageModel>();
+                return result.Any() ? result.ToList() : new List<BodyImageModel>();
             }
         }
 
@@ -63,9 +63,10 @@ namespace HealthManager.Model.Service
         {
             using (var db = new SQLiteConnection(DbConst.DBPath))
             {
+                var result = from record in db.Table<BodyImageModel>() select  record;
 
+                return result.Any() && result.ToList().Any(data => data.RegistedDate.Date == targeTime.Date);
             }
-            return false;
         }
     }
 }

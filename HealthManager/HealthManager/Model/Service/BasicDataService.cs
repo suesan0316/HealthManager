@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using HealthManager.Common;
 using SQLite;
@@ -72,6 +73,15 @@ namespace HealthManager.Model.Service
             {
                 var result = from record in db.Table<BasicDataModel>() orderby record.RegistedDate select record;
                 return result.Count() != 0 ? result.ToList() : new List<BasicDataModel>();
+            }
+        }
+   
+        public static bool CheckExitTargetDayData(DateTime targeTime)
+        {
+            using (var db = new SQLiteConnection(DbConst.DBPath))
+            {
+                var result = from record in db.Table<BasicDataModel>() select record;
+                return result.Any() && result.ToList().Any(data => data.RegistedDate.Date == targeTime.Date);
             }
         }
     }

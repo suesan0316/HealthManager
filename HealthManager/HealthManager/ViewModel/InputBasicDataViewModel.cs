@@ -12,6 +12,8 @@ namespace HealthManager.ViewModel
 {
     public class InputBasicDataViewModel : INotifyPropertyChanged
     {
+        private readonly int _id;
+
         // 体重
         private float _bodyWeight;
 
@@ -44,6 +46,7 @@ namespace HealthManager.ViewModel
             var model = BasicDataService.GetBasicData();
             if (model != null)
             {
+                _id = model.Id;
                 Name = model.Name;
                 Man = model.Sex;
                 Age = model.Age;
@@ -199,13 +202,36 @@ namespace HealthManager.ViewModel
         /// <returns></returns>
         private async Task SaveBasicData()
         {
-            IsLoading = true;
-            BasicDataService.RegistBasicData(Name, Man, height: Height, age: Age,
-                bodyWeight: BodyWeight, bodyFatPercentage: BodyFatPercentage, maxBloodPressure: MaxBloodPressure,
-                minBloodPressure: MinBloodPressure, basalMetabolism: BasalMetabolism);
-            IsLoading = false;
-            await Application.Current.MainPage.DisplayAlert("完了", "保存が完了しました。", "OK");
-            ViewModelCommonUtil.BackHome();
+            try
+            {
+                IsLoading = true;
+                if (BasicDataService.CheckExitTargetDayData(DateTime.Now))
+                {
+                    var result =
+                        await Application.Current.MainPage.DisplayAlert("確認", "本日は既にデータを登録しています。更新しますか？", "OK",
+                            "キャンセル");
+                    if (result)
+                        BasicDataService.UpdateBasicData(_id, Name, Man, height: Height, age: Age,
+                            bodyWeight: BodyWeight, bodyFatPercentage: BodyFatPercentage,
+                            maxBloodPressure: MaxBloodPressure,
+                            minBloodPressure: MinBloodPressure, basalMetabolism: BasalMetabolism);
+                }
+                else
+                {
+                    BasicDataService.RegistBasicData(Name, Man, height: Height, age: Age,
+                        bodyWeight: BodyWeight, bodyFatPercentage: BodyFatPercentage,
+                        maxBloodPressure: MaxBloodPressure,
+                        minBloodPressure: MinBloodPressure, basalMetabolism: BasalMetabolism);
+                }
+
+                IsLoading = false;
+                await Application.Current.MainPage.DisplayAlert("完了", "保存が完了しました。", "OK");
+                ViewModelCommonUtil.BackHome();
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+            }
         }
     }
 }
