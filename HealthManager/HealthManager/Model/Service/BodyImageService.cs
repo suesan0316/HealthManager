@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using HealthManager.DependencyInterface;
+using HealthManager.Common;
 using SQLite;
-using Xamarin.Forms;
 
 namespace HealthManager.Model.Service
 {
@@ -13,26 +13,59 @@ namespace HealthManager.Model.Service
             var model = new BodyImageModel
             {
                 ImageBase64String = base64String,
-                RegistedDate = System.DateTime.Now
+                RegistedDate = DateTime.Now
             };
-            var db = new SQLiteConnection(DependencyService.Get<ISqliteDeviceInform>().GetDbPath());
-            db.Insert(model);
-            db.Commit();
+            using (var db = new SQLiteConnection(DbConst.DBPath))
+            {
+                db.Insert(model);
+                db.Commit();
+            }
+            return true;
+        }
+
+        public static bool UpdateBodyImage(int id, string base64String)
+        {
+            var model = new BodyImageModel
+            {
+                Id = id,
+                ImageBase64String = base64String,
+                RegistedDate = DateTime.Now
+            };
+            using (var db = new SQLiteConnection(DbConst.DBPath))
+            {
+                db.Update(model);
+                db.Commit();
+            }
             return true;
         }
 
         public static BodyImageModel GetBodyImage()
         {
-            var db = new SQLiteConnection(DependencyService.Get<ISqliteDeviceInform>().GetDbPath());
-            var result = from record in db.Table<BodyImageModel>() orderby record.RegistedDate descending select record;
-            return result.First();
+            using (var db = new SQLiteConnection(DbConst.DBPath))
+            {
+                var result = from record in db.Table<BodyImageModel>()
+                    orderby record.RegistedDate descending
+                    select record;
+                return result.Count() != 0 ? result.First() : null;
+            }
         }
 
         public static List<BodyImageModel> GetBodyImageList()
         {
-            var db = new SQLiteConnection(DependencyService.Get<ISqliteDeviceInform>().GetDbPath());
-            var result = from record in db.Table<BodyImageModel>() orderby record.RegistedDate ascending select record;
-            return result.ToList();
+            using (var db = new SQLiteConnection(DbConst.DBPath))
+            {
+                var result = from record in db.Table<BodyImageModel>() orderby record.RegistedDate select record;
+                return result.Count() != 0 ? result.ToList() : new List<BodyImageModel>();
+            }
+        }
+
+        public static bool CheckExitTargetDayData(DateTime targeTime)
+        {
+            using (var db = new SQLiteConnection(DbConst.DBPath))
+            {
+
+            }
+            return false;
         }
     }
 }

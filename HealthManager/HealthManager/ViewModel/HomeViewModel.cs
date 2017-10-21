@@ -40,20 +40,26 @@ namespace HealthManager.ViewModel
             });
 
             var bodyImageModel = BodyImageService.GetBodyImage();
-            var imageAsBytes = Convert.FromBase64String(bodyImageModel.ImageBase64String);
-            BodyImage = ImageSource.FromStream(() => new MemoryStream(imageAsBytes));
-            BodyImageRegistedDateString = "登録日時 : " + bodyImageModel.RegistedDate;
+            if (bodyImageModel != null)
+            {
+                var imageAsBytes = Convert.FromBase64String(bodyImageModel.ImageBase64String);
+                BodyImage = ImageSource.FromStream(() => new MemoryStream(imageAsBytes));
+                BodyImageRegistedDateString = "登録日時 : " + bodyImageModel.RegistedDate;
+            }
 
             var model = BasicDataService.GetBasicData();
-            Name = model.Name;
-            Man = model.Sex;
-            Age = model.Age;
-            Height = model.Height;
-            BodyWeight = model.BodyWeight;
-            BodyFatPercentage = model.BodyFatPercentage;
-            MaxBloodPressure = model.MaxBloodPressure;
-            MinBloodPressure = model.MinBloodPressure;
-            BasalMetabolism = model.BasalMetabolism;
+            if (model != null)
+            {
+                Name = model.Name;
+                Man = model.Sex;
+                Age = model.Age;
+                Height = model.Height;
+                BodyWeight = model.BodyWeight;
+                BodyFatPercentage = model.BodyFatPercentage;
+                MaxBloodPressure = model.MaxBloodPressure;
+                MinBloodPressure = model.MinBloodPressure;
+                BasalMetabolism = model.BasalMetabolism;
+            }
 
             Task.Run(SetNewsSourceTask);
         }

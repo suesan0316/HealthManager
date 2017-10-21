@@ -64,5 +64,15 @@ namespace HealthManager.iOS.DependencyImplement
             taskCompletionSource.SetResult(null);
             imagePicker.DismissModalViewController(true);
         }
+
+        public void BringUpPhotoGallery()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void BringUpCamera()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

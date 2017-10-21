@@ -40,6 +40,7 @@
     </Compile>
     <Compile Include="Common\BasicDataEnum.cs" />
     <Compile Include="Common\CommonUtil.cs" />
+    <Compile Include="Common\DBConst.cs" />
     <Compile Include="Common\Html\HtmlConst.cs" />
     <Compile Include="Common\Html\HtmlTagUtil.cs" />
     <Compile Include="Common\ViewModelCommonUtil.cs" />

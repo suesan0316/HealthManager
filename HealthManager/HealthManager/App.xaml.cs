@@ -1,5 +1,4 @@
-﻿using System;
-using HealthManager.DependencyInterface;
+﻿using HealthManager.DependencyInterface;
 using HealthManager.Model;
 using HealthManager.Model.Service;
 using HealthManager.View;
@@ -38,17 +37,14 @@ namespace HealthManager
                 
             }
 
-            try
+            if (BasicDataService.GetBasicData() != null)
             {
-                BasicDataService.GetBasicData();
-
                 MainPage = new HomeView();
             }
-            catch (Exception e)
+            else
             {
                 MainPage = new InputBasicDataView();
-            }
-
+            }                    
         }
 
         protected override void OnStart()

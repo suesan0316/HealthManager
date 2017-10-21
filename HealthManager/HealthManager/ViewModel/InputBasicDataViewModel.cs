@@ -29,10 +29,10 @@ namespace HealthManager.ViewModel
 
         // 女性
         private bool _woman;
-        
+
         /// <summary>
-        /// コンストラクタ
-        /// 基本データが存在しない場合はキャンセルボタンを非表示
+        ///     コンストラクタ
+        ///     基本データが存在しない場合はキャンセルボタンを非表示
         /// </summary>
         public InputBasicDataViewModel()
         {
@@ -41,9 +41,9 @@ namespace HealthManager.ViewModel
 
             CancelButtonIsVisible = true;
 
-            try
+            var model = BasicDataService.GetBasicData();
+            if (model != null)
             {
-                var model = BasicDataService.GetBasicData();
                 Name = model.Name;
                 Man = model.Sex;
                 Age = model.Age;
@@ -54,7 +54,7 @@ namespace HealthManager.ViewModel
                 MinBloodPressure = model.MinBloodPressure;
                 BasalMetabolism = model.BasalMetabolism;
             }
-            catch (Exception)
+            else
             {
                 CancelButtonIsVisible = false;
             }
