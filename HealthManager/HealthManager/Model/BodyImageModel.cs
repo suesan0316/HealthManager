@@ -6,7 +6,9 @@ namespace HealthManager.Model
     [Table("BodyImageModel")]
     public class BodyImageModel
     {
-        [Column("ImageBase64String")]
+        [PrimaryKey, AutoIncrement]
+        public int Id { get; set; }
+        [ Column("ImageBase64String") ]
         public string ImageBase64String { get; set; }
         [Column("RegistedDate")]
         public DateTime RegistedDate { get; set; }
