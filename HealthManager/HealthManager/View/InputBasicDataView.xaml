@@ -13,14 +13,7 @@
                 <Label Text="名前" />
                 <Entry Placeholder="名前を入力してください" Text="{Binding Name}" IsEnabled="{Binding IsDisable}" />
                 <Label Text="性別" />
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="男性" />
-                    <Switch IsToggled="{Binding Man}" IsEnabled="{Binding IsDisable}" />
-                </StackLayout>
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="女性" />
-                    <Switch IsToggled="{Binding Woman}" IsEnabled="{Binding IsDisable}" />
-                </StackLayout>
+                <Picker ItemsSource="{Binding GenderItemSrouce}"  SelectedIndex="{Binding Gender}" IsEnabled="{Binding IsDisable}"></Picker>
                 <Label Text="年齢" />
                 <Entry Placeholder="年齢を入力してください" Keyboard="Numeric" Text="{Binding Age}"
                        IsEnabled="{Binding IsDisable}" />

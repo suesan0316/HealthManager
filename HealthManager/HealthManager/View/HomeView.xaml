@@ -18,6 +18,7 @@
                 <Label Text="名前" />
                 <Label Text="{Binding Name}" />
                 <Label Text="性別" />
+                <Label Text="{Binding Gender}"></Label>
                 <Label Text="年齢" />
                 <Label Text="{Binding Age}" />
                 <Label Text="身長(cm)" />

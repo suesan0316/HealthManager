@@ -8,13 +8,13 @@ namespace HealthManager.Model.Service
 {
     public class BasicDataService
     {
-        public static bool RegistBasicData(string name, bool sex, int age, float height, float bodyWeight,float bodyFatPercentage,
+        public static bool RegistBasicData(string name, int gender, int age, float height, float bodyWeight,float bodyFatPercentage,
             int maxBloodPressure, int minBloodPressure,int basalMetabolism)
         {
             var model = new BasicDataModel
             {
                 Name = name,
-                Sex = sex,
+                Gender = gender,
                 Age = age,
                 Height = height,
                 BodyWeight = bodyWeight,
@@ -22,7 +22,7 @@ namespace HealthManager.Model.Service
                 MaxBloodPressure = maxBloodPressure,
                 MinBloodPressure = minBloodPressure,
                 BasalMetabolism = basalMetabolism,
-                RegistedDate = System.DateTime.Now
+                RegistedDate = DateTime.Now
             };
             using (var db = new SQLiteConnection(DbConst.DBPath))
             {
@@ -32,14 +32,14 @@ namespace HealthManager.Model.Service
             return true;
         }
 
-        public static bool UpdateBasicData(int id, string name, bool sex, int age, float height, float bodyWeight, float bodyFatPercentage,
+        public static bool UpdateBasicData(int id, string name, int gender, int age, float height, float bodyWeight, float bodyFatPercentage,
             int maxBloodPressure, int minBloodPressure, int basalMetabolism)
         {
             var model = new BasicDataModel
             {
                 Id = id,
                 Name = name,
-                Sex = sex,
+                Gender = gender,
                 Age = age,
                 Height = height,
                 BodyWeight = bodyWeight,
@@ -47,7 +47,7 @@ namespace HealthManager.Model.Service
                 MaxBloodPressure = maxBloodPressure,
                 MinBloodPressure = minBloodPressure,
                 BasalMetabolism = basalMetabolism,
-                RegistedDate = System.DateTime.Now
+                RegistedDate = DateTime.Now
             };
             using (var db = new SQLiteConnection(DbConst.DBPath))
             {

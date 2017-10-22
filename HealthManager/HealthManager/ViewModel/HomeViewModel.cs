@@ -51,7 +51,7 @@ namespace HealthManager.ViewModel
             if (model != null)
             {
                 Name = model.Name;
-                Man = model.Sex;
+                Gender = ((GenderEnum)model.Gender).ToString();
                 Age = model.Age;
                 Height = model.Height;
                 BodyWeight = model.BodyWeight;
@@ -96,7 +96,7 @@ namespace HealthManager.ViewModel
         // 名前
         public string Name { get; set; }
 
-        public bool Man { get; }
+        public string Gender { get; }
 
         // 年齢
         public int Age { get; set; }

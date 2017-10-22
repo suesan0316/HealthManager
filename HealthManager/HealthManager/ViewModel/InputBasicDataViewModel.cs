@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -26,12 +27,6 @@ namespace HealthManager.ViewModel
         // 読み込み中フラグ
         private bool _isLoading;
 
-        // 男性
-        private bool _man = true;
-
-        // 女性
-        private bool _woman;
-
         /// <summary>
         ///     コンストラクタ
         ///     基本データが存在しない場合はキャンセルボタンを非表示
@@ -41,6 +36,14 @@ namespace HealthManager.ViewModel
             SaveBaisicDataCommand = new Command(async () => await SaveBasicData());
             CancleCommand = new Command(ViewModelCommonUtil.BackHome);
 
+            GenderItemSrouce = new List<GenderEnum>();
+            foreach (var gender in Enum.GetValues(typeof(GenderEnum)))
+            {
+                GenderItemSrouce.Add((GenderEnum)gender);
+            }
+
+            Gender = (int)GenderEnum.未選択;
+
             CancelButtonIsVisible = true;
 
             var model = BasicDataService.GetBasicData();
@@ -48,7 +51,7 @@ namespace HealthManager.ViewModel
             {
                 _id = model.Id;
                 Name = model.Name;
-                Man = model.Sex;
+                Gender = model.Gender;
                 Age = model.Age;
                 Height = model.Height;
                 BodyWeight = model.BodyWeight;
@@ -69,50 +72,12 @@ namespace HealthManager.ViewModel
         // 名前
         public string Name { get; set; }
 
-        public bool Man
-        {
-            get => _man;
-            set
-            {
-                _man = value;
-                if (value)
-                {
-                    Woman = false;
-                    OnPropertyChanged(nameof(Man));
-                    OnPropertyChanged(nameof(Woman));
-                }
-                else if (!Woman)
-                {
-                    Woman = true;
-                    OnPropertyChanged(nameof(Man));
-                    OnPropertyChanged(nameof(Woman));
-                }
-            }
-        }
-
-        public bool Woman
-        {
-            get => _woman;
-            set
-            {
-                _woman = value;
-                if (value)
-                {
-                    Man = false;
-                    OnPropertyChanged(nameof(Woman));
-                    OnPropertyChanged(nameof(Man));
-                }
-                else if (!Man)
-                {
-                    Man = true;
-                    OnPropertyChanged(nameof(Woman));
-                    OnPropertyChanged(nameof(Man));
-                }
-            }
-        }
-
         // 年齢
         public int Age { get; set; }
+
+        public List<GenderEnum> GenderItemSrouce { get; }
+
+        public int Gender { get; set; }
 
         public float Height
         {
@@ -211,14 +176,14 @@ namespace HealthManager.ViewModel
                         await Application.Current.MainPage.DisplayAlert("確認", "本日は既にデータを登録しています。更新しますか？", "OK",
                             "キャンセル");
                     if (result)
-                        BasicDataService.UpdateBasicData(_id, Name, Man, height: Height, age: Age,
+                        BasicDataService.UpdateBasicData(_id, Name, gender:Gender, height: Height, age: Age,
                             bodyWeight: BodyWeight, bodyFatPercentage: BodyFatPercentage,
                             maxBloodPressure: MaxBloodPressure,
                             minBloodPressure: MinBloodPressure, basalMetabolism: BasalMetabolism);
                 }
                 else
                 {
-                    BasicDataService.RegistBasicData(Name, Man, height: Height, age: Age,
+                    BasicDataService.RegistBasicData(Name, gender:Gender, height: Height, age: Age,
                         bodyWeight: BodyWeight, bodyFatPercentage: BodyFatPercentage,
                         maxBloodPressure: MaxBloodPressure,
                         minBloodPressure: MinBloodPressure, basalMetabolism: BasalMetabolism);
