@@ -39,7 +39,7 @@ namespace HealthManager
 
             if (BasicDataService.GetBasicData() != null)
             {
-                MainPage = new HomeView();
+                MainPage = new MainTabbedView();
             }
             else
             {
