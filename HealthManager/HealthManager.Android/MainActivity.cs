@@ -1,18 +1,17 @@
-﻿using System;
-using Android.App;
+﻿using Android.App;
 using Android.Content;
 using Android.Content.PM;
-using Android.Graphics;
+using Android.Database;
 using Android.OS;
 using Android.Provider;
 using HealthManager.Droid.DependencyImplement;
+using Plugin.Permissions;
 
 namespace HealthManager.Droid
 {
     [Activity(Label = "HealthManager", Icon = "@drawable/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
-
         public static Java.IO.File File;
         public static Java.IO.File Dir;
 
@@ -30,7 +29,12 @@ namespace HealthManager.Droid
 
         }
 
-        private void CreateDirectoryForPictures()
+	    public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
+	    {
+		    PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+	    }
+
+		private void CreateDirectoryForPictures()
         {
             Dir = new Java.IO.File(
                 Android.OS.Environment.GetExternalStoragePublicDirectory(
@@ -44,44 +48,31 @@ namespace HealthManager.Droid
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {
             base.OnActivityResult(requestCode, resultCode, data);
-            
+
+            //Since we set the request code to 1 for both the camera and photo gallery, that's what we need to check for
             if (requestCode == 1)
             {
                 if (resultCode == Result.Ok)
                 {
                     if (data.Data != null)
                     {
-                        var uri = data.Data;
-                        
-                        var orientation = GetOrientation(uri);
-                        
-                        var task = new BitmapWorkerTask(ContentResolver, uri);
+                        //Grab the Uri which is holding the path to the image
+                        Android.Net.Uri uri = data.Data;
+
+                        //Read the meta data of the image to determine what orientation the image should be in
+                        int orientation = getOrientation(uri);
+
+                        //Stat a background task so we can do all the bitmap stuff off the UI thread
+                        BitmapWorkerTask task = new BitmapWorkerTask(this.ContentResolver, uri);
                         task.Execute(orientation);
                     }
                 }
             }
-            else if(requestCode == 0)
-            {
-                if (resultCode != Result.Ok) return;
-                var mediaScanIntent = new Intent(Intent.ActionMediaScannerScanFile);
-                var contentUri = Android.Net.Uri.FromFile(File); 
-                mediaScanIntent.SetData(contentUri);
-                SendBroadcast(mediaScanIntent);
-
-                var height = Resources.DisplayMetrics.HeightPixels;
-                var width = 500;
-                var bitmap = File.Path.LoadAndResizeBitmap(width, height);
-
-                var task = new BitmapWorkerTask(bitmap);
-                task.Execute();
-
-                GC.Collect();
-            }
         }
 
-        public int GetOrientation(Android.Net.Uri photoUri)
+        public int getOrientation(Android.Net.Uri photoUri)
         {
-            var cursor = Application.ApplicationContext.ContentResolver.Query(photoUri, new[] { MediaStore.Images.ImageColumns.Orientation }, null, null, null);
+            ICursor cursor = Application.ApplicationContext.ContentResolver.Query(photoUri, new[] { MediaStore.Images.ImageColumns.Orientation }, null, null, null);
 
             if (cursor.Count != 1)
             {
@@ -90,31 +81,6 @@ namespace HealthManager.Droid
 
             cursor.MoveToFirst();
             return cursor.GetInt(0);
-        }
-    }
-    public static class BitmapHelpers
-    {
-        public static Bitmap LoadAndResizeBitmap(this string fileName, int width, int height)
-        {
-            var options = new BitmapFactory.Options { InJustDecodeBounds = true };
-            BitmapFactory.DecodeFile(fileName, options);
-            
-            var outHeight = options.OutHeight;
-            var outWidth = options.OutWidth;
-            var inSampleSize = 1;
-
-            if (outHeight > height || outWidth > width)
-            {
-                inSampleSize = outWidth > outHeight
-                    ? outHeight / height
-                    : outWidth / width;
-            }
-            
-            options.InSampleSize = inSampleSize;
-            options.InJustDecodeBounds = false;
-            var resizedBitmap = BitmapFactory.DecodeFile(fileName, options);
-
-            return resizedBitmap;
         }
     }
 }

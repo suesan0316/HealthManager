@@ -18,8 +18,8 @@ namespace HealthManager
             try
             {
 
-                /*db.DropTable<BodyImageModel>();
-                db.DropTable<BasicDataModel>();*/
+                db.DropTable<BodyImageModel>();
+                //db.DropTable<BasicDataModel>();
             }
             catch (NotNullConstraintViolationException e)
             {

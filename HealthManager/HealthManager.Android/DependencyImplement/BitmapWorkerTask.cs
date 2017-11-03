@@ -13,31 +13,20 @@ namespace HealthManager.Droid.DependencyImplement
         private int data = 0;
         private ContentResolver resolver;
 
-        private Bitmap bit;
-
         public BitmapWorkerTask(ContentResolver cr, Android.Net.Uri uri)
         {
             uriReference = uri;
             resolver = cr;
         }
 
-        public BitmapWorkerTask(Bitmap bitmap)
-        {
-            bit = bitmap;
-        }
-
         // Decode image in background.
         protected override Bitmap RunInBackground(params int[] p)
         {
             //This will be the orientation that was passed in from above (task.Execute(orientation);)
-
-            if (bit != null) return bit;
-
             data = p[0];
 
             Bitmap mBitmap = Android.Provider.MediaStore.Images.Media.GetBitmap(resolver, uriReference);
             Bitmap myBitmap = null;
-
 
             if (mBitmap != null)
             {

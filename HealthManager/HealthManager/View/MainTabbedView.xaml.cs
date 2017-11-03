@@ -13,9 +13,9 @@ namespace HealthManager.View
             {
                 Title = "Schedule"
             };
-
-            Children.Add(new TrainingHomeView());
             Children.Add(new HomeView());
+            Children.Add(new TrainingHomeView());
+            
         }
     }
 }

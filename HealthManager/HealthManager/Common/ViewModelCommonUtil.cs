@@ -7,7 +7,7 @@ namespace HealthManager.Common
     {
         public static void BackHome()
         {
-            ((App)Application.Current).ChangeScreen(new HomeView());
+            ((App)Application.Current).ChangeScreen(new MainTabbedView());
         }
     }
 }

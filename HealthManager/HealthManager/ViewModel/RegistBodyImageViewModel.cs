@@ -8,6 +8,7 @@ using HealthManager.Annotations;
 using HealthManager.Common;
 using HealthManager.DependencyInterface;
 using HealthManager.Model.Service;
+using Plugin.Media;
 using Xamarin.Forms;
 
 namespace HealthManager.ViewModel
@@ -21,18 +22,15 @@ namespace HealthManager.ViewModel
 
         public RegistBodyImageViewModel()
         {
-            TakeImageCameraCommand = new Command(TakeImageCamera);
+            TakeImageCameraCommand = new Command(async () =>  TakeImageCamera());
             TakeImageLibraryaCommand = new Command(TakeImageLibrary);
             RegistBodyImageCommand = new Command(async () => await RegistBodyImage());
             BackHomeCommand = new Command(ViewModelCommonUtil.BackHome);
 
             var model = BodyImageService.GetBodyImage();
-            if (model != null)
-                _id = model.Id;
-            else
-                _id = 0;
+            _id = model?.Id ?? 0;
 
-            MessagingCenter.Subscribe<byte[]>(this, "ImageSelected", args =>
+            /*MessagingCenter.Subscribe<byte[]>(this, "ImageSelected", args =>
             {
                 Device.BeginInvokeOnMainThread(() =>
                 {
@@ -40,7 +38,7 @@ namespace HealthManager.ViewModel
                     var imageAsBytes = Convert.FromBase64String(_base64String);
                     BodyImage = ImageSource.FromStream(() => new MemoryStream(imageAsBytes));
                 });
-            });
+            });*/
         }
 
         public ICommand TakeImageCameraCommand { get; set; }
@@ -70,12 +68,65 @@ namespace HealthManager.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private void TakeImageCamera()
+        private async void TakeImageCamera()
         {
-            DependencyService.Get<ICameraDependencyService>().BringUpCamera();
+	        try
+	        {
+		        //DependencyService.Get<ICameraDependencyService>().BringUpCamera();
+		        if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+		        {
+			        await Application.Current.MainPage.DisplayAlert("No Camera", ":( No camera avaialble.", "OK");
+			        return;
+		        }
+
+		        var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
+		        {
+			        PhotoSize = Plugin.Media.Abstractions.PhotoSize.Medium,
+			        Directory = "Sample",
+			        Name = "test.jpg"
+		        });
+
+		        if (file == null)
+			        return;
+
+		        //await Application.Current.MainPage.DisplayAlert("File Location", file.Path, "OK");
+
+		        BodyImage = ImageSource.FromStream(() =>
+		        {
+			        var stream = file.GetStream();
+			        file.Dispose();
+			        return stream;
+		        });
+
+		        byte[] imgData = ReadStream(file.GetStream());
+
+
+				_base64String = Convert.ToBase64String(imgData);
+
+
+			}
+	        catch (Exception e)
+	        {
+		        System.Diagnostics.Debug.WriteLine(e.StackTrace);
+	        }
         }
 
-        private void TakeImageLibrary()
+	    public byte[] ReadStream(Stream input)
+	    {
+		    byte[] buffer = new byte[16 * 1024];
+		    using (MemoryStream ms = new MemoryStream())
+		    {
+			    int read;
+			    while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
+			    {
+				    ms.Write(buffer, 0, read);
+			    }
+			    return ms.ToArray();
+		    }
+
+	    }
+
+		private void TakeImageLibrary()
         {
             DependencyService.Get<ICameraDependencyService>().BringUpPhotoGallery();
         }
