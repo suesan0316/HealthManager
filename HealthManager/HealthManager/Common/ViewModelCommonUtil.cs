@@ -7,6 +7,10 @@ namespace HealthManager.Common
 {
     class ViewModelCommonUtil
     {
+
+	    public static string DateTimeFormatString = "yyyy/MM/DD";
+	    public static string DateTimeFormatWithoutSymbolString = "yyyyMMDD";
+
         public static void BackHome()
         {
             ((App)Application.Current).ChangeScreen(new MainTabbedView());
@@ -14,15 +18,25 @@ namespace HealthManager.Common
 
 	    public static string FormatDateString(DateTime dateTime)
 	    {
-		    return  dateTime.ToString("yyyy/MM/dd");
+		    return  dateTime.ToString(DateTimeFormatString);
 	    }
 
-	    public static string FormatDateStringWithoutSymbol(DateTime dateTime)
+	    public static string FormatDateString(string dateTimeString)
 	    {
-		    return dateTime.ToString("yyyyMMdd");
+		    return DateTime.Parse(dateTimeString).ToString(DateTimeFormatString);
 	    }
 
-	    public static byte[] ConvertToByteArrayFromStream(Stream input)
+		public static string FormatDateStringWithoutSymbol(DateTime dateTime)
+	    {
+		    return dateTime.ToString(DateTimeFormatWithoutSymbolString);
+	    }
+
+	    public static string FormatDateStringWithoutSymbol(string dateTimeString)
+	    {
+		    return DateTime.Parse(dateTimeString).ToString(DateTimeFormatWithoutSymbolString);
+	    }
+
+		public static byte[] ConvertToByteArrayFromStream(Stream input)
 	    {
 		    var buffer = new byte[16 * 1024];
 		    using (var ms = new MemoryStream())

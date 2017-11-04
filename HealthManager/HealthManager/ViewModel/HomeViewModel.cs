@@ -44,7 +44,7 @@ namespace HealthManager.ViewModel
             {
                 var imageAsBytes = Convert.FromBase64String(bodyImageModel.ImageBase64String);
                 BodyImage = ImageSource.FromStream(() => new MemoryStream(imageAsBytes));
-                BodyImageRegistedDateString = "登録日時 : " + bodyImageModel.RegistedDate;
+                BodyImageRegistedDateString = "登録日 : " + ViewModelCommonUtil.FormatDateString(bodyImageModel.RegistedDate);
             }
 
             var model = BasicDataService.GetBasicData();

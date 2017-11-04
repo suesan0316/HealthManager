@@ -56,7 +56,12 @@ namespace HealthManager.ViewModel
 
         public string TermText
         {
-            get { return "期間 : " + _entries.Min(data => data.Label) + "~" + _entries.Max(data => data.Label); }
+            get {
+				return "期間 : " 
+					+ _entries.Min(data => data.Label) 
+					+ "~" 
+					+ _entries.Max(data => data.Label); 
+            }
         }
 
         public string TermMinText
@@ -66,7 +71,7 @@ namespace HealthManager.ViewModel
 
         public string TermMaxText
         {
-            get { return "期間中最大 : " + _entries.Max(data => data.Value) + _targetBasicDataEnum.DisplayUnit(); }
+            get { return "期間中最大 : " +　 _entries.Max(data => data.Value) + _targetBasicDataEnum.DisplayUnit(); }
         }
 
         public string TermAverageText
@@ -89,7 +94,7 @@ namespace HealthManager.ViewModel
             return new Entry(value)
             {
                 Color = SKColor.Parse("#00CED1"),
-                Label = registedDateTime.ToString(),
+                Label = ViewModelCommonUtil.FormatDateString(registedDateTime),
                 ValueLabel = value.ToString()
             };
         }
