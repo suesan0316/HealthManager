@@ -1,12 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SQLite;
 
 namespace HealthManager.Model
 {
-    class TrainingMasterModel
+	[Table("BodyImageModel")]
+	public class TrainingMasterModel
     {
-    }
+	    [PrimaryKey, AutoIncrement]
+	    public int Id { get; set; }
+	    [Column("TrainingName")]
+	    public string TrainingName { get; set; }
+	    [Column("LoadType")]
+	    public int LoadType { get; set; }
+		[Column("PartId")]
+		public int PartId { get; set; }
+		[Column("SubPartId")]
+		public int SubPartId { get; set; }
+	    [Column("RegistedDate")]
+	    public DateTime RegistedDate { get; set; }
+	}
 }

@@ -58,8 +58,10 @@
     <Compile Include="Logic\News\Service\INewsSourceService.cs" />
     <Compile Include="Model\BasicDataModel.cs" />
     <Compile Include="Model\BodyImageModel.cs" />
+    <Compile Include="Model\PartModel.cs" />
     <Compile Include="Model\Service\BodyImageService.cs" />
     <Compile Include="Model\Service\BasicDataService.cs" />
+    <Compile Include="Model\SubPartModel.cs" />
     <Compile Include="Model\TrainingMasterModel.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
