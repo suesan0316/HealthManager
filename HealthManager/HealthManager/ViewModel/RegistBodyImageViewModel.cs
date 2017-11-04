@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -15,30 +14,25 @@ namespace HealthManager.ViewModel
 {
     public class RegistBodyImageViewModel : INotifyPropertyChanged
     {
-        private string _base64String;
+	    private static readonly string BodyImageFileDirectory = "BodyImage";
+	    private static readonly string BodyImageNameHead = "bodyImage_";
+	    private static readonly string BodyImageExtension = ".jpg";
+
+		private string _base64String;
 
         private ImageSource _bodyImage;
         private readonly int _id;
+        private bool _takePhotoFromCamera = false;
 
         public RegistBodyImageViewModel()
         {
-            TakeImageCameraCommand = new Command(async () =>  TakeImageCamera());
-            TakeImageLibraryaCommand = new Command(TakeImageLibrary);
+            TakeImageCameraCommand = new Command(async () => await TakeImageCamera());
+            TakeImageLibraryaCommand = new Command(async () => await　TakeImageLibrary());
             RegistBodyImageCommand = new Command(async () => await RegistBodyImage());
             BackHomeCommand = new Command(ViewModelCommonUtil.BackHome);
 
             var model = BodyImageService.GetBodyImage();
             _id = model?.Id ?? 0;
-
-            /*MessagingCenter.Subscribe<byte[]>(this, "ImageSelected", args =>
-            {
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    _base64String = Convert.ToBase64String(args);
-                    var imageAsBytes = Convert.FromBase64String(_base64String);
-                    BodyImage = ImageSource.FromStream(() => new MemoryStream(imageAsBytes));
-                });
-            });*/
         }
 
         public ICommand TakeImageCameraCommand { get; set; }
@@ -68,28 +62,28 @@ namespace HealthManager.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private async void TakeImageCamera()
+        private async Task TakeImageCamera()
         {
+            // TODO カメラから写真を登録した場合は撮った写真は削除する処理を追加する
 	        try
 	        {
-		        //DependencyService.Get<ICameraDependencyService>().BringUpCamera();
 		        if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
 		        {
-			        await Application.Current.MainPage.DisplayAlert("No Camera", ":( No camera avaialble.", "OK");
+			        await Application.Current.MainPage.DisplayAlert("エラー","カメラが有効で張りません", "OK");
 			        return;
 		        }
 
+		        var fileName = BodyImageNameHead + ViewModelCommonUtil.FormatDateStringWithoutSymbol(DateTime.Now) + BodyImageExtension;
 		        var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
 		        {
 			        PhotoSize = Plugin.Media.Abstractions.PhotoSize.Medium,
-			        Directory = "Sample",
-			        Name = "test.jpg"
+			        Directory = BodyImageFileDirectory,
+			        Name = fileName,
+					SaveToAlbum = false
 		        });
 
 		        if (file == null)
 			        return;
-
-		        //await Application.Current.MainPage.DisplayAlert("File Location", file.Path, "OK");
 
 		        BodyImage = ImageSource.FromStream(() =>
 		        {
@@ -98,37 +92,45 @@ namespace HealthManager.ViewModel
 			        return stream;
 		        });
 
-		        byte[] imgData = ReadStream(file.GetStream());
+		        var imgData =ViewModelCommonUtil.ConvertToByteArrayFromStream(file.GetStream());
+		        _base64String = Convert.ToBase64String(imgData);
 
+	            _takePhotoFromCamera = true;
 
-				_base64String = Convert.ToBase64String(imgData);
-
-
-			}
+	        }
 	        catch (Exception e)
 	        {
 		        System.Diagnostics.Debug.WriteLine(e.StackTrace);
 	        }
         }
 
-	    public byte[] ReadStream(Stream input)
-	    {
-		    byte[] buffer = new byte[16 * 1024];
-		    using (MemoryStream ms = new MemoryStream())
-		    {
-			    int read;
-			    while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
-			    {
-				    ms.Write(buffer, 0, read);
-			    }
-			    return ms.ToArray();
-		    }
-
-	    }
-
-		private void TakeImageLibrary()
+		private async Task TakeImageLibrary()
         {
-            DependencyService.Get<ICameraDependencyService>().BringUpPhotoGallery();
+            if (!CrossMedia.Current.IsPickPhotoSupported)
+            {
+                await Application.Current.MainPage.DisplayAlert("エラー", "写真ライブラリを開けません", "OK");
+                return;
+            }
+            var file = await CrossMedia.Current.PickPhotoAsync(new Plugin.Media.Abstractions.PickMediaOptions
+            {
+                PhotoSize = Plugin.Media.Abstractions.PhotoSize.Medium
+            });
+
+
+            if (file == null)
+                return;
+
+            BodyImage　= ImageSource.FromStream(() =>
+            {
+                var stream = file.GetStream();
+                file.Dispose();
+                return stream;
+            });
+
+            var imgData = ViewModelCommonUtil.ConvertToByteArrayFromStream(file.GetStream());
+            _base64String = Convert.ToBase64String(imgData);
+
+            _takePhotoFromCamera = false;
         }
 
         private async Task RegistBodyImage()
