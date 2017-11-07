@@ -63,6 +63,7 @@
     <Compile Include="Model\Service\BasicDataService.cs" />
     <Compile Include="Model\SubPartModel.cs" />
     <Compile Include="Model\TrainingMasterModel.cs" />
+    <Compile Include="Model\TrainingMenuModel.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\BodyImageViewModel.cs" />

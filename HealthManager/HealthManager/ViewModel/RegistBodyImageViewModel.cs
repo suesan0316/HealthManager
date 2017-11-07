@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using HealthManager.Annotations;
 using HealthManager.Common;
-using HealthManager.DependencyInterface;
 using HealthManager.Model.Service;
 using Plugin.Media;
 using Xamarin.Forms;
@@ -14,11 +13,11 @@ namespace HealthManager.ViewModel
 {
     public class RegistBodyImageViewModel : INotifyPropertyChanged
     {
-	    private static readonly string BodyImageFileDirectory = "BodyImage";
-	    private static readonly string BodyImageNameHead = "bodyImage_";
-	    private static readonly string BodyImageExtension = ".jpg";
+        private const string BodyImageFileDirectory = "BodyImage";
+        private const string BodyImageNameHead = "bodyImage_";
+        private const string BodyImageExtension = ".jpg";
 
-		private string _base64String;
+        private string _base64String;
 
         private ImageSource _bodyImage;
         private readonly int _id;
