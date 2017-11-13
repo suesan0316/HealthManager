@@ -1,15 +1,20 @@
-﻿using SQLite;
+﻿using System;
+using SQLite;
 
 namespace HealthManager.Model
 {
-    [Table("TrainingMenuModel")]
-    class TrainingMenuModel
+    [Table("TrainingMenu")]
+    public class TrainingMenuModel
     {
-        [PrimaryKey, AutoIncrement]
+        [Column("Id"), PrimaryKey, AutoIncrement]
         public int Id { get; set; }
+        [Column("MenuName")]
+        public string MenuName { get; set; }
         [Column("TrainingId")]
         public int TrainingId { get; set; }
         [Column("Load")]
-        public int Load { get; set; }
+        public string Load { get; set; }
+        [Column("RegistedDate")]
+        public DateTime RegistedDate { get; set; }
     }
 }

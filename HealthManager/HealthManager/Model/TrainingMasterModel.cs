@@ -3,19 +3,17 @@ using SQLite;
 
 namespace HealthManager.Model
 {
-	[Table("BodyImageModel")]
+	[Table("TrainingMaster")]
 	public class TrainingMasterModel
     {
-	    [PrimaryKey, AutoIncrement]
+	    [Column("Id"), PrimaryKey, AutoIncrement]
 	    public int Id { get; set; }
 	    [Column("TrainingName")]
 	    public string TrainingName { get; set; }
-	    [Column("LoadType")]
-	    public int LoadType { get; set; }
-		[Column("PartId")]
-		public int PartId { get; set; }
-		[Column("SubPartId")]
-		public int SubPartId { get; set; }
+	    [Column("Load")]
+	    public string Load { get; set; }
+		[Column("Part")]
+		public string Part { get; set; }
 	    [Column("RegistedDate")]
 	    public DateTime RegistedDate { get; set; }
 	}

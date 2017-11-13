@@ -3,10 +3,10 @@ using SQLite;
 
 namespace HealthManager.Model
 {
-	[Table("SubPartModel")]
+	[Table("SubPart")]
 	public class SubPartModel
 	{
-		[PrimaryKey, AutoIncrement]
+		[Column("Id"), PrimaryKey, AutoIncrement]
 		public int Id { get; set; }
 		[Column("ParentPartId")]
 		public  int ParentPartId { get; set; }
