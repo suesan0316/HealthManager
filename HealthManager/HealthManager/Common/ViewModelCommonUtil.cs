@@ -5,37 +5,70 @@ using Xamarin.Forms;
 
 namespace HealthManager.Common
 {
-    class ViewModelCommonUtil
+    /// <summary>
+    /// ViewModelで使用するユーティリティクラス
+    /// </summary>
+    internal class ViewModelCommonUtil
     {
 
+        /// <summary>日付記号あり規定フォーマット</summary>
 	    public static string DateTimeFormatString = "yyyy/MM/DD";
-	    public static string DateTimeFormatWithoutSymbolString = "yyyyMMDD";
+        /// <summary>日付記号なし規定フォーマット</summary>
+        public static string DateTimeFormatWithoutSymbolString = "yyyyMMDD";
 
+        /// <summary>
+        /// ホーム画面遷移の共通処理
+        /// </summary>
         public static void BackHome()
         {
             ((App)Application.Current).ChangeScreen(new MainTabbedView());
         }
 
+        /// <summary>
+        /// 日付を記号ありの規定フォーマットに変換
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
 	    public static string FormatDateString(DateTime dateTime)
 	    {
 		    return  dateTime.ToString(DateTimeFormatString);
 	    }
 
+        /// <summary>
+        /// 日付文字列を記号ありの規定フォーマットに変換
+        /// </summary>
+        /// <param name="dateTimeString"></param>
+        /// <returns></returns>
 	    public static string FormatDateString(string dateTimeString)
 	    {
 		    return DateTime.Parse(dateTimeString).ToString(DateTimeFormatString);
 	    }
 
+        /// <summary>
+        /// 日付を記号なしの規定フォーマットに変換
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
 		public static string FormatDateStringWithoutSymbol(DateTime dateTime)
 	    {
 		    return dateTime.ToString(DateTimeFormatWithoutSymbolString);
 	    }
 
+        /// <summary>
+        /// 日付文字列を記号なしの規定フォーマットに変換
+        /// </summary>
+        /// <param name="dateTimeString"></param>
+        /// <returns></returns>
 	    public static string FormatDateStringWithoutSymbol(string dateTimeString)
 	    {
 		    return DateTime.Parse(dateTimeString).ToString(DateTimeFormatWithoutSymbolString);
 	    }
 
+        /// <summary>
+        /// ストリームをバイト配列に変換
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
 		public static byte[] ConvertToByteArrayFromStream(Stream input)
 	    {
 		    var buffer = new byte[16 * 1024];

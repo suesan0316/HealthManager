@@ -12,6 +12,9 @@ using XView = Xamarin.Forms.View;
 
 namespace HealthManager.ViewModel
 {
+    /// <summary>
+    /// 体格画像表示画面VMクラス
+    /// </summary>
     internal class BodyImageViewModel : INotifyPropertyChanged
     {
         public BodyImageViewModel()
@@ -33,6 +36,9 @@ namespace HealthManager.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        /// <summary>
+        /// 画面に表示するレイアウトを生成
+        /// </summary>
         private void InitImageStackLayout()
         {
             var bodyImageModels = BodyImageService.GetBodyImageList();
@@ -46,11 +52,6 @@ namespace HealthManager.ViewModel
                     HeightRequest = 400,
                     Source = ImageSource.FromStream(() => new MemoryStream(imageAsBytes))
                 };
-                /*var tapGestureRecognizer = new TapGestureRecognizer();
-                tapGestureRecognizer.Tapped += (s, e) => {
-                    System.Diagnostics.Debug.WriteLine("aaa");
-                };
-                bodyImage.GestureRecognizers.Add(tapGestureRecognizer);*/
                 childStackLayout.Children.Add(bodyImage);
 
                 var registedDateLabel = new Label { Text = value.RegistedDate.ToString() };

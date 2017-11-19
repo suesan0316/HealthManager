@@ -1,9 +1,14 @@
-﻿using System;
-
-namespace HealthManager.DependencyInterface
+﻿namespace HealthManager.DependencyInterface
 {
+    /// <summary>
+    /// SqliteDBのファイルパスを取得するための依存インターフェース
+    /// </summary>
     public interface ISqliteDeviceInform
     {
-        String GetDbPath();
+        /// <summary>
+        /// データベースのパスを取得
+        /// </summary>
+        /// <returns></returns>
+        string GetDbPath();
     }
 }

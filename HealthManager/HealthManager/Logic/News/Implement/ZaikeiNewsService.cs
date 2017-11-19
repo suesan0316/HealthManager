@@ -1,58 +1,40 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using HealthManager.Common.Html;
+using AngleSharp.Dom.Html;
+using AngleSharp.Extensions;
+using AngleSharp.Parser.Html;
 using HealthManager.Logic.News.Service;
 
 namespace HealthManager.Logic.News.Implement
 {
     internal class ZaikeiNewsService : INewsSourceService
     {
+        private const string Home = "http://www.zaikei.co.jp";
+        private const string Url = Home + "/news/topics/363/";
+
         public async Task<Dictionary<string, string>> GetNewsSourceDictionary()
         {
-            var httpClient = new HttpClient();
-
-            var stream =
-                await httpClient.GetStreamAsync("http://www.zaikei.co.jp/news/topics/363/");
-
-            var sr = new StreamReader(stream);
+            IHtmlDocument doc;
+            using (var client = new HttpClient())
+            using (var stream = await client.GetStreamAsync(new Uri(Url)))
+            {
+                var parser = new HtmlParser();
+                doc = await parser.ParseAsync(stream);
+            }
 
             var itemsDictionary = new Dictionary<string, string>();
-
-            while (!sr.EndOfStream)
+            var article02Query = doc.QuerySelectorAll("div.news_list > div.article_02");
+            foreach (var value in article02Query)
             {
-                var text = sr.ReadLine();
+                itemsDictionary.Add(value.QuerySelector("p.link > a").Text(), Home + value.QuerySelector("p.link > a").GetAttribute("href"));
+            }
 
-                var endFlg = false;
-
-                if (!text.Contains("<div class=\"news_list\">")) continue;
-                while (!sr.EndOfStream)
-                {
-                    var text2 = sr.ReadLine();
-                    if (text2.Contains("<p class=\"link\">"))
-                    {
-                        var r = new Regex(
-                            @"<p class=""link""><a href=""(.*?)"">(.*?)</a></p>",
-                            RegexOptions.IgnoreCase);
-
-                        var m = r.Match(text2);
-
-                        var keyText = "";
-
-                        if (m.Success) keyText = m.Groups[2].Value;
-
-                        itemsDictionary.Add(HtmlTagUtil.GetATagLabelValue(keyText),
-                            "http://www.zaikei.co.jp" + HtmlTagUtil.GetATagHrefValue(text2));
-                    }
-                    else if (text2.Contains("<div class=\"sub\">"))
-                    {
-                        endFlg = true;
-                        break;
-                    }
-                }
-                if (endFlg) break;
+            var article02NoImgQuery = doc.QuerySelectorAll("div.news_list > div.article_02_no_img");
+            foreach (var value in article02NoImgQuery)
+            {
+                itemsDictionary.Add(value.QuerySelector("a").Text(), Home + value.QuerySelector("a").GetAttribute("href"));
             }
             return itemsDictionary;
         }

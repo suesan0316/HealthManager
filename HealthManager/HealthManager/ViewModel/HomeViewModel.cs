@@ -16,12 +16,17 @@ using Xamarin.Forms;
 
 namespace HealthManager.ViewModel
 {
+    /// <summary>
+    ///     ホーム画面のVMクラス
+    /// </summary>
     public class HomeViewModel : INotifyPropertyChanged
     {
         private ImageSource _bodyImage;
         private string _bodyImageRegistedDateString;
         private float _bodyWeight;
+
         private float _height;
+
         // 読み込み中フラグ
         private bool _isLoading;
 
@@ -29,11 +34,11 @@ namespace HealthManager.ViewModel
 
         public HomeViewModel()
         {
-            RegistBodyImageCommand = new Command(RegistBodyImage);
-            RegistBasicDataCommand = new Command(RegistBasicData);
-            ViewBodyFatPercentageChartCommand = new Command(ViewBodyFatPercentageChart);
-            ViewBodyImageListCommand = new Command(ViewBodyImageList);
-            ViewBodyWeightChartCommand = new Command(ViewBodyWeightChart);
+            MoveToRegistBodyImageCommand = new Command(MoveToRegistBodyImage);
+            MoveToRegistBasicDataCommand = new Command(MoveToRegistBasicData);
+            MoveToBodyFatPercentageOfDataChartCommand = new Command(MoveToBodyFatPercentageOfDataChart);
+            MoveToBodyImageListCommand = new Command(MoveToBodyImageList);
+            MoveToBodyWeightOfDataChartCommand = new Command(MoveToViewBodyWeightOfDataChart);
             ItemTappedCommand = new Command<string>(item =>
             {
                 ((App) Application.Current).ChangeScreen(new NewsWebView(ItemsDictionary[item]));
@@ -44,14 +49,15 @@ namespace HealthManager.ViewModel
             {
                 var imageAsBytes = Convert.FromBase64String(bodyImageModel.ImageBase64String);
                 BodyImage = ImageSource.FromStream(() => new MemoryStream(imageAsBytes));
-                BodyImageRegistedDateString = "登録日 : " + ViewModelCommonUtil.FormatDateString(bodyImageModel.RegistedDate);
+                BodyImageRegistedDateString =
+                    "登録日 : " + ViewModelCommonUtil.FormatDateString(bodyImageModel.RegistedDate);
             }
 
             var model = BasicDataService.GetBasicData();
             if (model != null)
             {
                 Name = model.Name;
-                Gender = ((GenderEnum)model.Gender).ToString();
+                Gender = ((GenderEnum) model.Gender).ToString();
                 Age = model.Age;
                 Height = model.Height;
                 BodyWeight = model.BodyWeight;
@@ -67,11 +73,11 @@ namespace HealthManager.ViewModel
         public ObservableCollection<string> Items { protected set; get; } = new ObservableCollection<string>();
 
         public ICommand ItemTappedCommand { get; set; }
-        public ICommand RegistBodyImageCommand { get; set; }
-        public ICommand RegistBasicDataCommand { get; set; }
-        public ICommand ViewBodyWeightChartCommand { get; set; }
-        public ICommand ViewBodyFatPercentageChartCommand { get; set; }
-        public ICommand ViewBodyImageListCommand { get; set; }
+        public ICommand MoveToRegistBodyImageCommand { get; set; }
+        public ICommand MoveToRegistBasicDataCommand { get; set; }
+        public ICommand MoveToBodyWeightOfDataChartCommand { get; set; }
+        public ICommand MoveToBodyFatPercentageOfDataChartCommand { get; set; }
+        public ICommand MoveToBodyImageListCommand { get; set; }
 
         public ImageSource BodyImage
         {
@@ -171,6 +177,10 @@ namespace HealthManager.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        /// <summary>
+        ///     ニュース一覧を取得
+        /// </summary>
+        /// <returns></returns>
         private async Task SetNewsSourceTask()
         {
             IsLoading = true;
@@ -184,27 +194,27 @@ namespace HealthManager.ViewModel
             IsLoading = false;
         }
 
-        private void RegistBodyImage()
+        private static void MoveToRegistBodyImage()
         {
             ((App) Application.Current).ChangeScreen(new RegistBodyImageView());
         }
 
-        private void RegistBasicData()
+        private static void MoveToRegistBasicData()
         {
             ((App) Application.Current).ChangeScreen(new InputBasicDataView());
         }
 
-        private void ViewBodyWeightChart()
+        public void MoveToViewBodyWeightOfDataChart()
         {
             ((App) Application.Current).ChangeScreen(new DataChartView(BasicDataEnum.BodyWeight));
         }
 
-        private void ViewBodyFatPercentageChart()
+        private static void MoveToBodyFatPercentageOfDataChart()
         {
             ((App) Application.Current).ChangeScreen(new DataChartView(BasicDataEnum.BodyFatPercentage));
         }
 
-        private void ViewBodyImageList()
+        private static void MoveToBodyImageList()
         {
             ((App) Application.Current).ChangeScreen(new BodyImageView());
         }

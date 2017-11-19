@@ -15,6 +15,9 @@ using Entry = Microcharts.Entry;
 
 namespace HealthManager.ViewModel
 {
+    /// <summary>
+    /// データチャート画面のVMクラス
+    /// </summary>
     internal class DataChartViewModel : INotifyPropertyChanged
     {
         private readonly List<Entry> _entries = new List<Entry>();
@@ -89,7 +92,13 @@ namespace HealthManager.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private Entry CreateNewEntry(float value, DateTime registedDateTime)
+        /// <summary>
+        /// データチャートに使用するエントリーを生成
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="registedDateTime"></param>
+        /// <returns></returns>
+        protected virtual Entry CreateNewEntry(float value, DateTime registedDateTime)
         {
             return new Entry(value)
             {
