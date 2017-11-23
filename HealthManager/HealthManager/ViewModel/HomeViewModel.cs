@@ -27,7 +27,6 @@ namespace HealthManager.ViewModel
 
         private float _height;
 
-        // 読み込み中フラグ
         private bool _isLoading;
 
         public Dictionary<string, string> ItemsDictionary;
@@ -99,12 +98,10 @@ namespace HealthManager.ViewModel
             }
         }
 
-        // 名前
         public string Name { get; set; }
 
         public string Gender { get; }
 
-        // 年齢
         public int Age { get; set; }
 
         public float Height
@@ -129,7 +126,6 @@ namespace HealthManager.ViewModel
             }
         }
 
-        // BMI
         public string Bmi
         {
             get
@@ -146,16 +142,12 @@ namespace HealthManager.ViewModel
             }
         }
 
-        // 体脂肪率
         public float BodyFatPercentage { get; set; }
 
-        // 上の血圧
         public int MaxBloodPressure { get; set; }
 
-        // 下の血圧
         public int MinBloodPressure { get; set; }
 
-        // 基礎代謝
         public int BasalMetabolism { get; set; }
 
         public bool IsLoading
@@ -184,13 +176,9 @@ namespace HealthManager.ViewModel
         private async Task SetNewsSourceTask()
         {
             IsLoading = true;
-
             var service = NewsServiceFactory.CreateNewsService();
-
             ItemsDictionary = await service.GetNewsDictionary();
-
             ItemsDictionary.ForEach(data => Items.Add(data.Key));
-
             IsLoading = false;
         }
 

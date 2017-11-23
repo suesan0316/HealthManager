@@ -24,10 +24,6 @@ namespace HealthManager.ViewModel
 
         private readonly BasicDataEnum _targetBasicDataEnum;
 
-        public DataChartViewModel()
-        {
-        }
-
         public DataChartViewModel(BasicDataEnum targetBasicDataEnum)
         {
             BackHomeCommand = new Command(ViewModelCommonUtil.BackHome);
@@ -47,6 +43,27 @@ namespace HealthManager.ViewModel
                     _entries = list.Select(value => CreateNewEntry(value.BodyFatPercentage, value.RegistedDate))
                         .ToList();
                     break;
+                case BasicDataEnum.Name:
+                case BasicDataEnum.Sex:
+                case BasicDataEnum.Age:
+                    break;
+                case BasicDataEnum.Height:
+                    _entries = list.Select(value => CreateNewEntry(value.Height, value.RegistedDate))
+                        .ToList();
+                    break;
+                case BasicDataEnum.MaxBloodPressure:
+                    _entries = list.Select(value => CreateNewEntry(value.MaxBloodPressure, value.RegistedDate))
+                        .ToList();
+                    break;
+                case BasicDataEnum.MinBloodPressure:
+                    _entries = list.Select(value => CreateNewEntry(value.MinBloodPressure, value.RegistedDate))
+                        .ToList();
+                    break;
+                case BasicDataEnum.BasalMetabolism:
+                    _entries = list.Select(value => CreateNewEntry(value.BasalMetabolism, value.RegistedDate)).ToList();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
 
             Chart = new LineChart {Entries = _entries};
@@ -102,6 +119,7 @@ namespace HealthManager.ViewModel
         {
             return new Entry(value)
             {
+                // TODO 色を決定
                 Color = SKColor.Parse("#00CED1"),
                 Label = ViewModelCommonUtil.FormatDateString(registedDateTime),
                 ValueLabel = value.ToString()

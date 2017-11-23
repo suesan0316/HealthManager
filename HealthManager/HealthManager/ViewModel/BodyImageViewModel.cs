@@ -25,8 +25,7 @@ namespace HealthManager.ViewModel
 
         public ICommand BackHomeCommand { get; set; }
 
-        public ObservableCollection<XView> BodyImageContents { set; get; } =
-            new ObservableCollection<XView>();
+        public ObservableCollection<XView> BodyImageContents { set; get; } =　new ObservableCollection<XView>();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -49,6 +48,7 @@ namespace HealthManager.ViewModel
                 var imageAsBytes = Convert.FromBase64String(value.ImageBase64String);
                 var bodyImage = new Image
                 {
+                    // TODO 高さは調整
                     HeightRequest = 400,
                     Source = ImageSource.FromStream(() => new MemoryStream(imageAsBytes))
                 };
