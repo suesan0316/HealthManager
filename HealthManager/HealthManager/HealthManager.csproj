@@ -41,6 +41,7 @@
     <Compile Include="Common\BasicDataEnum.cs" />
     <Compile Include="Common\CommonUtil.cs" />
     <Compile Include="Common\DBConst.cs" />
+    <Compile Include="Common\WeekEnum.cs" />
     <Compile Include="Common\GenderEnum.cs" />
     <Compile Include="Common\ViewModelCommonUtil.cs" />
     <Compile Include="DependencyInterface\ISqliteDeviceInform.cs" />
@@ -60,6 +61,12 @@
     <Compile Include="Model\PartModel.cs" />
     <Compile Include="Model\Service\BodyImageService.cs" />
     <Compile Include="Model\Service\BasicDataService.cs" />
+    <Compile Include="Model\Service\LoadService.cs" />
+    <Compile Include="Model\Service\PartService.cs" />
+    <Compile Include="Model\Service\SubPartService.cs" />
+    <Compile Include="Model\Service\TrainingMasterService.cs" />
+    <Compile Include="Model\Service\TrainingMenuService.cs" />
+    <Compile Include="Model\Service\TrainingScheduleService.cs" />
     <Compile Include="Model\SubPartModel.cs" />
     <Compile Include="Model\TrainingMasterModel.cs" />
     <Compile Include="Model\TrainingMenuModel.cs" />
