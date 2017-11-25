@@ -12,9 +12,9 @@ namespace HealthManager.Common
     {
 
         /// <summary>日付記号あり規定フォーマット</summary>
-	    public static string DateTimeFormatString = "yyyy/MM/DD";
+	    public static string DateTimeFormatString = "yyyy/MM/dd";
         /// <summary>日付記号なし規定フォーマット</summary>
-        public static string DateTimeFormatWithoutSymbolString = "yyyyMMDD";
+        public static string DateTimeFormatWithoutSymbolString = "yyyyMMdd";
 
         /// <summary>
         /// ホーム画面遷移の共通処理

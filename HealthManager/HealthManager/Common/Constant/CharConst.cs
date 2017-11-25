@@ -8,11 +8,6 @@
         public const  char Zero = '0';
 
         /// <summary>
-        /// 空文字
-        /// </summary>
-        public const char Empty = '';
-
-        /// <summary>
         /// スペース
         /// </summary>
         public const char Blank = ' ';
