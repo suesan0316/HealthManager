@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using HealthManager.Annotations;
+using HealthManager.Properties;
 
 namespace HealthManager.ViewModel
 {

@@ -1,6 +1,6 @@
-﻿using HealthManager.Common;
+﻿using HealthManager.Common.Enum;
 
-namespace HealthManager.Extention
+namespace HealthManager.Common.Extention
 {
     /// <summary>
     /// 基本データ列挙の各拡張ラス

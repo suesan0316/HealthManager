@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using Xamarin.Forms;
 using XView = Xamarin.Forms.View;
-namespace HealthManager.Extention
+namespace HealthManager.Common.Extention
 {
     internal class BindableStackLayout : StackLayout
     {

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HealthManager.Common
+﻿namespace HealthManager.Common.Constant
 {
    public  static class StringConst
     {
@@ -27,5 +21,10 @@ namespace HealthManager.Common
         /// ~
         /// </summary>
         public const string WavyLine = "~";
+        
+        /// <summary>
+        /// =
+        /// </summary>
+        public const string Equal = "=";
     }
 }

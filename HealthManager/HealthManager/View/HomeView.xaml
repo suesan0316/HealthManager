@@ -3,7 +3,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:HealthManager.ViewModel"
-             xmlns:b="clr-namespace:HealthManager.Extention"
+             xmlns:extention="clr-namespace:HealthManager.Common.Extention;assembly=HealthManager"
              x:Class="HealthManager.View.HomeView">
     <ContentPage.BindingContext>
         <vm:HomeViewModel />
@@ -45,7 +45,7 @@
         <ActivityIndicator IsRunning="{Binding IsLoading}" />
         <ListView ItemsSource="{Binding Items}" VerticalOptions="FillAndExpand">
             <ListView.Behaviors>
-                <b:ItemTappedBehavior Command="{Binding NewsListItemTappedCommand}" />
+                <extention:ItemTappedBehavior Command="{Binding NewsListItemTappedCommand}" />
             </ListView.Behaviors>
         </ListView>
     </StackLayout>

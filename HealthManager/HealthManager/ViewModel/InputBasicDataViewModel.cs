@@ -4,33 +4,46 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using HealthManager.Annotations;
 using HealthManager.Common;
-using HealthManager.Language;
+using HealthManager.Common.Constant;
+using HealthManager.Common.Enum;
+using HealthManager.Common.Language;
 using HealthManager.Model.Service;
+using HealthManager.Properties;
 using Xamarin.Forms;
 
 namespace HealthManager.ViewModel
 {
+    /// <summary>
+    /// 基本情報登録画面VMクラス
+    /// </summary>
     public class InputBasicDataViewModel : INotifyPropertyChanged
     {
         private readonly int _id;
 
-        // 体重
+        /// <summary>
+        /// 体重
+        /// </summary>
         private float _bodyWeight;
 
-        // キャンセルボタン表示フラグ
+        /// <summary>
+        /// キャンセルボタン表示フラグ
+        /// </summary>
         private bool _cancelButtonIsVisible;
 
-        // 身長
+        /// <summary>
+        /// 身長
+        /// </summary>
         private float _height;
 
-        // 読み込み中フラグ
+        /// <summary>
+        /// 読み込み中フラグ
+        /// </summary>
         private bool _isLoading;
 
         /// <summary>
-        ///     コンストラクタ
-        ///     基本データが存在しない場合はキャンセルボタンを非表示
+        /// コンストラクタ
+        /// 基本データが存在しない場合はキャンセルボタンを非表示
         /// </summary>
         public InputBasicDataViewModel()
         {
@@ -70,16 +83,26 @@ namespace HealthManager.ViewModel
         public ICommand SaveBaisicDataCommand { get; }
         public ICommand CancleCommand { get; }
 
-        // 名前
+        /// <summary>
+        /// 名前
+        /// </summary>
         public string Name { get; set; }
 
-        // 年齢
+        /// <summary>
+        /// 年齢
+        /// </summary>
         public int Age { get; set; }
 
         public List<GenderEnum> GenderItemSrouce { get; }
 
+        /// <summary>
+        /// 性別
+        /// </summary>
         public int Gender { get; set; }
 
+        /// <summary>
+        /// 身長
+        /// </summary>
         public float Height
         {
             get => _height;
@@ -91,6 +114,9 @@ namespace HealthManager.ViewModel
             }
         }
 
+        /// <summary>
+        /// 体重
+        /// </summary>
         public float BodyWeight
         {
             get => _bodyWeight;
@@ -102,7 +128,9 @@ namespace HealthManager.ViewModel
             }
         }
 
-        // BMI
+        /// <summary>
+        /// BMI(自動計算項目)
+        /// </summary>
         public string Bmi
         {
             get
@@ -119,18 +147,29 @@ namespace HealthManager.ViewModel
             }
         }
 
-        // 体脂肪率
+        /// <summary>
+        /// 体脂肪率
+        /// </summary>
         public float BodyFatPercentage { get; set; }
 
-        // 上の血圧
+        /// <summary>
+        /// 上の血圧
+        /// </summary>
         public int MaxBloodPressure { get; set; }
 
-        // 下の血圧
+        /// <summary>
+        /// 下の血圧
+        /// </summary>
         public int MinBloodPressure { get; set; }
 
-        // 基礎代謝
+        /// <summary>
+        /// 下の血圧
+        /// </summary>
         public int BasalMetabolism { get; set; }
 
+        /// <summary>
+        /// 読み込みフラグ
+        /// </summary>
         public bool IsLoading
         {
             get => _isLoading;
@@ -142,6 +181,9 @@ namespace HealthManager.ViewModel
             }
         }
 
+        /// <summary>
+        /// キャンセルボタン非表示・表示
+        /// </summary>
         public bool CancelButtonIsVisible
         {
             get => _cancelButtonIsVisible;
@@ -163,7 +205,7 @@ namespace HealthManager.ViewModel
         }
 
         /// <summary>
-        ///     基本データ保存アクション
+        ///  基本データ保存アクション
         /// </summary>
         /// <returns></returns>
         private async Task SaveBasicData()
@@ -174,8 +216,8 @@ namespace HealthManager.ViewModel
                 if (BasicDataService.CheckExitTargetDayData(DateTime.Now))
                 {
                     var result =
-                        await Application.Current.MainPage.DisplayAlert("確認", "本日は既にデータを登録しています。更新しますか？", "OK",
-                            "キャンセル");
+                        await Application.Current.MainPage.DisplayAlert(LanguageUtils.Get(LanguageKeys.Confirm), LanguageUtils.Get(LanguageKeys.TodayDataUpdateConfirm), LanguageUtils.Get(LanguageKeys.OK),
+                            LanguageUtils.Get(LanguageKeys.Cancel));
                     if (result)
                         BasicDataService.UpdateBasicData(_id, Name, gender:Gender, height: Height, age: Age,
                             bodyWeight: BodyWeight, bodyFatPercentage: BodyFatPercentage,
@@ -191,7 +233,7 @@ namespace HealthManager.ViewModel
                 }
 
                 IsLoading = false;
-                await Application.Current.MainPage.DisplayAlert("完了", "保存が完了しました。", "OK");
+                await Application.Current.MainPage.DisplayAlert(LanguageUtils.Get(LanguageKeys.Complete), LanguageUtils.Get(LanguageKeys.SaveComplete),LanguageUtils.Get(LanguageKeys.OK));
                 ViewModelCommonUtil.BackHome();
             }
             catch (Exception e)

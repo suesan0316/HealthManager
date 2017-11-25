@@ -1,4 +1,4 @@
-﻿namespace HealthManager.Common
+﻿namespace HealthManager.Common.Enum
 {
     /// <summary>
     /// 曜日列挙

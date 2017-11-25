@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace HealthManager.Logic.News.Service
+namespace HealthManager.ViewModel.Logic.News.Service
 {
     interface INewsSourceService
     {

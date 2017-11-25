@@ -1,12 +1,15 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using HealthManager.Annotations;
 using HealthManager.Common;
+using HealthManager.Common.Language;
 using HealthManager.Model.Service;
+using HealthManager.Properties;
 using Plugin.Media;
+using Plugin.Media.Abstractions;
 using Xamarin.Forms;
 
 namespace HealthManager.ViewModel
@@ -16,17 +19,17 @@ namespace HealthManager.ViewModel
         private const string BodyImageFileDirectory = "BodyImage";
         private const string BodyImageNameHead = "bodyImage_";
         private const string BodyImageExtension = ".jpg";
+        private readonly int _id;
 
         private string _base64String;
 
         private ImageSource _bodyImage;
-        private readonly int _id;
-        private bool _takePhotoFromCamera = false;
+        private bool _takePhotoFromCamera;
 
         public RegistBodyImageViewModel()
         {
             TakeImageCameraCommand = new Command(async () => await TakeImageCamera());
-            TakeImageLibraryaCommand = new Command(async () => await　TakeImageLibrary());
+            TakeImageLibraryaCommand = new Command(async () => await TakeImageLibrary());
             RegistBodyImageCommand = new Command(async () => await RegistBodyImage());
             BackHomeCommand = new Command(ViewModelCommonUtil.BackHome);
 
@@ -64,62 +67,64 @@ namespace HealthManager.ViewModel
         private async Task TakeImageCamera()
         {
             // TODO カメラから写真を登録した場合は撮った写真は削除する処理を追加する
-	        try
-	        {
-		        if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
-		        {
-			        await Application.Current.MainPage.DisplayAlert("エラー","カメラが有効で張りません", "OK");
-			        return;
-		        }
+            try
+            {
+                if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+                {
+                    await Application.Current.MainPage.DisplayAlert(LanguageUtils.Get(LanguageKeys.Error),
+                        LanguageUtils.Get(LanguageKeys.CameraNotAvailable), LanguageUtils.Get(LanguageKeys.OK));
+                    return;
+                }
 
-		        var fileName = BodyImageNameHead + ViewModelCommonUtil.FormatDateStringWithoutSymbol(DateTime.Now) + BodyImageExtension;
-		        var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
-		        {
-			        PhotoSize = Plugin.Media.Abstractions.PhotoSize.Medium,
-			        Directory = BodyImageFileDirectory,
-			        Name = fileName,
-					SaveToAlbum = false
-		        });
+                var fileName = BodyImageNameHead + ViewModelCommonUtil.FormatDateStringWithoutSymbol(DateTime.Now) +
+                               BodyImageExtension;
+                var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
+                {
+                    PhotoSize = PhotoSize.Medium,
+                    Directory = BodyImageFileDirectory,
+                    Name = fileName,
+                    SaveToAlbum = false
+                });
 
-		        if (file == null)
-			        return;
+                if (file == null)
+                    return;
 
-		        BodyImage = ImageSource.FromStream(() =>
-		        {
-			        var stream = file.GetStream();
-			        file.Dispose();
-			        return stream;
-		        });
+                BodyImage = ImageSource.FromStream(() =>
+                {
+                    var stream = file.GetStream();
+                    file.Dispose();
+                    return stream;
+                });
 
-		        var imgData =ViewModelCommonUtil.ConvertToByteArrayFromStream(file.GetStream());
-		        _base64String = Convert.ToBase64String(imgData);
+                var imgData = ViewModelCommonUtil.ConvertToByteArrayFromStream(file.GetStream());
+                _base64String = Convert.ToBase64String(imgData);
 
-	            _takePhotoFromCamera = true;
-
-	        }
-	        catch (Exception e)
-	        {
-		        System.Diagnostics.Debug.WriteLine(e.StackTrace);
-	        }
+                _takePhotoFromCamera = true;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.StackTrace);
+            }
         }
 
-		private async Task TakeImageLibrary()
+        private async Task TakeImageLibrary()
         {
             if (!CrossMedia.Current.IsPickPhotoSupported)
             {
-                await Application.Current.MainPage.DisplayAlert("エラー", "写真ライブラリを開けません", "OK");
+                await Application.Current.MainPage.DisplayAlert(LanguageUtils.Get(LanguageKeys.Error),
+                    LanguageUtils.Get(LanguageKeys.PictureLibraryCanNotOpen), LanguageUtils.Get(LanguageKeys.OK));
                 return;
             }
-            var file = await CrossMedia.Current.PickPhotoAsync(new Plugin.Media.Abstractions.PickMediaOptions
+            var file = await CrossMedia.Current.PickPhotoAsync(new PickMediaOptions
             {
-                PhotoSize = Plugin.Media.Abstractions.PhotoSize.Medium
+                PhotoSize = PhotoSize.Medium
             });
 
 
             if (file == null)
                 return;
 
-            BodyImage　= ImageSource.FromStream(() =>
+            BodyImage = ImageSource.FromStream(() =>
             {
                 var stream = file.GetStream();
                 file.Dispose();
@@ -137,7 +142,9 @@ namespace HealthManager.ViewModel
             if (BodyImageService.CheckExitTargetDayData(DateTime.Now))
             {
                 var result =
-                    await Application.Current.MainPage.DisplayAlert("確認", "本日は既にデータを登録しています。更新しますか？", "OK", "キャンセル");
+                    await Application.Current.MainPage.DisplayAlert(LanguageUtils.Get(LanguageKeys.Confirm),
+                        LanguageUtils.Get(LanguageKeys.TodayDataUpdateConfirm), LanguageUtils.Get(LanguageKeys.OK),
+                        LanguageUtils.Get(LanguageKeys.Cancel));
                 if (result)
                     BodyImageService.UpdateBodyImage(_id, _base64String);
             }

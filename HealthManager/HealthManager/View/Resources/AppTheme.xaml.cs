@@ -1,7 +1,7 @@
 ﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace HealthManager.Resources
+namespace HealthManager.View.Resources
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AppTheme : ResourceDictionary

@@ -4,10 +4,13 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using HealthManager.Annotations;
 using HealthManager.Common;
-using HealthManager.Extention;
+using HealthManager.Common.Constant;
+using HealthManager.Common.Enum;
+using HealthManager.Common.Extention;
+using HealthManager.Common.Language;
 using HealthManager.Model.Service;
+using HealthManager.Properties;
 using Microcharts;
 using SkiaSharp;
 using Xamarin.Forms;
@@ -67,7 +70,6 @@ namespace HealthManager.ViewModel
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-
             Chart = new LineChart {Entries = _entries};
             DataList = _entries.Select(data => data.Label + StringConst.Blank + data.Value + _targetBasicDataEnum.DisplayUnit());
         }
@@ -79,7 +81,7 @@ namespace HealthManager.ViewModel
         public string TermText
         {
             get {
-				return "期間 : " 
+				return LanguageUtils.Get(LanguageKeys.Terms)
 					+ _entries.Min(data => data.Label) 
 					+ StringConst.WavyLine 
 					+ _entries.Max(data => data.Label); 
@@ -88,17 +90,17 @@ namespace HealthManager.ViewModel
 
         public string TermMinText
         {
-            get { return "期間中最小 : " + _entries.Min(data => data.Value) + _targetBasicDataEnum.DisplayUnit(); }
+            get { return LanguageUtils.Get(LanguageKeys.TermsMin) + _entries.Min(data => data.Value) + _targetBasicDataEnum.DisplayUnit(); }
         }
 
         public string TermMaxText
         {
-            get { return "期間中最大 : " +　 _entries.Max(data => data.Value) + _targetBasicDataEnum.DisplayUnit(); }
+            get { return LanguageUtils.Get(LanguageKeys.TermsMax) +　 _entries.Max(data => data.Value) + _targetBasicDataEnum.DisplayUnit(); }
         }
 
         public string TermAverageText
         {
-            get { return "期間中平均 : " + _entries.Average(data => data.Value) + _targetBasicDataEnum.DisplayUnit(); }
+            get { return LanguageUtils.Get(LanguageKeys.TermsAverage) + _entries.Average(data => data.Value) + _targetBasicDataEnum.DisplayUnit(); }
         }
 
         public IEnumerable<string> DataList { get; set; }

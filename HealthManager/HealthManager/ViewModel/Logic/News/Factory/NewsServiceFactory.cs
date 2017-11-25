@@ -1,6 +1,6 @@
-﻿using HealthManager.Logic.News.Implement;
+﻿using HealthManager.ViewModel.Logic.News.Implement;
 
-namespace HealthManager.Logic.News.Factory
+namespace HealthManager.ViewModel.Logic.News.Factory
 {
     public class NewsServiceFactory
     {

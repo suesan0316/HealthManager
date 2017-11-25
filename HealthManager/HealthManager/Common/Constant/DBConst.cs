@@ -1,7 +1,7 @@
 ﻿using HealthManager.DependencyInterface;
 using Xamarin.Forms;
 
-namespace HealthManager.Common
+namespace HealthManager.Common.Constant
 {
     /// <summary>
     /// DB関連定数クラス

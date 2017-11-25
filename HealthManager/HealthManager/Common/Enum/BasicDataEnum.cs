@@ -1,44 +1,44 @@
-ï»¿namespace HealthManager.Common
+namespace HealthManager.Common.Enum
 {
     /// <summary>
-    /// åŸºæœ¬ãƒ‡ãƒ¼ã‚¿é …ç›®ã®åˆ—æŒ™
+    /// Šî–{ƒf[ƒ^€–Ú‚Ì—ñ‹“
     /// </summary>
     public enum BasicDataEnum
     {
         /// <summary>
-        /// åå‰
+        /// –¼‘O
         /// </summary>
         Name,
         /// <summary>
-        /// æ€§åˆ¥
+        /// «•Ê
         /// </summary>
         Sex,
         /// <summary>
-        /// å¹´é½¢
+        /// ”N—î
         /// </summary>
         Age,
         /// <summary>
-        /// èº«é•·
+        /// g’·
         /// </summary>
         Height,
         /// <summary>
-        /// ä½“é‡
+        /// ‘Ìd
         /// </summary>
         BodyWeight,
         /// <summary>
-        /// ä½“è„‚è‚ªç‡
+        /// ‘Ì‰–b—¦
         /// </summary>
         BodyFatPercentage,
         /// <summary>
-        /// ä¸Šã®è¡€åœ§
+        /// ã‚ÌŒŒˆ³
         /// </summary>
         MaxBloodPressure,
         /// <summary>
-        /// ä¸‹ã®è¡€åœ§
+        /// ‰º‚ÌŒŒˆ³
         /// </summary>
         MinBloodPressure,
         /// <summary>
-        /// åŸºç¤ä»£è¬
+        /// Šî‘b‘ãÓ
         /// </summary>
         BasalMetabolism
     }

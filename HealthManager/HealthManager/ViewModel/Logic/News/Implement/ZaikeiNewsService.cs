@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using AngleSharp.Dom.Html;
 using AngleSharp.Extensions;
 using AngleSharp.Parser.Html;
-using HealthManager.Logic.News.Service;
+using HealthManager.ViewModel.Logic.News.Service;
 
-namespace HealthManager.Logic.News.Implement
+namespace HealthManager.ViewModel.Logic.News.Implement
 {
     internal class ZaikeiNewsService : INewsSourceService
     {

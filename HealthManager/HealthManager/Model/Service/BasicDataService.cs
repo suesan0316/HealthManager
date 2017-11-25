@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using HealthManager.Common;
+using HealthManager.Common.Constant;
 using SQLite;
 
 namespace HealthManager.Model.Service

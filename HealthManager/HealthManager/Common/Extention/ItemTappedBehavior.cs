@@ -1,7 +1,7 @@
 ﻿using System.Windows.Input;
 using Xamarin.Forms;
 
-namespace HealthManager.Extention
+namespace HealthManager.Common.Extention
 {
     public class ItemTappedBehavior : Behavior<ListView>
     {

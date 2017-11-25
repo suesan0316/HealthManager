@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using HealthManager.Extention;
-using HealthManager.Logic.News.Service;
+using HealthManager.Common.Extention;
+using HealthManager.ViewModel.Logic.News.Service;
 
-namespace HealthManager.Logic.News.Implement
+namespace HealthManager.ViewModel.Logic.News.Implement
 {
     public class NewsService : INewsService
     {

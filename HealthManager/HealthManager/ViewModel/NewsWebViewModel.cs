@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using HealthManager.Annotations;
 using HealthManager.Common;
+using HealthManager.Properties;
 using Xamarin.Forms;
 
 namespace HealthManager.ViewModel

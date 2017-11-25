@@ -4,9 +4,9 @@ using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using HealthManager.Annotations;
 using HealthManager.Common;
 using HealthManager.Model.Service;
+using HealthManager.Properties;
 using Xamarin.Forms;
 using XView = Xamarin.Forms.View;
 
@@ -44,7 +44,6 @@ namespace HealthManager.ViewModel
             foreach (var value in bodyImageModels)
             {
                 var childStackLayout = new StackLayout();
-
                 var imageAsBytes = Convert.FromBase64String(value.ImageBase64String);
                 var bodyImage = new Image
                 {

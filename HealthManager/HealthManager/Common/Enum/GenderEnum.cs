@@ -1,4 +1,4 @@
-﻿namespace HealthManager.Common
+﻿namespace HealthManager.Common.Enum
 {
     /// <summary>
     /// 性別列挙

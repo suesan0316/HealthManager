@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace HealthManager.Extention
+namespace HealthManager.Common.Extention
 {
     /// <summary>
     /// MonoでForEachを使用するための各兆クラス

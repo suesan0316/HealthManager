@@ -6,12 +6,15 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using HealthManager.Annotations;
 using HealthManager.Common;
-using HealthManager.Extention;
-using HealthManager.Logic.News.Factory;
+using HealthManager.Common.Constant;
+using HealthManager.Common.Enum;
+using HealthManager.Common.Extention;
+using HealthManager.Common.Language;
 using HealthManager.Model.Service;
+using HealthManager.Properties;
 using HealthManager.View;
+using HealthManager.ViewModel.Logic.News.Factory;
 using Xamarin.Forms;
 
 namespace HealthManager.ViewModel
@@ -49,7 +52,7 @@ namespace HealthManager.ViewModel
                 var imageAsBytes = Convert.FromBase64String(bodyImageModel.ImageBase64String);
                 BodyImage = ImageSource.FromStream(() => new MemoryStream(imageAsBytes));
                 BodyImageRegistedDateString =
-                    "登録日 : " + ViewModelCommonUtil.FormatDateString(bodyImageModel.RegistedDate);
+                    LanguageUtils.Get(LanguageKeys.RegistedDate) + ViewModelCommonUtil.FormatDateString(bodyImageModel.RegistedDate);
             }
 
             var model = BasicDataService.GetBasicData();
