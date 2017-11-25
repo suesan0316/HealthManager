@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using HealthManager.Annotations;
 using HealthManager.Common;
+using HealthManager.Language;
 using HealthManager.Model.Service;
 using Xamarin.Forms;
 
@@ -113,7 +114,7 @@ namespace HealthManager.ViewModel
                 }
                 catch (Exception)
                 {
-                    return "0";
+                    return StringConst.Zero;
                 }
             }
         }

@@ -28,7 +28,7 @@ namespace HealthManager.ViewModel
         private float _height;
 
         private bool _isLoading;
-
+        
         public Dictionary<string, string> ItemsDictionary;
 
         public HomeViewModel()
@@ -38,7 +38,7 @@ namespace HealthManager.ViewModel
             MoveToBodyFatPercentageOfDataChartCommand = new Command(MoveToBodyFatPercentageOfDataChart);
             MoveToBodyImageListCommand = new Command(MoveToBodyImageList);
             MoveToBodyWeightOfDataChartCommand = new Command(MoveToViewBodyWeightOfDataChart);
-            ItemTappedCommand = new Command<string>(item =>
+            NewsListItemTappedCommand = new Command<string>(item =>
             {
                 ((App) Application.Current).ChangeScreen(new NewsWebView(ItemsDictionary[item]));
             });
@@ -71,7 +71,7 @@ namespace HealthManager.ViewModel
 
         public ObservableCollection<string> Items { protected set; get; } = new ObservableCollection<string>();
 
-        public ICommand ItemTappedCommand { get; set; }
+        public ICommand NewsListItemTappedCommand { get; set; }
         public ICommand MoveToRegistBodyImageCommand { get; set; }
         public ICommand MoveToRegistBasicDataCommand { get; set; }
         public ICommand MoveToBodyWeightOfDataChartCommand { get; set; }
@@ -137,7 +137,7 @@ namespace HealthManager.ViewModel
                 }
                 catch (Exception)
                 {
-                    return "0";
+                    return StringConst.Zero;
                 }
             }
         }
@@ -161,7 +161,6 @@ namespace HealthManager.ViewModel
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

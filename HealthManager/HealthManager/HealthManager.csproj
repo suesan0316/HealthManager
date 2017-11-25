@@ -41,6 +41,9 @@
     <Compile Include="Common\BasicDataEnum.cs" />
     <Compile Include="Common\CommonUtil.cs" />
     <Compile Include="Common\DBConst.cs" />
+    <Compile Include="Language\LanguageKeys.cs" />
+    <Compile Include="Language\LanguageUtils.cs" />
+    <Compile Include="Common\StringConst.cs" />
     <Compile Include="Common\WeekEnum.cs" />
     <Compile Include="Common\GenderEnum.cs" />
     <Compile Include="Common\ViewModelCommonUtil.cs" />
@@ -168,6 +171,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Language.properties" />
+    <EmbeddedResource Include="Language\Language.properties" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

@@ -45,7 +45,7 @@
         <ActivityIndicator IsRunning="{Binding IsLoading}" />
         <ListView ItemsSource="{Binding Items}" VerticalOptions="FillAndExpand">
             <ListView.Behaviors>
-                <b:ItemTappedBehavior Command="{Binding ItemTappedCommand}" />
+                <b:ItemTappedBehavior Command="{Binding NewsListItemTappedCommand}" />
             </ListView.Behaviors>
         </ListView>
     </StackLayout>

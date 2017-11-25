@@ -24,6 +24,8 @@ namespace HealthManager.ViewModel
 
         private readonly BasicDataEnum _targetBasicDataEnum;
 
+        public DataChartViewModel() { }
+
         public DataChartViewModel(BasicDataEnum targetBasicDataEnum)
         {
             BackHomeCommand = new Command(ViewModelCommonUtil.BackHome);
@@ -67,7 +69,7 @@ namespace HealthManager.ViewModel
             }
 
             Chart = new LineChart {Entries = _entries};
-            DataList = _entries.Select(data => data.Label + "  " + data.Value + _targetBasicDataEnum.DisplayUnit());
+            DataList = _entries.Select(data => data.Label + StringConst.Blank + data.Value + _targetBasicDataEnum.DisplayUnit());
         }
 
         public ICommand BackHomeCommand { get; set; }
@@ -79,7 +81,7 @@ namespace HealthManager.ViewModel
             get {
 				return "期間 : " 
 					+ _entries.Min(data => data.Label) 
-					+ "~" 
+					+ StringConst.WavyLine 
 					+ _entries.Max(data => data.Label); 
             }
         }
