@@ -39,6 +39,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\Constant\CharConst.cs" />
+    <Compile Include="Common\Constant\ViewModelConst.cs" />
     <Compile Include="Common\Enum\BasicDataEnum.cs" />
     <Compile Include="Common\CommonUtil.cs" />
     <Compile Include="Common\Constant\DBConst.cs" />

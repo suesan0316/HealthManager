@@ -52,7 +52,15 @@ namespace HealthManager.ViewModel
                 var imageAsBytes = Convert.FromBase64String(bodyImageModel.ImageBase64String);
                 BodyImage = ImageSource.FromStream(() => new MemoryStream(imageAsBytes));
                 BodyImageRegistedDateString =
-                    LanguageUtils.Get(LanguageKeys.RegistedDate) + ViewModelCommonUtil.FormatDateString(bodyImageModel.RegistedDate);
+                    LanguageUtils.Get(LanguageKeys.RegistedDate) +
+                    ViewModelCommonUtil.FormatDateString(bodyImageModel.RegistedDate);
+            }
+            else
+            {
+                var imageAsBytes = Convert.FromBase64String(ViewModelConst.NoImageString64);
+                BodyImage = ImageSource.FromStream(() => new MemoryStream(imageAsBytes));
+                BodyImageRegistedDateString =
+                    LanguageUtils.Get(LanguageKeys.RegistedDate) + StringConst.Empty;
             }
 
             var model = BasicDataService.GetBasicData();
@@ -103,9 +111,13 @@ namespace HealthManager.ViewModel
 
         public string Name { get; set; }
 
+        public string NameLabel => LanguageUtils.Get(LanguageKeys.Name) + StringConst.Colon;
+
         public string Gender { get; }
+        public string GenderLabel => LanguageUtils.Get(LanguageKeys.Gender) + StringConst.Colon;
 
         public int Age { get; set; }
+        public string AgeLabel => LanguageUtils.Get(LanguageKeys.Age) + StringConst.Colon;
 
         public float Height
         {
@@ -117,6 +129,7 @@ namespace HealthManager.ViewModel
                 OnPropertyChanged(nameof(Bmi));
             }
         }
+        public string HeightLabel => LanguageUtils.Get(LanguageKeys.Height) + StringConst.Colon;
 
         public float BodyWeight
         {
@@ -128,6 +141,7 @@ namespace HealthManager.ViewModel
                 OnPropertyChanged(nameof(Bmi));
             }
         }
+        public string BodyWeightLabel => LanguageUtils.Get(LanguageKeys.BodyWeight) + StringConst.Colon;
 
         public string Bmi
         {
@@ -144,14 +158,17 @@ namespace HealthManager.ViewModel
                 }
             }
         }
+        public string BmiLabel => LanguageUtils.Get(LanguageKeys.BMI) + StringConst.Colon;
 
         public float BodyFatPercentage { get; set; }
+        public string BodyFatPercentageLabel => LanguageUtils.Get(LanguageKeys.BodyFatPercentage) + StringConst.Colon;
 
         public int MaxBloodPressure { get; set; }
-
         public int MinBloodPressure { get; set; }
+        public string BloodPressureLabel => LanguageUtils.Get(LanguageKeys.BloodPressure) + StringConst.Colon;
 
         public int BasalMetabolism { get; set; }
+        public string BasalMetabolismLabel => LanguageUtils.Get(LanguageKeys.BasicMetabolism) + StringConst.Colon;
 
         public bool IsLoading
         {

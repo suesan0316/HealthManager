@@ -108,7 +108,7 @@ namespace HealthManager.Model.Service
                 var result = from record in db.Table<BasicDataModel>()
                     orderby record.RegistedDate descending
                     select record;
-                return result.Count() != 0 ? result.First() : null;
+                return result.Any() ? result.First() : null;
             }
         }
 
@@ -121,7 +121,7 @@ namespace HealthManager.Model.Service
             using (var db = new SQLiteConnection(DbConst.DbPath))
             {
                 var result = from record in db.Table<BasicDataModel>() orderby record.RegistedDate select record;
-                return result.Count() != 0 ? result.ToList() : new List<BasicDataModel>();
+                return result.Any() ? result.ToList() : new List<BasicDataModel>();
             }
         }
    

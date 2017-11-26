@@ -11,12 +11,13 @@ namespace HealthManager.Common.Other
     /// </summary>
     public class ApplicationIinitializer
     {
-        public void InitDatabase()
+        public static void InitDatabase()
         {
             using (var db = new SQLiteConnection(DependencyService.Get<ISqliteDeviceInform>().GetDbPath()))
             {
                 try
                 {
+                    //db.DropTable<InitModel>();
                     //db.DropTable<BodyImageModel>();
                     //db.DropTable<BasicDataModel>();
                     //db.DropTable<LoadModle>();
@@ -30,10 +31,10 @@ namespace HealthManager.Common.Other
                 {
 
                 }
-                
+
+                db.CreateTable<InitModel>();
                 if (!(from record in db.Table<InitModel>() select record).Any())
                 {
-                    db.CreateTable<InitModel>();
                     db.Insert(new InitModel());
                     try
                     {
@@ -60,7 +61,7 @@ namespace HealthManager.Common.Other
     }
 
     [Table("Init")]
-    public class InitModel
+    class InitModel
     {
         [Column("Id"),PrimaryKey,AutoIncrement]
         public int Id { get; set; }

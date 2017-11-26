@@ -20,9 +20,7 @@ namespace HealthManager.ViewModel
         private const string BodyImageNameHead = "bodyImage_";
         private const string BodyImageExtension = ".jpg";
         private readonly int _id;
-
         private string _base64String;
-
         private ImageSource _bodyImage;
         private bool _takePhotoFromCamera;
 

@@ -1,15 +1,6 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Xml.Serialization;
-using HealthManager.Common;
-using HealthManager.Common.Language;
-using HealthManager.DependencyInterface;
-using HealthManager.Model;
+﻿using HealthManager.Common.Other;
 using HealthManager.Model.Service;
 using HealthManager.View;
-using SQLite;
 using Xamarin.Forms;
 
 namespace HealthManager
@@ -19,6 +10,7 @@ namespace HealthManager
         public App()
         {
             InitializeComponent();
+            ApplicationIinitializer. InitDatabase();
 
             if (BasicDataService.GetBasicData() != null)
             {
