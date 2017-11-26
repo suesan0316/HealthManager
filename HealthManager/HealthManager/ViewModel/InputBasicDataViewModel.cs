@@ -216,13 +216,21 @@ namespace HealthManager.ViewModel
                 if (BasicDataService.CheckExitTargetDayData(DateTime.Now))
                 {
                     var result =
-                        await Application.Current.MainPage.DisplayAlert(LanguageUtils.Get(LanguageKeys.Confirm), LanguageUtils.Get(LanguageKeys.TodayDataUpdateConfirm), LanguageUtils.Get(LanguageKeys.OK),
+                        await Application.Current.MainPage.DisplayAlert(LanguageUtils.Get(LanguageKeys.Confirm),
+                        LanguageUtils.Get(LanguageKeys.TodayDataUpdateConfirm), LanguageUtils.Get(LanguageKeys.OK),
                             LanguageUtils.Get(LanguageKeys.Cancel));
                     if (result)
-                        BasicDataService.UpdateBasicData(_id, Name, gender:Gender, height: Height, age: Age,
+                    {
+                        BasicDataService.UpdateBasicData(_id, Name, gender: Gender, height: Height, age: Age,
                             bodyWeight: BodyWeight, bodyFatPercentage: BodyFatPercentage,
                             maxBloodPressure: MaxBloodPressure,
                             minBloodPressure: MinBloodPressure, basalMetabolism: BasalMetabolism);
+                    }
+                    else
+                    {
+                        IsLoading = false;
+                        return;
+                    }
                 }
                 else
                 {
@@ -233,7 +241,8 @@ namespace HealthManager.ViewModel
                 }
 
                 IsLoading = false;
-                await Application.Current.MainPage.DisplayAlert(LanguageUtils.Get(LanguageKeys.Complete), LanguageUtils.Get(LanguageKeys.SaveComplete),LanguageUtils.Get(LanguageKeys.OK));
+                await Application.Current.MainPage.DisplayAlert(LanguageUtils.Get(LanguageKeys.Complete),
+                    LanguageUtils.Get(LanguageKeys.SaveComplete),LanguageUtils.Get(LanguageKeys.OK));
                 ViewModelCommonUtil.BackHome();
             }
             catch (Exception e)

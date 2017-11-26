@@ -14,8 +14,9 @@ namespace HealthManager.View
                 Title = "Schedule"
             };
             Children.Add(new HomeView());
+            Children[0].Title = "データ";
             Children.Add(new TrainingHomeView());
-            
+            Children[1].Title = "トレーニング";
         }
     }
 }

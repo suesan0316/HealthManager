@@ -20,30 +20,6 @@ namespace HealthManager
         {
             InitializeComponent();
 
-            var db = new SQLiteConnection(DependencyService.Get<ISqliteDeviceInform>().GetDbPath());
-            
-            try
-            {
-
-                db.DropTable<BodyImageModel>();
-                //db.DropTable<BasicDataModel>();
-            }
-            catch (NotNullConstraintViolationException e)
-            {
-
-            }
-
-            try
-            {
-
-                db.CreateTable<BodyImageModel>();
-                db.CreateTable<BasicDataModel>();
-            }
-            catch (NotNullConstraintViolationException e)
-            {
-                
-            }
-
             if (BasicDataService.GetBasicData() != null)
             {
                 MainPage = new MainTabbedView();

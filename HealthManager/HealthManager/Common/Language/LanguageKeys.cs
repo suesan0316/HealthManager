@@ -70,5 +70,41 @@
         /// 保存が完了しました。
         /// </summary>
         public const string SaveComplete = "SaveComplete";
+        /// <summary>
+        /// 名前
+        /// </summary>
+        public const string Name = "Name";
+        /// <summary>
+        /// 性別
+        /// </summary>
+        public const string Gender = "Gender";
+        /// <summary>
+        /// 年齢
+        /// </summary>
+        public const string Age = "Age";
+        /// <summary>
+        /// 身長
+        /// </summary>
+        public const string Height = "Height";
+        /// <summary>
+        /// 体重
+        /// </summary>
+        public const string BodyWeight = "BodyWeight";
+        /// <summary>
+        /// BMI
+        /// </summary>
+        public const string BMI = "BMI";
+        /// <summary>
+        /// 体脂肪率
+        /// </summary>
+        public const string BodyFatPercentage = "BodyFatPercentage";
+        /// <summary>
+        /// 血圧
+        /// </summary>
+        public const string BloodPressure = "BloodPressure";
+        /// <summary>
+        /// 基礎代謝
+        /// </summary>
+        public const string BasicMetabolism = "BasicMetabolism";
     }
 }

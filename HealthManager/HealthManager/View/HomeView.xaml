@@ -11,10 +11,10 @@
     <StackLayout>
         <ScrollView>
             <StackLayout Margin="30" VerticalOptions="FillAndExpand">
-                <Button Text="体の写真を登録" Command="{Binding MoveToRegistBodyImageCommand}" />
+                <Button Text="体格の写真を登録" Command="{Binding MoveToRegistBodyImageCommand}" />
                 <Image Source="{Binding BodyImage}" HeightRequest="400" />
                 <Label Text="{Binding BodyImageRegistedDateString}" />
-                <Button Text="体の遷移を見る" Command="{Binding MoveToBodyImageListCommand}" />
+                <Button Text="体格の遷移を見る" Command="{Binding MoveToBodyImageListCommand}" />
                 <Label Text="名前" />
                 <Label Text="{Binding Name}" />
                 <Label Text="性別" />

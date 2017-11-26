@@ -26,5 +26,11 @@
         /// =
         /// </summary>
         public const string Equal = "=";
+
+        /// <summary>
+        /// :
+        /// </summary>
+        public const string Colon = ":";
+
     }
 }
