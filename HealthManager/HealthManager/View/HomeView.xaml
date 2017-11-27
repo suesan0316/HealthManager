@@ -11,10 +11,10 @@
     <StackLayout>
         <ScrollView>
             <StackLayout Margin="30" VerticalOptions="FillAndExpand">
-                <Button Text="体格の写真を登録" Command="{Binding MoveToRegistBodyImageCommand}" />
+                <Button Text="{Binding MoveToRegistBodyImageLabel}" Command="{Binding MoveToRegistBodyImageCommand}" />
                 <Image Source="{Binding BodyImage}" HeightRequest="400" />
                 <Label Text="{Binding BodyImageRegistedDateString}" />
-                <Button Text="体格の遷移を見る" Command="{Binding MoveToBodyImageListCommand}" />
+                <Button Text="{Binding MoveToBodyImageListLabel}" Command="{Binding MoveToBodyImageListCommand}" />
                 <StackLayout Orientation="Horizontal">
                     <Label Text="{Binding NameLabel}" />
                     <Label Text="{Binding Name}" />
@@ -35,7 +35,7 @@
                     <Label Text="{Binding BodyWeightLabel}" />
                     <Label Text="{Binding BodyWeight}" />
                 </StackLayout>
-                <Button Text="体重遷移" Command="{Binding MoveToBodyWeightOfDataChartCommand}" />
+                <Button Text="{Binding MoveToBodyWeightOfDataChartLabel}" Command="{Binding MoveToBodyWeightOfDataChartCommand}" />
                 <StackLayout Orientation="Horizontal">
                     <Label Text="{Binding BmiLabel}" />
                     <Label Text="{Binding Bmi}" />
@@ -44,7 +44,7 @@
                     <Label Text="{Binding BodyFatPercentageLabel}" />
                     <Label Text="{Binding BodyFatPercentage}" />
                 </StackLayout>
-                <Button Text="体脂肪率遷移" Command="{Binding MoveToBodyFatPercentageOfDataChartCommand}" />
+                <Button Text="{Binding MoveToBodyFatPercentageOfDataChartLabel}" Command="{Binding MoveToBodyFatPercentageOfDataChartCommand}" />
                 <StackLayout Orientation="Horizontal">
                     <Label Text="{Binding BloodPressureLabel} " />
                     <Label Text="{Binding MaxBloodPressure} " />
@@ -55,7 +55,7 @@
                     <Label Text="{Binding BasalMetabolismLabel}" />
                     <Label Text="{Binding BasalMetabolism}" />
                 </StackLayout>
-                <Button Text="基本データを更新" Command="{Binding MoveToRegistBasicDataCommand}" />
+                <Button Text="{Binding MoveToRegistBasicDataLabel}" Command="{Binding MoveToRegistBasicDataCommand}" />
             </StackLayout>
         </ScrollView>
         <ActivityIndicator IsRunning="{Binding IsLoading}" />

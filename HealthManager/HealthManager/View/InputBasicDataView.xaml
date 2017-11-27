@@ -10,39 +10,39 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout Margin="30">
-                <Label Text="名前" />
-                <Entry Placeholder="名前を入力してください" Text="{Binding Name}" IsEnabled="{Binding IsDisable}" />
-                <Label Text="性別" />
+                <Label Text="{Binding NameLabel}" />
+                <Entry Placeholder="{Binding NamePlaceholderLabel}" Text="{Binding Name}" IsEnabled="{Binding IsDisable}" />
+                <Label Text="{Binding GenderLabel}" />
                 <Picker ItemsSource="{Binding GenderItemSrouce}"  SelectedIndex="{Binding Gender}" IsEnabled="{Binding IsDisable}"></Picker>
-                <Label Text="年齢" />
-                <Entry Placeholder="年齢を入力してください" Keyboard="Numeric" Text="{Binding Age}"
+                <Label Text="{Binding AgeLabel}" />
+                <Entry Placeholder="{Binding AgePlaceholderLabel}" Keyboard="Numeric" Text="{Binding Age}"
                        IsEnabled="{Binding IsDisable}" />
-                <Label Text="身長(cm)" />
-                <Entry Placeholder="身長をcmで入力してください" Keyboard="Numeric" Text="{Binding Height}"
+                <Label Text="{Binding HeightLabel}" />
+                <Entry Placeholder="{Binding HeightPlaceholderLabel}" Keyboard="Numeric" Text="{Binding Height}"
                        IsEnabled="{Binding IsDisable}" />
-                <Label Text="体重(kg)" />
-                <Entry Placeholder="体重をkgで入力してください" Keyboard="Numeric" Text="{Binding BodyWeight}"
+                <Label Text="{Binding BodyWeightLabel}" />
+                <Entry Placeholder="{Binding BodyWeightPlaceholderLabel}" Keyboard="Numeric" Text="{Binding BodyWeight}"
                        IsEnabled="{Binding IsDisable}" />
-                <Label Text="BMI" />
+                <Label Text="{Binding BmiLabel}" />
                 <Label Text="{Binding Bmi}" />
-                <Label Text="体脂肪率" />
-                <Entry Placeholder="体脂肪率を入力してください" Keyboard="Numeric" Text="{Binding BodyFatPercentage}"
+                <Label Text="{Binding  BodyFatPercentageLabel}" />
+                <Entry Placeholder="{Binding BodyFatPercentagePlaceholderLabel}" Keyboard="Numeric" Text="{Binding BodyFatPercentage}"
                        IsEnabled="{Binding IsDisable}" />
-                <Label Text="血圧" />
+                <Label Text="{Binding BloodPressureLabel}" />
                 <StackLayout Orientation="Horizontal">
-                    <Entry Placeholder="上の血圧" Keyboard="Numeric" WidthRequest="100" Text="{Binding MaxBloodPressure} "
+                    <Entry Placeholder="{Binding MaxBloodPressurePlaceholderLabel}" Keyboard="Numeric" WidthRequest="100" Text="{Binding MaxBloodPressure} "
                            IsEnabled="{Binding IsDisable}" />
                     <Label Text="/" VerticalOptions="End" />
-                    <Entry Placeholder="下の血圧" Keyboard="Numeric" WidthRequest="100" Text="{Binding MinBloodPressure}"
+                    <Entry Placeholder="{Binding MinBloodPressurePlaceholderLabel}" Keyboard="Numeric" WidthRequest="100" Text="{Binding MinBloodPressure}"
                            IsEnabled="{Binding IsDisable}" />
                 </StackLayout>
-                <Label Text="基礎代謝" />
-                <Entry Placeholder="基礎代謝を入力してください" Keyboard="Numeric" Text="{Binding BasalMetabolism}"
+                <Label Text="{Binding BasalMetabolismLabel}" />
+                <Entry Placeholder="{Binding BasalMetabolismPlaceholderLabel}" Keyboard="Numeric" Text="{Binding BasalMetabolism}"
                        IsEnabled="{Binding IsDisable}" />
-                <Label HorizontalOptions="Center" Text="処理中です..." IsVisible="{Binding IsLoading}" />
+                <Label HorizontalOptions="Center" Text="{Binding LoadingLabel}" IsVisible="{Binding IsLoading}" />
                 <ActivityIndicator IsRunning="{Binding IsLoading}" />
-                <Button IsEnabled="{Binding IsDisable}" Text="保存" Command="{Binding SaveBaisicDataCommand}" />
-                <Button Text="キャンセル" Command="{Binding CancleCommand}" IsVisible="{Binding CancelButtonIsVisible}" />
+                <Button IsEnabled="{Binding IsDisable}" Text="{Binding SaveButtonLabel}" Command="{Binding SaveBaisicDataCommand}" />
+                <Button Text="{Binding CancelButtonLabel}" Command="{Binding CancleCommand}" IsVisible="{Binding CancelButtonIsVisible}" />
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

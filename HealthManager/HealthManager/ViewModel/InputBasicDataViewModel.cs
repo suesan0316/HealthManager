@@ -87,11 +87,15 @@ namespace HealthManager.ViewModel
         /// 名前
         /// </summary>
         public string Name { get; set; }
+        public string NameLabel => LanguageUtils.Get(LanguageKeys.Name);
+        public string NamePlaceholderLabel => LanguageUtils.Get(LanguageKeys.NamePlaceholder);
 
         /// <summary>
         /// 年齢
         /// </summary>
         public int Age { get; set; }
+        public string AgeLabel => LanguageUtils.Get(LanguageKeys.Age);
+        public string AgePlaceholderLabel => LanguageUtils.Get(LanguageKeys.AgePlaceholder);
 
         public List<GenderEnum> GenderItemSrouce { get; }
 
@@ -99,6 +103,8 @@ namespace HealthManager.ViewModel
         /// 性別
         /// </summary>
         public int Gender { get; set; }
+
+        public string GenderLabel => LanguageUtils.Get(LanguageKeys.Gender);
 
         /// <summary>
         /// 身長
@@ -113,6 +119,8 @@ namespace HealthManager.ViewModel
                 OnPropertyChanged(nameof(Bmi));
             }
         }
+        public string HeightLabel => LanguageUtils.Get(LanguageKeys.Height);
+        public string HeightPlaceholderLabel => LanguageUtils.Get(LanguageKeys.HeightPlaceholder);
 
         /// <summary>
         /// 体重
@@ -127,6 +135,9 @@ namespace HealthManager.ViewModel
                 OnPropertyChanged(nameof(Bmi));
             }
         }
+
+        public string BodyWeightLabel => LanguageUtils.Get(LanguageKeys.BodyWeight);
+        public string BodyWeightPlaceholderLabel => LanguageUtils.Get(LanguageKeys.BodyWeightPlaceHolder);
 
         /// <summary>
         /// BMI(自動計算項目)
@@ -147,25 +158,35 @@ namespace HealthManager.ViewModel
             }
         }
 
+        public string BmiLabel => LanguageUtils.Get(LanguageKeys.BMI);
+
         /// <summary>
         /// 体脂肪率
         /// </summary>
         public float BodyFatPercentage { get; set; }
+        public string BodyFatPercentageLabel => LanguageUtils.Get(LanguageKeys.BodyFatPercentage);
+        public string BodyFatPercentagePlaceholderLabel => LanguageUtils.Get(LanguageKeys.BodyFatPercentagePlaceholder);
 
+
+        public string BloodPressureLabel => LanguageUtils.Get(LanguageKeys.BloodPressure);
         /// <summary>
         /// 上の血圧
         /// </summary>
         public int MaxBloodPressure { get; set; }
+        public string MaxBloodPressurePlaceholderLabel => LanguageUtils.Get(LanguageKeys.MaxBloodPressure);
 
         /// <summary>
         /// 下の血圧
         /// </summary>
         public int MinBloodPressure { get; set; }
+        public string MinBloodPressurePlaceholderLabel => LanguageUtils.Get(LanguageKeys.MinBloodPressure);
 
         /// <summary>
-        /// 下の血圧
+        /// 基礎代謝
         /// </summary>
         public int BasalMetabolism { get; set; }
+        public string BasalMetabolismLabel => LanguageUtils.Get(LanguageKeys.BasicMetabolism);
+        public string BasalMetabolismPlaceholderLabel => LanguageUtils.Get(LanguageKeys.BasalMetabolismPlaceholder);
 
         /// <summary>
         /// 読み込みフラグ
@@ -180,6 +201,9 @@ namespace HealthManager.ViewModel
                 OnPropertyChanged(nameof(IsDisable));
             }
         }
+        public string LoadingLabel => LanguageUtils.Get(LanguageKeys.Loading);
+        public string SaveButtonLabel => LanguageUtils.Get(LanguageKeys.Save);
+        public string CancelButtonLabel => LanguageUtils.Get(LanguageKeys.Cancel);
 
         /// <summary>
         /// キャンセルボタン非表示・表示

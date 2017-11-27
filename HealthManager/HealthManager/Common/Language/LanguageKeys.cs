@@ -1,6 +1,6 @@
 ﻿namespace HealthManager.Common.Language
 {
-   public static  class LanguageKeys
+    public static class LanguageKeys
     {
         /// <summary>
         /// 登録日 : 
@@ -106,5 +106,69 @@
         /// 基礎代謝
         /// </summary>
         public const string BasicMetabolism = "BasicMetabolism";
+        /// <summary>
+        /// 上の血圧
+        /// </summary>
+        public const string MaxBloodPressure = "MaxBloodPressure";
+        /// <summary>
+        /// 下の血圧
+        /// </summary>
+        public const string MinBloodPressure = "MinBloodPressure";
+        /// <summary>
+        /// 名前を入力してください
+        /// </summary>
+        public const string NamePlaceholder = "NamePlaceholder";
+        /// <summary>
+        /// 年齢を入力してください
+        /// </summary>
+        public const string AgePlaceholder = "AgePlaceholder";
+        /// <summary>
+        /// 身長をcmで入力してください
+        /// </summary>
+        public const string HeightPlaceholder = "HeightPlaceholder";
+        /// <summary>
+        /// 体重をKgで入力してください
+        /// </summary>
+        public const string BodyWeightPlaceHolder = "BodyWeightPlaceHolder";
+        /// <summary>
+        /// 体脂肪率を入力してください
+        /// </summary>
+        public const string BodyFatPercentagePlaceholder = "BodyFatPercentagePlaceholder";
+        /// <summary>
+        /// 基礎代謝を入力してください
+        /// </summary>
+        public const string BasalMetabolismPlaceholder = "BasalMetabolismPlaceholder";
+        /// <summary>
+        /// 処理中です...
+        /// </summary>
+        public const string Loading = "Loading";
+        /// <summary>
+        /// 保存
+        /// </summary>
+        public const string Save = "Save";
+        /// <summary>
+        /// 登録
+        /// </summary>
+        public const string Regist = "Regist";
+        /// <summary>
+        /// 体格の写真を登録
+        /// </summary>
+        public const string RegistBodyImage = "RegistBodyImage";
+        /// <summary>
+        /// 体格の遷移を見る
+        /// </summary>
+        public const string WatchBodyTransition = "WatchBodyTransition";
+        /// <summary>
+        /// 体重遷移
+        /// </summary>
+        public const string BodyWeightTransition = "BodyWeightTransition";
+        /// <summary>
+        /// 体脂肪率遷移
+        /// </summary>
+        public const string BodyFatPercentageTransition = "BodyFatPercentageTransition";
+        /// <summary>
+        /// 基本データを更新
+        /// </summary>
+        public const string UpdateBasicData = "UpdateBasicData";
     }
 }
