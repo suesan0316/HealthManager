@@ -2,14 +2,18 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:HealthManager.ViewModel"
              xmlns:extention="clr-namespace:HealthManager.Common.Extention;assembly=HealthManager"
              x:Class="HealthManager.View.BodyImageView">
+    <ContentPage.BindingContext>
+        <vm:BodyImageViewModel />
+    </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout>
             <ScrollView Orientation="Horizontal">
-                <extention:BindableStackLayout Items="{Binding BodyImageContents}"  Orientation="Horizontal" />
+                <extention:BindableStackLayout Items="{Binding BodyImageContents}" Orientation="Horizontal" />
             </ScrollView>
-            <Button Text="戻る" Command="{Binding BackHomeCommand}" />
+            <Button Text="{Binding BackHomeLabel}" Command="{Binding BackHomeCommand}" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

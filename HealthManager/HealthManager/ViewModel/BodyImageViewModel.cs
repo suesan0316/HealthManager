@@ -5,6 +5,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using HealthManager.Common;
+using HealthManager.Common.Language;
 using HealthManager.Model.Service;
 using HealthManager.Properties;
 using Xamarin.Forms;
@@ -17,14 +18,23 @@ namespace HealthManager.ViewModel
     /// </summary>
     internal class BodyImageViewModel : INotifyPropertyChanged
     {
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         public BodyImageViewModel()
         {
             BackHomeCommand = new Command(ViewModelCommonUtil.BackHome);
             InitImageStackLayout();
         }
 
+        /// <summary>
+        /// 戻るボタンコマンド
+        /// </summary>
         public ICommand BackHomeCommand { get; set; }
 
+        /// <summary>
+        /// 体格画像リスト
+        /// </summary>
         public ObservableCollection<XView> BodyImageContents { set; get; } =　new ObservableCollection<XView>();
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -34,6 +44,11 @@ namespace HealthManager.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        /// <summary>
+        /// 戻るボタンラベル
+        /// </summary>
+        public string BackHomeLabel => LanguageUtils.Get(LanguageKeys.Return);
 
         /// <summary>
         /// 画面に表示するレイアウトを生成

@@ -1,15 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:HealthManager.ViewModel"
              x:Class="HealthManager.View.RegistBodyImageView">
+    <ContentPage.BindingContext>
+        <vm:RegistBodyImageViewModel />
+    </ContentPage.BindingContext>
     <ContentPage.Content>
         <ScrollView>
         <StackLayout>
-            <Button Text="カメラで撮る" Command="{Binding TakeImageCameraCommand}"></Button>
-            <Button Text="ライブラリから選択する" Command="{Binding TakeImageLibraryaCommand}"></Button>
+            <Button Text="{Binding TakeImageCameraLabel}" Command="{Binding TakeImageCameraCommand}"></Button>
+            <Button Text="{Binding TakeImageLibraryLabel}" Command="{Binding TakeImageLibraryaCommand}"></Button>
             <Image Source="{Binding BodyImage}"></Image>
-            <Button Text="登録" IsVisible="{Binding RegistButtonIsVisible}" Command="{Binding RegistBodyImageCommand}"></Button>
-            <Button Text="キャンセル" Command="{Binding BackHomeCommand}"></Button>
+            <Button Text="{Binding RegistButtonLabel}" IsVisible="{Binding RegistButtonIsVisible}" Command="{Binding RegistBodyImageCommand}"></Button>
+            <Button Text="{Binding CancelButtonLabel}" Command="{Binding BackHomeCommand}"></Button>
         </StackLayout>
         </ScrollView>
     </ContentPage.Content>

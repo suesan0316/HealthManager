@@ -170,5 +170,17 @@
         /// 基本データを更新
         /// </summary>
         public const string UpdateBasicData = "UpdateBasicData";
+        /// <summary>
+        /// 戻る
+        /// </summary>
+        public const string Return = "Return";
+        /// <summary>
+        /// カメラで撮る
+        /// </summary>
+        public const string SnapFromCamera = "SnapFromCamera";
+        /// <summary>
+        /// ライブラリから選択する
+        /// </summary>
+        public const string SelectFromLibrary = "SelectFromLibrary";
     }
 }

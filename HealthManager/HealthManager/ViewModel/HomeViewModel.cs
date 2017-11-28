@@ -56,6 +56,7 @@ namespace HealthManager.ViewModel
 
         public HomeViewModel()
         {
+            // 各コマンドの初期化
             MoveToRegistBodyImageCommand = new Command(MoveToRegistBodyImage);
             MoveToRegistBasicDataCommand = new Command(MoveToRegistBasicData);
             MoveToBodyFatPercentageOfDataChartCommand = new Command(MoveToBodyFatPercentageOfDataChart);
@@ -66,6 +67,7 @@ namespace HealthManager.ViewModel
                 ((App) Application.Current).ChangeScreen(new NewsWebView(ItemsDictionary[item]));
             });
 
+            // 表示する体格画像を取得
             var bodyImageModel = BodyImageService.GetBodyImage();
             if (bodyImageModel != null)
             {
@@ -84,6 +86,7 @@ namespace HealthManager.ViewModel
                     LanguageUtils.Get(LanguageKeys.RegistedDate) + StringConst.Empty;
             }
 
+            // 基本データを取得
             var model = BasicDataService.GetBasicData();
             if (model != null)
             {

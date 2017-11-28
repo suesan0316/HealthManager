@@ -19,6 +19,9 @@ namespace HealthManager.ViewModel
     /// </summary>
     public class InputBasicDataViewModel : INotifyPropertyChanged
     {
+        /// <summary>
+        /// 基本情報ID
+        /// </summary>
         private readonly int _id;
 
         /// <summary>
@@ -80,23 +83,49 @@ namespace HealthManager.ViewModel
             }
         }
 
+        /// <summary>
+        /// 保存ボタンコマンド
+        /// </summary>
         public ICommand SaveBaisicDataCommand { get; }
+
+        /// <summary>
+        /// キャンセルボタンコマンド
+        /// </summary>
         public ICommand CancleCommand { get; }
 
         /// <summary>
         /// 名前
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// 名前ラベル
+        /// </summary>
         public string NameLabel => LanguageUtils.Get(LanguageKeys.Name);
+
+        /// <summary>
+        /// 名前プレースホルダーラベル
+        /// </summary>
         public string NamePlaceholderLabel => LanguageUtils.Get(LanguageKeys.NamePlaceholder);
 
         /// <summary>
         /// 年齢
         /// </summary>
         public int Age { get; set; }
+
+        /// <summary>
+        /// 年齢ラベル
+        /// </summary>
         public string AgeLabel => LanguageUtils.Get(LanguageKeys.Age);
+
+        /// <summary>
+        /// 年齢プレースホルダーラベル
+        /// </summary>
         public string AgePlaceholderLabel => LanguageUtils.Get(LanguageKeys.AgePlaceholder);
 
+        /// <summary>
+        /// 性別リストボックスアイテム
+        /// </summary>
         public List<GenderEnum> GenderItemSrouce { get; }
 
         /// <summary>
@@ -104,6 +133,9 @@ namespace HealthManager.ViewModel
         /// </summary>
         public int Gender { get; set; }
 
+        /// <summary>
+        /// 性別ラベル
+        /// </summary>
         public string GenderLabel => LanguageUtils.Get(LanguageKeys.Gender);
 
         /// <summary>
@@ -119,7 +151,15 @@ namespace HealthManager.ViewModel
                 OnPropertyChanged(nameof(Bmi));
             }
         }
+
+        /// <summary>
+        /// 身長ラベル
+        /// </summary>
         public string HeightLabel => LanguageUtils.Get(LanguageKeys.Height);
+
+        /// <summary>
+        /// 身長プレースホルダーラベル
+        /// </summary>
         public string HeightPlaceholderLabel => LanguageUtils.Get(LanguageKeys.HeightPlaceholder);
 
         /// <summary>
@@ -136,7 +176,14 @@ namespace HealthManager.ViewModel
             }
         }
 
+        /// <summary>
+        /// 体重ラベル
+        /// </summary>
         public string BodyWeightLabel => LanguageUtils.Get(LanguageKeys.BodyWeight);
+
+        /// <summary>
+        /// 体重プレースホルダーラベル
+        /// </summary>
         public string BodyWeightPlaceholderLabel => LanguageUtils.Get(LanguageKeys.BodyWeightPlaceHolder);
 
         /// <summary>
@@ -158,34 +205,64 @@ namespace HealthManager.ViewModel
             }
         }
 
+        /// <summary>
+        /// BMIラベル
+        /// </summary>
         public string BmiLabel => LanguageUtils.Get(LanguageKeys.BMI);
 
         /// <summary>
         /// 体脂肪率
         /// </summary>
         public float BodyFatPercentage { get; set; }
+
+        /// <summary>
+        /// 体脂肪率ラベル
+        /// </summary>
         public string BodyFatPercentageLabel => LanguageUtils.Get(LanguageKeys.BodyFatPercentage);
+
+        /// <summary>
+        /// 体脂肪率プレースホルダーラベル
+        /// </summary>
         public string BodyFatPercentagePlaceholderLabel => LanguageUtils.Get(LanguageKeys.BodyFatPercentagePlaceholder);
 
-
+        /// <summary>
+        /// 血圧ラベル
+        /// </summary>
         public string BloodPressureLabel => LanguageUtils.Get(LanguageKeys.BloodPressure);
+        
         /// <summary>
         /// 上の血圧
         /// </summary>
         public int MaxBloodPressure { get; set; }
+
+        /// <summary>
+        /// 上の血圧プレースホルダーラベル
+        /// </summary>
         public string MaxBloodPressurePlaceholderLabel => LanguageUtils.Get(LanguageKeys.MaxBloodPressure);
 
         /// <summary>
         /// 下の血圧
         /// </summary>
         public int MinBloodPressure { get; set; }
+
+        /// <summary>
+        /// 下の血圧プレースホルダーラベル
+        /// </summary>
         public string MinBloodPressurePlaceholderLabel => LanguageUtils.Get(LanguageKeys.MinBloodPressure);
 
         /// <summary>
         /// 基礎代謝
         /// </summary>
         public int BasalMetabolism { get; set; }
+
+        /// <summary>
+        /// 基礎代謝ラベル
+        /// </summary>
         public string BasalMetabolismLabel => LanguageUtils.Get(LanguageKeys.BasicMetabolism);
+
+        /// <summary>
+        /// 基礎代謝プレースホルダーラベル
+        /// </summary>
         public string BasalMetabolismPlaceholderLabel => LanguageUtils.Get(LanguageKeys.BasalMetabolismPlaceholder);
 
         /// <summary>
@@ -201,8 +278,20 @@ namespace HealthManager.ViewModel
                 OnPropertyChanged(nameof(IsDisable));
             }
         }
+
+        /// <summary>
+        /// 処理中ラベル
+        /// </summary>
         public string LoadingLabel => LanguageUtils.Get(LanguageKeys.Loading);
+
+        /// <summary>
+        /// 保存ボタンラベル
+        /// </summary>
         public string SaveButtonLabel => LanguageUtils.Get(LanguageKeys.Save);
+
+        /// <summary>
+        /// キャンセルボタンラベル
+        /// </summary>
         public string CancelButtonLabel => LanguageUtils.Get(LanguageKeys.Cancel);
 
         /// <summary>
@@ -218,6 +307,9 @@ namespace HealthManager.ViewModel
             }
         }
 
+        /// <summary>
+        /// 無効フラグ
+        /// </summary>
         public bool IsDisable => !_isLoading;
 
         public event PropertyChangedEventHandler PropertyChanged;
