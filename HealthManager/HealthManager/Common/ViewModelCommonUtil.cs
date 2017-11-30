@@ -83,5 +83,12 @@ namespace HealthManager.Common
 		    }
 	    }
 
-	}
+        /// <summary>
+        /// トレーニングホーム画面遷移の共通処理
+        /// </summary>
+        public static void BackTrainingHome()
+        {
+            ((App)Application.Current).ChangeScreen(new MainTabbedView());
+        }
+    }
 }

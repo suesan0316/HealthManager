@@ -1,5 +1,4 @@
 ﻿using System;
-using HealthManager.Common;
 using HealthManager.Common.Constant;
 using SQLite;
 

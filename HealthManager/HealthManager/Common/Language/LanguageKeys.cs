@@ -182,5 +182,17 @@
         /// ライブラリから選択する
         /// </summary>
         public const string SelectFromLibrary = "SelectFromLibrary";
+        /// <summary>
+        /// トレーニングを追加する
+        /// </summary>
+        public const string AddTraining = "AddTraining";
+        /// <summary>
+        /// トレーニングスケジュールを編集する
+        /// </summary>
+        public const string EditTrainingSchedulr = "EditTrainingSchedulr";
+        /// <summary>
+        /// トレーニングを開始する
+        /// </summary>
+        public const string StartTraining = "StartTraining";
     }
 }

@@ -1,12 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:HealthManager.ViewModel"
              x:Class="HealthManager.View.TrainingHomeView">
+    <ContentPage.BindingContext>
+        <vm:TrainingHomeViewModel />
+    </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Button Text="{Binding AddTrainingLabel}" Command="{Binding AddTraningCommand}"></Button>
+            <Button Text="{Binding EditTrainingLabel}" Command="{Binding EditTrainingScheduleCommand}"></Button>
+            <Button Text="{Binding StrartTrainingLabel}" Command="{Binding StartTrainingCommand}"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
