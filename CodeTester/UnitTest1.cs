@@ -15,6 +15,7 @@ namespace CodeTester
     {
         private const string URL = "https://yomidr.yomiuri.co.jp/news-kaisetsu/news/kenko-news/";
         private const string URL2 = "http://www.zaikei.co.jp/news/topics/363/";
+        private const string URL3 = "http://futamitc.jp/blog-entry-573.html#title4";
         [TestMethod]
         public async Task TestMethod1()
         {

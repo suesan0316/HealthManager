@@ -189,6 +189,8 @@
   <ItemGroup>
     <EmbeddedResource Include="Language.properties" />
     <EmbeddedResource Include="Common\Language\Language.properties" />
+    <EmbeddedResource Include="Common\Other\Data\part_data.csv" />
+    <EmbeddedResource Include="Common\Other\Data\sub_part_data.csv" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

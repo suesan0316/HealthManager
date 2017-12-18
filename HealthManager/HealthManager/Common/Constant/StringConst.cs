@@ -1,5 +1,8 @@
 ﻿namespace HealthManager.Common.Constant
 {
+    /// <summary>
+    /// 文字列定数クラス
+    /// </summary>
    public  static class StringConst
     {
         /// <summary>
@@ -32,5 +35,9 @@
         /// </summary>
         public const string Colon = ":";
 
+        /// <summary>
+        /// ,
+        /// </summary>
+        public const string Conma = ",";
     }
 }

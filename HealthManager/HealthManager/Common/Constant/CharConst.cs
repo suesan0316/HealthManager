@@ -1,5 +1,8 @@
 ﻿namespace HealthManager.Common.Constant
 {
+    /// <summary>
+    /// 文字列定数クラス
+    /// </summary>
    public  static class CharConst
     {
         /// <summary>
@@ -21,5 +24,10 @@
         /// =
         /// </summary>
         public const char Equal = '=';
+
+        /// <summary>
+        /// ,
+        /// </summary>
+        public const char Conma = ',';
     }
 }
