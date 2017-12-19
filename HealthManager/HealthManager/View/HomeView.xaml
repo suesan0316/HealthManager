@@ -12,7 +12,7 @@
         <ScrollView>
             <StackLayout Margin="30" VerticalOptions="FillAndExpand">
                 <Button Text="{Binding MoveToRegistBodyImageLabel}" Command="{Binding MoveToRegistBodyImageCommand}" />
-                <Image Source="{Binding BodyImage}" HeightRequest="400" />
+                <Image Source="{Binding BodyImage}" HeightRequest="500" />
                 <Label Text="{Binding BodyImageRegistedDateString}" />
                 <Button Text="{Binding MoveToBodyImageListLabel}" Command="{Binding MoveToBodyImageListCommand}" />
                 <StackLayout Orientation="Horizontal">
