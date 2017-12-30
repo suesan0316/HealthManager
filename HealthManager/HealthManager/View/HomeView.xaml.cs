@@ -10,7 +10,6 @@ namespace HealthManager.View
         public HomeView()
         {
             InitializeComponent();
-            BindingContext = new HomeViewModel();
         }
     }
 }

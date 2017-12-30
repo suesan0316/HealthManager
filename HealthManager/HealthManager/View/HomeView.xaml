@@ -3,6 +3,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:HealthManager.ViewModel"
+             xmlns:controls="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms"
              xmlns:extention="clr-namespace:HealthManager.Common.Extention;assembly=HealthManager"
              x:Class="HealthManager.View.HomeView">
     <ContentPage.BindingContext>
@@ -15,6 +16,19 @@
                 <Image Source="{Binding BodyImage}" HeightRequest="200" />
                 <Label Text="{Binding BodyImageRegistedDateString}" />
                 <Button Text="{Binding MoveToBodyImageListLabel}" Command="{Binding MoveToBodyImageListCommand}" />
+
+
+                <StackLayout Orientation="Horizontal">
+                    <StackLayout Orientation="Vertical">
+                        <controls:ImageButton  Command="{Binding MoveToRegistBasicDataCommand}" Orientation="ImageToLeft"  Source="library.png" ImageHeightRequest="200" ImageWidthRequest="200" HeightRequest="100" WidthRequest="125"></controls:ImageButton>
+                        <Label Text="{Binding MoveToRegistBasicDataLabel}" />
+                    </StackLayout>
+                    <StackLayout Orientation="Vertical">
+                        <controls:ImageButton  Command="{Binding MoveToRegistBasicDataCommand}" Orientation="ImageToLeft"  Source="library.png" ImageHeightRequest="200" ImageWidthRequest="200" HeightRequest="100" WidthRequest="125"></controls:ImageButton>
+                        <Label Text="{Binding MoveToRegistBasicDataLabel}" />
+                    </StackLayout>
+                </StackLayout>
+                
                 <StackLayout Orientation="Horizontal">
                     <Label Text="{Binding NameLabel}" />
                     <Label Text="{Binding Name}" />

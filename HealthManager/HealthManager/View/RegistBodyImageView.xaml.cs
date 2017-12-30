@@ -1,4 +1,5 @@
-﻿using HealthManager.ViewModel;
+﻿using HealthManager.DependencyInterface;
+using HealthManager.ViewModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -8,9 +9,9 @@ namespace HealthManager.View
     public partial class RegistBodyImageView : ContentPage
     {
         public RegistBodyImageView()
-        {
+        {            
             InitializeComponent();
-            BindingContext = new RegistBodyImageViewModel();
+           // DependencyService.Get<IImageService>().ResizeImage("camera", "camera", 50, 50);
         }
     }
 }
