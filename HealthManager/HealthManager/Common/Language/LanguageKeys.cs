@@ -167,7 +167,7 @@
         /// </summary>
         public const string BodyFatPercentageTransition = "BodyFatPercentageTransition";
         /// <summary>
-        /// 基本データを更新
+        /// 基本データ更新
         /// </summary>
         public const string UpdateBasicData = "UpdateBasicData";
         /// <summary>
@@ -194,5 +194,9 @@
         /// トレーニングを開始する
         /// </summary>
         public const string StartTraining = "StartTraining";
+        /// <summary>
+        /// データチャート
+        /// </summary>
+        public const string DataChart = "DataChart";
     }
 }

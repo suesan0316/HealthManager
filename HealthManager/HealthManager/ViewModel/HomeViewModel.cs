@@ -62,6 +62,7 @@ namespace HealthManager.ViewModel
             MoveToBodyFatPercentageOfDataChartCommand = new Command(MoveToBodyFatPercentageOfDataChart);
             MoveToBodyImageListCommand = new Command(MoveToBodyImageList);
             MoveToBodyWeightOfDataChartCommand = new Command(MoveToViewBodyWeightOfDataChart);
+            MoveToDataChartCommand = new Command(MoveToDataChart);
             NewsListItemTappedCommand = new Command<string>(item =>
             {
                 ((App) Application.Current).ChangeScreen(new NewsWebView(ItemsDictionary[item]));
@@ -99,6 +100,18 @@ namespace HealthManager.ViewModel
                 MaxBloodPressure = model.MaxBloodPressure;
                 MinBloodPressure = model.MinBloodPressure;
                 BasalMetabolism = model.BasalMetabolism;
+                switch (model.Gender)
+                {
+                    case (int)GenderEnum.男性:
+                        MoveTioRegistBasicDataImageSource = ViewModelConst.ManImage;
+                        break;
+                    case (int)GenderEnum.女性:
+                        MoveTioRegistBasicDataImageSource = ViewModelConst.WomanImage;
+                        break;
+                    default:
+                        MoveTioRegistBasicDataImageSource = ViewModelConst.PersonImage;
+                        break;
+                }
             }
             // ニュース一覧を取得
             Task.Run(SetNewsSourceTask);
@@ -138,6 +151,11 @@ namespace HealthManager.ViewModel
         ///     体格遷移ボタンコマンド
         /// </summary>
         public ICommand MoveToBodyImageListCommand { get; set; }
+
+        /// <summary>
+        ///     体格遷移ボタンコマンド
+        /// </summary>
+        public ICommand MoveToDataChartCommand { get; set; }
 
         /// <summary>
         ///     体格画像
@@ -316,6 +334,11 @@ namespace HealthManager.ViewModel
         public string MoveToBodyImageListLabel => LanguageUtils.Get(LanguageKeys.WatchBodyTransition);
 
         /// <summary>
+        /// データチャート遷移ボタンラベル
+        /// </summary>
+        public string MoveToDataChartLabel => LanguageUtils.Get(LanguageKeys.DataChart);
+
+        /// <summary>
         ///     体重遷移ボタンラベル
         /// </summary>
         public string MoveToBodyWeightOfDataChartLabel => LanguageUtils.Get(LanguageKeys.BodyWeightTransition);
@@ -330,6 +353,11 @@ namespace HealthManager.ViewModel
         ///     基本データ更新ボタンラベル
         /// </summary>
         public string MoveToRegistBasicDataLabel => LanguageUtils.Get(LanguageKeys.UpdateBasicData);
+
+        /// <summary>
+        /// 基本データ更新ボタンファイルソース
+        /// </summary>
+        public string MoveTioRegistBasicDataImageSource { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -366,6 +394,14 @@ namespace HealthManager.ViewModel
         private static void MoveToRegistBasicData()
         {
             ((App) Application.Current).ChangeScreen(new InputBasicDataView());
+        }
+
+        /// <summary>
+        /// データチャート画面遷移
+        /// </summary>
+        public void MoveToDataChart()
+        {
+            ((App)Application.Current).ChangeScreen(new DataSelectView());
         }
 
         /// <summary>

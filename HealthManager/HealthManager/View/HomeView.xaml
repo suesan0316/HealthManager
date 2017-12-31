@@ -20,12 +20,12 @@
 
                 <StackLayout Orientation="Horizontal">
                     <StackLayout Orientation="Vertical">
-                        <controls:ImageButton  Command="{Binding MoveToRegistBasicDataCommand}" Orientation="ImageToLeft"  Source="library.png" ImageHeightRequest="200" ImageWidthRequest="200" HeightRequest="100" WidthRequest="125"></controls:ImageButton>
+                        <controls:ImageButton  Command="{Binding MoveToRegistBasicDataCommand}" Orientation="ImageToLeft"  Source="{Binding MoveTioRegistBasicDataImageSource}" ImageHeightRequest="200" ImageWidthRequest="200" HeightRequest="100" WidthRequest="125"></controls:ImageButton>
                         <Label Text="{Binding MoveToRegistBasicDataLabel}" />
                     </StackLayout>
                     <StackLayout Orientation="Vertical">
-                        <controls:ImageButton  Command="{Binding MoveToRegistBasicDataCommand}" Orientation="ImageToLeft"  Source="library.png" ImageHeightRequest="200" ImageWidthRequest="200" HeightRequest="100" WidthRequest="125"></controls:ImageButton>
-                        <Label Text="{Binding MoveToRegistBasicDataLabel}" />
+                        <controls:ImageButton  Command="{Binding MoveToDataChartCommand}" Orientation="ImageToLeft"  Source="chart.png" ImageHeightRequest="200" ImageWidthRequest="200" HeightRequest="100" WidthRequest="125"></controls:ImageButton>
+                        <Label Text="{Binding MoveToDataChartLabel}" />
                     </StackLayout>
                 </StackLayout>
                 

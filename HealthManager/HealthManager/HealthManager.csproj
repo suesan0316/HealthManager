@@ -52,11 +52,12 @@
     <Compile Include="Common\ViewModelCommonUtil.cs" />
     <Compile Include="DependencyInterface\IImageService.cs" />
     <Compile Include="DependencyInterface\ISqliteDeviceInform.cs" />
-    <Compile Include="Common\Extention\BasciDataEnumExt.cs" />
+    <Compile Include="Common\Extention\BasicDataEnumExt.cs" />
     <Compile Include="Common\Extention\BindableStackLayout.cs" />
     <Compile Include="Common\Extention\EnumerableExtensions.cs" />
     <Compile Include="Common\Extention\ItemTappedBehavior.cs" />
     <Compile Include="Properties\Annotations1.cs" />
+    <Compile Include="ViewModel\DataSelectViewModel.cs" />
     <Compile Include="ViewModel\EditTrainingScheduleViewModel.cs" />
     <Compile Include="ViewModel\Logic\News\Factory\NewsServiceFactory.cs" />
     <Compile Include="ViewModel\Logic\News\Implement\NewsService.cs" />
@@ -84,6 +85,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\TrainingMasterViewModel.cs" />
     <Compile Include="ViewModel\TrainingViewModel.cs" />
+    <Compile Include="View\DataSelectView.xaml.cs">
+      <DependentUpon>DataSelectView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\EditTrainingScheduleView.xaml.cs">
       <DependentUpon>EditTrainingScheduleView.xaml</DependentUpon>
     </Compile>
@@ -281,6 +285,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="View\TrainingView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="View\DataSelectView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
