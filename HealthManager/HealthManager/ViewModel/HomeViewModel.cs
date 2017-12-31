@@ -59,9 +59,7 @@ namespace HealthManager.ViewModel
             // 各コマンドの初期化
             MoveToRegistBodyImageCommand = new Command(MoveToRegistBodyImage);
             MoveToRegistBasicDataCommand = new Command(MoveToRegistBasicData);
-            MoveToBodyFatPercentageOfDataChartCommand = new Command(MoveToBodyFatPercentageOfDataChart);
             MoveToBodyImageListCommand = new Command(MoveToBodyImageList);
-            MoveToBodyWeightOfDataChartCommand = new Command(MoveToViewBodyWeightOfDataChart);
             MoveToDataChartCommand = new Command(MoveToDataChart);
             NewsListItemTappedCommand = new Command<string>(item =>
             {
@@ -73,7 +71,8 @@ namespace HealthManager.ViewModel
             if (bodyImageModel != null)
             {
                 var imageAsBytes = Convert.FromBase64String(bodyImageModel.ImageBase64String);
-                BodyImage = ImageSource.FromStream(() => new MemoryStream(imageAsBytes));
+                
+                BodyImage = ImageSource.FromStream(() => new MemoryStream(ViewModelCommonUtil.GetResizeImageBytes(imageAsBytes,300,425)));
                 BodyImageRegistedDateString =
                     LanguageUtils.Get(LanguageKeys.RegistedDate) +
                     ViewModelCommonUtil.FormatDateString(bodyImageModel.RegistedDate);
@@ -138,22 +137,12 @@ namespace HealthManager.ViewModel
         public ICommand MoveToRegistBasicDataCommand { get; set; }
 
         /// <summary>
-        ///     体重遷移ボタンコマンド
-        /// </summary>
-        public ICommand MoveToBodyWeightOfDataChartCommand { get; set; }
-
-        /// <summary>
-        ///     体脂肪率遷移ボタンコマンド
-        /// </summary>
-        public ICommand MoveToBodyFatPercentageOfDataChartCommand { get; set; }
-
-        /// <summary>
         ///     体格遷移ボタンコマンド
         /// </summary>
         public ICommand MoveToBodyImageListCommand { get; set; }
 
         /// <summary>
-        ///     体格遷移ボタンコマンド
+        ///     データチャート遷移ボタンコマンド
         /// </summary>
         public ICommand MoveToDataChartCommand { get; set; }
 
@@ -339,17 +328,6 @@ namespace HealthManager.ViewModel
         public string MoveToDataChartLabel => LanguageUtils.Get(LanguageKeys.DataChart);
 
         /// <summary>
-        ///     体重遷移ボタンラベル
-        /// </summary>
-        public string MoveToBodyWeightOfDataChartLabel => LanguageUtils.Get(LanguageKeys.BodyWeightTransition);
-
-        /// <summary>
-        ///     体脂肪率遷移ボタン
-        /// </summary>
-        public string MoveToBodyFatPercentageOfDataChartLabel =>
-            LanguageUtils.Get(LanguageKeys.BodyFatPercentageTransition);
-
-        /// <summary>
         ///     基本データ更新ボタンラベル
         /// </summary>
         public string MoveToRegistBasicDataLabel => LanguageUtils.Get(LanguageKeys.UpdateBasicData);
@@ -402,22 +380,6 @@ namespace HealthManager.ViewModel
         public void MoveToDataChart()
         {
             ((App)Application.Current).ChangeScreen(new DataSelectView());
-        }
-
-        /// <summary>
-        ///     データチャート画面遷移(体重)
-        /// </summary>
-        public void MoveToViewBodyWeightOfDataChart()
-        {
-            ((App) Application.Current).ChangeScreen(new DataChartView(BasicDataEnum.BodyWeight));
-        }
-
-        /// <summary>
-        ///     データチャート画面遷移(体脂肪率)
-        /// </summary>
-        private static void MoveToBodyFatPercentageOfDataChart()
-        {
-            ((App) Application.Current).ChangeScreen(new DataChartView(BasicDataEnum.BodyFatPercentage));
         }
 
         /// <summary>

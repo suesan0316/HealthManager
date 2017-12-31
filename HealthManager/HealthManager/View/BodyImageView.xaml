@@ -9,7 +9,7 @@
         <vm:BodyImageViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Margin="30">
             <ScrollView Orientation="Horizontal">
                 <extention:BindableStackLayout Items="{Binding BodyImageContents}" Orientation="Horizontal" />
             </ScrollView>

@@ -12,68 +12,86 @@
     <StackLayout>
         <ScrollView>
             <StackLayout Margin="30" VerticalOptions="FillAndExpand">
-                <Button Text="{Binding MoveToRegistBodyImageLabel}" Command="{Binding MoveToRegistBodyImageCommand}" />
-                <Image Source="{Binding BodyImage}" HeightRequest="200" />
-                <Label Text="{Binding BodyImageRegistedDateString}" />
-                <Button Text="{Binding MoveToBodyImageListLabel}" Command="{Binding MoveToBodyImageListCommand}" />
-
-
                 <StackLayout Orientation="Horizontal">
-                    <StackLayout Orientation="Vertical">
-                        <controls:ImageButton  Command="{Binding MoveToRegistBasicDataCommand}" Orientation="ImageToLeft"  Source="{Binding MoveTioRegistBasicDataImageSource}" ImageHeightRequest="200" ImageWidthRequest="200" HeightRequest="100" WidthRequest="125"></controls:ImageButton>
-                        <Label Text="{Binding MoveToRegistBasicDataLabel}" />
+                    <StackLayout>
+                        <Image Source="{Binding BodyImage}" />
+                        <Label Text="{Binding BodyImageRegistedDateString}" />
                     </StackLayout>
                     <StackLayout Orientation="Vertical">
-                        <controls:ImageButton  Command="{Binding MoveToDataChartCommand}" Orientation="ImageToLeft"  Source="chart.png" ImageHeightRequest="200" ImageWidthRequest="200" HeightRequest="100" WidthRequest="125"></controls:ImageButton>
-                        <Label Text="{Binding MoveToDataChartLabel}" />
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="{Binding NameLabel}" />
+                            <Label Text="{Binding Name}" />
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="{Binding GenderLabel}" />
+                            <Label Text="{Binding Gender}" />
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="{Binding AgeLabel}" />
+                            <Label Text="{Binding Age}" />
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="{Binding HeightLabel}" />
+                            <Label Text="{Binding Height}" />
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="{Binding BodyWeightLabel}" />
+                            <Label Text="{Binding BodyWeight}" />
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="{Binding BmiLabel}" />
+                            <Label Text="{Binding Bmi}" />
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="{Binding BodyFatPercentageLabel}" />
+                            <Label Text="{Binding BodyFatPercentage}" />
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="{Binding BloodPressureLabel} " />
+                            <Label Text="{Binding MaxBloodPressure} " />
+                            <Label Text="/" VerticalOptions="End" />
+                            <Label Text="{Binding MinBloodPressure}" />
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="{Binding BasalMetabolismLabel}" />
+                            <Label Text="{Binding BasalMetabolism}" />
+                        </StackLayout>
                     </StackLayout>
                 </StackLayout>
-                
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="{Binding NameLabel}" />
-                    <Label Text="{Binding Name}" />
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                    <StackLayout Orientation="Vertical" Margin="0, 0, 50, 0">
+                        <controls:ImageButton Command="{Binding MoveToRegistBasicDataCommand}"
+                                              Orientation="ImageToLeft"
+                                              Source="{Binding MoveTioRegistBasicDataImageSource}"
+                                              ImageHeightRequest="200" ImageWidthRequest="200" HeightRequest="130"
+                                              WidthRequest="125" />
+                        <Label Text="{Binding MoveToRegistBasicDataLabel}" HorizontalOptions="Center" />
+                    </StackLayout>
+                    <StackLayout Orientation="Vertical">
+                        <controls:ImageButton Command="{Binding MoveToDataChartCommand}" Orientation="ImageToLeft"
+                                              Source="chart.png" ImageHeightRequest="200" ImageWidthRequest="200"
+                                              HeightRequest="130" WidthRequest="125" />
+                        <Label Text="{Binding MoveToDataChartLabel}"  HorizontalOptions="Center"/>
+                    </StackLayout>
                 </StackLayout>
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="{Binding GenderLabel}" />
-                    <Label Text="{Binding Gender}" />
+                <StackLayout Orientation="Horizontal"  HorizontalOptions="Center">
+                    <StackLayout Orientation="Vertical" Margin="0, 0, 50, 0">
+                        <controls:ImageButton Command="{Binding MoveToBodyImageListCommand}" Orientation="ImageToLeft"
+                                              Source="bodyImage.png" ImageHeightRequest="200" ImageWidthRequest="200"
+                                              HeightRequest="130" WidthRequest="125" />
+                        <Label Text="{Binding MoveToBodyImageListLabel}" HorizontalOptions="Center" />
+                    </StackLayout>
+                    <StackLayout Orientation="Vertical">
+                        <controls:ImageButton Command="{Binding MoveToRegistBodyImageCommand}" Orientation="ImageToLeft"
+                                              Source="camera.png" ImageHeightRequest="200" ImageWidthRequest="200"
+                                              HeightRequest="130" WidthRequest="125" />
+                        <Label Text="{Binding MoveToRegistBodyImageLabel}" HorizontalOptions="Center" />
+                    </StackLayout>
                 </StackLayout>
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="{Binding AgeLabel}" />
-                    <Label Text="{Binding Age}" />
-                </StackLayout>
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="{Binding HeightLabel}" />
-                    <Label Text="{Binding Height}" />
-                </StackLayout>
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="{Binding BodyWeightLabel}" />
-                    <Label Text="{Binding BodyWeight}" />
-                </StackLayout>
-                <Button Text="{Binding MoveToBodyWeightOfDataChartLabel}" Command="{Binding MoveToBodyWeightOfDataChartCommand}" />
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="{Binding BmiLabel}" />
-                    <Label Text="{Binding Bmi}" />
-                </StackLayout>
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="{Binding BodyFatPercentageLabel}" />
-                    <Label Text="{Binding BodyFatPercentage}" />
-                </StackLayout>
-                <Button Text="{Binding MoveToBodyFatPercentageOfDataChartLabel}" Command="{Binding MoveToBodyFatPercentageOfDataChartCommand}" />
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="{Binding BloodPressureLabel} " />
-                    <Label Text="{Binding MaxBloodPressure} " />
-                    <Label Text="/" VerticalOptions="End" />
-                    <Label Text="{Binding MinBloodPressure}" />
-                </StackLayout>
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="{Binding BasalMetabolismLabel}" />
-                    <Label Text="{Binding BasalMetabolism}" />
-                </StackLayout>
-                <Button Text="{Binding MoveToRegistBasicDataLabel}" Command="{Binding MoveToRegistBasicDataCommand}" />
             </StackLayout>
         </ScrollView>
         <ActivityIndicator IsRunning="{Binding IsLoading}" />
-        <ListView ItemsSource="{Binding Items}" VerticalOptions="FillAndExpand">
+        <ListView ItemsSource="{Binding Items}" VerticalOptions="FillAndExpand" Margin="15">
             <ListView.Behaviors>
                 <extention:ItemTappedBehavior Command="{Binding NewsListItemTappedCommand}" />
             </ListView.Behaviors>

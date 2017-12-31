@@ -43,6 +43,7 @@
     <Compile Include="Common\Enum\BasicDataEnum.cs" />
     <Compile Include="Common\CommonUtil.cs" />
     <Compile Include="Common\Constant\DBConst.cs" />
+    <Compile Include="Common\ImageResizer.cs" />
     <Compile Include="Common\Language\LanguageKeys.cs" />
     <Compile Include="Common\Language\LanguageUtils.cs" />
     <Compile Include="Common\Constant\StringConst.cs" />

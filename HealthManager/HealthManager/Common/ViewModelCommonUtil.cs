@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using HealthManager.DependencyInterface;
 using HealthManager.View;
 using Xamarin.Forms;
 
@@ -89,6 +90,11 @@ namespace HealthManager.Common
         public static void BackTrainingHome()
         {
             ((App)Application.Current).ChangeScreen(new MainTabbedView());
+        }
+
+        public static byte[] GetResizeImageBytes(byte[] originBytes, float width, float height)
+        {
+            return DependencyService.Get<IImageService>().ResizeImage(originBytes,width,height);
         }
     }
 }

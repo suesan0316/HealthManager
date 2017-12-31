@@ -58,17 +58,16 @@ namespace HealthManager.ViewModel
             var bodyImageModels = BodyImageService.GetBodyImageList();
             foreach (var value in bodyImageModels)
             {
-                var childStackLayout = new StackLayout();
+                var childStackLayout = new StackLayout(){};
                 var imageAsBytes = Convert.FromBase64String(value.ImageBase64String);
                 var bodyImage = new Image
                 {
                     // TODO 高さは調整
-                    HeightRequest = 400,
-                    Source = ImageSource.FromStream(() => new MemoryStream(imageAsBytes))
+                    Source = ImageSource.FromStream(() => new MemoryStream(ViewModelCommonUtil.GetResizeImageBytes(imageAsBytes, 500, 625)))
                 };
                 childStackLayout.Children.Add(bodyImage);
 
-                var registedDateLabel = new Label { Text = value.RegistedDate.ToString() };
+                var registedDateLabel = new Label { Text = value.RegistedDate.ToString(), VerticalOptions = LayoutOptions.Center };
                 childStackLayout.Children.Add(registedDateLabel);
 
                 BodyImageContents.Add(childStackLayout);

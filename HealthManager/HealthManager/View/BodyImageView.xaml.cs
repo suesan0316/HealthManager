@@ -10,7 +10,6 @@ namespace HealthManager.View
         public BodyImageView()
         {
             InitializeComponent();
-            Content.BindingContext = new BodyImageViewModel();
         }
     }
 }
