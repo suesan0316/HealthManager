@@ -81,7 +81,7 @@ namespace HealthManager.ViewModel
             {
                 // 登録されている体格画像がない場合はイメージなし用の画像を表示する
                 var imageAsBytes = Convert.FromBase64String(ViewModelConst.NoImageString64);
-                BodyImage = ImageSource.FromStream(() => new MemoryStream(imageAsBytes));
+                BodyImage = ImageSource.FromStream(() => new MemoryStream(ViewModelCommonUtil.GetResizeImageBytes(imageAsBytes, 300, 425)));
                 BodyImageRegistedDateString =
                     LanguageUtils.Get(LanguageKeys.RegistedDate) + StringConst.Empty;
             }
@@ -331,6 +331,11 @@ namespace HealthManager.ViewModel
         ///     基本データ更新ボタンラベル
         /// </summary>
         public string MoveToRegistBasicDataLabel => LanguageUtils.Get(LanguageKeys.UpdateBasicData);
+
+        /// <summary>
+        /// ニュース一覧タイトルラベル
+        /// </summary>
+        public string NewsListTitleLabel => LanguageUtils.Get(LanguageKeys.NewsListTitle);
 
         /// <summary>
         /// 基本データ更新ボタンファイルソース

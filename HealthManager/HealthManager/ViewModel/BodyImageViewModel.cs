@@ -67,7 +67,7 @@ namespace HealthManager.ViewModel
                 };
                 childStackLayout.Children.Add(bodyImage);
 
-                var registedDateLabel = new Label { Text = value.RegistedDate.ToString(), VerticalOptions = LayoutOptions.Center };
+                var registedDateLabel = new Label { Text = value.RegistedDate.ToString(), HorizontalOptions = LayoutOptions.Center };
                 childStackLayout.Children.Add(registedDateLabel);
 
                 BodyImageContents.Add(childStackLayout);

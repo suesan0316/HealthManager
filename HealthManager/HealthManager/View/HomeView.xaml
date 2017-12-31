@@ -90,11 +90,14 @@
                 </StackLayout>
             </StackLayout>
         </ScrollView>
-        <ActivityIndicator IsRunning="{Binding IsLoading}" />
-        <ListView ItemsSource="{Binding Items}" VerticalOptions="FillAndExpand" Margin="15">
+        <StackLayout >
+            <Label Text="{Binding NewsListTitleLabel}" HorizontalOptions="Center" Margin="0,20,0,0"></Label>
+            <ActivityIndicator IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" />
+            <ListView ItemsSource="{Binding Items}" VerticalOptions="FillAndExpand" Margin="15">
             <ListView.Behaviors>
                 <extention:ItemTappedBehavior Command="{Binding NewsListItemTappedCommand}" />
             </ListView.Behaviors>
         </ListView>
+    </StackLayout>
     </StackLayout>
 </ContentPage>

@@ -198,5 +198,9 @@
         /// データチャート
         /// </summary>
         public const string DataChart = "DataChart";
+        /// <summary>
+        /// 健康ニュース一覧
+        /// </summary>
+        public const string NewsListTitle = "NewsListTitle";
     }
 }
