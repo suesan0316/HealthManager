@@ -13,7 +13,7 @@
             <ScrollView Orientation="Horizontal">
                 <extention:BindableStackLayout Items="{Binding BodyImageContents}" Orientation="Horizontal" />
             </ScrollView>
-            <Button Text="{Binding BackHomeLabel}" Command="{Binding BackHomeCommand}" />
+            <Button Text="{Binding BackHomeLabel}" Command="{Binding BackHomeCommand}" Style="{StaticResource NormalButtonStyle}" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

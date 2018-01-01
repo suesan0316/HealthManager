@@ -41,8 +41,8 @@
                        IsEnabled="{Binding IsDisable}" />
                 <Label HorizontalOptions="Center" Text="{Binding LoadingLabel}" IsVisible="{Binding IsLoading}" />
                 <ActivityIndicator IsRunning="{Binding IsLoading}" />
-                <Button IsEnabled="{Binding IsDisable}" Text="{Binding SaveButtonLabel}" Command="{Binding SaveBaisicDataCommand}" />
-                <Button Text="{Binding CancelButtonLabel}" Command="{Binding CancleCommand}" IsVisible="{Binding CancelButtonIsVisible}" />
+                <Button IsEnabled="{Binding IsDisable}" Text="{Binding SaveButtonLabel}" Command="{Binding SaveBaisicDataCommand}"  Style="{StaticResource NormalButtonStyle}"/>
+                <Button Text="{Binding CancelButtonLabel}" Command="{Binding CancleCommand}" IsVisible="{Binding CancelButtonIsVisible}" Style="{StaticResource NormalButtonStyle}" />
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

@@ -7,7 +7,7 @@
     <ContentPage.BindingContext>
     </ContentPage.BindingContext>
     <StackLayout>
-        <Button Text="{Binding BackHomeLabel}" Command="{Binding BackHomeCommand}" />
+        <Button Text="{Binding BackHomeLabel}" Command="{Binding BackHomeCommand}"  Style="{StaticResource NormalButtonStyle}"/>
         <forms:ChartView  HeightRequest="150" Chart="{Binding Chart}" />
         <Label  Text="{Binding TermText}" />
         <Label  Text="{Binding TermMaxText}" />

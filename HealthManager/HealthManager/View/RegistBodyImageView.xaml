@@ -13,8 +13,8 @@
                 <controls:ImageButton Text="{Binding TakeImageCameraLabel}"  Command="{Binding TakeImageCameraCommand}" Orientation="ImageToLeft"  Source="camera.png" ImageHeightRequest="200" ImageWidthRequest="200" HeightRequest="120"></controls:ImageButton>
                 <controls:ImageButton Text="{Binding TakeImageLibraryLabel}" Command="{Binding TakeImageLibraryaCommand}" Orientation="ImageToLeft"  Source="library.png" ImageHeightRequest="200" ImageWidthRequest="200" HeightRequest="120"></controls:ImageButton>
                 <Image Source="{Binding BodyImage}"></Image>
-                <Button Text="{Binding RegistButtonLabel}" IsVisible="{Binding RegistButtonIsVisible}" Command="{Binding RegistBodyImageCommand}"></Button>
-                <Button Text="{Binding CancelButtonLabel}" Command="{Binding BackHomeCommand}"></Button>
+                <Button Text="{Binding RegistButtonLabel}" IsVisible="{Binding RegistButtonIsVisible}" Command="{Binding RegistBodyImageCommand}" Style="{StaticResource NormalButtonStyle}"></Button>
+                <Button Text="{Binding CancelButtonLabel}" Command="{Binding BackHomeCommand}" Style="{StaticResource NormalButtonStyle}"></Button>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
