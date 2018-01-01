@@ -120,6 +120,12 @@
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="AiForms.Effects, Version=1.0.6568.33233, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AiForms.Effects.1.1.2\lib\Xamarin.iOS10\AiForms.Effects.dll</HintPath>
+    </Reference>
+    <Reference Include="AiForms.Effects.iOS, Version=1.0.6568.33242, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AiForms.Effects.1.1.2\lib\Xamarin.iOS10\AiForms.Effects.iOS.dll</HintPath>
+    </Reference>
     <Reference Include="ExifLib, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\ExifLib.PCL.1.0.1\lib\portable-net45+sl50+win+WindowsPhoneApp81+wp80+Xamarin.iOS10+MonoAndroid10+MonoTouch10\ExifLib.dll</HintPath>
     </Reference>
@@ -209,6 +215,30 @@
       <Project>{ec0e4a23-a6f1-414a-add4-15a0e610b41e}</Project>
       <Name>HealthManager</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\bodyImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\camera.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\chart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\library.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\man.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\person.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\woman.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

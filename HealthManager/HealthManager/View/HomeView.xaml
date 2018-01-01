@@ -4,6 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:HealthManager.ViewModel"
              xmlns:controls="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms"
+             xmlns:ef="clr-namespace:AiForms.Effects;assembly=AiForms.Effects"
              xmlns:extention="clr-namespace:HealthManager.Common.Extention;assembly=HealthManager"
              x:Class="HealthManager.View.HomeView">
     <ContentPage.BindingContext>
@@ -14,9 +15,10 @@
             <StackLayout Margin="30" VerticalOptions="FillAndExpand">
                 <StackLayout Orientation="Horizontal">
                     <StackLayout>
-                        <Image Source="{Binding BodyImage}" />
+                        <Image Source="{Binding BodyImage}"  />
                         <Label Text="{Binding BodyImageRegistedDateString}" />
                     </StackLayout>
+                    <ScrollView HeightRequest="200">
                     <StackLayout Orientation="Vertical">
                         <StackLayout Orientation="Horizontal">
                             <Label Text="{Binding NameLabel}" />
@@ -57,47 +59,45 @@
                             <Label Text="{Binding BasalMetabolism}" />
                         </StackLayout>
                     </StackLayout>
+                        </ScrollView>
                 </StackLayout>
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,30,0,0">
                     <StackLayout Orientation="Vertical" Margin="0, 0, 40, 0">
                         <controls:ImageButton Command="{Binding MoveToRegistBasicDataCommand}"
-                                              Orientation="ImageToLeft"
                                               Source="{Binding MoveTioRegistBasicDataImageSource}"
-                                              ImageHeightRequest="200" ImageWidthRequest="200" HeightRequest="130"
-                                              WidthRequest="125" BackgroundColor="AliceBlue" BorderWidth="1" BorderColor="Black" BorderRadius="10"/>
+                                              Style="{StaticResource HomeImageButtonStyle}" />
                         <Label Text="{Binding MoveToRegistBasicDataLabel}" HorizontalOptions="Center" />
                     </StackLayout>
                     <StackLayout Orientation="Vertical">
-                        <controls:ImageButton Command="{Binding MoveToDataChartCommand}" Orientation="ImageToLeft"
-                                              Source="chart.png" ImageHeightRequest="200" ImageWidthRequest="200"
-                                              HeightRequest="130" WidthRequest="125" BackgroundColor="AliceBlue" BorderWidth="1" BorderColor="Black" BorderRadius="10"/>
-                        <Label Text="{Binding MoveToDataChartLabel}"  HorizontalOptions="Center"/>
+                        <controls:ImageButton Command="{Binding MoveToDataChartCommand}"
+                                              Style="{StaticResource HomeImageButtonStyle}" Source="chart.png" />
+                        <Label Text="{Binding MoveToDataChartLabel}" HorizontalOptions="Center" />
                     </StackLayout>
                 </StackLayout>
-                <StackLayout Orientation="Horizontal"  HorizontalOptions="Center" Margin="0,30,0,0">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,30,0,0">
                     <StackLayout Orientation="Vertical" Margin="0, 0, 40, 0">
-                        <controls:ImageButton Command="{Binding MoveToBodyImageListCommand}" Orientation="ImageToLeft"
-                                              Source="bodyImage.png" ImageHeightRequest="200" ImageWidthRequest="200"
-                                              HeightRequest="130" WidthRequest="125"  BackgroundColor="AliceBlue" BorderWidth="1" BorderColor="Black" BorderRadius="10"/>
+                        <controls:ImageButton Command="{Binding MoveToBodyImageListCommand}"
+                                              Source="bodyImage.png" Style="{StaticResource HomeImageButtonStyle}" />
                         <Label Text="{Binding MoveToBodyImageListLabel}" HorizontalOptions="Center" />
                     </StackLayout>
                     <StackLayout Orientation="Vertical">
-                        <controls:ImageButton Command="{Binding MoveToRegistBodyImageCommand}" Orientation="ImageToLeft"
-                                              Source="camera.png" ImageHeightRequest="200" ImageWidthRequest="200"
-                                              HeightRequest="130" WidthRequest="125" BackgroundColor="AliceBlue" BorderWidth="1" BorderColor="Black" BorderRadius="10"/>
+                        <controls:ImageButton Command="{Binding MoveToRegistBodyImageCommand}"
+                                              Source="camera.png" Style="{StaticResource HomeImageButtonStyle}" />
                         <Label Text="{Binding MoveToRegistBodyImageLabel}" HorizontalOptions="Center" />
                     </StackLayout>
                 </StackLayout>
             </StackLayout>
         </ScrollView>
-        <StackLayout >
-            <Label Text="{Binding NewsListTitleLabel}" HorizontalOptions="Center" Margin="0,20,0,0"></Label>
+        <StackLayout  Margin="20,20,20,20" >
+            <StackLayout BackgroundColor="LavenderBlush" ef:Border.Width="2" ef:Border.Radius="6" ef:Border.Color="Black" >
+            <Label Text="{Binding NewsListTitleLabel}" HorizontalOptions="Center" Margin="0,20,0,20" />
+            </StackLayout>
             <ActivityIndicator IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" />
             <ListView ItemsSource="{Binding Items}" VerticalOptions="FillAndExpand" Margin="15">
-            <ListView.Behaviors>
-                <extention:ItemTappedBehavior Command="{Binding NewsListItemTappedCommand}" />
-            </ListView.Behaviors>
-        </ListView>
-    </StackLayout>
+                <ListView.Behaviors>
+                    <extention:ItemTappedBehavior Command="{Binding NewsListItemTappedCommand}" />
+                </ListView.Behaviors>
+            </ListView>
+        </StackLayout>
     </StackLayout>
 </ContentPage>

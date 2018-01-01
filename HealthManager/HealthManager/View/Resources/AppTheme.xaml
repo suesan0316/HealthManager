@@ -1,7 +1,17 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:controls="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms"
                     x:Class="HealthManager.View.Resources.AppTheme">
-    <Color x:Key="FontColor1">#ff0000</Color>
-    <Color x:Key="FontColor2">#00ff00</Color>
+    <Style x:Key="HomeImageButtonStyle" TargetType="controls:ImageButton">
+        <Setter Property="Orientation" Value="ImageToLeft" />
+        <Setter Property="ImageHeightRequest" Value="200" />
+        <Setter Property="ImageWidthRequest" Value="200"/>
+        <Setter Property="HeightRequest" Value="130"/>
+        <Setter Property="WidthRequest" Value="125"/>
+        <Setter Property="BackgroundColor" Value="AliceBlue"/>
+        <Setter Property="BorderWidth" Value="1"/>
+        <Setter Property="BorderColor" Value="Black"/>
+        <Setter Property="BorderRadius" Value="10"/>
+    </Style>
 </ResourceDictionary>

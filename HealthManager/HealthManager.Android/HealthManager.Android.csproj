@@ -54,6 +54,12 @@
     <AndroidLinkMode>SdkOnly</AndroidLinkMode>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AiForms.Effects, Version=1.0.6568.33233, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AiForms.Effects.1.1.2\lib\MonoAndroid\AiForms.Effects.dll</HintPath>
+    </Reference>
+    <Reference Include="AiForms.Effects.Droid, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AiForms.Effects.1.1.2\lib\MonoAndroid\AiForms.Effects.Droid.dll</HintPath>
+    </Reference>
     <Reference Include="ExifLib, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\ExifLib.PCL.1.0.1\lib\portable-net45+sl50+win+WindowsPhoneApp81+wp80+Xamarin.iOS10+MonoAndroid10+MonoTouch10\ExifLib.dll</HintPath>
     </Reference>

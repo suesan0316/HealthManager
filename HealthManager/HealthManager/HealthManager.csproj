@@ -139,6 +139,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="AiForms.Effects, Version=1.0.6568.33233, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AiForms.Effects.1.1.2\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\AiForms.Effects.dll</HintPath>
+    </Reference>
     <Reference Include="AngleSharp, Version=0.9.9.0, Culture=neutral, PublicKeyToken=e83494dcdc6d31ea, processorArchitecture=MSIL">
       <HintPath>..\..\packages\AngleSharp.0.9.9\lib\portable-windows8+net45+windowsphone8+wpa+monoandroid+monotouch\AngleSharp.dll</HintPath>
     </Reference>
