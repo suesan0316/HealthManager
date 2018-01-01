@@ -62,7 +62,6 @@ namespace HealthManager.ViewModel
                 var imageAsBytes = Convert.FromBase64String(value.ImageBase64String);
                 var bodyImage = new Image
                 {
-                    // TODO 高さは調整
                     Source = ImageSource.FromStream(() => new MemoryStream(ViewModelCommonUtil.GetResizeImageBytes(imageAsBytes, 500, 625)))
                 };
                 childStackLayout.Children.Add(bodyImage);

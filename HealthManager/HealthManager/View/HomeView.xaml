@@ -59,32 +59,32 @@
                     </StackLayout>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                    <StackLayout Orientation="Vertical" Margin="0, 0, 50, 0">
+                    <StackLayout Orientation="Vertical" Margin="0, 0, 40, 0">
                         <controls:ImageButton Command="{Binding MoveToRegistBasicDataCommand}"
                                               Orientation="ImageToLeft"
                                               Source="{Binding MoveTioRegistBasicDataImageSource}"
                                               ImageHeightRequest="200" ImageWidthRequest="200" HeightRequest="130"
-                                              WidthRequest="125" />
+                                              WidthRequest="125" BackgroundColor="AliceBlue" BorderWidth="1" BorderColor="Black" BorderRadius="10"/>
                         <Label Text="{Binding MoveToRegistBasicDataLabel}" HorizontalOptions="Center" />
                     </StackLayout>
                     <StackLayout Orientation="Vertical">
                         <controls:ImageButton Command="{Binding MoveToDataChartCommand}" Orientation="ImageToLeft"
                                               Source="chart.png" ImageHeightRequest="200" ImageWidthRequest="200"
-                                              HeightRequest="130" WidthRequest="125" />
+                                              HeightRequest="130" WidthRequest="125" BackgroundColor="AliceBlue" BorderWidth="1" BorderColor="Black" BorderRadius="10"/>
                         <Label Text="{Binding MoveToDataChartLabel}"  HorizontalOptions="Center"/>
                     </StackLayout>
                 </StackLayout>
-                <StackLayout Orientation="Horizontal"  HorizontalOptions="Center">
-                    <StackLayout Orientation="Vertical" Margin="0, 0, 50, 0">
+                <StackLayout Orientation="Horizontal"  HorizontalOptions="Center" Margin="0,30,0,0">
+                    <StackLayout Orientation="Vertical" Margin="0, 0, 40, 0">
                         <controls:ImageButton Command="{Binding MoveToBodyImageListCommand}" Orientation="ImageToLeft"
                                               Source="bodyImage.png" ImageHeightRequest="200" ImageWidthRequest="200"
-                                              HeightRequest="130" WidthRequest="125" />
+                                              HeightRequest="130" WidthRequest="125"  BackgroundColor="AliceBlue" BorderWidth="1" BorderColor="Black" BorderRadius="10"/>
                         <Label Text="{Binding MoveToBodyImageListLabel}" HorizontalOptions="Center" />
                     </StackLayout>
                     <StackLayout Orientation="Vertical">
                         <controls:ImageButton Command="{Binding MoveToRegistBodyImageCommand}" Orientation="ImageToLeft"
                                               Source="camera.png" ImageHeightRequest="200" ImageWidthRequest="200"
-                                              HeightRequest="130" WidthRequest="125" />
+                                              HeightRequest="130" WidthRequest="125" BackgroundColor="AliceBlue" BorderWidth="1" BorderColor="Black" BorderRadius="10"/>
                         <Label Text="{Binding MoveToRegistBodyImageLabel}" HorizontalOptions="Center" />
                     </StackLayout>
                 </StackLayout>

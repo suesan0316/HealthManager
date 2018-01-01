@@ -19,6 +19,11 @@ namespace HealthManager.Common.Extention
             return names[(int) basicData];
         }
 
+        /// <summary>
+        /// 基本データ表示用文字列返却
+        /// </summary>
+        /// <param name="basicData"></param>
+        /// <returns></returns>
         public static string DisplayString(this BasicDataEnum basicData)
         {
             string[] names =
