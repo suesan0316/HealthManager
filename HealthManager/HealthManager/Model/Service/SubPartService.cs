@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using HealthManager.Common.Constant;
 using SQLite;
 
@@ -32,6 +34,33 @@ namespace HealthManager.Model.Service
                 }
                 db.Commit();
                 return true;
+            }
+        }
+
+        /// <summary>
+        /// サブ部位名でソートしたサブ部位データを全件取得
+        /// </summary>
+        /// <returns></returns>
+        public static List<SubPartModel> GetSubPartDataList()
+        {
+            using (var db = new SQLiteConnection(DbConst.DbPath))
+            {
+                var result = from record in db.Table<SubPartModel>() orderby record.SubPartName select record;
+                return result.Any() ? result.ToList() : new List<SubPartModel>();
+            }
+        }
+
+        /// <summary>
+        /// 親部位IDで絞ったサブ部位データを取得
+        /// </summary>
+        /// <param name="parentPartId"></param>
+        /// <returns></returns>
+        public static List<SubPartModel> GetSubPartDataList(int parentPartId)
+        {
+            using (var db = new SQLiteConnection(DbConst.DbPath))
+            {
+                var result = from record in db.Table<SubPartModel>() where record.ParentPartId == parentPartId orderby record.SubPartName select record;
+                return result.Any() ? result.ToList() : new List<SubPartModel>();
             }
         }
 

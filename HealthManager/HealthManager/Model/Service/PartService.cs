@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using HealthManager.Common.Constant;
 using SQLite;
 
@@ -30,6 +32,19 @@ namespace HealthManager.Model.Service
                 }
                 db.Commit();
                 return true;
+            }
+        }
+
+        /// <summary>
+        /// 部位名でソートした部位データを全件取得
+        /// </summary>
+        /// <returns></returns>
+        public static List<PartModel> GetPartDataList()
+        {
+            using (var db = new SQLiteConnection(DbConst.DbPath))
+            {
+                var result = from record in db.Table<PartModel>() orderby record.PartName select record;
+                return result.Any() ? result.ToList() : new List<PartModel>();
             }
         }
 

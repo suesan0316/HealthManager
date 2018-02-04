@@ -43,7 +43,7 @@ namespace HealthManager.Common.Other
                     {
                         db.CreateTable<BodyImageModel>();
                         db.CreateTable<BasicDataModel>();
-                        db.CreateTable<LoadModle>();
+                        db.CreateTable<LoadModel>();
                         db.CreateTable<PartModel>();
                         db.CreateTable<SubPartModel>();
                         db.CreateTable<TrainingMasterModel>();
@@ -65,13 +65,14 @@ namespace HealthManager.Common.Other
             ReadingPartMaster();
             // サブ部位マスタを読み込み
             ReadingSubPartMaster();
+            // 負荷マスタを読み込み
         }
 
         public static void ReadingPartMaster()
         {
             // 部位マスタを読み込む
             var assembly = typeof(App).GetTypeInfo().Assembly;
-            var stream = assembly.GetManifestResourceStream(typeof(ApplicationIinitializer).Namespace + "Data.part_data.csv");
+            var stream = assembly.GetManifestResourceStream(typeof(ApplicationIinitializer).Namespace + ".Data.part_data.csv");
             using (var reader = new System.IO.StreamReader(stream))
             {
                 using (var db = new SQLiteConnection(DependencyService.Get<ISqliteDeviceInform>().GetDbPath()))
@@ -94,7 +95,7 @@ namespace HealthManager.Common.Other
         {
             // サブ部位マスタを読み込む
             var assembly = typeof(App).GetTypeInfo().Assembly;
-            var stream = assembly.GetManifestResourceStream(typeof(ApplicationIinitializer).Namespace + "Data.sub_part_data.csv");
+            var stream = assembly.GetManifestResourceStream(typeof(ApplicationIinitializer).Namespace + ".Data.sub_part_data.csv");
             using (var reader = new System.IO.StreamReader(stream))
             {
                 using (var db = new SQLiteConnection(DependencyService.Get<ISqliteDeviceInform>().GetDbPath()))
@@ -106,6 +107,29 @@ namespace HealthManager.Common.Other
                         {
                             ParentPartId = int.Parse(row.Split(CharConst.Conma)[0]),
                             SubPartName = row.Split(CharConst.Conma)[1],
+                            RegistedDate = new DateTime()
+                        });
+                    }
+                }
+            }
+        }
+
+        public static void ReadingLoadMaster()
+        {
+            // 部位マスタを読み込む
+            var assembly = typeof(App).GetTypeInfo().Assembly;
+            var stream = assembly.GetManifestResourceStream(typeof(ApplicationIinitializer).Namespace + ".Data.load_data.csv");
+            using (var reader = new System.IO.StreamReader(stream))
+            {
+                using (var db = new SQLiteConnection(DependencyService.Get<ISqliteDeviceInform>().GetDbPath()))
+                {
+                    while (!reader.EndOfStream)
+                    {
+                        var row = reader.ReadLine();
+                        db.Insert(new LoadModel()
+                        {
+                            Id = int.Parse(row.Split(CharConst.Conma)[0]),
+                            LoadName = row.Split(CharConst.Conma)[1],
                             RegistedDate = new DateTime()
                         });
                     }

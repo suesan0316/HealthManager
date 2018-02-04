@@ -16,7 +16,7 @@ namespace HealthManager.Model.Service
         /// <returns></returns>
         public static bool RegistLoad(string loadName)
         {
-            var model = new LoadModle
+            var model = new LoadModel
             {
                 LoadName = loadName,
                 RegistedDate = DateTime.Now
@@ -41,7 +41,7 @@ namespace HealthManager.Model.Service
         /// <returns></returns>
         public static bool UpdateLoad(int id, string loadName)
         {
-            var model = new LoadModle
+            var model = new LoadModel
             {
                 Id = id,
                 LoadName = loadName

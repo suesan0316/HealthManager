@@ -4,7 +4,7 @@ using SQLite;
 namespace HealthManager.Model
 {
     [Table("Load")]
-    public class LoadModle
+    public class LoadModel
     {
         [Column("Id"), PrimaryKey, AutoIncrement]
         public int Id { get; set; }

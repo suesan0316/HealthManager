@@ -8,9 +8,9 @@
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Picker ItemsSource="{Binding PartItemSrouce}" ItemDisplayBinding="{Binding PartName}"  SelectedItem="{Binding Part}" IsEnabled="{Binding IsDisable}" ></Picker>
+            <Picker ItemsSource="{Binding SubPartItemSrouce}"  ItemDisplayBinding="{Binding SubPartName}"  SelectedItem="{Binding SubPart}"  IsEnabled="{Binding IsDisable}"></Picker>
+            <Button Text="{Binding CancelButtonLabel}" Command="{Binding CancleCommand}" IsVisible="{Binding CancelButtonIsVisible}" Style="{StaticResource NormalButtonStyle}" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

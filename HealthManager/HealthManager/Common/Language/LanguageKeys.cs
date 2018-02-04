@@ -202,5 +202,33 @@
         /// 健康ニュース一覧
         /// </summary>
         public const string NewsListTitle = "NewsListTitle";
+        /// <summary>
+        /// 鍛える部位
+        /// </summary>
+        public const string TrainingPart = "TrainingPart";
+        /// <summary>
+        /// 鍛える部位を選択してください
+        /// </summary>
+        public const string SelectTrainingPart = "SelectTrainingPart";
+        /// <summary>
+        /// 鍛える部位を選択してください
+        /// </summary>
+        public const string SelectTrainingSubPart = "SelectTrainingSubPart";
+        /// <summary>
+        /// トレーニング名
+        /// </summary>
+        public const string TrainingName = "TrainingName";
+        /// <summary>
+        /// トレーニング名を入力してください
+        /// </summary>
+        public const string InputTrainingName = "InputTrainingName";
+        /// <summary>
+        /// 負荷の種類
+        /// </summary>
+        public const string Load = "Load";
+        /// <summary>
+        /// 負荷の種類を選択してください
+        /// </summary>
+        public const string SelectLoad = "SelectLoad";
     }
 }
