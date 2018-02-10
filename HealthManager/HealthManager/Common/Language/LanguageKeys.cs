@@ -189,7 +189,7 @@
         /// <summary>
         /// トレーニングスケジュールを編集する
         /// </summary>
-        public const string EditTrainingSchedulr = "EditTrainingSchedulr";
+        public const string EditTrainingSchedule = "EditTrainingSchedule";
         /// <summary>
         /// トレーニングを開始する
         /// </summary>
@@ -230,5 +230,9 @@
         /// 負荷の種類を選択してください
         /// </summary>
         public const string SelectLoad = "SelectLoad";
+        /// <summary>
+        /// トレーニングを編集する
+        /// </summary>
+        public const string EditTraining = "EditTraining";
     }
 }

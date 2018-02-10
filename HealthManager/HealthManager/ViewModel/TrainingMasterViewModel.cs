@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -11,6 +13,8 @@ using HealthManager.Common.Extention;
 using HealthManager.Common.Language;
 using HealthManager.Model;
 using HealthManager.Model.Service;
+using HealthManager.Model.Structure;
+using Newtonsoft.Json;
 using Xamarin.Forms;
 
 namespace HealthManager.ViewModel
@@ -20,19 +24,20 @@ namespace HealthManager.ViewModel
     /// </summary>
     public class TrainingMasterViewModel : INotifyPropertyChanged
     {
+        private readonly TrainingMasterModel _targetTrainingMasterModel;
 
-        private string _trainingName;
+        /// <summary>
+        ///     読み込み中フラグ
+        /// </summary>
+        private bool _isLoading;
+
+        private LoadModel _load;
 
         private PartModel _part;
 
         private SubPartModel _subPart;
 
-        private LoadModel _load;
-
-        /// <summary>
-        /// 読み込み中フラグ
-        /// </summary>
-        private bool _isLoading;
+        private string _trainingName;
 
         public TrainingMasterViewModel()
         {
@@ -41,14 +46,33 @@ namespace HealthManager.ViewModel
 
             PartItemSrouce = PartService.GetPartDataList();
             SubPartService.GetSubPartDataList().ForEach(data => SubPartItemSrouce.Add(data));
-            LoadService.GetLoadDataList().ForEach(data=>LoadItemSrouce.Add(data));
+            LoadService.GetLoadDataList().ForEach(data => LoadItemSrouce.Add(data));
             Part = PartItemSrouce[0];
             SubPart = SubPartItemSrouce[0];
             Load = LoadItemSrouce[0];
         }
 
+        public TrainingMasterViewModel(int id)
+        {
+            _targetTrainingMasterModel = TrainingMasterService.GetTrainingMasterData(id);
+            CancleCommand = new Command(ViewModelCommonUtil.BackTrainingHome);
+            SaveTrainingMasterCommand = new Command(async () => await SaveTrainingMaster());
+
+            PartItemSrouce = PartService.GetPartDataList();
+            SubPartService.GetSubPartDataList().ForEach(data => SubPartItemSrouce.Add(data));
+            LoadService.GetLoadDataList().ForEach(data => LoadItemSrouce.Add(data));
+
+            var partStructure = JsonConvert.DeserializeObject<PartStructure>(_targetTrainingMasterModel.Part);
+            var loadStructure = JsonConvert.DeserializeObject<LoadStructure>(_targetTrainingMasterModel.Load);
+
+            TrainingName = _targetTrainingMasterModel.TrainingName;
+            Part = PartItemSrouce.First(data => data.Id == partStructure.Part.Id);
+            SubPart = SubPartItemSrouce.First(data => data.Id == partStructure.SubPart.Id);
+            Load = LoadItemSrouce.First(data => data.Id == loadStructure.LoadList[0].Id);
+        }
+
         /// <summary>
-        /// 保存ボタンコマンド
+        ///     保存ボタンコマンド
         /// </summary>
         public ICommand SaveTrainingMasterCommand { get; }
 
@@ -58,7 +82,7 @@ namespace HealthManager.ViewModel
         public ICommand CancleCommand { get; }
 
         /// <summary>
-        /// トレーニング名
+        ///     トレーニング名
         /// </summary>
         public string TrainingName
         {
@@ -71,7 +95,7 @@ namespace HealthManager.ViewModel
         }
 
         /// <summary>
-        /// 部位
+        ///     部位
         /// </summary>
         public PartModel Part
         {
@@ -88,7 +112,7 @@ namespace HealthManager.ViewModel
         }
 
         /// <summary>
-        /// サブ部位
+        ///     サブ部位
         /// </summary>
         public SubPartModel SubPart
         {
@@ -101,7 +125,7 @@ namespace HealthManager.ViewModel
         }
 
         /// <summary>
-        /// 負荷
+        ///     負荷
         /// </summary>
         public LoadModel Load
         {
@@ -109,12 +133,12 @@ namespace HealthManager.ViewModel
             set
             {
                 _load = value;
-                PropertyChanged?.Invoke(this,new PropertyChangedEventArgs(nameof(Load)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Load)));
             }
         }
 
         /// <summary>
-        /// 読み込みフラグ
+        ///     読み込みフラグ
         /// </summary>
         public bool IsLoading
         {
@@ -128,7 +152,7 @@ namespace HealthManager.ViewModel
         }
 
         /// <summary>
-        /// 無効フラグ
+        ///     無効フラグ
         /// </summary>
         public bool IsDisable => !_isLoading;
 
@@ -155,12 +179,12 @@ namespace HealthManager.ViewModel
         public string CancelButtonLabel => LanguageUtils.Get(LanguageKeys.Cancel);
 
         /// <summary>
-        /// 処理中ラベル
+        ///     処理中ラベル
         /// </summary>
         public string LoadingLabel => LanguageUtils.Get(LanguageKeys.Loading);
 
         /// <summary>
-        /// 保存ボタンラベル
+        ///     保存ボタンラベル
         /// </summary>
         public string SaveButtonLabel => LanguageUtils.Get(LanguageKeys.Save);
 
@@ -180,7 +204,7 @@ namespace HealthManager.ViewModel
         }
 
         /// <summary>
-        ///  基本データ保存アクション
+        ///     トレーニング保存アクション
         /// </summary>
         /// <returns></returns>
         private async Task SaveTrainingMaster()
@@ -188,35 +212,31 @@ namespace HealthManager.ViewModel
             try
             {
                 IsLoading = true;
-                if (BasicDataService.CheckExitTargetDayData(DateTime.Now))
-                {
-                    var result =
-                        await Application.Current.MainPage.DisplayAlert(LanguageUtils.Get(LanguageKeys.Confirm),
-                        LanguageUtils.Get(LanguageKeys.TodayDataUpdateConfirm), LanguageUtils.Get(LanguageKeys.OK),
-                            LanguageUtils.Get(LanguageKeys.Cancel));
-                    if (result)
-                    {
-                        
-                    }
-                    else
-                    {
-                        IsLoading = false;
-                        return;
-                    }
-                }
+                var partStructure = new PartStructure {Part = Part, SubPart = SubPart};
+                var loadStructure = new LoadStructure {LoadList = new List<LoadModel> {Load}};
+
+
+                if (_targetTrainingMasterModel != null)
+                    TrainingMasterService.UpdateTrainingMaster(
+                        _targetTrainingMasterModel.Id,
+                        TrainingName,
+                        JsonConvert.SerializeObject(loadStructure),
+                        JsonConvert.SerializeObject(partStructure));
                 else
-                {
-                    
-                }
+                    TrainingMasterService.RegistTrainingMaster(
+                        TrainingName,
+                        JsonConvert.SerializeObject(loadStructure),
+                        JsonConvert.SerializeObject(partStructure));
 
                 IsLoading = false;
+
                 await Application.Current.MainPage.DisplayAlert(LanguageUtils.Get(LanguageKeys.Complete),
                     LanguageUtils.Get(LanguageKeys.SaveComplete), LanguageUtils.Get(LanguageKeys.OK));
                 ViewModelCommonUtil.BackHome();
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e);
+                Debug.WriteLine(e);
             }
         }
     }

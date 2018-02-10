@@ -21,12 +21,18 @@ namespace HealthManager.ViewModel
             AddTraningCommand = new Command(MoveToTrainingMaster);
             EditTrainingScheduleCommand = new Command(MoveToTrainingSchedule);
             StartTrainingCommand = new Command(MoveToTraining);
+            EditTrainingCommand = new Command(MoveToTrainingList);
         }
 
         /// <summary>
         ///     トレーニングを追加するコマンド
         /// </summary>
         public ICommand AddTraningCommand { get; set; }
+
+        /// <summary>
+        ///     トレーニングを編集するコマンド
+        /// </summary>
+        public ICommand EditTrainingCommand { get; set; }
 
         /// <summary>
         ///     トレーニングスケジュールを編集するコマンド
@@ -46,7 +52,12 @@ namespace HealthManager.ViewModel
         /// <summary>
         ///     トレーニングスケジュールを編集するボタンラベル
         /// </summary>
-        public string EditTrainingLabel => LanguageUtils.Get(LanguageKeys.EditTrainingSchedulr);
+        public string EditTrainingScheduleLabel => LanguageUtils.Get(LanguageKeys.EditTrainingSchedule);
+
+        /// <summary>
+        ///     トレーニングスケジュールを編集するボタンラベル
+        /// </summary>
+        public string EditTrainingLabel => LanguageUtils.Get(LanguageKeys.EditTraining);
 
         /// <summary>
         ///     トレーニングを開始するボタンラベル
@@ -67,6 +78,11 @@ namespace HealthManager.ViewModel
         private static void MoveToTrainingMaster()
         {
             ((App) Application.Current).ChangeScreen(new TrainingMasterView());
+        }
+
+        private static void MoveToTrainingList()
+        {
+            ((App)Application.Current).ChangeScreen(new TrainingListView());
         }
 
         /// <summary>

@@ -9,7 +9,8 @@
     <ContentPage.Content>
         <StackLayout>
             <Button Text="{Binding AddTrainingLabel}" Command="{Binding AddTraningCommand}"></Button>
-            <Button Text="{Binding EditTrainingLabel}" Command="{Binding EditTrainingScheduleCommand}"></Button>
+            <Button Text="{Binding EditTrainingLabel}" Command="{Binding EditTrainingCommand}"></Button>
+            <Button Text="{Binding EditTrainingScheduleLabel}" Command="{Binding EditTrainingScheduleCommand}"></Button>
             <Button Text="{Binding StrartTrainingLabel}" Command="{Binding StartTrainingCommand}"></Button>
         </StackLayout>
     </ContentPage.Content>

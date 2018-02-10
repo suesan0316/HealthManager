@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:extention="clr-namespace:HealthManager.Common.Extention;assembly=HealthManager"
+             xmlns:viewModel="clr-namespace:HealthManager.ViewModel;assembly=HealthManager"
+             x:Class="HealthManager.View.TrainingListView">
+    <ContentPage.BindingContext>
+        <viewModel:TrainingListViewModel />
+    </ContentPage.BindingContext>
+    <StackLayout>
+        <ListView ItemsSource="{Binding Items}"  VerticalOptions="FillAndExpand">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding TrainingName}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.Behaviors>
+                <extention:ItemTappedBehavior Command="{Binding TrainingMasterItemTappedCommand}" />
+            </ListView.Behaviors>
+        </ListView>
+    </StackLayout>
+</ContentPage>

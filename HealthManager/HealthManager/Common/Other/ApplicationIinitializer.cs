@@ -23,9 +23,9 @@ namespace HealthManager.Common.Other
                     //db.DropTable<InitModel>();
                     //db.DropTable<BodyImageModel>();
                     //db.DropTable<BasicDataModel>();
-                    //db.DropTable<LoadModle>();
-                    //db.DropTable<PartModel>();
-                    //db.DropTable<SubPartModel>();
+                    db.DropTable<LoadModel>();
+                    db.DropTable<PartModel>();
+                    db.DropTable<SubPartModel>();
                     //db.DropTable<TrainingMasterModel>();
                     //db.DropTable<TrainingMenuModel>();
                     //db.DropTable<TrainingScheduleModel>();
