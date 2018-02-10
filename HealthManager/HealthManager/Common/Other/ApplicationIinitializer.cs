@@ -29,6 +29,7 @@ namespace HealthManager.Common.Other
                     //db.DropTable<TrainingMasterModel>();
                     //db.DropTable<TrainingMenuModel>();
                     //db.DropTable<TrainingScheduleModel>();
+                    db.DropTable<InitModel>();
                 }
                 catch (NotNullConstraintViolationException e)
                 {
@@ -66,6 +67,7 @@ namespace HealthManager.Common.Other
             // サブ部位マスタを読み込み
             ReadingSubPartMaster();
             // 負荷マスタを読み込み
+            ReadingLoadMaster();
         }
 
         public static void ReadingPartMaster()
@@ -116,7 +118,7 @@ namespace HealthManager.Common.Other
 
         public static void ReadingLoadMaster()
         {
-            // 部位マスタを読み込む
+            // 負荷マスタを読み込む
             var assembly = typeof(App).GetTypeInfo().Assembly;
             var stream = assembly.GetManifestResourceStream(typeof(ApplicationIinitializer).Namespace + ".Data.load_data.csv");
             using (var reader = new System.IO.StreamReader(stream))

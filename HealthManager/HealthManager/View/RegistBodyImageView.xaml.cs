@@ -1,6 +1,4 @@
-﻿using HealthManager.DependencyInterface;
-using HealthManager.ViewModel;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace HealthManager.View

@@ -56,6 +56,8 @@
     <Compile Include="Common\Extention\BindableStackLayout.cs" />
     <Compile Include="Common\Extention\EnumerableExtensions.cs" />
     <Compile Include="Common\Extention\ItemTappedBehavior.cs" />
+    <Compile Include="Model\Structure\LoadStructure.cs" />
+    <Compile Include="Model\Structure\PartStructure.cs" />
     <Compile Include="Properties\Annotations1.cs" />
     <Compile Include="ViewModel\DataSelectViewModel.cs" />
     <Compile Include="ViewModel\EditTrainingScheduleViewModel.cs" />
@@ -217,7 +219,7 @@
     <EmbeddedResource Include="Common\Other\Data\part_data.csv" />
     <EmbeddedResource Include="Common\Other\Data\sub_part_data.csv" />
     <None Include="app.config" />
-    <None Include="Common\Other\Data\load_data.csv" />
+    <EmbeddedResource Include="Common\Other\Data\load_data.csv" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
