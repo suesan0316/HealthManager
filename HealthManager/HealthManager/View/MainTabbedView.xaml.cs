@@ -9,13 +9,18 @@ namespace HealthManager.View
         public MainTabbedView()
         {
 
-            var navigationPage = new NavigationPage(new HomeView())
+            var navigationPageHome = new NavigationPage(new HomeView())
             {
-                Title = "Schedule"
+                //Title = "Schedule"
             };
-            Children.Add(new HomeView());
+            
+            var navigationPageTraining = new NavigationPage(new TrainingHomeView())
+            {
+                //Title = "Schedule"
+            };
+            Children.Add(navigationPageHome);
             Children[0].Title = "データ";
-            Children.Add(new TrainingHomeView());
+            Children.Add(navigationPageTraining);
             Children[1].Title = "トレーニング";
         }
     }

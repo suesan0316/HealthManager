@@ -5,13 +5,19 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using HealthManager.Annotations;
+using HealthManager.Common;
+using HealthManager.Common.Constant;
 using HealthManager.Common.Enum;
 using HealthManager.Common.Extention;
+using HealthManager.Common.Language;
 using HealthManager.View;
 using Xamarin.Forms;
 
 namespace HealthManager.ViewModel
 {
+    /// <summary>
+    ///     基本情報選択画面VMクラス
+    /// </summary>
     public class DataSelectViewModel : INotifyPropertyChanged
     {
         private readonly Dictionary<string, BasicDataEnum> _dictionary = new Dictionary<string, BasicDataEnum>();
@@ -27,9 +33,11 @@ namespace HealthManager.ViewModel
 
         public DataSelectViewModel()
         {
+            BackPageCommand =
+                new Command(ViewModelCommonUtil.BackPage);
             BasicDataItemTappedCommand = new Command<string>(item =>
             {
-                ((App) Application.Current).ChangeScreen(new DataChartView(_dictionary[item]));
+                ViewModelConst.PageNavigation.PushAsync(new DataChartView(_dictionary[item]));
             });
             foreach (var gender in Enum.GetValues(typeof(BasicDataEnum)))
                 if (_showDataList.Contains((BasicDataEnum) gender))
@@ -39,9 +47,25 @@ namespace HealthManager.ViewModel
                 }
         }
 
+        /// <summary>
+        ///     基本情報リストアイテムソースリスト
+        /// </summary>
         public ObservableCollection<string> Items { protected set; get; } = new ObservableCollection<string>();
 
+        /// <summary>
+        ///     リストアイテムタップコマンド
+        /// </summary>
         public ICommand BasicDataItemTappedCommand { get; set; }
+
+        /// <summary>
+        ///     戻るボタンコマンド
+        /// </summary>
+        public ICommand BackPageCommand { get; set; }
+
+        /// <summary>
+        ///     戻るボタンラベル
+        /// </summary>
+        public string BackPageLabel => LanguageUtils.Get(LanguageKeys.Return);
 
         public event PropertyChangedEventHandler PropertyChanged;
 

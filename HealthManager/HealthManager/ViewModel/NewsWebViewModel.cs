@@ -8,6 +8,9 @@ using Xamarin.Forms;
 
 namespace HealthManager.ViewModel
 {
+    /// <summary>
+    ///  ニュース画面VMクラス
+    /// </summary>
     internal class NewsWebViewModel : INotifyPropertyChanged
 
     {
@@ -29,7 +32,7 @@ namespace HealthManager.ViewModel
         /// <param name="url"></param>
         public NewsWebViewModel(string url)
         {
-            BackHomeCommand = new Command(ViewModelCommonUtil.BackHome);
+            BackHomeCommand = new Command(ViewModelCommonUtil.BackPage);
             WebSource = url;
         }
 

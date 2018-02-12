@@ -90,10 +90,19 @@
         </ScrollView>
         <StackLayout  Margin="20,20,20,20" >
             <StackLayout BackgroundColor="LavenderBlush" ef:Border.Width="2" ef:Border.Radius="6" ef:Border.Color="Black" >
-            <Label Text="{Binding NewsListTitleLabel}" HorizontalOptions="Center" Margin="0,20,0,20" />
+            <Label Text="{Binding NewsListTitleLabel}" HorizontalOptions="Center" Margin="0,0,0,0" />
             </StackLayout>
             <ActivityIndicator IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" />
             <ListView ItemsSource="{Binding Items}" VerticalOptions="FillAndExpand" Margin="15">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout>
+                                <Label  Text="{Binding NewsTitle}" LineBreakMode="WordWrap"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
                 <ListView.Behaviors>
                     <extention:ItemTappedBehavior Command="{Binding NewsListItemTappedCommand}" />
                 </ListView.Behaviors>

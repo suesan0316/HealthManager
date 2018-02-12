@@ -9,7 +9,6 @@ namespace HealthManager.View
         public RegistBodyImageView()
         {            
             InitializeComponent();
-           // DependencyService.Get<IImageService>().ResizeImage("camera", "camera", 50, 50);
         }
     }
 }

@@ -11,6 +11,7 @@ namespace HealthManager.View
         {
             InitializeComponent();
             BindingContext = new NewsWebViewModel();
+            NavigationPage.SetHasNavigationBar(this, false);
         }
 
         public NewsWebView(string url)
@@ -18,7 +19,7 @@ namespace HealthManager.View
             InitializeComponent();
             WebView.Source = url;
             BindingContext = new NewsWebViewModel(url);
+            NavigationPage.SetHasNavigationBar(this, false);
         }
-
     }
 }

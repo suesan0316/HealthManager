@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using HealthManager.ViewModel.Structure;
 
 namespace HealthManager.ViewModel.Logic.News.Service
 {
     public interface INewsService
     {
-        Task<Dictionary<string, string>> GetNewsDictionary();
+        Task<List<NewsStructure>> GetNewsData();
     }
 }

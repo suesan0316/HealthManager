@@ -15,6 +15,7 @@ using HealthManager.Model.Service;
 using HealthManager.Properties;
 using HealthManager.View;
 using HealthManager.ViewModel.Logic.News.Factory;
+using HealthManager.ViewModel.Structure;
 using Xamarin.Forms;
 
 namespace HealthManager.ViewModel
@@ -49,11 +50,6 @@ namespace HealthManager.ViewModel
         /// </summary>
         private bool _isLoading;
 
-        /// <summary>
-        ///     ニュース一覧(キーにニュースタイトル、値にURL)
-        /// </summary>
-        public Dictionary<string, string> ItemsDictionary;
-
         public HomeViewModel()
         {
             // 各コマンドの初期化
@@ -61,10 +57,10 @@ namespace HealthManager.ViewModel
             MoveToRegistBasicDataCommand = new Command(MoveToRegistBasicData);
             MoveToBodyImageListCommand = new Command(MoveToBodyImageList);
             MoveToDataChartCommand = new Command(MoveToDataChart);
-            NewsListItemTappedCommand = new Command<string>(item =>
-            {
-                ((App) Application.Current).ChangeScreen(new NewsWebView(ItemsDictionary[item]));
-            });
+            NewsListItemTappedCommand = new Command<NewsStructure>(item =>
+                {
+                    ViewModelConst.PageNavigation.PushAsync(new NewsWebView(item.NewsUrl));
+                });
 
             // 表示する体格画像を取得
             var bodyImageModel = BodyImageService.GetBodyImage();
@@ -119,7 +115,7 @@ namespace HealthManager.ViewModel
         /// <summary>
         ///     ニュース一覧のアイテムリスト
         /// </summary>
-        public ObservableCollection<string> Items { protected set; get; } = new ObservableCollection<string>();
+        public ObservableCollection<NewsStructure> Items { protected set; get; } = new ObservableCollection<NewsStructure>();
 
         /// <summary>
         ///     ニュース一覧アイテムタップコマンド
@@ -358,8 +354,8 @@ namespace HealthManager.ViewModel
         {
             IsLoading = true;
             var service = NewsServiceFactory.CreateNewsService();
-            ItemsDictionary = await service.GetNewsDictionary();
-            ItemsDictionary.ForEach(data => Items.Add(data.Key));
+            var structures = await service.GetNewsData();
+            structures.ForEach(data => Items.Add(data));
             IsLoading = false;
         }
 
@@ -384,15 +380,17 @@ namespace HealthManager.ViewModel
         /// </summary>
         public void MoveToDataChart()
         {
-            ((App)Application.Current).ChangeScreen(new DataSelectView());
+            //((App)Application.Current).ChangeScreen(new DataSelectView());
+            ViewModelConst.PageNavigation.PushAsync(new DataSelectView());
+
         }
 
         /// <summary>
         ///     体格遷移画面遷移
         /// </summary>
-        private static void MoveToBodyImageList()
+        public  void MoveToBodyImageList()
         {
-            ((App) Application.Current).ChangeScreen(new BodyImageView());
+            ViewModelConst.PageNavigation.PushAsync(new BodyImageView());
         }
     }
 }

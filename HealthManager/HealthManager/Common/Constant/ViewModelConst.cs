@@ -1,4 +1,6 @@
-﻿namespace HealthManager.Common.Constant
+﻿using Xamarin.Forms;
+
+namespace HealthManager.Common.Constant
 {
     class ViewModelConst
     {
@@ -23,5 +25,8 @@
         /// 人画像ファイル(性別未選択時に使用)
         /// </summary>
         public const string PersonImage = "person.png";
+
+        public static INavigation PageNavigation;
+
     }
 }

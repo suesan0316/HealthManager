@@ -9,6 +9,7 @@ namespace HealthManager.View
         public DataSelectView()
         {
             InitializeComponent();
+            NavigationPage.SetHasNavigationBar(this, false);
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
+using HealthManager.Common.Constant;
 using HealthManager.DependencyInterface;
 using HealthManager.View;
 using Xamarin.Forms;
@@ -95,6 +97,11 @@ namespace HealthManager.Common
         public static byte[] GetResizeImageBytes(byte[] originBytes, float width, float height)
         {
             return DependencyService.Get<IImageService>().ResizeImage(originBytes,width,height);
+        }
+
+        public static void BackPage()
+        {
+            ViewModelConst.PageNavigation.PopAsync();
         }
     }
 }

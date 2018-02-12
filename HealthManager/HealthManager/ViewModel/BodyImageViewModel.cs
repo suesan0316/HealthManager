@@ -23,7 +23,7 @@ namespace HealthManager.ViewModel
         /// </summary>
         public BodyImageViewModel()
         {
-            BackHomeCommand = new Command(ViewModelCommonUtil.BackHome);
+            BackHomeCommand = new Command(ViewModelCommonUtil.BackPage);
             InitImageStackLayout();
         }
 
@@ -58,7 +58,7 @@ namespace HealthManager.ViewModel
             var bodyImageModels = BodyImageService.GetBodyImageList();
             foreach (var value in bodyImageModels)
             {
-                var childStackLayout = new StackLayout(){};
+                var childStackLayout = new StackLayout();
                 var imageAsBytes = Convert.FromBase64String(value.ImageBase64String);
                 var bodyImage = new Image
                 {

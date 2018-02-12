@@ -12,12 +12,14 @@ namespace HealthManager.View
         public DataChartView()
         {
             InitializeComponent();
+            NavigationPage.SetHasNavigationBar(this, false);
             BindingContext = new DataChartViewModel();
         }
 
         public DataChartView(BasicDataEnum target)
         {
             InitializeComponent();
+            NavigationPage.SetHasNavigationBar(this, false);
             BindingContext = new DataChartViewModel(target);
         }
     }  

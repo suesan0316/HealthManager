@@ -9,6 +9,7 @@ namespace HealthManager.View
         public BodyImageView()
         {
             InitializeComponent();
+            NavigationPage.SetHasNavigationBar(this, false);
         }
     }
 }
