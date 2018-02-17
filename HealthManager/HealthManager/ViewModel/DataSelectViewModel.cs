@@ -34,10 +34,10 @@ namespace HealthManager.ViewModel
         public DataSelectViewModel()
         {
             BackPageCommand =
-                new Command(ViewModelCommonUtil.BackPage);
+                new Command(ViewModelCommonUtil.DataBackPage);
             BasicDataItemTappedCommand = new Command<string>(item =>
             {
-                ViewModelConst.PageNavigation.PushAsync(new DataChartView(_dictionary[item]));
+                ViewModelConst.DataPageNavigation.PushAsync(new DataChartView(_dictionary[item]));
             });
             foreach (var gender in Enum.GetValues(typeof(BasicDataEnum)))
                 if (_showDataList.Contains((BasicDataEnum) gender))

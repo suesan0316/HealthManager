@@ -33,5 +33,24 @@ namespace HealthManager.Common.Language
         {
             return LanguageMap[key];
         }
+
+        /// <summary>
+        /// キーに対応するメッセージを取得
+        /// パラメータに渡された文字列で置換します
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="replace"></param>
+        /// <returns></returns>
+        public static string Get(string key, params  string[]  replace)
+        {
+            var  returnLang = LanguageMap[key];
+
+            for (var i=0; i < replace.Length; i++)
+            {
+                returnLang = returnLang.Replace("{" + i + "}", replace[i]);
+            }
+
+            return returnLang;
+        }
     }
 }

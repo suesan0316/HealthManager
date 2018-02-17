@@ -49,6 +49,7 @@
     <Compile Include="Common\Enum\WeekEnum.cs" />
     <Compile Include="Common\Enum\GenderEnum.cs" />
     <Compile Include="Common\Other\ApplicationIinitializer.cs" />
+    <Compile Include="Common\StringUtils.cs" />
     <Compile Include="Common\ViewModelCommonUtil.cs" />
     <Compile Include="DependencyInterface\IImageService.cs" />
     <Compile Include="DependencyInterface\ISqliteDeviceInform.cs" />

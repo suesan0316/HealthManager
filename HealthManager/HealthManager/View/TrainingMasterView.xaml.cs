@@ -10,13 +10,15 @@ namespace HealthManager.View
 	    public TrainingMasterView()
 	    {
 	        InitializeComponent();
-	        BindingContext = new TrainingMasterViewModel();
+	        NavigationPage.SetHasNavigationBar(this, false);
+            BindingContext = new TrainingMasterViewModel();
 	    }
 
 	    public TrainingMasterView(int id)
 	    {
 	        InitializeComponent();
-	        BindingContext = new TrainingMasterViewModel(id);
+	        NavigationPage.SetHasNavigationBar(this, false);
+            BindingContext = new TrainingMasterViewModel(id);
 	    }
     }
 }

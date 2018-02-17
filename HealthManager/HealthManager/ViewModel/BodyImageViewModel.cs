@@ -23,7 +23,7 @@ namespace HealthManager.ViewModel
         /// </summary>
         public BodyImageViewModel()
         {
-            BackHomeCommand = new Command(ViewModelCommonUtil.BackPage);
+            BackHomeCommand = new Command(ViewModelCommonUtil.DataBackPage);
             InitImageStackLayout();
         }
 

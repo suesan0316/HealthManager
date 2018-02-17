@@ -10,7 +10,9 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout Margin="30">
-                <Label Text="{Binding NameLabel}" />
+                <StackLayout  x:Name="ErrorStack"></StackLayout>
+
+<Label Text="{Binding NameLabel}" />
                 <Entry Placeholder="{Binding NamePlaceholderLabel}" Text="{Binding Name}" IsEnabled="{Binding IsDisable}" />
                 <Label Text="{Binding GenderLabel}" />
                 <Picker ItemsSource="{Binding GenderItemSrouce}"  SelectedIndex="{Binding Gender}" IsEnabled="{Binding IsDisable}"></Picker>

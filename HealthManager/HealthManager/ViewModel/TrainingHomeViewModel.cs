@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using HealthManager.Common.Constant;
 using HealthManager.Common.Language;
 using HealthManager.Properties;
 using HealthManager.View;
@@ -18,16 +19,10 @@ namespace HealthManager.ViewModel
         /// </summary>
         public TrainingHomeViewModel()
         {
-            AddTraningCommand = new Command(MoveToTrainingMaster);
             EditTrainingScheduleCommand = new Command(MoveToTrainingSchedule);
             StartTrainingCommand = new Command(MoveToTraining);
             EditTrainingCommand = new Command(MoveToTrainingList);
         }
-
-        /// <summary>
-        ///     トレーニングを追加するコマンド
-        /// </summary>
-        public ICommand AddTraningCommand { get; set; }
 
         /// <summary>
         ///     トレーニングを編集するコマンド
@@ -45,11 +40,6 @@ namespace HealthManager.ViewModel
         public ICommand StartTrainingCommand { get; set; }
 
         /// <summary>
-        ///     トレーニングを追加するボタンラベル
-        /// </summary>
-        public string AddTrainingLabel => LanguageUtils.Get(LanguageKeys.AddTraining);
-
-        /// <summary>
         ///     トレーニングスケジュールを編集するボタンラベル
         /// </summary>
         public string EditTrainingScheduleLabel => LanguageUtils.Get(LanguageKeys.EditTrainingSchedule);
@@ -64,6 +54,12 @@ namespace HealthManager.ViewModel
         /// </summary>
         public string StrartTrainingLabel => LanguageUtils.Get(LanguageKeys.StartTraining);
 
+        public string TrainingListButtonImage => ViewModelConst.TrainingListImage;
+
+        public string TrainingScheduleButtonImage => ViewModelConst.TrainingScheduleImage;
+
+        public string TrainingStartButtonImage => ViewModelConst.TrainingStartImage;
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
@@ -73,16 +69,11 @@ namespace HealthManager.ViewModel
         }
 
         /// <summary>
-        ///     トレーニングマスター画面遷移
+        /// トレーニング一覧画面遷移
         /// </summary>
-        private static void MoveToTrainingMaster()
-        {
-            ((App) Application.Current).ChangeScreen(new TrainingMasterView());
-        }
-
         private static void MoveToTrainingList()
         {
-            ((App)Application.Current).ChangeScreen(new TrainingListView());
+            ViewModelConst.TrainingPageNavigation.PushAsync(new TrainingListView());
         }
 
         /// <summary>

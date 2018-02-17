@@ -10,7 +10,15 @@ namespace HealthManager.View
         public InputBasicDataView()
         {
             InitializeComponent();
-            BindingContext = new InputBasicDataViewModel();
+            if (Navigation != null)
+            {
+                NavigationPage.SetHasNavigationBar(this, false);
+            }
+            var vm = new InputBasicDataViewModel();
+
+            vm.ErrorStack = ErrorStack.Children;
+            
+            BindingContext = vm;
         }
     }
 }

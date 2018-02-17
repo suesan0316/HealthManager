@@ -1,5 +1,4 @@
-﻿using HealthManager.Common;
-using HealthManager.Common.Constant;
+﻿using HealthManager.Common.Constant;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,7 +10,7 @@ namespace HealthManager.View
         public HomeView()
         {
             InitializeComponent();
-            ViewModelConst.PageNavigation = Navigation;
+            ViewModelConst.DataPageNavigation = Navigation;
             NavigationPage.SetHasNavigationBar(this, false);
         }
     }

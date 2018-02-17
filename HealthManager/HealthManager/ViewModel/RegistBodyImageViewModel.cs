@@ -62,7 +62,7 @@ namespace HealthManager.ViewModel
             TakeImageCameraCommand = new Command(async () => await TakeImageCamera());
             TakeImageLibraryaCommand = new Command(async () => await TakeImageLibrary());
             RegistBodyImageCommand = new Command(async () => await RegistBodyImage());
-            BackHomeCommand = new Command(ViewModelCommonUtil.BackHome);
+            BackHomeCommand = new Command(ViewModelCommonUtil.DataBackPage);
 
             var model = BodyImageService.GetBodyImage();
             _id = model?.Id ?? 0;
@@ -234,7 +234,9 @@ namespace HealthManager.ViewModel
             {
                 BodyImageService.RegistBodyImage(_base64String);
             }
-            ViewModelCommonUtil.BackHome();
+
+            ViewModelCommonUtil.DataBackPage();
+
         }
     }
 }

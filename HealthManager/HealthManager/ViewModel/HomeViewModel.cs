@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
@@ -59,7 +58,7 @@ namespace HealthManager.ViewModel
             MoveToDataChartCommand = new Command(MoveToDataChart);
             NewsListItemTappedCommand = new Command<NewsStructure>(item =>
                 {
-                    ViewModelConst.PageNavigation.PushAsync(new NewsWebView(item.NewsUrl));
+                    ViewModelConst.DataPageNavigation.PushAsync(new NewsWebView(item.NewsUrl));
                 });
 
             // 表示する体格画像を取得
@@ -181,7 +180,7 @@ namespace HealthManager.ViewModel
         /// <summary>
         ///     性別
         /// </summary>
-        public string Gender { get; }
+        public string Gender { get; set; }
 
         /// <summary>
         ///     性別ラベル
@@ -336,7 +335,7 @@ namespace HealthManager.ViewModel
         /// <summary>
         /// 基本データ更新ボタンファイルソース
         /// </summary>
-        public string MoveTioRegistBasicDataImageSource { get; }
+        public string MoveTioRegistBasicDataImageSource { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -364,7 +363,7 @@ namespace HealthManager.ViewModel
         /// </summary>
         private static void MoveToRegistBodyImage()
         {
-            ((App) Application.Current).ChangeScreen(new RegistBodyImageView());
+            ViewModelConst.DataPageNavigation.PushAsync(new RegistBodyImageView());
         }
 
         /// <summary>
@@ -372,7 +371,7 @@ namespace HealthManager.ViewModel
         /// </summary>
         private static void MoveToRegistBasicData()
         {
-            ((App) Application.Current).ChangeScreen(new InputBasicDataView());
+            ViewModelConst.DataPageNavigation.PushAsync(new InputBasicDataView());
         }
 
         /// <summary>
@@ -381,7 +380,7 @@ namespace HealthManager.ViewModel
         public void MoveToDataChart()
         {
             //((App)Application.Current).ChangeScreen(new DataSelectView());
-            ViewModelConst.PageNavigation.PushAsync(new DataSelectView());
+            ViewModelConst.DataPageNavigation.PushAsync(new DataSelectView());
 
         }
 
@@ -390,7 +389,66 @@ namespace HealthManager.ViewModel
         /// </summary>
         public  void MoveToBodyImageList()
         {
-            ViewModelConst.PageNavigation.PushAsync(new BodyImageView());
+            ViewModelConst.DataPageNavigation.PushAsync(new BodyImageView());
         }
+
+
+        /// <summary>
+        /// ホーム画面に表示されている情報をリロードする
+        /// </summary>
+        public void ReloadHome()
+        {
+
+            // 表示する体格画像を取得
+            var bodyImageModel = BodyImageService.GetBodyImage();
+            if (bodyImageModel != null)
+            {
+                var imageAsBytes = Convert.FromBase64String(bodyImageModel.ImageBase64String);
+
+                BodyImage = ImageSource.FromStream(() => new MemoryStream(ViewModelCommonUtil.GetResizeImageBytes(imageAsBytes, 300, 425)));
+                BodyImageRegistedDateString =
+                    LanguageUtils.Get(LanguageKeys.RegistedDate) +
+                    ViewModelCommonUtil.FormatDateString(bodyImageModel.RegistedDate);
+            }
+            else
+            {
+                // 登録されている体格画像がない場合はイメージなし用の画像を表示する
+                var imageAsBytes = Convert.FromBase64String(ViewModelConst.NoImageString64);
+                BodyImage = ImageSource.FromStream(() => new MemoryStream(ViewModelCommonUtil.GetResizeImageBytes(imageAsBytes, 300, 425)));
+                BodyImageRegistedDateString =
+                    LanguageUtils.Get(LanguageKeys.RegistedDate) + StringConst.Empty;
+            }
+
+            // 基本データを取得
+            var model = BasicDataService.GetBasicData();
+            if (model != null)
+            {
+                Name = model.Name;
+                Gender = ((GenderEnum)model.Gender).ToString();
+                Age = model.Age;
+                Height = model.Height;
+                BodyWeight = model.BodyWeight;
+                BodyFatPercentage = model.BodyFatPercentage;
+                MaxBloodPressure = model.MaxBloodPressure;
+                MinBloodPressure = model.MinBloodPressure;
+                BasalMetabolism = model.BasalMetabolism;
+                switch (model.Gender)
+                {
+                    case (int)GenderEnum.男性:
+                        MoveTioRegistBasicDataImageSource = ViewModelConst.ManImage;
+                        break;
+                    case (int)GenderEnum.女性:
+                        MoveTioRegistBasicDataImageSource = ViewModelConst.WomanImage;
+                        break;
+                    default:
+                        MoveTioRegistBasicDataImageSource = ViewModelConst.PersonImage;
+                        break;
+                }
+            }
+            // ニュース一覧を取得
+            Task.Run(SetNewsSourceTask);
+
+        }
+
     }
 }

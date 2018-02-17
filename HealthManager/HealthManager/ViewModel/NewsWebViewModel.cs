@@ -32,7 +32,7 @@ namespace HealthManager.ViewModel
         /// <param name="url"></param>
         public NewsWebViewModel(string url)
         {
-            BackHomeCommand = new Command(ViewModelCommonUtil.BackPage);
+            BackHomeCommand = new Command(ViewModelCommonUtil.DataBackPage);
             WebSource = url;
         }
 

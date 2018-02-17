@@ -45,7 +45,7 @@ namespace HealthManager.ViewModel
         /// <param name="targetBasicDataEnum"></param>
         public DataChartViewModel(BasicDataEnum targetBasicDataEnum)
         {
-            BackHomeCommand = new Command(ViewModelCommonUtil.BackPage);
+            BackHomeCommand = new Command(ViewModelCommonUtil.DataBackPage);
 
             _targetBasicDataEnum = targetBasicDataEnum;
 

@@ -147,6 +147,14 @@
         /// </summary>
         public const string Save = "Save";
         /// <summary>
+        /// {0}は必須入力項目です。
+        /// </summary>
+        public const string NotInputRequireData = "NotInputRequireData";
+        /// <summary>
+        /// {0}に不正な値が入力されています。
+        /// </summary>
+        public const string NotAvailableDataInput = "NotAvailableDataInput";
+        /// <summary>
         /// 登録
         /// </summary>
         public const string Regist = "Regist";

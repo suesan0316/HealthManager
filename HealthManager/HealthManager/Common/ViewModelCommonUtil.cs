@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Threading.Tasks;
 using HealthManager.Common.Constant;
 using HealthManager.DependencyInterface;
 using HealthManager.View;
@@ -99,9 +98,21 @@ namespace HealthManager.Common
             return DependencyService.Get<IImageService>().ResizeImage(originBytes,width,height);
         }
 
-        public static void BackPage()
+        /// <summary>
+        /// データ系画面で使用する戻る共通処理
+        /// </summary>
+        public static void DataBackPage()
         {
-            ViewModelConst.PageNavigation.PopAsync();
+            ViewModelConst.DataPageNavigation.PopAsync();
         }
+
+        /// <summary>
+        ///トレーニング系画面で使用する戻る共通処理
+        /// </summary>
+        public static void TrainingBackPage()
+        {
+            ViewModelConst.TrainingPageNavigation.PopAsync();
+        }
+
     }
 }

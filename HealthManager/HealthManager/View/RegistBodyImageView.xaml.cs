@@ -9,6 +9,7 @@ namespace HealthManager.View
         public RegistBodyImageView()
         {            
             InitializeComponent();
+            NavigationPage.SetHasNavigationBar(this, false);
         }
     }
 }

@@ -39,6 +39,10 @@ namespace HealthManager.ViewModel
 
         private string _trainingName;
 
+        private IList<Picker> _partList;
+
+        private IList<Picker> _loadList;
+
         public TrainingMasterViewModel()
         {
             CancleCommand = new Command(ViewModelCommonUtil.BackTrainingHome);
@@ -69,6 +73,7 @@ namespace HealthManager.ViewModel
             Part = PartItemSrouce.First(data => data.Id == partStructure.Part.Id);
             SubPart = SubPartItemSrouce.First(data => data.Id == partStructure.SubPart.Id);
             Load = LoadItemSrouce.First(data => data.Id == loadStructure.LoadList[0].Id);
+
         }
 
         /// <summary>
@@ -239,5 +244,51 @@ namespace HealthManager.ViewModel
                 Debug.WriteLine(e);
             }
         }
+
+        /// <summary>
+        /// 部位ピッカー作成
+        /// </summary>
+        /// <returns></returns>
+        private Picker CreatePartPicker()
+        {
+            var pick = new Picker
+            {
+                ItemsSource = PartItemSrouce
+            };
+
+            return pick;
+
+        }
+
+        /// <summary>
+        /// サブ部位ピッカー作成
+        /// </summary>
+        /// <returns></returns>
+        private Picker CreateSubPartPicker()
+        {
+            var pick = new Picker
+            {
+                ItemsSource = SubPartItemSrouce
+            };
+
+            return pick;
+
+        }
+
+        /// <summary>
+        /// 負荷ピッカー作成
+        /// </summary>
+        /// <returns></returns>
+        private Picker CreateLoadPicker()
+        {
+            var pick = new Picker
+            {
+                ItemsSource = SubPartItemSrouce
+            };
+
+            return pick;
+
+        }
+
     }
 }

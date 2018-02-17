@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -45,41 +46,59 @@ namespace HealthManager.ViewModel
         private bool _isLoading;
 
         /// <summary>
+        /// 更新フラグ
+        /// </summary>
+        private readonly bool _isUpdate;
+
+        /// <summary>
         /// コンストラクタ
         /// 基本データが存在しない場合はキャンセルボタンを非表示
         /// </summary>
         public InputBasicDataViewModel()
         {
-            SaveBaisicDataCommand = new Command(async () => await SaveBasicData());
-            CancleCommand = new Command(ViewModelCommonUtil.BackHome);
-
-            GenderItemSrouce = new List<GenderEnum>();
-            foreach (var gender in Enum.GetValues(typeof(GenderEnum)))
+            try
             {
-                GenderItemSrouce.Add((GenderEnum)gender);
+                SaveBaisicDataCommand = new Command(async () => await SaveBasicData());
+
+
+                GenderItemSrouce = new List<GenderEnum>();
+                foreach (var gender in Enum.GetValues(typeof(GenderEnum)))
+                {
+                    GenderItemSrouce.Add((GenderEnum) gender);
+                }
+
+                Gender = (int) GenderEnum.未選択;
+
+                CancelButtonIsVisible = true;
+
+                var model = BasicDataService.GetBasicData();
+                if (model != null)
+                {
+                    _id = model.Id;
+                    Name = model.Name;
+                    Gender = model.Gender;
+                    Age = model.Age;
+                    Height = model.Height;
+                    BodyWeight = model.BodyWeight;
+                    BodyFatPercentage = model.BodyFatPercentage;
+                    MaxBloodPressure = model.MaxBloodPressure;
+                    MinBloodPressure = model.MinBloodPressure;
+                    BasalMetabolism = model.BasalMetabolism;
+
+                    _isUpdate = true;
+                    CancleCommand = new Command(ViewModelCommonUtil.DataBackPage);
+                }
+                else
+                {
+                    CancelButtonIsVisible = false;
+                    CancleCommand = new Command(ViewModelCommonUtil.BackHome);
+                }
+
+                ErrorStack.Clear();
             }
-
-            Gender = (int)GenderEnum.未選択;
-
-            CancelButtonIsVisible = true;
-
-            var model = BasicDataService.GetBasicData();
-            if (model != null)
+            catch (Exception e)
             {
-                _id = model.Id;
-                Name = model.Name;
-                Gender = model.Gender;
-                Age = model.Age;
-                Height = model.Height;
-                BodyWeight = model.BodyWeight;
-                BodyFatPercentage = model.BodyFatPercentage;
-                MaxBloodPressure = model.MaxBloodPressure;
-                MinBloodPressure = model.MinBloodPressure;
-                BasalMetabolism = model.BasalMetabolism;
-            }
-            else
-            {
-                CancelButtonIsVisible = false;
+                Debug.WriteLine(e.StackTrace);
             }
         }
 
@@ -137,6 +156,8 @@ namespace HealthManager.ViewModel
         /// 性別ラベル
         /// </summary>
         public string GenderLabel => LanguageUtils.Get(LanguageKeys.Gender);
+
+        public IList<Xamarin.Forms.View> ErrorStack { get; set; } 
 
         /// <summary>
         /// 身長
@@ -328,6 +349,15 @@ namespace HealthManager.ViewModel
         {
             try
             {
+
+                if (!ValidationInputData(Name, gender: Gender, height: Height, age: Age,
+                    bodyWeight: BodyWeight, bodyFatPercentage: BodyFatPercentage,
+                    maxBloodPressure: MaxBloodPressure,
+                    minBloodPressure: MinBloodPressure, basalMetabolism: BasalMetabolism))
+                {
+                    return;
+                }
+
                 IsLoading = true;
                 if (BasicDataService.CheckExitTargetDayData(DateTime.Now))
                 {
@@ -359,12 +389,79 @@ namespace HealthManager.ViewModel
                 IsLoading = false;
                 await Application.Current.MainPage.DisplayAlert(LanguageUtils.Get(LanguageKeys.Complete),
                     LanguageUtils.Get(LanguageKeys.SaveComplete),LanguageUtils.Get(LanguageKeys.OK));
-                ViewModelCommonUtil.BackHome();
+
+                if (_isUpdate)
+                {
+                    ViewModelCommonUtil.DataBackPage();
+                }
+                else
+                {
+                    ViewModelCommonUtil.BackHome();
+                }
+                
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e);
+                Debug.WriteLine(e);
             }
+        }
+
+        /// <summary>
+        /// 入力項目のバリデーションチェックを実施します
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="gender"></param>
+        /// <param name="age"></param>
+        /// <param name="height"></param>
+        /// <param name="bodyWeight"></param>
+        /// <param name="bodyFatPercentage"></param>
+        /// <param name="maxBloodPressure"></param>
+        /// <param name="minBloodPressure"></param>
+        /// <param name="basalMetabolism"></param>
+        /// <returns></returns>
+        public bool ValidationInputData(string name, int gender, int age, float height, float bodyWeight,
+            float bodyFatPercentage,
+            int maxBloodPressure, int minBloodPressure, int basalMetabolism)
+        {
+
+            ErrorStack.Clear();
+
+            if (StringUtils.IsEmpty(name))
+            {
+                ErrorStack.Add(CreateErrorLabel(LanguageKeys.Name,LanguageKeys.NotInputRequireData));
+            }
+
+            if (age <= 0)
+            {
+                ErrorStack.Add(CreateErrorLabel(LanguageKeys.Age, LanguageKeys.NotAvailableDataInput));
+            }
+
+            if (height <= 0)
+            {
+                ErrorStack.Add(CreateErrorLabel(LanguageKeys.Height, LanguageKeys.NotAvailableDataInput));
+            }
+
+            if (bodyWeight <= 0)
+            {
+                ErrorStack.Add(CreateErrorLabel(LanguageKeys.BodyWeight, LanguageKeys.NotAvailableDataInput));
+            }
+
+            return ErrorStack.Count == 0;
+        }
+
+        /// <summary>
+        /// エラーラベルを生成します
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="errorType"></param>
+        /// <returns></returns>
+        public Label CreateErrorLabel(string key, string errorType)
+        {
+            return new Label
+            {
+                Text = LanguageUtils.Get(errorType,LanguageUtils.Get(key)),
+                TextColor = Color.Red
+            };
         }
     }
 }

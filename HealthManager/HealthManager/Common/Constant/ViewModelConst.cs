@@ -2,7 +2,7 @@
 
 namespace HealthManager.Common.Constant
 {
-    class ViewModelConst
+    public class ViewModelConst
     {
         /// <summary>
         /// 画像なし画像のString64
@@ -26,7 +26,29 @@ namespace HealthManager.Common.Constant
         /// </summary>
         public const string PersonImage = "person.png";
 
-        public static INavigation PageNavigation;
+        /// <summary>
+        /// トレーニング一覧画像ファイル
+        /// </summary>
+        public const string TrainingListImage = "man.png";
 
+        /// <summary>
+        /// トレーニングスケジュール画像ファイル
+        /// </summary>
+        public const string TrainingScheduleImage = "woman.png";
+
+        /// <summary>
+        /// トレーニング開始画像ファイル
+        /// </summary>
+        public const string TrainingStartImage = "person.png";
+
+        /// <summary>
+        /// データ系画面ナビゲーション参照
+        /// </summary>
+        public static INavigation DataPageNavigation;
+
+        /// <summary>
+        /// トレーニング系画面ナビゲーション参照
+        /// </summary>
+        public static INavigation TrainingPageNavigation;
     }
 }

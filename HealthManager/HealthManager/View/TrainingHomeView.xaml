@@ -1,17 +1,41 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:HealthManager.ViewModel"
+             xmlns:controls="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms"
              x:Class="HealthManager.View.TrainingHomeView">
     <ContentPage.BindingContext>
         <vm:TrainingHomeViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout>
-            <Button Text="{Binding AddTrainingLabel}" Command="{Binding AddTraningCommand}"></Button>
-            <Button Text="{Binding EditTrainingLabel}" Command="{Binding EditTrainingCommand}"></Button>
-            <Button Text="{Binding EditTrainingScheduleLabel}" Command="{Binding EditTrainingScheduleCommand}"></Button>
-            <Button Text="{Binding StrartTrainingLabel}" Command="{Binding StartTrainingCommand}"></Button>
+            <ScrollView>
+                <StackLayout Margin="30">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,30,0,0">
+                        <StackLayout Orientation="Vertical" Margin="0, 0, 40, 0">
+                            <controls:ImageButton Command="{Binding EditTrainingCommand}"
+                                                  Source="{Binding TrainingListButtonImage}"
+                                                  Style="{StaticResource HomeImageButtonStyle}" />
+                            <Label Text="{Binding EditTrainingLabel}" HorizontalOptions="Center" />
+                        </StackLayout>
+                        <StackLayout Orientation="Vertical">
+                            <controls:ImageButton Command="{Binding EditTrainingScheduleCommand}"
+                                                  Style="{StaticResource HomeImageButtonStyle}"
+                                                  Source="{Binding TrainingScheduleButtonImage}" />
+                            <Label Text="{Binding EditTrainingScheduleLabel}" HorizontalOptions="Center" />
+                        </StackLayout>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,30,0,0">
+                        <StackLayout Orientation="Vertical" Margin="0, 0, 40, 0">
+                            <controls:ImageButton Command="{Binding StartTrainingCommand}"
+                                                  Source="{Binding TrainingStartButtonImage}"
+                                                  Style="{StaticResource HomeImageButtonStyle}" />
+                            <Label Text="{Binding StrartTrainingLabel}" HorizontalOptions="Center" />
+                        </StackLayout>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
