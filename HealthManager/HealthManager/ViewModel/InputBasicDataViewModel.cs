@@ -48,7 +48,7 @@ namespace HealthManager.ViewModel
         /// <summary>
         /// 更新フラグ
         /// </summary>
-        private readonly bool _isUpdate;
+        private readonly bool _isUpdate;        
 
         /// <summary>
         /// コンストラクタ
@@ -59,8 +59,7 @@ namespace HealthManager.ViewModel
             try
             {
                 SaveBaisicDataCommand = new Command(async () => await SaveBasicData());
-
-
+                CancleCommand = new Command(ViewModelCommonUtil.BackHome);
                 GenderItemSrouce = new List<GenderEnum>();
                 foreach (var gender in Enum.GetValues(typeof(GenderEnum)))
                 {
@@ -86,12 +85,10 @@ namespace HealthManager.ViewModel
                     BasalMetabolism = model.BasalMetabolism;
 
                     _isUpdate = true;
-                    CancleCommand = new Command(ViewModelCommonUtil.DataBackPage);
                 }
                 else
                 {
                     CancelButtonIsVisible = false;
-                    CancleCommand = new Command(ViewModelCommonUtil.BackHome);
                 }
 
                 ErrorStack.Clear();
@@ -157,6 +154,9 @@ namespace HealthManager.ViewModel
         /// </summary>
         public string GenderLabel => LanguageUtils.Get(LanguageKeys.Gender);
 
+        /// <summary>
+        /// エラーラベルをスタックするレイアウトのChildren
+        /// </summary>
         public IList<Xamarin.Forms.View> ErrorStack { get; set; } 
 
         /// <summary>
@@ -390,15 +390,7 @@ namespace HealthManager.ViewModel
                 await Application.Current.MainPage.DisplayAlert(LanguageUtils.Get(LanguageKeys.Complete),
                     LanguageUtils.Get(LanguageKeys.SaveComplete),LanguageUtils.Get(LanguageKeys.OK));
 
-                if (_isUpdate)
-                {
-                    ViewModelCommonUtil.DataBackPage();
-                }
-                else
-                {
-                    ViewModelCommonUtil.BackHome();
-                }
-                
+                ViewModelCommonUtil.BackHome();
             }
             catch (Exception e)
             {

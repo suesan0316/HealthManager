@@ -5,9 +5,9 @@
     <ContentPage.Content>
         <StackLayout Margin="30">
             <Label Text="{Binding TrainingNameLabel}" />
-            
-            <StackLayout Children="{Binding PartList}"></StackLayout>
-            <StackLayout Children="{Binding LoadList}"></StackLayout>
+
+            <StackLayout x:Name="PartStack"></StackLayout>
+            <StackLayout x:Name="LoadStack"></StackLayout>
 
             <Entry Placeholder="{Binding NamePlaceholderLabel}" Text="{Binding TrainingName}" IsEnabled="{Binding IsDisable}" />
             <Picker ItemsSource="{Binding PartItemSrouce}" ItemDisplayBinding="{Binding PartName}"  SelectedItem="{Binding Part}" IsEnabled="{Binding IsDisable}" ></Picker>

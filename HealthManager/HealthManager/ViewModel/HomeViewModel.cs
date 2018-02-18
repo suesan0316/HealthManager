@@ -54,7 +54,6 @@ namespace HealthManager.ViewModel
             // 各コマンドの初期化
             MoveToRegistBodyImageCommand = new Command(MoveToRegistBodyImage);
             MoveToRegistBasicDataCommand = new Command(MoveToRegistBasicData);
-            MoveToBodyImageListCommand = new Command(MoveToBodyImageList);
             MoveToDataChartCommand = new Command(MoveToDataChart);
             NewsListItemTappedCommand = new Command<NewsStructure>(item =>
                 {
@@ -71,6 +70,8 @@ namespace HealthManager.ViewModel
                 BodyImageRegistedDateString =
                     LanguageUtils.Get(LanguageKeys.RegistedDate) +
                     ViewModelCommonUtil.FormatDateString(bodyImageModel.RegistedDate);
+
+                MoveToBodyImageListCommand = new Command(MoveToBodyImageList);
             }
             else
             {
@@ -79,6 +80,8 @@ namespace HealthManager.ViewModel
                 BodyImage = ImageSource.FromStream(() => new MemoryStream(ViewModelCommonUtil.GetResizeImageBytes(imageAsBytes, 300, 425)));
                 BodyImageRegistedDateString =
                     LanguageUtils.Get(LanguageKeys.RegistedDate) + StringConst.Empty;
+
+                MoveToBodyImageListCommand = new Command(MoveToRegistBodyImage);
             }
 
             // 基本データを取得
@@ -369,7 +372,7 @@ namespace HealthManager.ViewModel
         /// <summary>
         ///     基本データ登録画面遷移
         /// </summary>
-        private static void MoveToRegistBasicData()
+        private  void MoveToRegistBasicData()
         {
             ViewModelConst.DataPageNavigation.PushAsync(new InputBasicDataView());
         }
@@ -385,70 +388,11 @@ namespace HealthManager.ViewModel
         }
 
         /// <summary>
-        ///     体格遷移画面遷移
+        ///  体格遷移画面遷移
         /// </summary>
         public  void MoveToBodyImageList()
         {
             ViewModelConst.DataPageNavigation.PushAsync(new BodyImageView());
         }
-
-
-        /// <summary>
-        /// ホーム画面に表示されている情報をリロードする
-        /// </summary>
-        public void ReloadHome()
-        {
-
-            // 表示する体格画像を取得
-            var bodyImageModel = BodyImageService.GetBodyImage();
-            if (bodyImageModel != null)
-            {
-                var imageAsBytes = Convert.FromBase64String(bodyImageModel.ImageBase64String);
-
-                BodyImage = ImageSource.FromStream(() => new MemoryStream(ViewModelCommonUtil.GetResizeImageBytes(imageAsBytes, 300, 425)));
-                BodyImageRegistedDateString =
-                    LanguageUtils.Get(LanguageKeys.RegistedDate) +
-                    ViewModelCommonUtil.FormatDateString(bodyImageModel.RegistedDate);
-            }
-            else
-            {
-                // 登録されている体格画像がない場合はイメージなし用の画像を表示する
-                var imageAsBytes = Convert.FromBase64String(ViewModelConst.NoImageString64);
-                BodyImage = ImageSource.FromStream(() => new MemoryStream(ViewModelCommonUtil.GetResizeImageBytes(imageAsBytes, 300, 425)));
-                BodyImageRegistedDateString =
-                    LanguageUtils.Get(LanguageKeys.RegistedDate) + StringConst.Empty;
-            }
-
-            // 基本データを取得
-            var model = BasicDataService.GetBasicData();
-            if (model != null)
-            {
-                Name = model.Name;
-                Gender = ((GenderEnum)model.Gender).ToString();
-                Age = model.Age;
-                Height = model.Height;
-                BodyWeight = model.BodyWeight;
-                BodyFatPercentage = model.BodyFatPercentage;
-                MaxBloodPressure = model.MaxBloodPressure;
-                MinBloodPressure = model.MinBloodPressure;
-                BasalMetabolism = model.BasalMetabolism;
-                switch (model.Gender)
-                {
-                    case (int)GenderEnum.男性:
-                        MoveTioRegistBasicDataImageSource = ViewModelConst.ManImage;
-                        break;
-                    case (int)GenderEnum.女性:
-                        MoveTioRegistBasicDataImageSource = ViewModelConst.WomanImage;
-                        break;
-                    default:
-                        MoveTioRegistBasicDataImageSource = ViewModelConst.PersonImage;
-                        break;
-                }
-            }
-            // ニュース一覧を取得
-            Task.Run(SetNewsSourceTask);
-
-        }
-
     }
 }

@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:HealthManager.ViewModel"
@@ -9,12 +10,26 @@
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout>
-                <controls:ImageButton Text="{Binding TakeImageCameraLabel}"  Command="{Binding TakeImageCameraCommand}" Orientation="ImageToLeft"  Source="camera.png" ImageHeightRequest="200" ImageWidthRequest="200" HeightRequest="120"></controls:ImageButton>
-                <controls:ImageButton Text="{Binding TakeImageLibraryLabel}" Command="{Binding TakeImageLibraryaCommand}" Orientation="ImageToLeft"  Source="library.png" ImageHeightRequest="200" ImageWidthRequest="200" HeightRequest="120"></controls:ImageButton>
-                <Image Source="{Binding BodyImage}"></Image>
-                <Button Text="{Binding RegistButtonLabel}" IsVisible="{Binding RegistButtonIsVisible}" Command="{Binding RegistBodyImageCommand}" Style="{StaticResource NormalButtonStyle}"></Button>
-                <Button Text="{Binding CancelButtonLabel}" Command="{Binding BackHomeCommand}" Style="{StaticResource NormalButtonStyle}"></Button>
+            <StackLayout Margin="30">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,30,0,0">
+                    <StackLayout Orientation="Vertical" Margin="0, 0, 40, 0">
+                        <controls:ImageButton Command="{Binding TakeImageCameraCommand}"
+                                              Source="camera.png"
+                                              Style="{StaticResource HomeImageButtonStyle}" />
+                        <Label Text="{Binding TakeImageCameraLabel}" HorizontalOptions="Center" />
+                    </StackLayout>
+                    <StackLayout Orientation="Vertical">
+                        <controls:ImageButton Command="{Binding TakeImageLibraryaCommand}"
+                                              Style="{StaticResource HomeImageButtonStyle}"
+                                              Source="library.png" />
+                        <Label Text="{Binding TakeImageLibraryLabel}" HorizontalOptions="Center" />
+                    </StackLayout>
+                </StackLayout>
+                <Image Source="{Binding BodyImage}" />
+                <Button Text="{Binding RegistButtonLabel}" IsVisible="{Binding RegistButtonIsVisible}"
+                        Command="{Binding RegistBodyImageCommand}" Style="{StaticResource NormalButtonStyle}" />
+                <Button Text="{Binding CancelButtonLabel}" Command="{Binding BackHomeCommand}"
+                        Style="{StaticResource NormalButtonStyle}" />
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

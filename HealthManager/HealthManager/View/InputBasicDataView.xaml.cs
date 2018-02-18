@@ -15,9 +15,7 @@ namespace HealthManager.View
                 NavigationPage.SetHasNavigationBar(this, false);
             }
             var vm = new InputBasicDataViewModel();
-
-            vm.ErrorStack = ErrorStack.Children;
-            
+            vm.ErrorStack = ErrorStack.Children;            
             BindingContext = vm;
         }
     }
