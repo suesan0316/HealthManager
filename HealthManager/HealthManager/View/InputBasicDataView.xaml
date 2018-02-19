@@ -10,12 +10,14 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout Margin="30">
-                <StackLayout  x:Name="ErrorStack"></StackLayout>
+                <StackLayout x:Name="ErrorStack" />
 
-<Label Text="{Binding NameLabel}" />
-                <Entry Placeholder="{Binding NamePlaceholderLabel}" Text="{Binding Name}" IsEnabled="{Binding IsDisable}" />
+                <Label Text="{Binding NameLabel}" />
+                <Entry Placeholder="{Binding NamePlaceholderLabel}" Text="{Binding Name}"
+                       IsEnabled="{Binding IsDisable}" />
                 <Label Text="{Binding GenderLabel}" />
-                <Picker ItemsSource="{Binding GenderItemSrouce}"  SelectedIndex="{Binding Gender}" IsEnabled="{Binding IsDisable}"></Picker>
+                <Picker ItemsSource="{Binding GenderItemSrouce}" SelectedIndex="{Binding Gender}"
+                        IsEnabled="{Binding IsDisable}" />
                 <Label Text="{Binding AgeLabel}" />
                 <Entry Placeholder="{Binding AgePlaceholderLabel}" Keyboard="Numeric" Text="{Binding Age}"
                        IsEnabled="{Binding IsDisable}" />
@@ -23,28 +25,35 @@
                 <Entry Placeholder="{Binding HeightPlaceholderLabel}" Keyboard="Numeric" Text="{Binding Height}"
                        IsEnabled="{Binding IsDisable}" />
                 <Label Text="{Binding BodyWeightLabel}" />
-                <Entry Placeholder="{Binding BodyWeightPlaceholderLabel}" Keyboard="Numeric" Text="{Binding BodyWeight}"
+                <Entry Placeholder="{Binding BodyWeightPlaceholderLabel}" Keyboard="Numeric"
+                       Text="{Binding BodyWeight}"
                        IsEnabled="{Binding IsDisable}" />
                 <Label Text="{Binding BmiLabel}" />
                 <Label Text="{Binding Bmi}" />
                 <Label Text="{Binding  BodyFatPercentageLabel}" />
-                <Entry Placeholder="{Binding BodyFatPercentagePlaceholderLabel}" Keyboard="Numeric" Text="{Binding BodyFatPercentage}"
+                <Entry Placeholder="{Binding BodyFatPercentagePlaceholderLabel}" Keyboard="Numeric"
+                       Text="{Binding BodyFatPercentage}"
                        IsEnabled="{Binding IsDisable}" />
                 <Label Text="{Binding BloodPressureLabel}" />
                 <StackLayout Orientation="Horizontal">
-                    <Entry Placeholder="{Binding MaxBloodPressurePlaceholderLabel}" Keyboard="Numeric" WidthRequest="100" Text="{Binding MaxBloodPressure} "
+                    <Entry Placeholder="{Binding MaxBloodPressurePlaceholderLabel}" Keyboard="Numeric"
+                           WidthRequest="100" Text="{Binding MaxBloodPressure} "
                            IsEnabled="{Binding IsDisable}" />
                     <Label Text="/" VerticalOptions="End" />
-                    <Entry Placeholder="{Binding MinBloodPressurePlaceholderLabel}" Keyboard="Numeric" WidthRequest="100" Text="{Binding MinBloodPressure}"
+                    <Entry Placeholder="{Binding MinBloodPressurePlaceholderLabel}" Keyboard="Numeric"
+                           WidthRequest="100" Text="{Binding MinBloodPressure}"
                            IsEnabled="{Binding IsDisable}" />
                 </StackLayout>
                 <Label Text="{Binding BasalMetabolismLabel}" />
-                <Entry Placeholder="{Binding BasalMetabolismPlaceholderLabel}" Keyboard="Numeric" Text="{Binding BasalMetabolism}"
+                <Entry Placeholder="{Binding BasalMetabolismPlaceholderLabel}" Keyboard="Numeric"
+                       Text="{Binding BasalMetabolism}"
                        IsEnabled="{Binding IsDisable}" />
                 <Label HorizontalOptions="Center" Text="{Binding LoadingLabel}" IsVisible="{Binding IsLoading}" />
                 <ActivityIndicator IsRunning="{Binding IsLoading}" />
-                <Button IsEnabled="{Binding IsDisable}" Text="{Binding SaveButtonLabel}" Command="{Binding SaveBaisicDataCommand}"  Style="{StaticResource NormalButtonStyle}"/>
-                <Button Text="{Binding CancelButtonLabel}" Command="{Binding CancleCommand}" Style="{StaticResource NormalButtonStyle}" />
+                <Button IsEnabled="{Binding IsDisable}" Text="{Binding SaveButtonLabel}"
+                        Command="{Binding SaveBaisicDataCommand}" Style="{StaticResource NormalButtonStyle}" />
+                <Button Text="{Binding CancelButtonLabel}" Command="{Binding CancleCommand}"
+                        Style="{StaticResource NormalButtonStyle}" />
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
