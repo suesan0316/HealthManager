@@ -389,8 +389,15 @@ namespace HealthManager.ViewModel
                 IsLoading = false;
                 await Application.Current.MainPage.DisplayAlert(LanguageUtils.Get(LanguageKeys.Complete),
                     LanguageUtils.Get(LanguageKeys.SaveComplete),LanguageUtils.Get(LanguageKeys.OK));
-
-                ViewModelCommonUtil.BackHome();
+                if (_isUpdate)
+                {
+                    MessagingCenter.Send(this, "reload",true);
+                    ViewModelCommonUtil.DataBackPage();
+                }
+                else
+                {
+                    ViewModelCommonUtil.BackHome();
+                }
             }
             catch (Exception e)
             {

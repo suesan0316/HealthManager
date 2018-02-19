@@ -234,9 +234,8 @@ namespace HealthManager.ViewModel
             {
                 BodyImageService.RegistBodyImage(_base64String);
             }
-
+            MessagingCenter.Send(this, "reload", true);
             ViewModelCommonUtil.DataBackPage();
-
         }
     }
 }
