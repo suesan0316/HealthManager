@@ -21,6 +21,9 @@ namespace HealthManager.ViewModel
     {
         public TrainingListViewModel()
         {
+            // 基本情報入力画面から戻ってきた際に基本情報をリロードする
+            MessagingCenter.Subscribe<TrainingMasterViewModel>(this, ViewModelConst.MessagingHomeReload,
+                (sender) => { ReloadList(); });
             BackPageCommand = new Command(ViewModelCommonUtil.TrainingBackPage);
             TrainingAddCommand = new Command(MoveToTrainingMaster);
             TrainingMasterItemTappedCommand = new Command<TrainingMasterModel>(item =>
@@ -76,6 +79,13 @@ namespace HealthManager.ViewModel
         {
             ViewModelConst.TrainingPageNavigation.PushAsync(new TrainingMasterView());
 //            ((App)Application.Current).ChangeScreen(new TrainingMasterView());
+        }
+
+        public void ReloadList()
+        {
+            Items.Clear();
+            var items = TrainingMasterService.GetTrainingMasterDataList();
+            items?.ForEach(data => Items.Add(data));
         }
     }
 }

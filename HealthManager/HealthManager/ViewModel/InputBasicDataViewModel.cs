@@ -391,7 +391,8 @@ namespace HealthManager.ViewModel
                     LanguageUtils.Get(LanguageKeys.SaveComplete),LanguageUtils.Get(LanguageKeys.OK));
                 if (_isUpdate)
                 {
-                    MessagingCenter.Send(this, "reload",true);
+                    // ホーム画面をリロードする
+                    MessagingCenter.Send(this, ViewModelConst.MessagingHomeReload);
                     ViewModelCommonUtil.DataBackPage();
                 }
                 else

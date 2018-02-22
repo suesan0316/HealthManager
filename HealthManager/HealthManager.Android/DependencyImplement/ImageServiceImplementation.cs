@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Android.Graphics;
 using HealthManager.DependencyInterface;
 using HealthManager.Droid.DependencyImplement;
@@ -12,6 +13,8 @@ namespace HealthManager.Droid.DependencyImplement
     {
         public byte[] ResizeImage(byte[] imageData, float width, float height)
         {
+            GC.Collect();
+
             // Load the bitmap
             var originalImage = BitmapFactory.DecodeByteArray(imageData, 0, imageData.Length);
             var resizedImage = Bitmap.CreateScaledBitmap(originalImage, (int)width, (int)height, false);
@@ -21,6 +24,7 @@ namespace HealthManager.Droid.DependencyImplement
                 resizedImage.Compress(Bitmap.CompressFormat.Jpeg, 100, ms);
                 return ms.ToArray();
             }
+            
         }
     }
 }

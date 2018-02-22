@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using HealthManager.Common;
+using HealthManager.Common.Constant;
 using HealthManager.Common.Language;
 using HealthManager.Model.Service;
 using HealthManager.Properties;
@@ -234,7 +235,9 @@ namespace HealthManager.ViewModel
             {
                 BodyImageService.RegistBodyImage(_base64String);
             }
-            MessagingCenter.Send(this, "reload", true);
+
+            // ホーム画面をリロードする
+            MessagingCenter.Send(this, ViewModelConst.MessagingHomeReload);
             ViewModelCommonUtil.DataBackPage();
         }
     }

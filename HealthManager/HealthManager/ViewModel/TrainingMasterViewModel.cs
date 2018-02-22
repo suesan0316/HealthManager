@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using HealthManager.Annotations;
 using HealthManager.Common;
+using HealthManager.Common.Constant;
 using HealthManager.Common.Extention;
 using HealthManager.Common.Language;
 using HealthManager.Model;
@@ -45,7 +46,7 @@ namespace HealthManager.ViewModel
 
         public TrainingMasterViewModel()
         {
-            CancleCommand = new Command(ViewModelCommonUtil.BackTrainingHome);
+            CancleCommand = new Command(Cancel);
             SaveTrainingMasterCommand = new Command(async () => await SaveTrainingMaster());
 
             PartItemSrouce = PartService.GetPartDataList();
@@ -59,7 +60,7 @@ namespace HealthManager.ViewModel
         public TrainingMasterViewModel(int id)
         {
             _targetTrainingMasterModel = TrainingMasterService.GetTrainingMasterData(id);
-            CancleCommand = new Command(ViewModelCommonUtil.BackTrainingHome);
+            CancleCommand = new Command(Cancel);
             SaveTrainingMasterCommand = new Command(async () => await SaveTrainingMaster());
 
             PartItemSrouce = PartService.GetPartDataList();
@@ -237,12 +238,22 @@ namespace HealthManager.ViewModel
 
                 await Application.Current.MainPage.DisplayAlert(LanguageUtils.Get(LanguageKeys.Complete),
                     LanguageUtils.Get(LanguageKeys.SaveComplete), LanguageUtils.Get(LanguageKeys.OK));
-                ViewModelCommonUtil.BackHome();
+
+                // ホーム画面をリロードする
+                MessagingCenter.Send(this, ViewModelConst.MessagingHomeReload);
+                ViewModelCommonUtil.TrainingBackPage();
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e);
             }
+        }
+
+        private void Cancel()
+        {
+            // 遷移元画面をリロードする
+            MessagingCenter.Send(this, ViewModelConst.MessagingHomeReload);
+            ViewModelConst.TrainingPageNavigation.PopAsync();
         }
 
         /// <summary>

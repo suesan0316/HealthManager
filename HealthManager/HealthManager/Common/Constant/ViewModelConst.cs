@@ -50,5 +50,15 @@ namespace HealthManager.Common.Constant
         /// トレーニング系画面ナビゲーション参照
         /// </summary>
         public static INavigation TrainingPageNavigation;
+
+        /// <summary>
+        /// MessageCenter識別子:ホーム画面リロード
+        /// </summary>
+        public const string MessagingHomeReload="reload";
+
+        /// <summary>
+        /// MessageCenter識別子:画面参照渡し
+        /// </summary>
+        public const string MessagingPassingView = "view";
     }
 }

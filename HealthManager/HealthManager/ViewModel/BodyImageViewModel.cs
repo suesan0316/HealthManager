@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using HealthManager.Common;
+using HealthManager.Common.Constant;
 using HealthManager.Common.Language;
 using HealthManager.Model.Service;
 using HealthManager.Properties;
+using HealthManager.View;
 using Xamarin.Forms;
 using XView = Xamarin.Forms.View;
 
@@ -24,7 +27,11 @@ namespace HealthManager.ViewModel
         public BodyImageViewModel()
         {
             BackHomeCommand = new Command(ViewModelCommonUtil.DataBackPage);
-            InitImageStackLayout();
+            MessagingCenter.Subscribe<BodyImageView, IList<XView>>(this, ViewModelConst.MessagingPassingView,
+                (sender,args) => {
+                InitImageStackLayout(args);
+            });
+            //InitImageStackLayout();
         }
 
         /// <summary>
@@ -46,6 +53,11 @@ namespace HealthManager.ViewModel
         }
 
         /// <summary>
+        /// エラーラベルをスタックするレイアウトのChildren
+        /// </summary>
+        public IList<XView> ImageStack { get; set; }
+
+        /// <summary>
         /// 戻るボタンラベル
         /// </summary>
         public string BackHomeLabel => LanguageUtils.Get(LanguageKeys.Return);
@@ -53,10 +65,11 @@ namespace HealthManager.ViewModel
         /// <summary>
         /// 画面に表示するレイアウトを生成
         /// </summary>
-        private void InitImageStackLayout()
+        private static void InitImageStackLayout(ICollection<XView> children)
         {
+            children.Clear();
             var bodyImageModels = BodyImageService.GetBodyImageList();
-            foreach (var value in bodyImageModels)
+             foreach (var value in bodyImageModels)
             {
                 var childStackLayout = new StackLayout();
                 var imageAsBytes = Convert.FromBase64String(value.ImageBase64String);
@@ -69,7 +82,7 @@ namespace HealthManager.ViewModel
                 var registedDateLabel = new Label { Text = value.RegistedDate.ToString(), HorizontalOptions = LayoutOptions.Center };
                 childStackLayout.Children.Add(registedDateLabel);
 
-                BodyImageContents.Add(childStackLayout);
+                children.Add(childStackLayout);
             }
         }
     }

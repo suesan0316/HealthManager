@@ -25,6 +25,21 @@ namespace HealthManager.ViewModel
     public class HomeViewModel : INotifyPropertyChanged
     {
         /// <summary>
+        ///     年齢
+        /// </summary>
+        private int _age;
+
+        /// <summary>
+        ///     基礎代謝
+        /// </summary>
+        private int _basalMetabolism;
+
+        /// <summary>
+        ///     体脂肪率
+        /// </summary>
+        private float _bodyFatPercentage;
+
+        /// <summary>
         ///     表示体格画像
         /// </summary>
         private ImageSource _bodyImage;
@@ -40,80 +55,64 @@ namespace HealthManager.ViewModel
         private float _bodyWeight;
 
         /// <summary>
-        ///     身長
-        /// </summary>
-        private float _height;
-
-        /// <summary>
-        ///  年齢
-        /// </summary>
-        private int _age;
-
-        /// <summary>
-        ///  名前
-        /// </summary>
-        private string _name;
-
-        /// <summary>
-        ///  性別
+        ///     性別
         /// </summary>
         private string _gender;
 
         /// <summary>
-        /// 体脂肪率
+        ///     身長
         /// </summary>
-        private float _bodyFatPercentage;
-
-        /// <summary>
-        /// 上の血圧
-        /// </summary>
-        private int _maxBloodPressure;
-
-        /// <summary>
-        /// 下の血圧
-        /// </summary>
-        private int _minBloodPressure;
-
-        /// <summary>
-        /// 基礎代謝
-        /// </summary>
-        private int _basalMetabolism;
-
-        private string _moveTioRegistBasicDataImageSource;
+        private float _height;
 
         /// <summary>
         ///     読み込み中フラグ
         /// </summary>
         private bool _isLoading;
 
+        /// <summary>
+        ///     上の血圧
+        /// </summary>
+        private int _maxBloodPressure;
+
+        /// <summary>
+        ///     下の血圧
+        /// </summary>
+        private int _minBloodPressure;
+
+        private string _moveTioRegistBasicDataImageSource;
+
+        /// <summary>
+        ///     名前
+        /// </summary>
+        private string _name;
+
         public HomeViewModel()
         {
             // 基本情報入力画面から戻ってきた際に基本情報をリロードする
-            MessagingCenter.Subscribe<InputBasicDataViewModel,bool>(this, "reload", (sender,args) => {
-                ReloadBasicData();
-            });
+            MessagingCenter.Subscribe<InputBasicDataViewModel>(this, ViewModelConst.MessagingHomeReload,
+                (sender) => { ReloadBasicData(); });
 
             // 体格画像登録画面から戻ってきた際に画像をリロードする
-            MessagingCenter.Subscribe<RegistBodyImageViewModel, bool>(this, "reload", (sender, args) => {
-                ReloadImage();
-            });
+            MessagingCenter.Subscribe<RegistBodyImageViewModel>(this, ViewModelConst.MessagingHomeReload,
+                (sender) => { ReloadImage(); });
 
             // 各コマンドの初期化
             MoveToRegistBodyImageCommand = new Command(MoveToRegistBodyImage);
             MoveToRegistBasicDataCommand = new Command(MoveToRegistBasicData);
             MoveToDataChartCommand = new Command(MoveToDataChart);
             NewsListItemTappedCommand = new Command<NewsStructure>(item =>
-                {
-                    ViewModelConst.DataPageNavigation.PushAsync(new NewsWebView(item.NewsUrl));
-                });
+            {
+                ViewModelConst.DataPageNavigation.PushAsync(new NewsWebView(item.NewsUrl));
+            });
 
             // 表示する体格画像を取得
             var bodyImageModel = BodyImageService.GetBodyImage();
             if (bodyImageModel != null)
             {
                 var imageAsBytes = Convert.FromBase64String(bodyImageModel.ImageBase64String);
-                
-                BodyImage = ImageSource.FromStream(() => new MemoryStream(ViewModelCommonUtil.GetResizeImageBytes(imageAsBytes,300,425)));
+
+                BodyImage = ImageSource.FromStream(() =>
+                    new MemoryStream(ViewModelCommonUtil.GetResizeImageBytes(imageAsBytes, 300, 425)));
                 BodyImageRegistedDateString =
                     LanguageUtils.Get(LanguageKeys.RegistedDate) +
                     ViewModelCommonUtil.FormatDateString(bodyImageModel.RegistedDate);
@@ -124,7 +123,8 @@ namespace HealthManager.ViewModel
             {
                 // 登録されている体格画像がない場合はイメージなし用の画像を表示する
                 var imageAsBytes = Convert.FromBase64String(ViewModelConst.NoImageString64);
-                BodyImage = ImageSource.FromStream(() => new MemoryStream(ViewModelCommonUtil.GetResizeImageBytes(imageAsBytes, 300, 425)));
+                BodyImage = ImageSource.FromStream(() =>
+                    new MemoryStream(ViewModelCommonUtil.GetResizeImageBytes(imageAsBytes, 300, 425)));
                 BodyImageRegistedDateString =
                     LanguageUtils.Get(LanguageKeys.RegistedDate) + StringConst.Empty;
 
@@ -146,10 +146,10 @@ namespace HealthManager.ViewModel
                 BasalMetabolism = model.BasalMetabolism;
                 switch (model.Gender)
                 {
-                    case (int)GenderEnum.男性:
+                    case (int) GenderEnum.男性:
                         MoveTioRegistBasicDataImageSource = ViewModelConst.ManImage;
                         break;
-                    case (int)GenderEnum.女性:
+                    case (int) GenderEnum.女性:
                         MoveTioRegistBasicDataImageSource = ViewModelConst.WomanImage;
                         break;
                     default:
@@ -157,6 +157,7 @@ namespace HealthManager.ViewModel
                         break;
                 }
             }
+
             // ニュース一覧を取得
             Task.Run(SetNewsSourceTask);
         }
@@ -164,7 +165,8 @@ namespace HealthManager.ViewModel
         /// <summary>
         ///     ニュース一覧のアイテムリスト
         /// </summary>
-        public ObservableCollection<NewsStructure> Items { protected set; get; } = new ObservableCollection<NewsStructure>();
+        public ObservableCollection<NewsStructure> Items { protected set; get; } =
+            new ObservableCollection<NewsStructure>();
 
         /// <summary>
         ///     ニュース一覧アイテムタップコマンド
@@ -222,7 +224,7 @@ namespace HealthManager.ViewModel
         /// </summary>
         public string Name
         {
-            get=>_name;
+            get => _name;
             set
             {
                 _name = value;
@@ -240,7 +242,7 @@ namespace HealthManager.ViewModel
         /// </summary>
         public string Gender
         {
-            get=>_gender;
+            get => _gender;
             set
             {
                 _gender = value;
@@ -256,8 +258,9 @@ namespace HealthManager.ViewModel
         /// <summary>
         ///     年齢
         /// </summary>
-        public int Age {
-            get =>_age;
+        public int Age
+        {
+            get => _age;
             set
             {
                 _age = value;
@@ -337,7 +340,7 @@ namespace HealthManager.ViewModel
         /// </summary>
         public float BodyFatPercentage
         {
-            get=>_bodyFatPercentage;
+            get => _bodyFatPercentage;
             set
             {
                 _bodyFatPercentage = value;
@@ -355,7 +358,7 @@ namespace HealthManager.ViewModel
         /// </summary>
         public int MaxBloodPressure
         {
-            get=>_maxBloodPressure;
+            get => _maxBloodPressure;
             set
             {
                 _maxBloodPressure = value;
@@ -368,7 +371,7 @@ namespace HealthManager.ViewModel
         /// </summary>
         public int MinBloodPressure
         {
-            get=>_minBloodPressure;
+            get => _minBloodPressure;
             set
             {
                 _minBloodPressure = value;
@@ -423,7 +426,7 @@ namespace HealthManager.ViewModel
         public string MoveToBodyImageListLabel => LanguageUtils.Get(LanguageKeys.WatchBodyTransition);
 
         /// <summary>
-        /// データチャート遷移ボタンラベル
+        ///     データチャート遷移ボタンラベル
         /// </summary>
         public string MoveToDataChartLabel => LanguageUtils.Get(LanguageKeys.DataChart);
 
@@ -433,16 +436,16 @@ namespace HealthManager.ViewModel
         public string MoveToRegistBasicDataLabel => LanguageUtils.Get(LanguageKeys.UpdateBasicData);
 
         /// <summary>
-        /// ニュース一覧タイトルラベル
+        ///     ニュース一覧タイトルラベル
         /// </summary>
         public string NewsListTitleLabel => LanguageUtils.Get(LanguageKeys.NewsListTitle);
 
         /// <summary>
-        /// 基本データ更新ボタンファイルソース
+        ///     基本データ更新ボタンファイルソース
         /// </summary>
         public string MoveTioRegistBasicDataImageSource
         {
-            get=>_moveTioRegistBasicDataImageSource;
+            get => _moveTioRegistBasicDataImageSource;
             set
             {
                 _moveTioRegistBasicDataImageSource = value;
@@ -482,31 +485,30 @@ namespace HealthManager.ViewModel
         /// <summary>
         ///     基本データ登録画面遷移
         /// </summary>
-        private  void MoveToRegistBasicData()
+        private void MoveToRegistBasicData()
         {
             ViewModelConst.DataPageNavigation.PushAsync(new InputBasicDataView());
         }
 
         /// <summary>
-        /// データチャート画面遷移
+        ///     データチャート画面遷移
         /// </summary>
         public void MoveToDataChart()
         {
             //((App)Application.Current).ChangeScreen(new DataSelectView());
             ViewModelConst.DataPageNavigation.PushAsync(new DataSelectView());
-
         }
 
         /// <summary>
-        ///  体格遷移画面遷移
+        ///     体格遷移画面遷移
         /// </summary>
-        public  void MoveToBodyImageList()
+        public void MoveToBodyImageList()
         {
             ViewModelConst.DataPageNavigation.PushAsync(new BodyImageView());
         }
 
         /// <summary>
-        /// 基本データのリロード
+        ///     基本データのリロード
         /// </summary>
         public void ReloadBasicData()
         {
@@ -515,7 +517,7 @@ namespace HealthManager.ViewModel
             if (model != null)
             {
                 Name = model.Name;
-                Gender = ((GenderEnum)model.Gender).ToString();
+                Gender = ((GenderEnum) model.Gender).ToString();
                 Age = model.Age;
                 Height = model.Height;
                 BodyWeight = model.BodyWeight;
@@ -525,10 +527,10 @@ namespace HealthManager.ViewModel
                 BasalMetabolism = model.BasalMetabolism;
                 switch (model.Gender)
                 {
-                    case (int)GenderEnum.男性:
+                    case (int) GenderEnum.男性:
                         MoveTioRegistBasicDataImageSource = ViewModelConst.ManImage;
                         break;
-                    case (int)GenderEnum.女性:
+                    case (int) GenderEnum.女性:
                         MoveTioRegistBasicDataImageSource = ViewModelConst.WomanImage;
                         break;
                     default:
@@ -539,7 +541,7 @@ namespace HealthManager.ViewModel
         }
 
         /// <summary>
-        /// 体格画像のリロード
+        ///     体格画像のリロード
         /// </summary>
         public void ReloadImage()
         {
@@ -549,7 +551,8 @@ namespace HealthManager.ViewModel
             {
                 var imageAsBytes = Convert.FromBase64String(bodyImageModel.ImageBase64String);
 
-                BodyImage = ImageSource.FromStream(() => new MemoryStream(ViewModelCommonUtil.GetResizeImageBytes(imageAsBytes, 300, 425)));
+                BodyImage = ImageSource.FromStream(() =>
+                    new MemoryStream(ViewModelCommonUtil.GetResizeImageBytes(imageAsBytes, 300, 425)));
                 BodyImageRegistedDateString =
                     LanguageUtils.Get(LanguageKeys.RegistedDate) +
                     ViewModelCommonUtil.FormatDateString(bodyImageModel.RegistedDate);
@@ -560,7 +563,8 @@ namespace HealthManager.ViewModel
             {
                 // 登録されている体格画像がない場合はイメージなし用の画像を表示する
                 var imageAsBytes = Convert.FromBase64String(ViewModelConst.NoImageString64);
-                BodyImage = ImageSource.FromStream(() => new MemoryStream(ViewModelCommonUtil.GetResizeImageBytes(imageAsBytes, 300, 425)));
+                BodyImage = ImageSource.FromStream(() =>
+                    new MemoryStream(ViewModelCommonUtil.GetResizeImageBytes(imageAsBytes, 300, 425)));
                 BodyImageRegistedDateString =
                     LanguageUtils.Get(LanguageKeys.RegistedDate) + StringConst.Empty;
 
