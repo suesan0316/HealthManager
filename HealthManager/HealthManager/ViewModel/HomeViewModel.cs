@@ -469,7 +469,7 @@ namespace HealthManager.ViewModel
         {
             IsLoading = true;
             var service = NewsServiceFactory.CreateNewsService();
-            var structures = await service.GetNewsData();
+            var structures = await service.GetHealthNewsData();
             structures.ForEach(data => Items.Add(data));
             IsLoading = false;
         }

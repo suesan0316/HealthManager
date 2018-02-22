@@ -6,6 +6,7 @@ namespace HealthManager.ViewModel.Logic.News.Service
 {
     public interface INewsService
     {
-        Task<List<NewsStructure>> GetNewsData();
+        Task<List<NewsStructure>> GetHealthNewsData();
+        Task<List<NewsStructure>> GetTrainingNewsData();
     }
 }

@@ -64,6 +64,7 @@
     <Compile Include="ViewModel\EditTrainingScheduleViewModel.cs" />
     <Compile Include="ViewModel\Logic\News\Factory\NewsServiceFactory.cs" />
     <Compile Include="ViewModel\Logic\News\Implement\NewsService.cs" />
+    <Compile Include="ViewModel\Logic\News\Implement\YahooTrainingNewsService.cs" />
     <Compile Include="ViewModel\Logic\News\Implement\ZaikeiNewsService.cs" />
     <Compile Include="ViewModel\Logic\News\Implement\YomiuriNewsService.cs" />
     <Compile Include="ViewModel\Logic\News\Service\INewsService.cs" />
