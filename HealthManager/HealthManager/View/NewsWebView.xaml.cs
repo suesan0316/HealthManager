@@ -14,11 +14,11 @@ namespace HealthManager.View
             NavigationPage.SetHasNavigationBar(this, false);
         }
 
-        public NewsWebView(string url)
+        public NewsWebView(string url,INavigation navigation)
         {
             InitializeComponent();
             WebView.Source = url;
-            BindingContext = new NewsWebViewModel(url);
+            BindingContext = new NewsWebViewModel(url, navigation);
             NavigationPage.SetHasNavigationBar(this, false);
         }
     }

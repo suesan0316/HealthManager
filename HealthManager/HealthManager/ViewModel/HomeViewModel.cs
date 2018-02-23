@@ -102,7 +102,7 @@ namespace HealthManager.ViewModel
             MoveToDataChartCommand = new Command(MoveToDataChart);
             NewsListItemTappedCommand = new Command<NewsStructure>(item =>
             {
-                ViewModelConst.DataPageNavigation.PushAsync(new NewsWebView(item.NewsUrl));
+                ViewModelConst.DataPageNavigation.PushAsync(new NewsWebView(item.NewsUrl,ViewModelConst.DataPageNavigation));
             });
 
             // 表示する体格画像を取得

@@ -8,7 +8,9 @@
     </ContentPage.BindingContext>
     <StackLayout Margin="30">
         <Button Text="{Binding BackHomeLabel}" Command="{Binding BackHomeCommand}"  Style="{StaticResource NormalButtonStyle}"/>
-        <forms:ChartView  HeightRequest="150" Chart="{Binding Chart}" />
+        <ScrollView Orientation="Horizontal"  HeightRequest="450">
+            <forms:ChartView WidthRequest="{Binding ChartWidth}"  HeightRequest="450"  Chart="{Binding Chart}" />
+        </ScrollView>
         <Label  Text="{Binding TermText}" />
         <Label  Text="{Binding TermMaxText}" />
         <Label Text="{Binding TermMinText}" />

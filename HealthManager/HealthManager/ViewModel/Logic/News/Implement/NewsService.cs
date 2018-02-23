@@ -12,18 +12,15 @@ namespace HealthManager.ViewModel.Logic.News.Implement
         {
             var yomiuriNewsService = new YomiuriNewsService();
             var zaikeiNewsService = new ZaikeiNewsService();
-            var yahooTrainingNewsService = new YahooTrainingNewsService();
-
+            
             var newsStructures = new List<NewsStructure>();
 
             var yomiuriNewsDictionary = await yomiuriNewsService.GetNewsSourceDictionary();
             var zaikeiNewsDictionary = await zaikeiNewsService.GetNewsSourceDictionary();
-            var yahooNewsDictionary = await yahooTrainingNewsService.GetNewsSourceDictionary();
-
+            
             yomiuriNewsDictionary.ForEach(data => newsStructures.Add(new NewsStructure(){NewsTitle = data.Key,NewsUrl = data.Value}));
             zaikeiNewsDictionary.ForEach(data => newsStructures.Add(new NewsStructure() { NewsTitle = data.Key, NewsUrl = data.Value }));
-            yahooNewsDictionary.ForEach(data => newsStructures.Add(new NewsStructure() { NewsTitle = data.Key, NewsUrl = data.Value }));
-
+            
             return newsStructures;
         }
 

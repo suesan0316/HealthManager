@@ -19,6 +19,8 @@ namespace HealthManager.ViewModel
         /// </summary>
         private string _webSource;
 
+        private readonly INavigation _navigation;
+
         /// <summary>
         /// デフォルトのコンストラクタは使用しない想定
         /// </summary>
@@ -30,9 +32,11 @@ namespace HealthManager.ViewModel
         /// コンストラクタ
         /// </summary>
         /// <param name="url"></param>
-        public NewsWebViewModel(string url)
+        /// <param name="navigation"></param>
+        public NewsWebViewModel(string url,INavigation navigation)
         {
-            BackHomeCommand = new Command(ViewModelCommonUtil.DataBackPage);
+            BackHomeCommand = new Command(ReturnHome);
+            this._navigation = navigation;
             WebSource = url;
         }
 
@@ -66,5 +70,10 @@ namespace HealthManager.ViewModel
         /// 戻るボタンラベル
         /// </summary>
         public string BackHomeLabel => LanguageUtils.Get(LanguageKeys.Return);
+
+        private void ReturnHome()
+        {
+            _navigation.PopAsync();
+        }
     }
 }

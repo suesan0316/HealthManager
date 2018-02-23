@@ -242,5 +242,9 @@
         /// トレーニングを編集する
         /// </summary>
         public const string EditTraining = "EditTraining";
+        /// <summary>
+        /// トレーニングニュース一覧
+        /// </summary>
+        public const string TrainingNewsListTitle = "TrainingNewsListTitle";
     }
 }
