@@ -1,22 +1,31 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="HealthManager.View.TrainingMasterView">
     <ContentPage.Content>
-        <StackLayout Margin="30">
-            <Label Text="{Binding TrainingNameLabel}" />
-
-            <StackLayout x:Name="PartStack"></StackLayout>
-            <StackLayout x:Name="LoadStack"></StackLayout>
-
-            <Entry Placeholder="{Binding NamePlaceholderLabel}" Text="{Binding TrainingName}" IsEnabled="{Binding IsDisable}" />
-            <Picker ItemsSource="{Binding PartItemSrouce}" ItemDisplayBinding="{Binding PartName}"  SelectedItem="{Binding Part}" IsEnabled="{Binding IsDisable}" ></Picker>
-            <Picker ItemsSource="{Binding SubPartItemSrouce}"  ItemDisplayBinding="{Binding SubPartName}"  SelectedItem="{Binding SubPart}"  IsEnabled="{Binding IsDisable}"></Picker>
-            <Picker ItemsSource="{Binding LoadItemSrouce}"  ItemDisplayBinding="{Binding LoadName}"  SelectedItem="{Binding Load}"  IsEnabled="{Binding IsDisable}"></Picker>
-            <Label HorizontalOptions="Center" Text="{Binding LoadingLabel}" IsVisible="{Binding IsLoading}" />
-            <ActivityIndicator IsRunning="{Binding IsLoading}" />
-            <Button IsEnabled="{Binding IsDisable}" Text="{Binding SaveButtonLabel}" Command="{Binding SaveTrainingMasterCommand}"  Style="{StaticResource NormalButtonStyle}"/>
-            <Button Text="{Binding CancelButtonLabel}" Command="{Binding CancleCommand}" IsVisible="{Binding CancelButtonIsVisible}" Style="{StaticResource NormalButtonStyle}" />
+        <StackLayout>
+            <ScrollView>
+                <StackLayout Margin="30">
+                    <Label Text="{Binding TrainingNameLabel}" />
+                    <Entry Placeholder="{Binding NamePlaceholderLabel}" Text="{Binding TrainingName}"
+                           IsEnabled="{Binding IsDisable}" />
+                    <Label Text="{Binding TrainingPartLabel}"></Label>
+                    <StackLayout x:Name="PartStack" />
+                    <Button Text="{Binding AddPartButtonLabel}" Command="{Binding AddPartStackCommand}" />
+                    <Button Text="{Binding DeletePartButtonLabel}" Command="{Binding DeletePartStackCommand}" />
+                    <Label Text="{Binding TrainingLoadLabel}"></Label>
+                    <StackLayout x:Name="LoadStack" />
+                    <Button Text="{Binding AddLoadButtonLabel}" Command="{Binding AddLoadStackCommand}" />
+                    <Button Text="{Binding DeleteLoadButtonLabel}" Command="{Binding DeleteLoadStackCommand}" />
+                    <Label HorizontalOptions="Center" Text="{Binding LoadingLabel}" IsVisible="{Binding IsLoading}" />
+                    <ActivityIndicator IsRunning="{Binding IsLoading}" />
+                    <Button IsEnabled="{Binding IsDisable}" Text="{Binding SaveButtonLabel}"
+                            Command="{Binding SaveTrainingMasterCommand}" Style="{StaticResource NormalButtonStyle}" />
+                    <Button Text="{Binding CancelButtonLabel}" Command="{Binding CancleCommand}"
+                            IsVisible="{Binding CancelButtonIsVisible}" Style="{StaticResource NormalButtonStyle}" />
+                </StackLayout>
+            </ScrollView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

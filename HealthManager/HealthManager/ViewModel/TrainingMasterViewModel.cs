@@ -32,55 +32,87 @@ namespace HealthManager.ViewModel
         /// </summary>
         private bool _isLoading;
 
-        private LoadModel _load;
-
-        private PartModel _part;
-
-        private SubPartModel _subPart;
-
         private string _trainingName;
-
-        private IList<Picker> _partList;
-
-        private IList<Picker> _loadList;
 
         public TrainingMasterViewModel()
         {
-            CancleCommand = new Command(Cancel);
-            SaveTrainingMasterCommand = new Command(async () => await SaveTrainingMaster());
-
-            PartItemSrouce = PartService.GetPartDataList();
-            SubPartService.GetSubPartDataList().ForEach(data => SubPartItemSrouce.Add(data));
-            LoadService.GetLoadDataList().ForEach(data => LoadItemSrouce.Add(data));
-            Part = PartItemSrouce[0];
-            SubPart = SubPartItemSrouce[0];
-            Load = LoadItemSrouce[0];
         }
 
-        public TrainingMasterViewModel(int id)
+        public TrainingMasterViewModel(StackLayout partStack, StackLayout loadStack)
         {
+            PartStack = partStack;
+            LoadStack = loadStack;
+
+            CancleCommand = new Command(Cancel);
+            SaveTrainingMasterCommand = new Command(async () => await SaveTrainingMaster());
+            AddPartStackCommand = new Command(AddPartStack);
+            DeletePartStackCommand = new Command(DeletePartStack);
+            AddLoadStackCommand = new Command(AddLoadStack);
+            DeleteLoadStackCommand = new Command(DeleteLoadStack);
+
+            AddPartStack();
+            AddLoadStack();
+        }
+
+        public TrainingMasterViewModel(StackLayout partStack, StackLayout loadStack, int id)
+        {
+            PartStack = partStack;
+            LoadStack = loadStack;
+
             _targetTrainingMasterModel = TrainingMasterService.GetTrainingMasterData(id);
             CancleCommand = new Command(Cancel);
             SaveTrainingMasterCommand = new Command(async () => await SaveTrainingMaster());
 
-            PartItemSrouce = PartService.GetPartDataList();
-            SubPartService.GetSubPartDataList().ForEach(data => SubPartItemSrouce.Add(data));
-            LoadService.GetLoadDataList().ForEach(data => LoadItemSrouce.Add(data));
 
-            var partStructure = JsonConvert.DeserializeObject<PartStructure>(_targetTrainingMasterModel.Part);
+            var partStructureList = JsonConvert.DeserializeObject<List<PartStructure>>(_targetTrainingMasterModel.Part);
             var loadStructure = JsonConvert.DeserializeObject<LoadStructure>(_targetTrainingMasterModel.Load);
+            foreach (var data in partStructureList)
+            {
+                AddPartStack(data.Part.Id,data.SubPart.Id);
+            }
+
+            foreach (var data in loadStructure.LoadList)
+            {
+                AddLoadStack(data.Id);
+            }
 
             TrainingName = _targetTrainingMasterModel.TrainingName;
-            Part = PartItemSrouce.First(data => data.Id == partStructure.Part.Id);
-            SubPart = SubPartItemSrouce.First(data => data.Id == partStructure.SubPart.Id);
-            Load = LoadItemSrouce.First(data => data.Id == loadStructure.LoadList[0].Id);
-
         }
+
+        /// <summary>
+        ///     部位をスタックするレイアウト
+        /// </summary>
+        public StackLayout PartStack { get; set; }
+
+        /// <summary>
+        ///     負荷をスタックするレイアウト
+        /// </summary>
+        public StackLayout LoadStack { get; set; }
 
         /// <summary>
         ///     保存ボタンコマンド
         /// </summary>
         public ICommand SaveTrainingMasterCommand { get; }
+
+        /// <summary>
+        ///     部位を追加するボタンコマンド
+        /// </summary>
+        public ICommand AddPartStackCommand { get; }
+
+        /// <summary>
+        ///     部位を削除するボタンコマンド
+        /// </summary>
+        public ICommand DeletePartStackCommand { get; }
+
+        /// <summary>
+        ///     負荷を追加するボタンコマンド
+        /// </summary>
+        public ICommand AddLoadStackCommand { get; }
+
+        /// <summary>
+        ///     負荷を削除するボタンコマンド
+        /// </summary>
+        public ICommand DeleteLoadStackCommand { get; }
 
         /// <summary>
         ///     キャンセルボタンコマンド
@@ -97,49 +129,6 @@ namespace HealthManager.ViewModel
             {
                 _trainingName = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TrainingName)));
-            }
-        }
-
-        /// <summary>
-        ///     部位
-        /// </summary>
-        public PartModel Part
-        {
-            get => _part;
-            set
-            {
-                _part = value;
-                SubPartItemSrouce = new ObservableCollection<SubPartModel>();
-                SubPartService.GetSubPartDataList(value.Id).ForEach(data => SubPartItemSrouce.Add(data));
-                SubPart = SubPartItemSrouce[0];
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Part)));
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SubPartItemSrouce)));
-            }
-        }
-
-        /// <summary>
-        ///     サブ部位
-        /// </summary>
-        public SubPartModel SubPart
-        {
-            get => _subPart;
-            set
-            {
-                _subPart = value ?? SubPartItemSrouce[0];
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SubPart)));
-            }
-        }
-
-        /// <summary>
-        ///     負荷
-        /// </summary>
-        public LoadModel Load
-        {
-            get => _load;
-            set
-            {
-                _load = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Load)));
             }
         }
 
@@ -163,23 +152,6 @@ namespace HealthManager.ViewModel
         public bool IsDisable => !_isLoading;
 
         /// <summary>
-        ///     部位リストボックスアイテム
-        /// </summary>
-        public List<PartModel> PartItemSrouce { get; }
-
-        /// <summary>
-        ///     部位リストボックスアイテム
-        /// </summary>
-        public ObservableCollection<SubPartModel> SubPartItemSrouce { protected set; get; } =
-            new ObservableCollection<SubPartModel>();
-
-        /// <summary>
-        ///     負荷リストボックスアイテム
-        /// </summary>
-        public ObservableCollection<LoadModel> LoadItemSrouce { protected set; get; } =
-            new ObservableCollection<LoadModel>();
-
-        /// <summary>
         ///     キャンセルボタンラベル
         /// </summary>
         public string CancelButtonLabel => LanguageUtils.Get(LanguageKeys.Cancel);
@@ -199,7 +171,40 @@ namespace HealthManager.ViewModel
         /// </summary>
         public string TrainingNameLabel => LanguageUtils.Get(LanguageKeys.TrainingName);
 
+        /// <summary>
+        ///     トレーニング名プレースホルダー
+        /// </summary>
         public string TrainingNamePlaceholderLabel => LanguageUtils.Get(LanguageKeys.InputTrainingName);
+
+        /// <summary>
+        ///     部位追加ボタンラベル
+        /// </summary>
+        public string AddPartButtonLabel => LanguageUtils.Get(LanguageKeys.AddPart);
+
+        /// <summary>
+        ///     部位削除ボタンラベル
+        /// </summary>
+        public string DeletePartButtonLabel => LanguageUtils.Get(LanguageKeys.DeletePart);
+
+        /// <summary>
+        ///     部位追加ボタンラベル
+        /// </summary>
+        public string AddLoadButtonLabel => LanguageUtils.Get(LanguageKeys.AddLoad);
+
+        /// <summary>
+        ///     部位削除ボタンラベル
+        /// </summary>
+        public string DeleteLoadButtonLabel => LanguageUtils.Get(LanguageKeys.DeleteLoad);
+
+        /// <summary>
+        ///     トレーニングする部位のラベル
+        /// </summary>
+        public string TrainingPartLabel => LanguageUtils.Get(LanguageKeys.TrainingPart);
+
+        /// <summary>
+        ///     トレーニングの負荷のラベル
+        /// </summary>
+        public string TrainingLoadLabel => LanguageUtils.Get(LanguageKeys.TrainingLoad);
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -218,21 +223,49 @@ namespace HealthManager.ViewModel
             try
             {
                 IsLoading = true;
-                var partStructure = new PartStructure {Part = Part, SubPart = SubPart};
-                var loadStructure = new LoadStructure {LoadList = new List<LoadModel> {Load}};
 
+                var partStructureList = new List<PartStructure>();
+                PartStack.Children.ForEach(child =>
+                {
+                    var stack = (StackLayout) child;
+                    var partModel = ((PartModel)((Picker) stack.Children[0]).SelectedItem);
+                    var subPartModel = ((SubPartModel)((Picker)stack.Children[1]).SelectedItem);
+
+                    if (!partStructureList.Any(
+                        data => data.Part.Id == partModel.Id && data.SubPart.Id == subPartModel.Id))
+                    {
+                        partStructureList.Add(new PartStructure
+                        {
+                            Part = partModel,
+                            SubPart = subPartModel
+                        });
+                    }
+                });
+
+                var loadList = new List<LoadModel>();
+                LoadStack.Children.ForEach(child =>
+                {
+                    var stack = (StackLayout) child;
+                    var loadModel = ((LoadModel)((Picker)stack.Children[0]).SelectedItem);
+                    if (loadList.All(data => data.Id != loadModel.Id))
+                    {
+                        loadList.Add(loadModel);
+                    }
+                });
+
+                var loadStructure = new LoadStructure {LoadList = loadList};
 
                 if (_targetTrainingMasterModel != null)
                     TrainingMasterService.UpdateTrainingMaster(
                         _targetTrainingMasterModel.Id,
                         TrainingName,
                         JsonConvert.SerializeObject(loadStructure),
-                        JsonConvert.SerializeObject(partStructure));
+                        JsonConvert.SerializeObject(partStructureList));
                 else
                     TrainingMasterService.RegistTrainingMaster(
                         TrainingName,
                         JsonConvert.SerializeObject(loadStructure),
-                        JsonConvert.SerializeObject(partStructure));
+                        JsonConvert.SerializeObject(partStructureList));
 
                 IsLoading = false;
 
@@ -257,49 +290,205 @@ namespace HealthManager.ViewModel
         }
 
         /// <summary>
-        /// 部位ピッカー作成
+        ///     部位ピッカー作成
         /// </summary>
         /// <returns></returns>
         private Picker CreatePartPicker()
         {
             var pick = new Picker
             {
-                ItemsSource = PartItemSrouce
+                ItemsSource = PartService.GetPartDataList(),
+                ItemDisplayBinding = new Binding("PartName")
             };
-
+            pick.SelectedIndex = 0;
             return pick;
-
         }
 
         /// <summary>
-        /// サブ部位ピッカー作成
+        ///     部位ピッカー作成
+        /// </summary>
+        /// <returns></returns>
+        private Picker CreatePartPicker(int id)
+        {
+            var pick = CreatePartPicker();
+            pick.SelectedItem = ((List<PartModel>)pick.ItemsSource).First(data=>data.Id == id);
+            return pick;
+        }
+
+        /// <summary>
+        ///     サブ部位ピッカー作成
         /// </summary>
         /// <returns></returns>
         private Picker CreateSubPartPicker()
         {
             var pick = new Picker
             {
-                ItemsSource = SubPartItemSrouce
+                ItemsSource = SubPartService.GetSubPartDataList(),
+                ItemDisplayBinding = new Binding("SubPartName")
             };
-
+            pick.SelectedIndex = 0;
             return pick;
-
         }
 
         /// <summary>
-        /// 負荷ピッカー作成
+        ///     サブ部位ピッカー作成
+        /// </summary>
+        /// <returns></returns>
+        private Picker CreateSubPartPicker(int id)
+        {
+            var pick = CreateSubPartPicker();
+            pick.SelectedItem = ((List<SubPartModel>)pick.ItemsSource).First(data => data.Id == id);
+            return pick;
+        }
+
+        /// <summary>
+        ///     負荷ピッカー作成
         /// </summary>
         /// <returns></returns>
         private Picker CreateLoadPicker()
         {
             var pick = new Picker
             {
-                ItemsSource = SubPartItemSrouce
+                ItemsSource = LoadService.GetLoadDataList(),
+                ItemDisplayBinding = new Binding("LoadName")
             };
-
+            pick.SelectedIndex = 0;
             return pick;
-
         }
 
+        /// <summary>
+        ///     負荷ピッカー作成
+        /// </summary>
+        /// <returns></returns>
+        private Picker CreateLoadPicker(int selectedIndex)
+        {
+            var pick = CreateLoadPicker();
+            pick.SelectedItem = ((List<LoadModel>)pick.ItemsSource).First(data => data.Id == selectedIndex);
+            return pick;
+        }
+
+        /// <summary>
+        ///     部位のレイアウトを作成
+        /// </summary>
+        /// <returns></returns>
+        private StackLayout CreatePartStackLayout()
+        {
+            var stack = new StackLayout();
+            var partPicker = CreatePartPicker();
+            var subPartPicker = CreateSubPartPicker();
+
+            partPicker.SelectedIndexChanged += (sender, args) =>
+            {
+                var itemSource = new ObservableCollection<SubPartModel>();
+                SubPartService.GetSubPartDataList(
+                    ((PartModel) ((Picker) sender).SelectedItem).Id).ForEach(data => itemSource.Add(data));
+                subPartPicker.ItemsSource = itemSource;
+                subPartPicker.SelectedIndex = 0;
+            };
+
+            subPartPicker.ItemsSource = SubPartService.GetSubPartDataList(
+                ((PartModel) partPicker.SelectedItem).Id);
+
+            subPartPicker.SelectedIndex = 0;
+
+            stack.Children.Add(partPicker);
+            stack.Children.Add(subPartPicker);
+
+            return stack;
+        }
+
+        /// <summary>
+        ///     部位のレイアウトを作成
+        /// </summary>
+        /// <returns></returns>
+        private StackLayout CreatePartStackLayout(int partId, int subPartId)
+        {
+            var stack = new StackLayout();
+            var partPicker = CreatePartPicker(partId);
+            var subPartPicker = CreateSubPartPicker(subPartId);
+
+            partPicker.SelectedIndexChanged += (sender, args) =>
+            {
+                var itemSource = new ObservableCollection<SubPartModel>();
+                SubPartService.GetSubPartDataList(
+                    ((PartModel) ((Picker) sender).SelectedItem).Id).ForEach(data => itemSource.Add(data));
+                subPartPicker.ItemsSource = itemSource;
+                subPartPicker.SelectedIndex = 0;
+            };
+
+            stack.Children.Add(partPicker);
+            stack.Children.Add(subPartPicker);
+            return stack;
+        }
+
+        /// <summary>
+        ///     負荷のレイアウトを作成
+        /// </summary>
+        /// <returns></returns>
+        private StackLayout CreateLoadStackLayout()
+        {
+            var stack = new StackLayout();
+            stack.Children.Add(CreateLoadPicker());
+            return stack;
+        }
+
+        /// <summary>
+        ///     負荷のレイアウトを作成
+        /// </summary>
+        /// <returns></returns>
+        private StackLayout CreateLoadStackLayout(int loadId)
+        {
+            var stack = new StackLayout();
+            stack.Children.Add(CreateLoadPicker(loadId));
+            return stack;
+        }
+
+        /// <summary>
+        ///     部位を追加するボタンアクション
+        /// </summary>
+        private void AddPartStack()
+        {
+            PartStack.Children.Add(CreatePartStackLayout());
+        }
+
+        /// <summary>
+        ///     部位を追加するボタンアクション
+        /// </summary>
+        private void AddPartStack(int partId, int subPartId)
+        {
+            PartStack.Children.Add(CreatePartStackLayout(partId,subPartId));
+        }
+
+        /// <summary>
+        ///     部位を削除するボタンアクション
+        /// </summary>
+        private void DeletePartStack()
+        {
+            PartStack.Children.RemoveAt(PartStack.Children.Count - 1);
+        }
+
+        /// <summary>
+        ///     負荷を追加するボタンアクション
+        /// </summary>
+        private void AddLoadStack()
+        {
+            LoadStack.Children.Add(CreateLoadStackLayout());
+        }
+
+        /// <summary>
+        ///     負荷を追加するボタンアクション
+        /// </summary>
+        private void AddLoadStack(int loadId)
+        {
+            LoadStack.Children.Add(CreateLoadStackLayout(loadId));
+        }
+
+        /// <summary>
+        ///     負荷を削除するボタンアクション
+        /// </summary>
+        private void DeleteLoadStack()
+        {
+            LoadStack.Children.RemoveAt(LoadStack.Children.Count - 1);
+        }
     }
 }

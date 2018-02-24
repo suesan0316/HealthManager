@@ -83,12 +83,24 @@ namespace HealthManager.ViewModel
         /// </summary>
         public string StrartTrainingLabel => LanguageUtils.Get(LanguageKeys.StartTraining);
 
+        /// <summary>
+        /// トレーニングリストのボタンイメージ
+        /// </summary>
         public string TrainingListButtonImage => ViewModelConst.TrainingListImage;
 
+        /// <summary>
+        /// トレーニングスケジュールのボタンイメージ
+        /// </summary>
         public string TrainingScheduleButtonImage => ViewModelConst.TrainingScheduleImage;
 
+        /// <summary>
+        /// トレーニングスタートのボタンイメージ
+        /// </summary>
         public string TrainingStartButtonImage => ViewModelConst.TrainingStartImage;
 
+        /// <summary>
+        /// トレーニングニュース一覧のラベル
+        /// </summary>
         public string TrainingNewsListTitleLabel => LanguageUtils.Get(LanguageKeys.TrainingNewsListTitle);
 
         public event PropertyChangedEventHandler PropertyChanged;

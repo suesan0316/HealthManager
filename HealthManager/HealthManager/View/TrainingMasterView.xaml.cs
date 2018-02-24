@@ -11,14 +11,16 @@ namespace HealthManager.View
 	    {
 	        InitializeComponent();
 	        NavigationPage.SetHasNavigationBar(this, false);
-            BindingContext = new TrainingMasterViewModel();
+            var vm = new TrainingMasterViewModel(partStack:PartStack, loadStack:LoadStack);
+	        BindingContext = vm;
 	    }
 
 	    public TrainingMasterView(int id)
 	    {
 	        InitializeComponent();
 	        NavigationPage.SetHasNavigationBar(this, false);
-            BindingContext = new TrainingMasterViewModel(id);
-	    }
+	        var vm = new TrainingMasterViewModel(id:id, partStack: PartStack, loadStack: LoadStack);
+            BindingContext = vm;
+        }
     }
 }

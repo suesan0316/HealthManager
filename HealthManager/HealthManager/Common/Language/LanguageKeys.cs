@@ -211,15 +211,15 @@
         /// </summary>
         public const string NewsListTitle = "NewsListTitle";
         /// <summary>
-        /// 鍛える部位
+        /// トレーニングする体の部位
         /// </summary>
         public const string TrainingPart = "TrainingPart";
         /// <summary>
-        /// 鍛える部位を選択してください
+        /// トレーニングする体の部位を選択してください
         /// </summary>
         public const string SelectTrainingPart = "SelectTrainingPart";
         /// <summary>
-        /// 鍛える部位を選択してください
+        /// トレーニングする体の部位を選択してください
         /// </summary>
         public const string SelectTrainingSubPart = "SelectTrainingSubPart";
         /// <summary>
@@ -246,5 +246,25 @@
         /// トレーニングニュース一覧
         /// </summary>
         public const string TrainingNewsListTitle = "TrainingNewsListTitle";
+        /// <summary>
+        /// 部位を追加する
+        /// </summary>
+        public const string AddPart = "AddPart";
+        /// <summary>
+        /// 部位を削除する
+        /// </summary>
+        public const string DeletePart = "DeletePart";
+        /// <summary>
+        /// 負荷を追加する
+        /// </summary>
+        public const string AddLoad = "AddLoad";
+        /// <summary>
+        /// 負荷を削除する
+        /// </summary>
+        public const string DeleteLoad = "DeleteLoad";
+        /// <summary>
+        /// トレーニングの負荷方法
+        /// </summary>
+        public const string TrainingLoad = "TrainingLoad";
     }
 }
