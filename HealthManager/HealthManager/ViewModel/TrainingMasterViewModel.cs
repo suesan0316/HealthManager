@@ -32,6 +32,9 @@ namespace HealthManager.ViewModel
         /// </summary>
         private bool _isLoading;
 
+        /// <summary>
+        /// トレーニング名
+        /// </summary>
         private string _trainingName;
 
         public TrainingMasterViewModel()
@@ -206,6 +209,11 @@ namespace HealthManager.ViewModel
         /// </summary>
         public string TrainingLoadLabel => LanguageUtils.Get(LanguageKeys.TrainingLoad);
 
+        /// <summary>
+        /// エラーラベルをスタックするレイアウトのChildren
+        /// </summary>
+        public IList<Xamarin.Forms.View> ErrorStack { get; set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
@@ -222,6 +230,12 @@ namespace HealthManager.ViewModel
         {
             try
             {
+
+                if (!ValidationInputData(TrainingName))
+                {
+                    return;
+                }
+
                 IsLoading = true;
 
                 var partStructureList = new List<PartStructure>();
@@ -280,6 +294,32 @@ namespace HealthManager.ViewModel
             {
                 Debug.WriteLine(e);
             }
+        }
+
+        public bool ValidationInputData(string trainingName)
+        {
+            ErrorStack.Clear();
+
+            if (StringUtils.IsEmpty(trainingName))
+            {
+                ErrorStack.Add(CreateErrorLabel(LanguageKeys.TrainingName, LanguageKeys.NotInputRequireData));
+            }
+            return ErrorStack.Count == 0;
+        }
+
+        /// <summary>
+        /// エラーラベルを生成します
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="errorType"></param>
+        /// <returns></returns>
+        public Label CreateErrorLabel(string key, string errorType)
+        {
+            return new Label
+            {
+                Text = LanguageUtils.Get(errorType, LanguageUtils.Get(key)),
+                TextColor = Color.Red
+            };
         }
 
         private void Cancel()
@@ -464,7 +504,10 @@ namespace HealthManager.ViewModel
         /// </summary>
         private void DeletePartStack()
         {
-            PartStack.Children.RemoveAt(PartStack.Children.Count - 1);
+            if (PartStack.Children.Count != 1)
+            {
+                PartStack.Children.RemoveAt(PartStack.Children.Count - 1);
+            }
         }
 
         /// <summary>
@@ -488,7 +531,10 @@ namespace HealthManager.ViewModel
         /// </summary>
         private void DeleteLoadStack()
         {
-            LoadStack.Children.RemoveAt(LoadStack.Children.Count - 1);
+            if (LoadStack.Children.Count != 1)
+            {
+                LoadStack.Children.RemoveAt(LoadStack.Children.Count - 1);
+            }
         }
     }
 }

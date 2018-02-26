@@ -11,7 +11,7 @@ namespace HealthManager.View
 	    {
 	        InitializeComponent();
 	        NavigationPage.SetHasNavigationBar(this, false);
-            var vm = new TrainingMasterViewModel(partStack:PartStack, loadStack:LoadStack);
+            var vm = new TrainingMasterViewModel(partStack:PartStack, loadStack:LoadStack) { ErrorStack = ErrorStack.Children };
 	        BindingContext = vm;
 	    }
 
@@ -19,7 +19,7 @@ namespace HealthManager.View
 	    {
 	        InitializeComponent();
 	        NavigationPage.SetHasNavigationBar(this, false);
-	        var vm = new TrainingMasterViewModel(id:id, partStack: PartStack, loadStack: LoadStack);
+	        var vm = new TrainingMasterViewModel(id:id, partStack: PartStack, loadStack: LoadStack) { ErrorStack = ErrorStack.Children };
             BindingContext = vm;
         }
     }
