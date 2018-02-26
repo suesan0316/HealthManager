@@ -65,6 +65,10 @@ namespace HealthManager.ViewModel
             _targetTrainingMasterModel = TrainingMasterService.GetTrainingMasterData(id);
             CancleCommand = new Command(Cancel);
             SaveTrainingMasterCommand = new Command(async () => await SaveTrainingMaster());
+            AddPartStackCommand = new Command(AddPartStack);
+            DeletePartStackCommand = new Command(DeletePartStack);
+            AddLoadStackCommand = new Command(AddLoadStack);
+            DeleteLoadStackCommand = new Command(DeleteLoadStack);
 
 
             var partStructureList = JsonConvert.DeserializeObject<List<PartStructure>>(_targetTrainingMasterModel.Part);
@@ -413,9 +417,13 @@ namespace HealthManager.ViewModel
         /// <returns></returns>
         private StackLayout CreatePartStackLayout()
         {
-            var stack = new StackLayout();
+            var stack = new StackLayout { Orientation = StackOrientation.Horizontal,HorizontalOptions = LayoutOptions.Start};
             var partPicker = CreatePartPicker();
             var subPartPicker = CreateSubPartPicker();
+
+            // TODO 一旦これでしのぐ
+            partPicker.WidthRequest = 145;
+            subPartPicker.WidthRequest = 145;
 
             partPicker.SelectedIndexChanged += (sender, args) =>
             {
@@ -443,9 +451,12 @@ namespace HealthManager.ViewModel
         /// <returns></returns>
         private StackLayout CreatePartStackLayout(int partId, int subPartId)
         {
-            var stack = new StackLayout();
+            var stack = new StackLayout{Orientation = StackOrientation.Horizontal,HorizontalOptions = LayoutOptions.Start};
             var partPicker = CreatePartPicker(partId);
             var subPartPicker = CreateSubPartPicker(subPartId);
+
+            partPicker.WidthRequest = 145;
+            subPartPicker.WidthRequest = 145;
 
             partPicker.SelectedIndexChanged += (sender, args) =>
             {
