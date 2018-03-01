@@ -5842,26 +5842,26 @@ namespace HealthManager.Droid
 			// aapt resource value: 0x7f020054
 			public const int avd_hide_password = 2130837588;
 			
-			// aapt resource value: 0x7f020139
-			public const int avd_hide_password_1 = 2130837817;
+			// aapt resource value: 0x7f02013c
+			public const int avd_hide_password_1 = 2130837820;
 			
-			// aapt resource value: 0x7f02013a
-			public const int avd_hide_password_2 = 2130837818;
+			// aapt resource value: 0x7f02013d
+			public const int avd_hide_password_2 = 2130837821;
 			
-			// aapt resource value: 0x7f02013b
-			public const int avd_hide_password_3 = 2130837819;
+			// aapt resource value: 0x7f02013e
+			public const int avd_hide_password_3 = 2130837822;
 			
 			// aapt resource value: 0x7f020055
 			public const int avd_show_password = 2130837589;
 			
-			// aapt resource value: 0x7f02013c
-			public const int avd_show_password_1 = 2130837820;
+			// aapt resource value: 0x7f02013f
+			public const int avd_show_password_1 = 2130837823;
 			
-			// aapt resource value: 0x7f02013d
-			public const int avd_show_password_2 = 2130837821;
+			// aapt resource value: 0x7f020140
+			public const int avd_show_password_2 = 2130837824;
 			
-			// aapt resource value: 0x7f02013e
-			public const int avd_show_password_3 = 2130837822;
+			// aapt resource value: 0x7f020141
+			public const int avd_show_password_3 = 2130837825;
 			
 			// aapt resource value: 0x7f020056
 			public const int bodyImage = 2130837590;
@@ -6520,11 +6520,11 @@ namespace HealthManager.Droid
 			// aapt resource value: 0x7f020130
 			public const int notification_icon_background = 2130837808;
 			
-			// aapt resource value: 0x7f020137
-			public const int notification_template_icon_bg = 2130837815;
+			// aapt resource value: 0x7f02013a
+			public const int notification_template_icon_bg = 2130837818;
 			
-			// aapt resource value: 0x7f020138
-			public const int notification_template_icon_low_bg = 2130837816;
+			// aapt resource value: 0x7f02013b
+			public const int notification_template_icon_low_bg = 2130837819;
 			
 			// aapt resource value: 0x7f020131
 			public const int notification_tile_bg = 2130837809;
@@ -6536,13 +6536,22 @@ namespace HealthManager.Droid
 			public const int person = 2130837811;
 			
 			// aapt resource value: 0x7f020134
-			public const int tooltip_frame_dark = 2130837812;
+			public const int schedule = 2130837812;
 			
 			// aapt resource value: 0x7f020135
-			public const int tooltip_frame_light = 2130837813;
+			public const int tooltip_frame_dark = 2130837813;
 			
 			// aapt resource value: 0x7f020136
-			public const int woman = 2130837814;
+			public const int tooltip_frame_light = 2130837814;
+			
+			// aapt resource value: 0x7f020137
+			public const int training = 2130837815;
+			
+			// aapt resource value: 0x7f020138
+			public const int training_start = 2130837816;
+			
+			// aapt resource value: 0x7f020139
+			public const int woman = 2130837817;
 			
 			static Drawable()
 			{

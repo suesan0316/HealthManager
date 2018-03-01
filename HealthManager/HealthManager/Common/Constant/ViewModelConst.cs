@@ -29,17 +29,17 @@ namespace HealthManager.Common.Constant
         /// <summary>
         /// トレーニング一覧画像ファイル
         /// </summary>
-        public const string TrainingListImage = "man.png";
+        public const string TrainingListImage = "training.png";
 
         /// <summary>
         /// トレーニングスケジュール画像ファイル
         /// </summary>
-        public const string TrainingScheduleImage = "woman.png";
+        public const string TrainingScheduleImage = "schedule.png";
 
         /// <summary>
         /// トレーニング開始画像ファイル
         /// </summary>
-        public const string TrainingStartImage = "person.png";
+        public const string TrainingStartImage = "training_start.png";
 
         /// <summary>
         /// データ系画面ナビゲーション参照
