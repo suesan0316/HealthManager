@@ -59,7 +59,7 @@ namespace HealthManager.ViewModel
             try
             {
                 SaveBaisicDataCommand = new Command(async () => await SaveBasicData());
-                CancleCommand = new Command(ViewModelCommonUtil.BackHome);
+                CancleCommand = new Command(CancelAction);
                 GenderItemSrouce = new List<GenderEnum>();
                 foreach (var gender in Enum.GetValues(typeof(GenderEnum)))
                 {
@@ -404,6 +404,16 @@ namespace HealthManager.ViewModel
             {
                 Debug.WriteLine(e);
             }
+        }
+
+        /// <summary>
+        /// キャンセルアクション
+        /// </summary>
+        public void CancelAction()
+        {
+            // ホーム画面をリロードする
+            MessagingCenter.Send(this, ViewModelConst.MessagingHomeReload);
+            ViewModelCommonUtil.DataBackPage();
         }
 
         /// <summary>
