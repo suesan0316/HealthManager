@@ -2,22 +2,19 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:extention="clr-namespace:HealthManager.Common.Extention;assembly=HealthManager"
-             x:Class="HealthManager.View.TrainingScheduleList">
+             xmlns:viewCell="clr-namespace:HealthManager.View.ViewCell;assembly=HealthManager"
+             x:Class="HealthManager.View.TrainingScheduleListView">
     <ContentPage.Content>
         <StackLayout>
             <Button Text="{Binding BackPageLabel}" Command="{Binding BackPageCommand}" Style="{StaticResource NormalButtonStyle}"></Button>
-            <ListView ItemsSource="{Binding Items}" VerticalOptions="FillAndExpand" Margin="15" HeightRequest="150">
+            <ListView ItemsSource="{Binding Items}" HasUnevenRows="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell>
-                            <StackLayout>
-                                <Label  Text="{Binding Week}" LineBreakMode="WordWrap"/>
-                            </StackLayout>
-                        </ViewCell>
+                        <viewCell:TrainingScheduleViewCell BindingContext = "{Binding}" />
                     </DataTemplate>
                 </ListView.ItemTemplate>
                 <ListView.Behaviors>
-                    <extention:ItemTappedBehavior Command="{Binding NewsListItemTappedCommand}" />
+                    <extention:ItemTappedBehavior Command="{Binding TrainingScheduleListItemTappedCommand}" />
                 </ListView.Behaviors>
             </ListView>
         </StackLayout>

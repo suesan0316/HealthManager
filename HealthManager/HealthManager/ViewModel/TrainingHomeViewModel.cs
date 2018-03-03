@@ -150,7 +150,7 @@ namespace HealthManager.ViewModel
         /// </summary>
         private static void MoveToTrainingSchedule()
         {
-            ((App) Application.Current).ChangeScreen(new EditTrainingScheduleView());
+            ViewModelConst.TrainingPageNavigation.PushAsync(new TrainingScheduleListView());
         }
 
         /// <summary>

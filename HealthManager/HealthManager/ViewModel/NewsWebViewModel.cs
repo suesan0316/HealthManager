@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using HealthManager.Common;
 using HealthManager.Common.Language;
 using HealthManager.Properties;
 using Xamarin.Forms;

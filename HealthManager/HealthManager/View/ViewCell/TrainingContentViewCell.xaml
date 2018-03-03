@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ViewCell xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewCell="clr-namespace:HealthManager.View.ViewCell;assembly=HealthManager"
+             x:Class="HealthManager.View.ViewCell.TrainingContentViewCell">
+  <ViewCell.View>
+        <StackLayout>
+            <Label Text="{Binding TrainingNo}"  />
+            <Label Text="{Binding TrainingName}"  />
+            <Label Text="{Binding TrainingSetCount}"/>
+            <ListView ItemsSource="{Binding LoadContentList}" HasUnevenRows="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <viewCell:LoadContentViewCell BindingContext = "{Binding}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+  </ViewCell.View>
+</ViewCell>

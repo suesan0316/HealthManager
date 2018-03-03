@@ -23,10 +23,9 @@ namespace HealthManager.ViewModel
     /// </summary>
     internal class DataChartViewModel : INotifyPropertyChanged
     {
+        private const int MinChartWidth = 250;
 
-        private readonly int minChartWidth = 250;
-
-        private readonly int increaseChartWidth = 55;
+        private const int IncreaseChartWidth = 55;
 
         /// <summary>
         /// データチャートエントリーリスト
@@ -93,8 +92,8 @@ namespace HealthManager.ViewModel
             Chart = new LineChart {Entries = _entries};
             DataList = _entries.Select(data => data.Label + StringConst.Blank + data.Value + _targetBasicDataEnum.DisplayUnit());
 
-            var width = increaseChartWidth * list.Count;
-            ChartWidth = width < minChartWidth ? minChartWidth : width;
+            var width = IncreaseChartWidth * list.Count;
+            ChartWidth = width < MinChartWidth ? MinChartWidth : width;
         }
 
         /// <summary>

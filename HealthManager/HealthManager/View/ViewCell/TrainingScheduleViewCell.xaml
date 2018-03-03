@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ViewCell xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+          xmlns:controls="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms"
+          xmlns:viewCell="clr-namespace:HealthManager.View.ViewCell;assembly=HealthManager"
+          x:Class="HealthManager.View.ViewCell.TrainingScheduleViewCell">
+    <StackLayout HorizontalOptions="Start" >
+        <Label Text="{Binding WeekName}"  />
+        <Switch IsToggled="{Binding Off}"></Switch>
+        <ListView ItemsSource="{Binding TrainingContentList}" HasUnevenRows="True">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <viewCell:TrainingContentViewCell BindingContext = "{Binding}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ViewCell>

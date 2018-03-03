@@ -1,5 +1,4 @@
 ﻿using HealthManager.Common.Constant;
-using HealthManager.ViewModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
