@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using HealthManager.ViewModel;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace HealthManager.View
@@ -6,9 +7,12 @@ namespace HealthManager.View
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class EditTrainingScheduleView : ContentPage
 	{
-		public EditTrainingScheduleView ()
+		public EditTrainingScheduleView (int week)
 		{
-			InitializeComponent ();
-		}
+		    InitializeComponent();
+		    NavigationPage.SetHasNavigationBar(this, false);
+		    var vm = new EditTrainingScheduleViewModel(week: week, trainingStack: TrainingStack) { ErrorStack = ErrorStack.Children };
+		    BindingContext = vm;
+        }
 	}
 }

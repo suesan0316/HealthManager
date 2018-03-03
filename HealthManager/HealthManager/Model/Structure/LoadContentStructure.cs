@@ -3,6 +3,7 @@
     public class LoadContentStructure
     {
         public int LoadId { get; set; }
-        public string Nums { get; set; }
+        public float Nums { get; set; }
+        public int LoadUnitId { get; set; }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+using System.Text;
+using HealthManager.Common.Enum;
+using HealthManager.Common.Language;
 
 namespace HealthManager.ViewModel.Structure
 {
@@ -9,11 +11,39 @@ namespace HealthManager.ViewModel.Structure
         public string WeekName { get; set; }
         public bool Off { get; set; } 
         public List<TrainingListViewStructure> TrainingContentList { get; set; }
-        public string DisplayText { get; set; }
+        public string DisplayText => this.ToString();
 
-        public string CreateDisplayText()
+        public override string ToString()
         {
-            return JsonConvert.SerializeObject(this).Replace(",","\n");
+            var sb = new StringBuilder();
+            sb.Append((WeekEnum)Week);
+            sb.Append("\n");
+            if (Off)
+            {
+                sb.Append(LanguageUtils.Get(LanguageKeys.Rest));
+            }
+            else
+            {
+                foreach (var trainingListViewStructure in TrainingContentList)
+                {
+                    sb.Append("\t" + LanguageUtils.Get(LanguageKeys.No) + trainingListViewStructure.TrainingNo);
+                    sb.Append("\n");
+                    sb.Append("\t\t" + LanguageUtils.Get(LanguageKeys.TrainingName) + " : " + trainingListViewStructure.TrainingName);
+                    sb.Append("\n");
+                    sb.Append("\t\t" + LanguageUtils.Get(LanguageKeys.SetCount) + " : " + trainingListViewStructure.TrainingSetCount);
+                    sb.Append("\n");
+                    sb.Append("\t\t" + LanguageUtils.Get(LanguageKeys.LoadMethod));
+                    sb.Append("\n");
+                    foreach (var loadContentViewStructure in trainingListViewStructure.LoadContentList)
+                    {
+                        sb.Append("\t\t\t" + loadContentViewStructure.LoadName);
+                        sb.Append("\n");
+                        sb.Append("\t\t\t" + loadContentViewStructure.Nums + " " + loadContentViewStructure.LoadUnitName);
+                        sb.Append("\n");
+                    }
+                }
+            }
+            return sb.ToString();
         }
     }
 }

@@ -1,16 +1,29 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:HealthManager.ViewModel"
              x:Class="HealthManager.View.EditTrainingScheduleView">
-    <ContentPage.BindingContext>
-        <vm:EditTrainingScheduleViewModel />
-    </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <ScrollView>
+                <StackLayout Margin="30">
+                    <StackLayout x:Name="ErrorStack" />
+                    <Label Text="{Binding WeekLabel}" />
+                    <StackLayout>
+                        <Label Text="{Binding OffSwitchLabel}" />
+                        <Switch IsToggled="{Binding Off}" />
+                    </StackLayout>
+                    <StackLayout x:Name="TrainingStack" />
+                    <Button Text="{Binding AddTrainingButtonLabel}" Command="{Binding AddTrainingStackCommand}" />
+                    <Button Text="{Binding DeleteTrainingButtonLabel}" Command="{Binding DeleteTrainingStackCommand}" />
+                    <ActivityIndicator IsRunning="{Binding IsLoading}" />
+                    <Button IsEnabled="{Binding IsDisable}" Text="{Binding SaveButtonLabel}"
+                            Command="{Binding SaveTrainingScheduleCommand}" Style="{StaticResource NormalButtonStyle}" />
+                    <Button Text="{Binding CancelButtonLabel}" Command="{Binding CancleCommand}"
+                             Style="{StaticResource NormalButtonStyle}" />
+                </StackLayout>
+            </ScrollView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

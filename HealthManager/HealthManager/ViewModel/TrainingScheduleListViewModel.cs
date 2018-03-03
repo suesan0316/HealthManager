@@ -25,7 +25,10 @@ namespace HealthManager.ViewModel
         public TrainingScheduleListViewModel()
         {
             BackPageCommand = new Command(ViewModelCommonUtil.TrainingBackPage);
-            TrainingScheduleListItemTappedCommand = new Command(MoveToTrainingSchedule);
+            TrainingScheduleListItemTappedCommand = new Command<TrainingScheduleSViewtructure>(item =>
+            {
+                ViewModelConst.TrainingPageNavigation.PushAsync(new EditTrainingScheduleView(item.Week));
+            });
 
             weekList = new List<WeekEnum>();
             foreach (var week in Enum.GetValues(typeof(WeekEnum)))
@@ -58,11 +61,6 @@ namespace HealthManager.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public void MoveToTrainingSchedule()
-        {
-            ViewModelConst.TrainingPageNavigation.PushAsync(new EditTrainingScheduleView());
-        }
-
         private void CreateTrainingScheduleListItem(WeekEnum week)
         {
             var trainingScheduleViewStructure = new TrainingScheduleSViewtructure
@@ -81,6 +79,7 @@ namespace HealthManager.ViewModel
                 TrainingSetCount = 3
             };
             trainingListViewStructureList.Add(trainingListViewStructure);
+            trainingListViewStructureList.Add(trainingListViewStructure);
 
             var loadContentViewStructureList = new List<LoadContentViewStructure>();
             var loadContentViewStructure = new LoadContentViewStructure
@@ -93,8 +92,6 @@ namespace HealthManager.ViewModel
             trainingListViewStructure.LoadContentList = loadContentViewStructureList;
 
             trainingScheduleViewStructure.TrainingContentList = trainingListViewStructureList;
-
-            trainingScheduleViewStructure.DisplayText = trainingScheduleViewStructure.CreateDisplayText();
 
             Items.Add(trainingScheduleViewStructure);
         }

@@ -195,6 +195,10 @@
         /// </summary>
         public const string AddTraining = "AddTraining";
         /// <summary>
+        /// トレーニングを削除する
+        /// </summary>
+        public const string DeleteTraining = "DeleteTraining";
+        /// <summary>
         /// トレーニングスケジュールを編集する
         /// </summary>
         public const string EditTrainingSchedule = "EditTrainingSchedule";
@@ -266,5 +270,25 @@
         /// トレーニングの負荷方法
         /// </summary>
         public const string TrainingLoad = "TrainingLoad";
+        /// <summary>
+        /// 休息
+        /// </summary>
+        public const string Rest = "Rest";
+        /// <summary>
+        /// 本日のトレーニングメニュー
+        /// </summary>
+        public const string TodayTrainingMenu = "TodayTrainingMenu";
+        /// <summary>
+        /// No
+        /// </summary>
+        public const string No = "No";
+        /// <summary>
+        /// セット数
+        /// </summary>
+        public const string SetCount = "SetCount";
+        /// <summary>
+        /// 負荷方法
+        /// </summary>
+        public const string LoadMethod = "LoadMethod";
     }
 }
