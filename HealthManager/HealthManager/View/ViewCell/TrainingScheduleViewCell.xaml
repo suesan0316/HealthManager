@@ -3,10 +3,9 @@
           xmlns:controls="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms"
           xmlns:viewCell="clr-namespace:HealthManager.View.ViewCell;assembly=HealthManager"
           x:Class="HealthManager.View.ViewCell.TrainingScheduleViewCell">
-    <StackLayout HorizontalOptions="Start" >
+    <StackLayout>
         <Label Text="{Binding WeekName}"  />
-        <Switch IsToggled="{Binding Off}"></Switch>
-        <ListView ItemsSource="{Binding TrainingContentList}" HasUnevenRows="True">
+        <ListView ItemsSource="{Binding TrainingContentList}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <viewCell:TrainingContentViewCell BindingContext = "{Binding}" />

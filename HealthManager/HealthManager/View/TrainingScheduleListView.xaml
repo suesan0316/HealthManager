@@ -7,10 +7,10 @@
     <ContentPage.Content>
         <StackLayout>
             <Button Text="{Binding BackPageLabel}" Command="{Binding BackPageCommand}" Style="{StaticResource NormalButtonStyle}"></Button>
-            <ListView ItemsSource="{Binding Items}" HasUnevenRows="True">
+            <ListView ItemsSource="{Binding Items}"  Margin="15" HasUnevenRows="True"> 
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <viewCell:TrainingScheduleViewCell BindingContext = "{Binding}" />
+                        <viewCell:TrainingScheduleStructureViewCell BindingContext = "{Binding}" />
                     </DataTemplate>
                 </ListView.ItemTemplate>
                 <ListView.Behaviors>

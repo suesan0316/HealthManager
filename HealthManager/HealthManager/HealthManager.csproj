@@ -156,6 +156,9 @@
     <Compile Include="View\ViewCell\TrainingContentViewCell.xaml.cs">
       <DependentUpon>TrainingContentViewCell.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\ViewCell\TrainingScheduleStructureViewCell.xaml.cs">
+      <DependentUpon>TrainingScheduleStructureViewCell.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\ViewCell\TrainingScheduleViewCell.xaml.cs">
       <DependentUpon>TrainingScheduleViewCell.xaml</DependentUpon>
     </Compile>
@@ -352,6 +355,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="View\ViewCell\LoadContentViewCell.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="View\ViewCell\TrainingScheduleStructureViewCell.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

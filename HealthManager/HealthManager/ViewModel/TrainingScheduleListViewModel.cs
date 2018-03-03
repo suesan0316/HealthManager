@@ -94,6 +94,8 @@ namespace HealthManager.ViewModel
 
             trainingScheduleViewStructure.TrainingContentList = trainingListViewStructureList;
 
+            trainingScheduleViewStructure.DisplayText = trainingScheduleViewStructure.CreateDisplayText();
+
             Items.Add(trainingScheduleViewStructure);
         }
     }

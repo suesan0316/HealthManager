@@ -8,7 +8,7 @@
             <Label Text="{Binding TrainingNo}"  />
             <Label Text="{Binding TrainingName}"  />
             <Label Text="{Binding TrainingSetCount}"/>
-            <ListView ItemsSource="{Binding LoadContentList}" HasUnevenRows="True">
+            <ListView ItemsSource="{Binding LoadContentList}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <viewCell:LoadContentViewCell BindingContext = "{Binding}" />

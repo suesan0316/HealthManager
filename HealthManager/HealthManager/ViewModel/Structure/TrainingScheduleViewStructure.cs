@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace HealthManager.ViewModel.Structure
 {
@@ -8,5 +9,11 @@ namespace HealthManager.ViewModel.Structure
         public string WeekName { get; set; }
         public bool Off { get; set; } 
         public List<TrainingListViewStructure> TrainingContentList { get; set; }
+        public string DisplayText { get; set; }
+
+        public string CreateDisplayText()
+        {
+            return JsonConvert.SerializeObject(this).Replace(",","\n");
+        }
     }
 }
