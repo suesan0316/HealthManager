@@ -4,6 +4,8 @@ using System.Linq;
 
 using Foundation;
 using UIKit;
+using Xamarin.Forms;
+using XLabs.Forms.Controls;
 
 namespace HealthManager.iOS
 {
@@ -24,7 +26,7 @@ namespace HealthManager.iOS
         {
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
-
+            DependencyService.Register<ImageButtonRenderer>();
             return base.FinishedLaunching(app, options);
         }
     }
