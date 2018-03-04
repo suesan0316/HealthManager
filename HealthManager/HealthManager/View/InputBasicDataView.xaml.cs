@@ -1,4 +1,6 @@
-﻿using HealthManager.ViewModel;
+﻿using HealthManager.Common;
+using HealthManager.Common.Constant;
+using HealthManager.ViewModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,6 +12,8 @@ namespace HealthManager.View
         public InputBasicDataView()
         {
             InitializeComponent();
+            MessagingCenter.Subscribe<ViewModelCommonUtil>(this, ViewModelConst.MessagingSelfScroll,
+                (sender) => { ControlScroll.ScrollToAsync(ControlScroll, ScrollToPosition.Start, false); });
             if (Navigation != null)
             {
                 NavigationPage.SetHasNavigationBar(this, false);

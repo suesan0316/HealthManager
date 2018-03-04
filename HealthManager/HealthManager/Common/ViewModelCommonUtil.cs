@@ -18,6 +18,7 @@ namespace HealthManager.Common
     /// </summary>
     internal class ViewModelCommonUtil
     {
+        private static  readonly ViewModelCommonUtil _instance = new ViewModelCommonUtil();
 
         /// <summary>日付記号あり規定フォーマット</summary>
 	    public static string DateTimeFormatString = "yyyy/MM/dd";
@@ -118,6 +119,11 @@ namespace HealthManager.Common
         public static void TrainingBackPage()
         {
             ViewModelConst.TrainingPageNavigation.PopAsync();
+        }
+
+        public static void SendMessage(string messageKey)
+        {
+            MessagingCenter.Send(_instance, messageKey);
         }
 
         public static TrainingScheduleSViewtructure CreateTrainingScheduleSViewtructure(WeekEnum week)

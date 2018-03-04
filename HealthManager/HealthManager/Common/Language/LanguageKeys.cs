@@ -314,5 +314,17 @@
         /// 本日のトレーニングは既に完了しています。
         /// </summary>
         public const string TodayTrainingAlreadyCompleted = "TodayTrainingAlreadyCompleted";
+        /// <summary>
+        /// 次の{0}件
+        /// </summary>
+        public const string NextPage = "NextPage";
+        /// <summary>
+        /// 前の{0}件
+        /// </summary>
+        public const string PreviousPage = "PreviousPage";
+        /// <summary>
+        /// {0}件中{1}~{2}件目を表示
+        /// </summary>
+        public const string PageDisplayCount = "PageDisplayCount";
     }
 }

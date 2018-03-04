@@ -355,6 +355,7 @@ namespace HealthManager.ViewModel
                     maxBloodPressure: MaxBloodPressure,
                     minBloodPressure: MinBloodPressure, basalMetabolism: BasalMetabolism))
                 {
+                    ViewModelCommonUtil.SendMessage(ViewModelConst.MessagingSelfScroll);
                     return;
                 }
 
@@ -392,7 +393,7 @@ namespace HealthManager.ViewModel
                 if (_isUpdate)
                 {
                     // ホーム画面をリロードする
-                    MessagingCenter.Send(this, ViewModelConst.MessagingHomeReload);
+                    ViewModelCommonUtil.SendMessage(ViewModelConst.MessagingHomeReload);
                     ViewModelCommonUtil.DataBackPage();
                 }
                 else
@@ -412,7 +413,7 @@ namespace HealthManager.ViewModel
         public void CancelAction()
         {
             // ホーム画面をリロードする
-            MessagingCenter.Send(this, ViewModelConst.MessagingHomeReload);
+            ViewModelCommonUtil.SendMessage(ViewModelConst.MessagingHomeReload);
             ViewModelCommonUtil.DataBackPage();
         }
 

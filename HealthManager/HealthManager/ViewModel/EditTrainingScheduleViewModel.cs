@@ -218,7 +218,7 @@ namespace HealthManager.ViewModel
         public void CancelAction()
         {
             // 遷移元画面をリロードする
-            MessagingCenter.Send(this, ViewModelConst.MessagingHomeReload);
+            ViewModelCommonUtil.SendMessage(ViewModelConst.MessagingTrainingPrevPageReload);
             ViewModelConst.TrainingPageNavigation.PopAsync();
         }
 
@@ -288,7 +288,7 @@ namespace HealthManager.ViewModel
                     LanguageUtils.Get(LanguageKeys.SaveComplete), LanguageUtils.Get(LanguageKeys.OK));
 
                 // ホーム画面をリロードする
-                MessagingCenter.Send(this, ViewModelConst.MessagingHomeReload);
+                ViewModelCommonUtil.SendMessage(ViewModelConst.MessagingTrainingPrevPageReload);
                 ViewModelCommonUtil.TrainingBackPage();
 
             }

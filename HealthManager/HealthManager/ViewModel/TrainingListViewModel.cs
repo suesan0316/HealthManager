@@ -21,9 +21,10 @@ namespace HealthManager.ViewModel
     {
         public TrainingListViewModel()
         {
-            // 基本情報入力画面から戻ってきた際に基本情報をリロードする
-            MessagingCenter.Subscribe<TrainingMasterViewModel>(this, ViewModelConst.MessagingHomeReload,
+            // 遷移先画面から戻ってきた際に情報をリロードする
+            MessagingCenter.Subscribe<ViewModelCommonUtil>(this, ViewModelConst.MessagingTrainingPrevPageReload,
                 (sender) => { ReloadList(); });
+
             BackPageCommand = new Command(ViewModelCommonUtil.TrainingBackPage);
             TrainingAddCommand = new Command(MoveToTrainingMaster);
             TrainingMasterItemTappedCommand = new Command<TrainingMasterModel>(item =>

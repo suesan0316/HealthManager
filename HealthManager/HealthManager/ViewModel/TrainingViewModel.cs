@@ -105,7 +105,7 @@ namespace HealthManager.ViewModel
         public void CancelAction()
         {
             // 遷移元画面をリロードする
-            MessagingCenter.Send(this, ViewModelConst.MessagingHomeReload);
+            ViewModelCommonUtil.SendMessage(ViewModelConst.MessagingTrainingHomeReload);
             ViewModelConst.TrainingPageNavigation.PopAsync();
         }
 
@@ -129,7 +129,7 @@ namespace HealthManager.ViewModel
                     targetDate: _pageOpenDateTime, startDate: _trainingStartDateTime, endDate: _trainingEndDateTime);
 
                 // 遷移元画面をリロードする
-                MessagingCenter.Send(this, ViewModelConst.MessagingHomeReload);
+                ViewModelCommonUtil.SendMessage(ViewModelConst.MessagingTrainingHomeReload);
                 await ViewModelConst.TrainingPageNavigation.PopAsync();
             }
             else

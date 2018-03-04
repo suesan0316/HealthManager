@@ -1,4 +1,6 @@
-﻿using HealthManager.ViewModel;
+﻿using HealthManager.Common;
+using HealthManager.Common.Constant;
+using HealthManager.ViewModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,7 +12,9 @@ namespace HealthManager.View
 	    public TrainingMasterView()
 	    {
 	        InitializeComponent();
-	        NavigationPage.SetHasNavigationBar(this, false);
+	        MessagingCenter.Subscribe<ViewModelCommonUtil>(this, ViewModelConst.MessagingTrainingSelfScroll,
+	            (sender) => { ControlScroll.ScrollToAsync(ControlScroll, ScrollToPosition.Start, false); });
+            NavigationPage.SetHasNavigationBar(this, false);
             var vm = new TrainingMasterViewModel(partStack:PartStack, loadStack:LoadStack) { ErrorStack = ErrorStack.Children };
 	        BindingContext = vm;
 	    }
@@ -18,7 +22,9 @@ namespace HealthManager.View
 	    public TrainingMasterView(int id)
 	    {
 	        InitializeComponent();
-	        NavigationPage.SetHasNavigationBar(this, false);
+	        MessagingCenter.Subscribe<ViewModelCommonUtil>(this, ViewModelConst.MessagingTrainingSelfScroll,
+	            (sender) => { ControlScroll.ScrollToAsync(ControlScroll, ScrollToPosition.Start, false); });
+            NavigationPage.SetHasNavigationBar(this, false);
 	        var vm = new TrainingMasterViewModel(id:id, partStack: PartStack, loadStack: LoadStack) { ErrorStack = ErrorStack.Children };
             BindingContext = vm;
         }

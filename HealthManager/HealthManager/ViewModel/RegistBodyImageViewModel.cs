@@ -237,7 +237,7 @@ namespace HealthManager.ViewModel
             }
 
             // ホーム画面をリロードする
-            MessagingCenter.Send(this, ViewModelConst.MessagingHomeReload);
+            ViewModelCommonUtil.SendMessage(ViewModelConst.MessagingHomeReload);
             ViewModelCommonUtil.DataBackPage();
         }
     }

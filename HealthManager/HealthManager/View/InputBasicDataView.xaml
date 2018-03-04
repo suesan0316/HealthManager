@@ -8,7 +8,7 @@
         <vm:InputBasicDataViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
-        <ScrollView>
+        <ScrollView x:Name="ControlScroll">
             <StackLayout Margin="30">
                 <StackLayout x:Name="ErrorStack" />
 

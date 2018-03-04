@@ -237,6 +237,7 @@ namespace HealthManager.ViewModel
 
                 if (!ValidationInputData(TrainingName))
                 {
+                    ViewModelCommonUtil.SendMessage(ViewModelConst.MessagingTrainingSelfScroll);
                     return;
                 }
 
@@ -291,7 +292,7 @@ namespace HealthManager.ViewModel
                     LanguageUtils.Get(LanguageKeys.SaveComplete), LanguageUtils.Get(LanguageKeys.OK));
 
                 // ホーム画面をリロードする
-                MessagingCenter.Send(this, ViewModelConst.MessagingHomeReload);
+                ViewModelCommonUtil.SendMessage(ViewModelConst.MessagingTrainingPrevPageReload);
                 ViewModelCommonUtil.TrainingBackPage();
             }
             catch (Exception e)
@@ -329,7 +330,7 @@ namespace HealthManager.ViewModel
         private void Cancel()
         {
             // 遷移元画面をリロードする
-            MessagingCenter.Send(this, ViewModelConst.MessagingHomeReload);
+            ViewModelCommonUtil.SendMessage(ViewModelConst.MessagingTrainingPrevPageReload);
             ViewModelConst.TrainingPageNavigation.PopAsync();
         }
 

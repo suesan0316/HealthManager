@@ -5,7 +5,7 @@
              x:Class="HealthManager.View.TrainingMasterView">
     <ContentPage.Content>
         <StackLayout>
-            <ScrollView>
+            <ScrollView x:Name="ControlScroll">
                 <StackLayout Margin="30">
                     <StackLayout x:Name="ErrorStack" />
                     <Label Text="{Binding TrainingNameLabel}" />

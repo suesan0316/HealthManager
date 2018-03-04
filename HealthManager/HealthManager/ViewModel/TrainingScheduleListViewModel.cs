@@ -23,20 +23,24 @@ namespace HealthManager.ViewModel
     /// </summary>
     public class TrainingScheduleListViewModel : INotifyPropertyChanged
     {
-        private readonly List<WeekEnum> weekList;
+        private List<WeekEnum> _weekList;
 
         public TrainingScheduleListViewModel()
         {
+            // 遷移先画面から戻ってきた際に情報をリロードする
+            MessagingCenter.Subscribe<ViewModelCommonUtil>(this, ViewModelConst.MessagingTrainingPrevPageReload,
+                (sender) => { ReloadList(); });
+
             BackPageCommand = new Command(ViewModelCommonUtil.TrainingBackPage);
             TrainingScheduleListItemTappedCommand = new Command<TrainingScheduleSViewtructure>(item =>
             {
                 ViewModelConst.TrainingPageNavigation.PushAsync(new EditTrainingScheduleView(item.Week));
             });
 
-            weekList = new List<WeekEnum>();
+            _weekList = new List<WeekEnum>();
             foreach (var week in Enum.GetValues(typeof(WeekEnum)))
             {
-                weekList.Add((WeekEnum) week);
+                _weekList.Add((WeekEnum) week);
                Items.Add(ViewModelCommonUtil.CreateTrainingScheduleSViewtructure((WeekEnum)week));
                // CreateTrainingScheduleListItem((WeekEnum) week);
             }
@@ -130,6 +134,17 @@ namespace HealthManager.ViewModel
             trainingScheduleViewStructure.TrainingContentList = trainingListViewStructureList;
 
             Items.Add(trainingScheduleViewStructure);
+        }
+        public void ReloadList()
+        {
+            Items.Clear();
+            _weekList = new List<WeekEnum>();
+            foreach (var week in Enum.GetValues(typeof(WeekEnum)))
+            {
+                _weekList.Add((WeekEnum)week);
+                Items.Add(ViewModelCommonUtil.CreateTrainingScheduleSViewtructure((WeekEnum)week));
+                // CreateTrainingScheduleListItem((WeekEnum) week);
+            }
         }
     }
 }

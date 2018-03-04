@@ -5,15 +5,24 @@
              xmlns:vm="clr-namespace:HealthManager.ViewModel"
              xmlns:extention="clr-namespace:HealthManager.Common.Extention;assembly=HealthManager"
              x:Class="HealthManager.View.BodyImageView">
-    <ContentPage.BindingContext>
-        <vm:BodyImageViewModel />
-    </ContentPage.BindingContext>
     <ContentPage.Content>
-        <StackLayout Margin="30">
-            <ScrollView Orientation="Horizontal">
-                <StackLayout x:Name="ImageStack" Orientation="Horizontal"/>
+        <StackLayout>
+            <ScrollView>
+                <StackLayout Margin="30">
+                    <ScrollView Orientation="Horizontal">
+                        <StackLayout x:Name="ImageStack" Orientation="Horizontal" VerticalOptions="FillAndExpand" />
+                    </ScrollView>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                        <Button Text="{Binding PreviousPageButtonLabel}" Command="{Binding PreviousPageCommand}"
+                                IsEnabled="{Binding PreviousPageButtonEnable}" />
+                        <Label Text="{Binding PageCountLabel}"></Label>
+                        <Button Text="{Binding NextPageButtonLabel}" Command="{Binding NexPageCommand}"
+                                IsEnabled="{Binding NextPageButtonEnable}" />
+                    </StackLayout>
+                    <Button Text="{Binding BackHomeLabel}" Command="{Binding BackHomeCommand}"
+                            Style="{StaticResource NormalButtonStyle}" />
+                </StackLayout>
             </ScrollView>
-            <Button Text="{Binding BackHomeLabel}" Command="{Binding BackHomeCommand}" Style="{StaticResource NormalButtonStyle}" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

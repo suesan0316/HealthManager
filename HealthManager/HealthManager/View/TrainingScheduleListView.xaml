@@ -5,7 +5,7 @@
              xmlns:viewCell="clr-namespace:HealthManager.View.ViewCell;assembly=HealthManager"
              x:Class="HealthManager.View.TrainingScheduleListView">
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Margin="30">
             <Button Text="{Binding BackPageLabel}" Command="{Binding BackPageCommand}" Style="{StaticResource NormalButtonStyle}"></Button>
             <ListView ItemsSource="{Binding Items}"  Margin="15" HasUnevenRows="True"> 
                 <ListView.ItemTemplate>

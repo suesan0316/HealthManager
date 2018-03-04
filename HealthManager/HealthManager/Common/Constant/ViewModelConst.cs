@@ -54,7 +54,32 @@ namespace HealthManager.Common.Constant
         /// <summary>
         /// MessageCenter識別子:ホーム画面リロード
         /// </summary>
-        public const string MessagingHomeReload="reload";
+        public const string MessagingHomeReload="home_reload";
+
+        /// <summary>
+        /// MessageCenter識別子:ホーム画面リロード
+        /// </summary>
+        public const string MessagingPrevReload = "prev_reload";
+
+        /// <summary>
+        /// MessageCenter識別子:スクロール
+        /// </summary>
+        public const string MessagingSelfScroll = "self_scroll";
+
+        /// <summary>
+        /// MessageCenter識別子:トレーニングホーム画面リロード
+        /// </summary>
+        public const string MessagingTrainingHomeReload = "training_reload";
+
+        /// <summary>
+        /// MessageCenter識別子:トレーニングホーム画面リロード
+        /// </summary>
+        public const string MessagingTrainingPrevPageReload = "training_prev_reload";
+
+        /// <summary>
+        /// MessageCenter識別子:スクロール
+        /// </summary>
+        public const string MessagingTrainingSelfScroll = "training_self_scroll";
 
         /// <summary>
         /// MessageCenter識別子:画面参照渡し

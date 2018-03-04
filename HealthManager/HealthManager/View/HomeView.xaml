@@ -11,7 +11,7 @@
         <vm:HomeViewModel />
     </ContentPage.BindingContext>
     <StackLayout>
-        <ScrollView>
+        <ScrollView x:Name="ControlScroll">
             <StackLayout Margin="30" VerticalOptions="FillAndExpand">
                 <StackLayout Orientation="Horizontal">
                     <StackLayout>

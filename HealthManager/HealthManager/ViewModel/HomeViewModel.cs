@@ -88,13 +88,13 @@ namespace HealthManager.ViewModel
 
         public HomeViewModel()
         {
-            // 基本情報入力画面から戻ってきた際に基本情報をリロードする
-            MessagingCenter.Subscribe<InputBasicDataViewModel>(this, ViewModelConst.MessagingHomeReload,
-                (sender) => { ReloadBasicData(); });
-
-            // 体格画像登録画面から戻ってきた際に画像をリロードする
-            MessagingCenter.Subscribe<RegistBodyImageViewModel>(this, ViewModelConst.MessagingHomeReload,
-                (sender) => { ReloadImage(); });
+            // 遷移先画面から戻ってきた際に情報をリロードする
+            MessagingCenter.Subscribe<ViewModelCommonUtil>(this, ViewModelConst.MessagingHomeReload,
+                (sender) =>
+                {
+                    ReloadBasicData();
+                    ReloadImage();
+                });
 
             // 各コマンドの初期化
             MoveToRegistBodyImageCommand = new Command(MoveToRegistBodyImage);
