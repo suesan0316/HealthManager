@@ -53,7 +53,7 @@
                 <Button IsEnabled="{Binding IsDisable}" Text="{Binding SaveButtonLabel}"
                         Command="{Binding SaveBaisicDataCommand}" Style="{StaticResource NormalButtonStyle}" />
                 <Button Text="{Binding CancelButtonLabel}" Command="{Binding CancleCommand}"
-                        Style="{StaticResource NormalButtonStyle}" />
+                        Style="{StaticResource ReturnButtonStyle}" />
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

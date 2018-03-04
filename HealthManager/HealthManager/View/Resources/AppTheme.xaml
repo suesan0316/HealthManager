@@ -14,9 +14,19 @@
         <Setter Property="BorderColor" Value="Black"/>
         <Setter Property="BorderRadius" Value="10"/>
     </Style>
-    <Style x:Key="NormalButtonStyle" TargetType="Button">
+    <Style x:Key="FNormalButtonStyle" TargetType="Button">
         <Setter Property="BorderWidth" Value="1"/>
         <Setter Property="BorderColor" Value="Black"/>
         <Setter Property="BorderRadius" Value="10"/>
+    </Style>
+    <Style x:Key="NormalButtonStyle" TargetType="Button">
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="BackgroundColor" Value="#49d849" />
+        <Setter Property="BorderRadius" Value="5"/>
+    </Style>
+    <Style x:Key="ReturnButtonStyle" TargetType="Button">
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="BackgroundColor" Value="#B0C4DE" />
+        <Setter Property="BorderRadius" Value="5"/>
     </Style>
 </ResourceDictionary>
