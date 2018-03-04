@@ -24,6 +24,13 @@ namespace HealthManager.ViewModel.Structure
             }
             else
             {
+
+                if (TrainingContentList == null || TrainingContentList.Count == 0)
+                {
+                    sb.Append("\t" + "未設定");
+                    return sb.ToString();
+                }
+
                 foreach (var trainingListViewStructure in TrainingContentList)
                 {
                     sb.Append("\t" + LanguageUtils.Get(LanguageKeys.No) + trainingListViewStructure.TrainingNo);
@@ -37,8 +44,8 @@ namespace HealthManager.ViewModel.Structure
                     foreach (var loadContentViewStructure in trainingListViewStructure.LoadContentList)
                     {
                         sb.Append("\t\t\t" + loadContentViewStructure.LoadName);
-                        sb.Append("\n");
-                        sb.Append("\t\t\t" + loadContentViewStructure.Nums + " " + loadContentViewStructure.LoadUnitName);
+                        sb.Append(" : ");
+                        sb.Append("" + loadContentViewStructure.Nums + " " + loadContentViewStructure.LoadUnitName);
                         sb.Append("\n");
                     }
                 }

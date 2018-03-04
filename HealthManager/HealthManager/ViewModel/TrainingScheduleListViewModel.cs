@@ -9,8 +9,11 @@ using HealthManager.Common;
 using HealthManager.Common.Constant;
 using HealthManager.Common.Enum;
 using HealthManager.Common.Language;
+using HealthManager.Model.Service;
+using HealthManager.Model.Structure;
 using HealthManager.View;
 using HealthManager.ViewModel.Structure;
+using Newtonsoft.Json;
 using Xamarin.Forms;
 
 namespace HealthManager.ViewModel
@@ -34,7 +37,8 @@ namespace HealthManager.ViewModel
             foreach (var week in Enum.GetValues(typeof(WeekEnum)))
             {
                 weekList.Add((WeekEnum) week);
-                CreateTrainingScheduleListItem((WeekEnum) week);
+               Items.Add(ViewModelCommonUtil.CreateTrainingScheduleSViewtructure((WeekEnum)week));
+               // CreateTrainingScheduleListItem((WeekEnum) week);
             }
         }
 
@@ -61,35 +65,67 @@ namespace HealthManager.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+
+        // TODO 後で消す
         private void CreateTrainingScheduleListItem(WeekEnum week)
         {
+
+            var model = TrainingScheduleService.GetTrainingSchedule((int) week);
+
+            if (model == null)
+            {
+                var empty = new TrainingScheduleSViewtructure
+                {
+                    Week = (int)week,
+                    WeekName = week.ToString(),
+                    Off = false
+                };
+                Items.Add(empty);
+                return;
+            }
+
+            var trainingScheduleStructure =
+                JsonConvert.DeserializeObject<TrainingScheduleStructure>(model.TrainingMenu);
+
             var trainingScheduleViewStructure = new TrainingScheduleSViewtructure
             {
                 Week = (int) week,
                 WeekName = week.ToString(),
-                Off = false
+                Off = trainingScheduleStructure.Off
             };
 
             var trainingListViewStructureList = new List<TrainingListViewStructure>();
-            var trainingListViewStructure = new TrainingListViewStructure
-            {
-                TrainingId = 1,
-                TrainingNo = 2,
-                TrainingName = "腕立て伏せ",
-                TrainingSetCount = 3
-            };
-            trainingListViewStructureList.Add(trainingListViewStructure);
-            trainingListViewStructureList.Add(trainingListViewStructure);
 
-            var loadContentViewStructureList = new List<LoadContentViewStructure>();
-            var loadContentViewStructure = new LoadContentViewStructure
+            int count = 1;
+            foreach (var training in trainingScheduleStructure.TrainingContentList)
             {
-                LoadId = 4,
-                LoadName = "重量",
-                Nums = "これぐらい"
-            };
-            loadContentViewStructureList.Add(loadContentViewStructure);
-            trainingListViewStructure.LoadContentList = loadContentViewStructureList;
+                var trainingListViewStructure = new TrainingListViewStructure
+                {
+                    TrainingId = training.TrainingId,
+                    TrainingNo = count,
+                    TrainingName = TrainingMasterService.GetTrainingMasterData(training.TrainingId).TrainingName,
+                    TrainingSetCount = training.TrainingSetCount
+                };
+                var loadContentViewStructureList = new List<LoadContentViewStructure>();
+
+                foreach (var load in training.LoadContentList)
+                {
+                    var loadContentViewStructure = new LoadContentViewStructure
+                    {
+                        LoadId = load.LoadId,
+                        LoadName = LoadService.GetLoad(load.LoadId).LoadName,
+                        Nums =load.Nums.ToString(),
+                        LoadUnitId = load.LoadUnitId,
+                        LoadUnitName = LoadUnitService.GetLoadUnit(load.LoadUnitId).UnitName
+                    };
+                    loadContentViewStructureList.Add(loadContentViewStructure);
+                }
+
+                trainingListViewStructure.LoadContentList = loadContentViewStructureList;
+
+                trainingListViewStructureList.Add(trainingListViewStructure);
+                count++;
+            }
 
             trainingScheduleViewStructure.TrainingContentList = trainingListViewStructureList;
 

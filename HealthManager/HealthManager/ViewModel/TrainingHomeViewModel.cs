@@ -158,7 +158,7 @@ namespace HealthManager.ViewModel
         /// </summary>
         private static void MoveToTraining()
         {
-            ((App) Application.Current).ChangeScreen(new TrainingView());
+            ViewModelConst.TrainingPageNavigation.PushAsync(new TrainingView());
         }
     }
 }

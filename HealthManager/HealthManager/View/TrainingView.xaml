@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:HealthManager.ViewModel"
@@ -8,9 +9,18 @@
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <ScrollView>
+                <StackLayout Margin="30">
+                    <Label Text="{Binding TrainingMenuLabel}" />
+                    <Label Text="{Binding TrainingMenu}" />
+                    <Label Text="{Binding TimeCountLabel}" />
+                    <Label Text="{Binding TimeCount}" />
+                    <Button IsEnabled="{Binding IsDisable}" Text="{Binding TrainingStartButtonLabel}"
+                            Command="{Binding TrainingStartCommand}" Style="{StaticResource NormalButtonStyle}" />
+                    <Button Text="{Binding CancelButtonLabel}" Command="{Binding CancleCommand}"
+                            IsVisible="{Binding CancelButtonIsVisible}" Style="{StaticResource NormalButtonStyle}" />
+                </StackLayout>
+            </ScrollView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

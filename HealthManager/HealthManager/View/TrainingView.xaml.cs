@@ -9,6 +9,7 @@ namespace HealthManager.View
 		public TrainingView ()
 		{
 			InitializeComponent ();
-		}
+		    NavigationPage.SetHasNavigationBar(this, false);
+        }
 	}
 }

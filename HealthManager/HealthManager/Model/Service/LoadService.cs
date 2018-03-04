@@ -48,6 +48,15 @@ namespace HealthManager.Model.Service
             }
         }
 
+        public static LoadModel GetLoad(int id)
+        {
+            using (var db = new SQLiteConnection(DbConst.DbPath))
+            {
+                var result = from record in db.Table<LoadModel>() where record.Id == id select record;
+                return result.Any() ? result.First() : null;
+            }
+        }
+
         /// <summary>
         /// 負荷更新
         /// </summary>
