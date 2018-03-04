@@ -24,7 +24,7 @@ namespace HealthManager.ViewModel
     public class EditTrainingScheduleViewModel : INotifyPropertyChanged
     {
 
-        private bool _isUpdate;
+        private readonly bool _isUpdate;
 
         private readonly int _week;
 
@@ -45,9 +45,11 @@ namespace HealthManager.ViewModel
             {
                 _isUpdate = true;
                 _id = target.Id;
-                var trainingList = JsonConvert.DeserializeObject<TrainingScheduleStructure>(target.TrainingMenu).TrainingContentList;
+                var trainingScheduleStructure = JsonConvert.DeserializeObject<TrainingScheduleStructure>(target.TrainingMenu);
 
-                foreach (var training in trainingList)
+                Off = trainingScheduleStructure.Off;
+
+                foreach (var training in trainingScheduleStructure.TrainingContentList)
                 {
                     AddTrainingStack(training);
                 }
@@ -109,7 +111,7 @@ namespace HealthManager.ViewModel
             var trainingSetCountLabel = new Label { Text = LanguageUtils.Get(LanguageKeys.SetCount) };
             mainStack.Children.Add(trainingSetCountLabel);
 
-            var trainingSetCountEntry = new Entry();
+            var trainingSetCountEntry = new Entry { Keyboard =Keyboard.Numeric};
             mainStack.Children.Add(trainingSetCountEntry);
 
             var trainingLoadStack = new StackLayout();
@@ -119,7 +121,7 @@ namespace HealthManager.ViewModel
             {
                 var loadStack = new StackLayout();
                 loadStack.Children.Add(new Label { Text = load.LoadName });
-                loadStack.Children.Add(new Entry());
+                loadStack.Children.Add(new Entry { Keyboard = Keyboard.Numeric });
                 loadStack.Children.Add(new Picker { ItemsSource = LoadUnitService.GetLoadUnitList(load.Id), ItemDisplayBinding = new Binding("UnitName"), SelectedIndex = 0 });
                 trainingLoadStack.Children.Add(loadStack);
             }
@@ -132,7 +134,7 @@ namespace HealthManager.ViewModel
                 {
                     var loadStack = new StackLayout();
                     loadStack.Children.Add(new Label { Text = load.LoadName });
-                    loadStack.Children.Add(new Entry());
+                    loadStack.Children.Add(new Entry { Keyboard = Keyboard.Numeric });
                     loadStack.Children.Add(new Picker { ItemsSource = LoadUnitService.GetLoadUnitList(load.Id), ItemDisplayBinding = new Binding("UnitName"), SelectedIndex = 0 });
                     trainingLoadStack.Children.Add(loadStack);
                 }
@@ -159,7 +161,7 @@ namespace HealthManager.ViewModel
             var trainingSetCountLabel = new Label {Text = LanguageUtils.Get(LanguageKeys.SetCount)};
             mainStack.Children.Add(trainingSetCountLabel);
 
-            var trainingSetCountEntry = new Entry{Text = training.TrainingSetCount.ToString()};
+            var trainingSetCountEntry = new Entry{Text = training.TrainingSetCount.ToString(),Keyboard = Keyboard.Numeric};
             mainStack.Children.Add(trainingSetCountEntry);
 
             var trainingLoadStack = new StackLayout();
@@ -174,7 +176,7 @@ namespace HealthManager.ViewModel
 
                 var loadStack = new StackLayout();
                 loadStack.Children.Add(new Label { Text = loadModdel.LoadName });
-                loadStack.Children.Add(new Entry {Text = load.Nums.ToString()});
+                loadStack.Children.Add(new Entry {Text = load.Nums.ToString(),Keyboard = Keyboard.Numeric});
                 var loadUnitPick = new Picker
                 {
                     ItemsSource = LoadUnitService.GetLoadUnitList(load.LoadId),
@@ -195,7 +197,7 @@ namespace HealthManager.ViewModel
                 {
                     var loadStack = new StackLayout();
                     loadStack.Children.Add(new Label { Text = load.LoadName });
-                    loadStack.Children.Add(new Entry( ));
+                    loadStack.Children.Add(new Entry { Keyboard = Keyboard.Numeric });
                     loadStack.Children.Add(new Picker {ItemsSource = LoadUnitService.GetLoadUnitList(load.Id),ItemDisplayBinding = new Binding("UnitName"),SelectedIndex = 0});
                     trainingLoadStack.Children.Add(loadStack);
                 }

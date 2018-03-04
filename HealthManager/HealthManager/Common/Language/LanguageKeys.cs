@@ -290,5 +290,29 @@
         /// 負荷方法
         /// </summary>
         public const string LoadMethod = "LoadMethod";
+        /// <summary>
+        /// 住まい
+        /// </summary>
+        public const string Location = "Location";
+        /// <summary>
+        /// トレーニングを終了する
+        /// </summary>
+        public const string CompleteTraining = "CompleteTraining";
+        /// <summary>
+        /// トレーニングを終了しますか?
+        /// </summary>
+        public const string IsDoneTraining = "IsDoneTraining";
+        /// <summary>
+        /// トレーニング時間
+        /// </summary>
+        public const string TrainingTime = "TrainingTime";
+        /// <summary>
+        /// 本日は休息日です。
+        /// </summary>
+        public const string TodayIsRest = "TodayIsRest";
+        /// <summary>
+        /// 本日のトレーニングは既に完了しています。
+        /// </summary>
+        public const string TodayTrainingAlreadyCompleted = "TodayTrainingAlreadyCompleted";
     }
 }

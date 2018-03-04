@@ -15,6 +15,7 @@ namespace HealthManager.Model.Service
         /// 基本情報登録
         /// </summary>
         /// <param name="name"></param>
+        /// <param name="locationId"></param>
         /// <param name="gender"></param>
         /// <param name="age"></param>
         /// <param name="height"></param>
@@ -24,13 +25,14 @@ namespace HealthManager.Model.Service
         /// <param name="minBloodPressure"></param>
         /// <param name="basalMetabolism"></param>
         /// <returns></returns>
-        public static bool RegistBasicData(string name, int gender, int age, float height, float bodyWeight,
+        public static bool RegistBasicData(string name, int locationId, int gender, int age, float height, float bodyWeight,
             float bodyFatPercentage,
             int maxBloodPressure, int minBloodPressure, int basalMetabolism)
         {
             var model = new BasicDataModel
             {
                 Name = name,
+                LocationId = locationId,
                 Gender = gender,
                 Age = age,
                 Height = height,
@@ -58,6 +60,7 @@ namespace HealthManager.Model.Service
         /// </summary>
         /// <param name="id"></param>
         /// <param name="name"></param>
+        /// <param name="locationId"></param>
         /// <param name="gender"></param>
         /// <param name="age"></param>
         /// <param name="height"></param>
@@ -67,13 +70,14 @@ namespace HealthManager.Model.Service
         /// <param name="minBloodPressure"></param>
         /// <param name="basalMetabolism"></param>
         /// <returns></returns>
-        public static bool UpdateBasicData(int id, string name, int gender, int age, float height, float bodyWeight, float bodyFatPercentage,
+        public static bool UpdateBasicData(int id, string name,int locationId ,int gender, int age, float height, float bodyWeight, float bodyFatPercentage,
             int maxBloodPressure, int minBloodPressure, int basalMetabolism)
         {
             var model = new BasicDataModel
             {
                 Id = id,
                 Name = name,
+                LocationId = locationId,
                 Gender = gender,
                 Age = age,
                 Height = height,

@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -6,10 +7,13 @@ using System.Windows.Input;
 using HealthManager.Common.Constant;
 using HealthManager.Common.Extention;
 using HealthManager.Common.Language;
+using HealthManager.Model.Service;
+using HealthManager.Model.Structure;
 using HealthManager.Properties;
 using HealthManager.View;
 using HealthManager.ViewModel.Logic.News.Factory;
 using HealthManager.ViewModel.Structure;
+using Newtonsoft.Json;
 using Xamarin.Forms;
 
 namespace HealthManager.ViewModel
@@ -158,7 +162,29 @@ namespace HealthManager.ViewModel
         /// </summary>
         private static void MoveToTraining()
         {
-            ViewModelConst.TrainingPageNavigation.PushAsync(new TrainingView());
+            var check = TrainingResultService.CheckExitTargetDayData(DateTime.Now);
+
+            if (check)
+            {
+                Application.Current.MainPage.DisplayAlert(LanguageUtils.Get(LanguageKeys.Confirm),
+                    LanguageUtils.Get(LanguageKeys.TodayTrainingAlreadyCompleted), LanguageUtils.Get(LanguageKeys.OK));
+            }
+            else
+            {
+                var training = JsonConvert
+                    .DeserializeObject<TrainingScheduleStructure>(
+                        TrainingScheduleService.GetTrainingSchedule((int) DateTime.Now.DayOfWeek).TrainingMenu);
+
+                if (training.Off)
+                {
+                     Application.Current.MainPage.DisplayAlert(LanguageUtils.Get(LanguageKeys.Confirm),
+                        LanguageUtils.Get(LanguageKeys.TodayIsRest), LanguageUtils.Get(LanguageKeys.OK));
+                }
+                else
+                {
+                    ViewModelConst.TrainingPageNavigation.PushAsync(new TrainingView());
+                }
+            }           
         }
     }
 }

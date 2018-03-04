@@ -10,6 +10,8 @@ namespace HealthManager.Model
         public int Id { get; set; }
         [Column("Name")]
         public string Name { get; set; }
+        [Column("LocationId")]
+        public int LocationId { get; set; }
         [Column("Gender")]
         public int Gender { get; set; }
         [Column("Age")]

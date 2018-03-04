@@ -15,7 +15,7 @@ namespace HealthManager.Common.Extention
         /// <returns></returns>
         public static string DisplayUnit(this BasicDataEnum basicData)
         {
-            string[] names = {"", "", "才", "cm", "Kg", "%", "", "", ""};
+            string[] names = {"", "", "才", "cm", "Kg", "%", "", "", "",""};
             return names[(int) basicData];
         }
 
@@ -36,7 +36,8 @@ namespace HealthManager.Common.Extention
                 LanguageUtils.Get(LanguageKeys.BodyFatPercentage),
                 LanguageUtils.Get(LanguageKeys.MaxBloodPressure),
                 LanguageUtils.Get(LanguageKeys.MinBloodPressure),
-                LanguageUtils.Get(LanguageKeys.BasicMetabolism)
+                LanguageUtils.Get(LanguageKeys.BasicMetabolism),
+                LanguageUtils.Get(LanguageKeys.Location)
             };
             return names[(int) basicData];
         }

@@ -40,6 +40,10 @@ namespace HealthManager.Common.Enum
         /// <summary>
         /// Šî‘b‘ãÓ
         /// </summary>
-        BasalMetabolism
+        BasalMetabolism,
+        /// <summary>
+        /// Z‚Ü‚¢
+        /// </summary>
+        Location
     }
 }

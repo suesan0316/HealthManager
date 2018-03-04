@@ -367,7 +367,7 @@ namespace HealthManager.ViewModel
                             LanguageUtils.Get(LanguageKeys.Cancel));
                     if (result)
                     {
-                        BasicDataService.UpdateBasicData(_id, Name, gender: Gender, height: Height, age: Age,
+                        BasicDataService.UpdateBasicData(_id, name:Name,locationId:1, gender: Gender, height: Height, age: Age,
                             bodyWeight: BodyWeight, bodyFatPercentage: BodyFatPercentage,
                             maxBloodPressure: MaxBloodPressure,
                             minBloodPressure: MinBloodPressure, basalMetabolism: BasalMetabolism);
@@ -380,7 +380,7 @@ namespace HealthManager.ViewModel
                 }
                 else
                 {
-                    BasicDataService.RegistBasicData(Name, gender:Gender, height: Height, age: Age,
+                    BasicDataService.RegistBasicData(name:Name,locationId:1, gender:Gender, height: Height, age: Age,
                         bodyWeight: BodyWeight, bodyFatPercentage: BodyFatPercentage,
                         maxBloodPressure: MaxBloodPressure,
                         minBloodPressure: MinBloodPressure, basalMetabolism: BasalMetabolism);

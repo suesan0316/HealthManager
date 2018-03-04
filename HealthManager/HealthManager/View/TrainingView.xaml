@@ -13,10 +13,12 @@
                 <StackLayout Margin="30">
                     <Label Text="{Binding TrainingMenuLabel}" />
                     <Label Text="{Binding TrainingMenu}" />
-                    <Label Text="{Binding TimeCountLabel}" />
-                    <Label Text="{Binding TimeCount}" />
+                    <Label HorizontalOptions="Center" Text="{Binding TimeCountLabel}" IsVisible="{Binding TimeCountVisible}"/>
+                    <Label HorizontalOptions="Center" FontSize="35" Text="{Binding TimeCount}"  IsVisible="{Binding TimeCountVisible}"/>
                     <Button IsEnabled="{Binding IsDisable}" Text="{Binding TrainingStartButtonLabel}"
-                            Command="{Binding TrainingStartCommand}" Style="{StaticResource NormalButtonStyle}" />
+                            Command="{Binding TrainingStartCommand}" Style="{StaticResource NormalButtonStyle}" IsVisible="{Binding TrainingStartButtonVisible}" />
+                    <Button IsEnabled="{Binding IsDisable}" Text="{Binding TrainingCompleteButtonLabel}"
+                            Command="{Binding TrainingCompleteCommand}" Style="{StaticResource NormalButtonStyle}" IsVisible="{Binding TrainingCompleteButtonVisible}"/>
                     <Button Text="{Binding CancelButtonLabel}" Command="{Binding CancleCommand}"
                             IsVisible="{Binding CancelButtonIsVisible}" Style="{StaticResource NormalButtonStyle}" />
                 </StackLayout>
