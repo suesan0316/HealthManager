@@ -20,7 +20,7 @@
                     <Button IsEnabled="{Binding IsDisable}" Text="{Binding TrainingCompleteButtonLabel}"
                             Command="{Binding TrainingCompleteCommand}" Style="{StaticResource NormalButtonStyle}" IsVisible="{Binding TrainingCompleteButtonVisible}"/>
                     <Button Text="{Binding CancelButtonLabel}" Command="{Binding CancleCommand}"
-                            IsVisible="{Binding CancelButtonIsVisible}" Style="{StaticResource NormalButtonStyle}" />
+                            IsVisible="{Binding CancelButtonIsVisible}" Style="{StaticResource ReturnButtonStyle}" />
                 </StackLayout>
             </ScrollView>
         </StackLayout>

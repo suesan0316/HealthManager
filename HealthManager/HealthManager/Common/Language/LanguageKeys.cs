@@ -326,5 +326,9 @@
         /// {0}件中{1}~{2}件目を表示
         /// </summary>
         public const string PageDisplayCount = "PageDisplayCount";
+        /// <summary>
+        /// 負荷の値
+        /// </summary>
+        public const string LoadNum = "LoadNum";
     }
 }

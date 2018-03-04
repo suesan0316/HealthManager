@@ -23,18 +23,17 @@ namespace HealthManager.ViewModel
     /// </summary>
     public class EditTrainingScheduleViewModel : INotifyPropertyChanged
     {
+        private readonly int _id;
 
         private readonly bool _isUpdate;
 
         private readonly int _week;
 
-        private readonly int _id;
-
         public EditTrainingScheduleViewModel(int week, StackLayout trainingStack)
         {
             AddTrainingStackCommand = new Command(AddTrainingStack);
             DeleteTrainingStackCommand = new Command(DeleteTrainingStack);
-            SaveTrainingScheduleCommand = new Command(async() => await  SaveTrainingSchedule());
+            SaveTrainingScheduleCommand = new Command(async () => await SaveTrainingSchedule());
             CancleCommand = new Command(CancelAction);
             TrainingStack = trainingStack;
             WeekLabel = ((WeekEnum) week).ToString();
@@ -45,14 +44,16 @@ namespace HealthManager.ViewModel
             {
                 _isUpdate = true;
                 _id = target.Id;
-                var trainingScheduleStructure = JsonConvert.DeserializeObject<TrainingScheduleStructure>(target.TrainingMenu);
+                var trainingScheduleStructure =
+                    JsonConvert.DeserializeObject<TrainingScheduleStructure>(target.TrainingMenu);
 
                 Off = trainingScheduleStructure.Off;
 
-                foreach (var training in trainingScheduleStructure.TrainingContentList)
-                {
-                    AddTrainingStack(training);
-                }
+                foreach (var training in trainingScheduleStructure.TrainingContentList) AddTrainingStack(training);
+            }
+            else
+            {
+                AddTrainingStack();
             }
         }
 
@@ -108,34 +109,47 @@ namespace HealthManager.ViewModel
             trainingPicker.SelectedIndex = 0;
             mainStack.Children.Add(trainingPicker);
 
-            var trainingSetCountLabel = new Label { Text = LanguageUtils.Get(LanguageKeys.SetCount) };
+            var trainingSetCountLabel = new Label {Text = LanguageUtils.Get(LanguageKeys.SetCount)};
             mainStack.Children.Add(trainingSetCountLabel);
 
-            var trainingSetCountEntry = new Entry { Keyboard =Keyboard.Numeric};
+            var trainingSetCountEntry = new Entry {Keyboard = Keyboard.Numeric};
             mainStack.Children.Add(trainingSetCountEntry);
 
             var trainingLoadStack = new StackLayout();
 
-            var defaultLoad = JsonConvert.DeserializeObject<LoadStructure>(((TrainingMasterModel)trainingPicker.SelectedItem).Load);
+            var defaultLoad =
+                JsonConvert.DeserializeObject<LoadStructure>(((TrainingMasterModel) trainingPicker.SelectedItem).Load);
             foreach (var load in defaultLoad.LoadList)
             {
                 var loadStack = new StackLayout();
-                loadStack.Children.Add(new Label { Text = load.LoadName });
-                loadStack.Children.Add(new Entry { Keyboard = Keyboard.Numeric });
-                loadStack.Children.Add(new Picker { ItemsSource = LoadUnitService.GetLoadUnitList(load.Id), ItemDisplayBinding = new Binding("UnitName"), SelectedIndex = 0 });
+                loadStack.Children.Add(new Label {Text = load.LoadName});
+                loadStack.Children.Add(new Entry {Keyboard = Keyboard.Numeric});
+                loadStack.Children.Add(new Picker
+                {
+                    ItemsSource = LoadUnitService.GetLoadUnitList(load.Id),
+                    ItemDisplayBinding = new Binding("UnitName"),
+                    SelectedIndex = 0
+                });
                 trainingLoadStack.Children.Add(loadStack);
             }
 
             trainingPicker.SelectedIndexChanged += (sender, args) =>
             {
                 trainingLoadStack.Children.Clear();
-                var loadList = JsonConvert.DeserializeObject<LoadStructure>(((TrainingMasterModel) trainingPicker.SelectedItem).Load);
+                var loadList =
+                    JsonConvert.DeserializeObject<LoadStructure>(((TrainingMasterModel) trainingPicker.SelectedItem)
+                        .Load);
                 foreach (var load in loadList.LoadList)
                 {
                     var loadStack = new StackLayout();
-                    loadStack.Children.Add(new Label { Text = load.LoadName });
-                    loadStack.Children.Add(new Entry { Keyboard = Keyboard.Numeric });
-                    loadStack.Children.Add(new Picker { ItemsSource = LoadUnitService.GetLoadUnitList(load.Id), ItemDisplayBinding = new Binding("UnitName"), SelectedIndex = 0 });
+                    loadStack.Children.Add(new Label {Text = load.LoadName});
+                    loadStack.Children.Add(new Entry {Keyboard = Keyboard.Numeric});
+                    loadStack.Children.Add(new Picker
+                    {
+                        ItemsSource = LoadUnitService.GetLoadUnitList(load.Id),
+                        ItemDisplayBinding = new Binding("UnitName"),
+                        SelectedIndex = 0
+                    });
                     trainingLoadStack.Children.Add(loadStack);
                 }
             };
@@ -148,7 +162,7 @@ namespace HealthManager.ViewModel
         public void AddTrainingStack(TrainingListStructure training)
         {
             var mainStack = new StackLayout();
-            var trainingLabel = new Label { Text = LanguageUtils.Get(LanguageKeys.TrainingName) };
+            var trainingLabel = new Label {Text = LanguageUtils.Get(LanguageKeys.TrainingName)};
             mainStack.Children.Add(trainingLabel);
             var trainingPicker = new Picker
             {
@@ -161,13 +175,15 @@ namespace HealthManager.ViewModel
             var trainingSetCountLabel = new Label {Text = LanguageUtils.Get(LanguageKeys.SetCount)};
             mainStack.Children.Add(trainingSetCountLabel);
 
-            var trainingSetCountEntry = new Entry{Text = training.TrainingSetCount.ToString(),Keyboard = Keyboard.Numeric};
+            var trainingSetCountEntry =
+                new Entry {Text = training.TrainingSetCount.ToString(), Keyboard = Keyboard.Numeric};
             mainStack.Children.Add(trainingSetCountEntry);
 
             var trainingLoadStack = new StackLayout();
 
 
-            trainingPicker.SelectedItem = ((List<TrainingMasterModel>)trainingPicker.ItemsSource).First(data => data.Id == training.TrainingId);
+            trainingPicker.SelectedItem =
+                ((List<TrainingMasterModel>) trainingPicker.ItemsSource).First(data => data.Id == training.TrainingId);
 
             foreach (var load in training.LoadContentList)
             {
@@ -175,8 +191,8 @@ namespace HealthManager.ViewModel
                 var loadUnitModel = LoadUnitService.GetLoadUnit(load.LoadUnitId);
 
                 var loadStack = new StackLayout();
-                loadStack.Children.Add(new Label { Text = loadModdel.LoadName });
-                loadStack.Children.Add(new Entry {Text = load.Nums.ToString(),Keyboard = Keyboard.Numeric});
+                loadStack.Children.Add(new Label {Text = loadModdel.LoadName});
+                loadStack.Children.Add(new Entry {Text = load.Nums.ToString(), Keyboard = Keyboard.Numeric});
                 var loadUnitPick = new Picker
                 {
                     ItemsSource = LoadUnitService.GetLoadUnitList(load.LoadId),
@@ -192,13 +208,20 @@ namespace HealthManager.ViewModel
             trainingPicker.SelectedIndexChanged += (sender, args) =>
             {
                 trainingLoadStack.Children.Clear();
-                var loadList = JsonConvert.DeserializeObject<LoadStructure>(((TrainingMasterModel)trainingPicker.SelectedItem).Load);
+                var loadList =
+                    JsonConvert.DeserializeObject<LoadStructure>(((TrainingMasterModel) trainingPicker.SelectedItem)
+                        .Load);
                 foreach (var load in loadList.LoadList)
                 {
                     var loadStack = new StackLayout();
-                    loadStack.Children.Add(new Label { Text = load.LoadName });
-                    loadStack.Children.Add(new Entry { Keyboard = Keyboard.Numeric });
-                    loadStack.Children.Add(new Picker {ItemsSource = LoadUnitService.GetLoadUnitList(load.Id),ItemDisplayBinding = new Binding("UnitName"),SelectedIndex = 0});
+                    loadStack.Children.Add(new Label {Text = load.LoadName});
+                    loadStack.Children.Add(new Entry {Keyboard = Keyboard.Numeric});
+                    loadStack.Children.Add(new Picker
+                    {
+                        ItemsSource = LoadUnitService.GetLoadUnitList(load.Id),
+                        ItemDisplayBinding = new Binding("UnitName"),
+                        SelectedIndex = 0
+                    });
                     trainingLoadStack.Children.Add(loadStack);
                 }
             };
@@ -209,10 +232,7 @@ namespace HealthManager.ViewModel
 
         public void DeleteTrainingStack()
         {
-            if (TrainingStack.Children.Count != 1)
-            {
-                TrainingStack.Children.RemoveAt(TrainingStack.Children.Count - 1);
-            }
+            if (TrainingStack.Children.Count != 1) TrainingStack.Children.RemoveAt(TrainingStack.Children.Count - 1);
         }
 
         public void CancelAction()
@@ -226,32 +246,32 @@ namespace HealthManager.ViewModel
         {
             try
             {
-                //TODO バリデータを作成
-                if (1==2)
+                if (!Validate())
                 {
+                    ViewModelCommonUtil.SendMessage(ViewModelConst.MessagingTrainingSelfScroll);
                     return;
                 }
 
                 isLoading = true;
-
                 var trainingContentList = new List<TrainingListStructure>();
 
-                //トレーニング一覧
+                // トレーニング一覧
                 var trainingStack = TrainingStack.Children;
                 foreach (var training in trainingStack)
                 {
                     var insert = new TrainingListStructure();
-                    var trainingId = ((TrainingMasterModel)((Picker)((StackLayout) training).Children[1]).SelectedItem).Id;
+                    var trainingId =
+                        ((TrainingMasterModel) ((Picker) ((StackLayout) training).Children[1]).SelectedItem).Id;
                     var trainingseCount = ((Entry) ((StackLayout) training).Children[3]).Text;
 
                     var loadContentList = new List<LoadContentStructure>();
-                    var loadStack = ((StackLayout)((StackLayout)training).Children[4]).Children;
+                    var loadStack = ((StackLayout) ((StackLayout) training).Children[4]).Children;
                     foreach (var load in loadStack)
                     {
                         var insertload = new LoadContentStructure();
-                        var loadId = ((LoadUnitModel)((Picker)((StackLayout)load).Children[2]).SelectedItem).LoadId;
-                        var nums = ((Entry)((StackLayout)load).Children[1]).Text;
-                        var loadUnitId = ((LoadUnitModel)((Picker)((StackLayout)load).Children[2]).SelectedItem).Id;
+                        var loadId = ((LoadUnitModel) ((Picker) ((StackLayout) load).Children[2]).SelectedItem).LoadId;
+                        var nums = ((Entry) ((StackLayout) load).Children[1]).Text;
+                        var loadUnitId = ((LoadUnitModel) ((Picker) ((StackLayout) load).Children[2]).SelectedItem).Id;
                         insertload.LoadId = loadId;
                         insertload.LoadUnitId = loadUnitId;
                         insertload.Nums = float.Parse(nums);
@@ -272,15 +292,11 @@ namespace HealthManager.ViewModel
                 var trainingScheduleStructureJson = JsonConvert.SerializeObject(trainingScheduleStructure);
 
                 if (_isUpdate)
-                {
-                    TrainingScheduleService.UpdateTrainingSchedule(id: _id, trainingMenu: trainingScheduleStructureJson,
-                        week: _week);
-                }
+                    TrainingScheduleService.UpdateTrainingSchedule(_id, trainingScheduleStructureJson,
+                        _week);
                 else
-                {
-                    TrainingScheduleService.RegistTrainingSchedule(trainingMenu: trainingScheduleStructureJson,
-                        week: _week);
-                }
+                    TrainingScheduleService.RegistTrainingSchedule(trainingScheduleStructureJson,
+                        _week);
 
                 isLoading = false;
 
@@ -290,12 +306,64 @@ namespace HealthManager.ViewModel
                 // ホーム画面をリロードする
                 ViewModelCommonUtil.SendMessage(ViewModelConst.MessagingTrainingPrevPageReload);
                 ViewModelCommonUtil.TrainingBackPage();
-
             }
             catch (Exception e)
             {
-
             }
+        }
+
+        private bool Validate()
+        {
+            ErrorStack.Clear();
+
+            var trainingStack = TrainingStack.Children;
+            foreach (var training in trainingStack)
+            {
+                var trainingseCount = ((Entry) ((StackLayout) training).Children[3]).Text;
+                if (StringUtils.IsEmpty(trainingseCount))
+                {
+                    ErrorStack.Add(CreateErrorLabel(LanguageKeys.SetCount, LanguageKeys.NotInputRequireData));
+                }
+                else
+                {
+                    if (!int.TryParse(trainingseCount, out var result))
+                        ErrorStack.Add(CreateErrorLabel(LanguageKeys.SetCount, LanguageKeys.NotAvailableDataInput));
+                }
+
+                var loadStack = ((StackLayout) ((StackLayout) training).Children[4]).Children;
+                foreach (var load in loadStack)
+                {
+                    var nums = ((Entry) ((StackLayout) load).Children[1]).Text;
+                    if (StringUtils.IsEmpty(nums))
+                    {
+                        ErrorStack.Add(CreateErrorLabel(LanguageKeys.LoadNum, LanguageKeys.NotInputRequireData));
+                    }
+                    else
+                    {
+                        if (!float.TryParse(nums, out var result))
+                            ErrorStack.Add(CreateErrorLabel(LanguageKeys.LoadNum, LanguageKeys.NotAvailableDataInput));
+                    }
+                }
+
+                if (ErrorStack.Count != 0) return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        ///     エラーラベルを生成します
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="errorType"></param>
+        /// <returns></returns>
+        public Label CreateErrorLabel(string key, string errorType)
+        {
+            return new Label
+            {
+                Text = LanguageUtils.Get(errorType, LanguageUtils.Get(key)),
+                TextColor = Color.Red
+            };
         }
     }
 }

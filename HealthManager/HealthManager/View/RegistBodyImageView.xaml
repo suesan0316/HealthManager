@@ -29,7 +29,7 @@
                 <Button Text="{Binding RegistButtonLabel}" IsVisible="{Binding RegistButtonIsVisible}"
                         Command="{Binding RegistBodyImageCommand}" Style="{StaticResource NormalButtonStyle}" />
                 <Button Text="{Binding CancelButtonLabel}" Command="{Binding BackHomeCommand}"
-                        Style="{StaticResource NormalButtonStyle}" />
+                        Style="{StaticResource ReturnButtonStyle}" />
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

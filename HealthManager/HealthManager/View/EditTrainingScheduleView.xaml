@@ -6,7 +6,7 @@
              x:Class="HealthManager.View.EditTrainingScheduleView">
     <ContentPage.Content>
         <StackLayout>
-            <ScrollView>
+            <ScrollView x:Name="ControlScroll">
                 <StackLayout Margin="30">
                     <StackLayout x:Name="ErrorStack" />
                     <Label Text="{Binding WeekLabel}" />
@@ -15,13 +15,13 @@
                         <Switch IsToggled="{Binding Off}" />
                     </StackLayout>
                     <StackLayout x:Name="TrainingStack" />
-                    <Button Text="{Binding AddTrainingButtonLabel}" Command="{Binding AddTrainingStackCommand}" />
-                    <Button Text="{Binding DeleteTrainingButtonLabel}" Command="{Binding DeleteTrainingStackCommand}" />
+                    <Button Style="{StaticResource EventButtonStyle}" Text="{Binding AddTrainingButtonLabel}" Command="{Binding AddTrainingStackCommand}" />
+                    <Button Style="{StaticResource EventButtonStyle}" Text="{Binding DeleteTrainingButtonLabel}" Command="{Binding DeleteTrainingStackCommand}" />
                     <ActivityIndicator IsRunning="{Binding IsLoading}" />
                     <Button IsEnabled="{Binding IsDisable}" Text="{Binding SaveButtonLabel}"
                             Command="{Binding SaveTrainingScheduleCommand}" Style="{StaticResource NormalButtonStyle}" />
                     <Button Text="{Binding CancelButtonLabel}" Command="{Binding CancleCommand}"
-                             Style="{StaticResource NormalButtonStyle}" />
+                             Style="{StaticResource ReturnButtonStyle}" />
                 </StackLayout>
             </ScrollView>
         </StackLayout>

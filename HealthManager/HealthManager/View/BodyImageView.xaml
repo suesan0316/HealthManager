@@ -13,14 +13,14 @@
                         <StackLayout x:Name="ImageStack" Orientation="Horizontal" VerticalOptions="FillAndExpand" />
                     </ScrollView>
                     <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
-                        <Button Text="{Binding PreviousPageButtonLabel}" Command="{Binding PreviousPageCommand}"
+                        <Button Style="{StaticResource EventButtonStyle}" Text="{Binding PreviousPageButtonLabel}" Command="{Binding PreviousPageCommand}"
                                 IsEnabled="{Binding PreviousPageButtonEnable}" />
                         <Label Text="{Binding PageCountLabel}"></Label>
-                        <Button Text="{Binding NextPageButtonLabel}" Command="{Binding NexPageCommand}"
+                        <Button Style="{StaticResource EventButtonStyle}" Text="{Binding NextPageButtonLabel}" Command="{Binding NexPageCommand}"
                                 IsEnabled="{Binding NextPageButtonEnable}" />
                     </StackLayout>
                     <Button Text="{Binding BackHomeLabel}" Command="{Binding BackHomeCommand}"
-                            Style="{StaticResource NormalButtonStyle}" />
+                            Style="{StaticResource ReturnButtonStyle}" />
                 </StackLayout>
             </ScrollView>
         </StackLayout>

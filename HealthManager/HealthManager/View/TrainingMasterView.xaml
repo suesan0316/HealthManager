@@ -13,18 +13,18 @@
                            IsEnabled="{Binding IsDisable}" />
                     <Label Text="{Binding TrainingPartLabel}"></Label>
                     <StackLayout x:Name="PartStack" />
-                    <Button Text="{Binding AddPartButtonLabel}" Command="{Binding AddPartStackCommand}" />
-                    <Button Text="{Binding DeletePartButtonLabel}" Command="{Binding DeletePartStackCommand}" />
+                    <Button Style="{StaticResource EventButtonStyle}" Text="{Binding AddPartButtonLabel}" Command="{Binding AddPartStackCommand}" />
+                    <Button Style="{StaticResource EventButtonStyle}" Text="{Binding DeletePartButtonLabel}" Command="{Binding DeletePartStackCommand}" />
                     <Label Text="{Binding TrainingLoadLabel}"></Label>
                     <StackLayout x:Name="LoadStack" />
-                    <Button Text="{Binding AddLoadButtonLabel}" Command="{Binding AddLoadStackCommand}" />
-                    <Button Text="{Binding DeleteLoadButtonLabel}" Command="{Binding DeleteLoadStackCommand}" />
+                    <Button Style="{StaticResource EventButtonStyle}" Text="{Binding AddLoadButtonLabel}" Command="{Binding AddLoadStackCommand}" />
+                    <Button Style="{StaticResource EventButtonStyle}" Text="{Binding DeleteLoadButtonLabel}" Command="{Binding DeleteLoadStackCommand}" />
                     <Label HorizontalOptions="Center" Text="{Binding LoadingLabel}" IsVisible="{Binding IsLoading}" />
                     <ActivityIndicator IsRunning="{Binding IsLoading}" />
                     <Button IsEnabled="{Binding IsDisable}" Text="{Binding SaveButtonLabel}"
                             Command="{Binding SaveTrainingMasterCommand}" Style="{StaticResource NormalButtonStyle}" />
                     <Button Text="{Binding CancelButtonLabel}" Command="{Binding CancleCommand}"
-                            IsVisible="{Binding CancelButtonIsVisible}" Style="{StaticResource NormalButtonStyle}" />
+                            IsVisible="{Binding CancelButtonIsVisible}" Style="{StaticResource ReturnButtonStyle}" />
                 </StackLayout>
             </ScrollView>
         </StackLayout>

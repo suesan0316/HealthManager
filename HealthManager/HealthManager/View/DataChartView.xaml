@@ -7,7 +7,7 @@
     <ContentPage.BindingContext>
     </ContentPage.BindingContext>
     <StackLayout Margin="30">
-        <Button Text="{Binding BackHomeLabel}" Command="{Binding BackHomeCommand}"  Style="{StaticResource NormalButtonStyle}"/>
+        <Button Text="{Binding BackHomeLabel}" Command="{Binding BackHomeCommand}"  Style="{StaticResource ReturnButtonStyle}"/>
         <ScrollView Orientation="Horizontal"  HeightRequest="450">
             <forms:ChartView WidthRequest="{Binding ChartWidth}"  HeightRequest="450"  Chart="{Binding Chart}" />
         </ScrollView>

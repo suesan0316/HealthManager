@@ -1,4 +1,6 @@
-﻿using HealthManager.ViewModel;
+﻿using HealthManager.Common;
+using HealthManager.Common.Constant;
+using HealthManager.ViewModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,7 +12,9 @@ namespace HealthManager.View
 		public EditTrainingScheduleView (int week)
 		{
 		    InitializeComponent();
-		    NavigationPage.SetHasNavigationBar(this, false);
+		    MessagingCenter.Subscribe<ViewModelCommonUtil>(this, ViewModelConst.MessagingTrainingSelfScroll,
+		        (sender) => { ControlScroll.ScrollToAsync(ControlScroll, ScrollToPosition.Start, false); });
+            NavigationPage.SetHasNavigationBar(this, false);
 		    var vm = new EditTrainingScheduleViewModel(week: week, trainingStack: TrainingStack) { ErrorStack = ErrorStack.Children };
 		    BindingContext = vm;
         }
