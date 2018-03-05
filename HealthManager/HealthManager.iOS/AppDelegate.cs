@@ -25,9 +25,10 @@ namespace HealthManager.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
 
-            //DependencyService.Register<ImageButtonRenderer>();
+            
 
             global::Xamarin.Forms.Forms.Init();
+            DependencyService.Register<ImageButtonRenderer>();
             LoadApplication(new App());
           
             return base.FinishedLaunching(app, options);

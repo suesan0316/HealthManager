@@ -4,7 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:HealthManager.ViewModel"
              xmlns:controls="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms"
-             xmlns:effects="clr-namespace:AiForms.Effects;assembly=AiForms.Effects"
+             xmlns:ef="clr-namespace:AiForms.Effects;assembly=AiForms.Effects"
              xmlns:extention="clr-namespace:HealthManager.Common.Extention;assembly=HealthManager"
              x:Class="HealthManager.View.TrainingHomeView">
     <ContentPage.BindingContext>
@@ -17,29 +17,30 @@
                     <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,30,0,0">
                         <StackLayout Orientation="Vertical" Margin="0, 0, 40, 0">
                             <controls:ImageButton Command="{Binding EditTrainingCommand}"
-                                                  Source="{Binding TrainingListButtonImage}"
+                                                  Source="training.png"
                                                   Style="{StaticResource HomeImageButtonStyle}" />
                             <Label Text="{Binding EditTrainingLabel}" HorizontalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Vertical">
                             <controls:ImageButton Command="{Binding EditTrainingScheduleCommand}"
                                                   Style="{StaticResource HomeImageButtonStyle}"
-                                                  Source="{Binding TrainingScheduleButtonImage}" />
+                                                  Source="schedule.png"/>
                             <Label Text="{Binding EditTrainingScheduleLabel}" HorizontalOptions="Center" />
                         </StackLayout>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,30,0,0">
                         <StackLayout Orientation="Vertical" Margin="0, 0, 40, 0">
                             <controls:ImageButton Command="{Binding StartTrainingCommand}"
-                                                  Source="{Binding TrainingStartButtonImage}"
+                                                  Source="training_start.png"
                                                   Style="{StaticResource HomeImageButtonStyle}" />
                             <Label Text="{Binding StrartTrainingLabel}" HorizontalOptions="Center" />
                         </StackLayout>
                     </StackLayout>
                 </StackLayout>
             </ScrollView>
-            <StackLayout  Margin="20,20,20,20" >
-                <StackLayout BackgroundColor="LavenderBlush" effects:Border.Width="2" effects:Border.Radius="6" effects:Border.Color="Black" >
+            <StackLayout Margin="20,20,20,20">
+                <StackLayout BackgroundColor="LavenderBlush" ef:Border.Width="2" ef:Border.Radius="6"
+                             ef:Border.Color="Black">
                     <Label Text="{Binding TrainingNewsListTitleLabel}" HorizontalOptions="Center" Margin="0,0,0,0" />
                 </StackLayout>
                 <ActivityIndicator IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" />
@@ -48,7 +49,7 @@
                         <DataTemplate>
                             <ViewCell>
                                 <StackLayout>
-                                    <Label  Text="{Binding NewsTitle}" LineBreakMode="WordWrap"/>
+                                    <Label Text="{Binding NewsTitle}" LineBreakMode="WordWrap" />
                                 </StackLayout>
                             </ViewCell>
                         </DataTemplate>

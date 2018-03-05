@@ -15,51 +15,51 @@
             <StackLayout Margin="30" VerticalOptions="FillAndExpand">
                 <StackLayout Orientation="Horizontal">
                     <StackLayout>
-                        <Image Source="{Binding BodyImage}"  />
+                        <Image Source="{Binding BodyImage}" />
                         <Label Text="{Binding BodyImageRegistedDateString}" />
                     </StackLayout>
                     <ScrollView HeightRequest="200">
-                    <StackLayout Orientation="Vertical">
-                        <StackLayout Orientation="Horizontal">
-                            <Label Text="{Binding NameLabel}" />
-                            <Label Text="{Binding Name}" />
+                        <StackLayout Orientation="Vertical">
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding NameLabel}" />
+                                <Label Text="{Binding Name}" />
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding GenderLabel}" />
+                                <Label Text="{Binding Gender}" />
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding AgeLabel}" />
+                                <Label Text="{Binding Age}" />
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding HeightLabel}" />
+                                <Label Text="{Binding Height}" />
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding BodyWeightLabel}" />
+                                <Label Text="{Binding BodyWeight}" />
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding BmiLabel}" />
+                                <Label Text="{Binding Bmi}" />
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding BodyFatPercentageLabel}" />
+                                <Label Text="{Binding BodyFatPercentage}" />
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding BloodPressureLabel} " />
+                                <Label Text="{Binding MaxBloodPressure} " />
+                                <Label Text="/" VerticalOptions="End" />
+                                <Label Text="{Binding MinBloodPressure}" />
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding BasalMetabolismLabel}" />
+                                <Label Text="{Binding BasalMetabolism}" />
+                            </StackLayout>
                         </StackLayout>
-                        <StackLayout Orientation="Horizontal">
-                            <Label Text="{Binding GenderLabel}" />
-                            <Label Text="{Binding Gender}" />
-                        </StackLayout>
-                        <StackLayout Orientation="Horizontal">
-                            <Label Text="{Binding AgeLabel}" />
-                            <Label Text="{Binding Age}" />
-                        </StackLayout>
-                        <StackLayout Orientation="Horizontal">
-                            <Label Text="{Binding HeightLabel}" />
-                            <Label Text="{Binding Height}" />
-                        </StackLayout>
-                        <StackLayout Orientation="Horizontal">
-                            <Label Text="{Binding BodyWeightLabel}" />
-                            <Label Text="{Binding BodyWeight}" />
-                        </StackLayout>
-                        <StackLayout Orientation="Horizontal">
-                            <Label Text="{Binding BmiLabel}" />
-                            <Label Text="{Binding Bmi}" />
-                        </StackLayout>
-                        <StackLayout Orientation="Horizontal">
-                            <Label Text="{Binding BodyFatPercentageLabel}" />
-                            <Label Text="{Binding BodyFatPercentage}" />
-                        </StackLayout>
-                        <StackLayout Orientation="Horizontal">
-                            <Label Text="{Binding BloodPressureLabel} " />
-                            <Label Text="{Binding MaxBloodPressure} " />
-                            <Label Text="/" VerticalOptions="End" />
-                            <Label Text="{Binding MinBloodPressure}" />
-                        </StackLayout>
-                        <StackLayout Orientation="Horizontal">
-                            <Label Text="{Binding BasalMetabolismLabel}" />
-                            <Label Text="{Binding BasalMetabolism}" />
-                        </StackLayout>
-                    </StackLayout>
-                        </ScrollView>
+                    </ScrollView>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,30,0,0">
                     <StackLayout Orientation="Vertical" Margin="0, 0, 40, 0">
@@ -88,9 +88,10 @@
                 </StackLayout>
             </StackLayout>
         </ScrollView>
-        <StackLayout  Margin="20,20,20,20" >
-            <StackLayout BackgroundColor="LavenderBlush" ef:Border.Width="2" ef:Border.Radius="6" ef:Border.Color="Black" >
-            <Label Text="{Binding NewsListTitleLabel}" HorizontalOptions="Center" Margin="0,0,0,0" />
+        <StackLayout Margin="20,20,20,20">
+            <StackLayout BackgroundColor="LavenderBlush" ef:Border.Width="2" ef:Border.Radius="6"
+                         ef:Border.Color="Black">
+                <Label Text="{Binding NewsListTitleLabel}" HorizontalOptions="Center" Margin="0,0,0,0" />
             </StackLayout>
             <ActivityIndicator IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" />
             <ListView ItemsSource="{Binding Items}" VerticalOptions="FillAndExpand" Margin="15" HeightRequest="150">
@@ -98,7 +99,7 @@
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout>
-                                <Label  Text="{Binding NewsTitle}" LineBreakMode="WordWrap"/>
+                                <Label Text="{Binding NewsTitle}" LineBreakMode="WordWrap" />
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
