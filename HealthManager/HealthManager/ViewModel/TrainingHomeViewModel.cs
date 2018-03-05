@@ -171,18 +171,29 @@ namespace HealthManager.ViewModel
             }
             else
             {
-                var training = JsonConvert
-                    .DeserializeObject<TrainingScheduleStructure>(
-                        TrainingScheduleService.GetTrainingSchedule((int) DateTime.Now.DayOfWeek).TrainingMenu);
+                var exits = TrainingScheduleService.GetTrainingSchedule((int) DateTime.Now.DayOfWeek);
 
-                if (training.Off)
+                if (exits == null)
                 {
-                     Application.Current.MainPage.DisplayAlert(LanguageUtils.Get(LanguageKeys.Confirm),
-                        LanguageUtils.Get(LanguageKeys.TodayIsRest), LanguageUtils.Get(LanguageKeys.OK));
+                    Application.Current.MainPage.DisplayAlert(LanguageUtils.Get(LanguageKeys.Confirm),
+                        LanguageUtils.Get(LanguageKeys.NotSettingTrainingSchedule), LanguageUtils.Get(LanguageKeys.OK));
                 }
                 else
                 {
-                    ViewModelConst.TrainingPageNavigation.PushAsync(new TrainingView());
+
+                    var training = JsonConvert
+                        .DeserializeObject<TrainingScheduleStructure>(
+                            TrainingScheduleService.GetTrainingSchedule((int) DateTime.Now.DayOfWeek).TrainingMenu);
+
+                    if (training.Off)
+                    {
+                        Application.Current.MainPage.DisplayAlert(LanguageUtils.Get(LanguageKeys.Confirm),
+                            LanguageUtils.Get(LanguageKeys.TodayIsRest), LanguageUtils.Get(LanguageKeys.OK));
+                    }
+                    else
+                    {
+                        ViewModelConst.TrainingPageNavigation.PushAsync(new TrainingView());
+                    }
                 }
             }           
         }

@@ -27,10 +27,11 @@ namespace HealthManager.Common.Other
                     //db.DropTable<InitModel>();
                     //db.DropTable<BodyImageModel>();
                     //db.DropTable<BasicDataModel>();
-                    //db.DropTable<LoadModel>();
-                    //db.DropTable<PartModel>();
-                    //db.DropTable<SubPartModel>();
-                    //db.DropTable<LoadUnitModel>();
+                    db.DropTable<LoadModel>();
+                    db.DropTable<PartModel>();
+                    db.DropTable<SubPartModel>();
+                    db.DropTable<LoadUnitModel>();
+                    db.DropTable<LocationModel>();
                     //db.DropTable<TrainingMasterModel>();
                     //db.DropTable<TrainingMenuModel>();
                     //db.DropTable<TrainingScheduleModel>();
@@ -64,7 +65,7 @@ namespace HealthManager.Common.Other
                     {
                         throw e;
                     }
-                    //InsertMasterData();
+                    InsertMasterData();
                 }
             }               
         }

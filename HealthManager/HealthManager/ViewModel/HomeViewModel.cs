@@ -558,6 +558,7 @@ namespace HealthManager.ViewModel
                     ViewModelCommonUtil.FormatDateString(bodyImageModel.RegistedDate);
 
                 MoveToBodyImageListCommand = new Command(MoveToBodyImageList);
+                OnPropertyChanged(nameof(MoveToBodyImageListCommand));
             }
             else
             {
@@ -569,6 +570,7 @@ namespace HealthManager.ViewModel
                     LanguageUtils.Get(LanguageKeys.RegistedDate) + StringConst.Empty;
 
                 MoveToBodyImageListCommand = new Command(MoveToRegistBodyImage);
+                OnPropertyChanged(nameof(MoveToBodyImageListCommand));
             }
         }
     }

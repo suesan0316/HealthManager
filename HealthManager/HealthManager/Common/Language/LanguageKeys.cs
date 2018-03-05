@@ -330,5 +330,9 @@
         /// 負荷の値
         /// </summary>
         public const string LoadNum = "LoadNum";
+        /// <summary>
+        /// トレーニングスケジュールが未設定です。
+        /// </summary>
+        public const string NotSettingTrainingSchedule = "NotSettingTrainingSchedule";
     }
 }

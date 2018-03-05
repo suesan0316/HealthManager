@@ -26,7 +26,7 @@ namespace HealthManager.iOS
         {
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
-            DependencyService.Register<ImageButtonRenderer>();
+            //DependencyService.Register<ImageButtonRenderer>();
             return base.FinishedLaunching(app, options);
         }
     }
