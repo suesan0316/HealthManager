@@ -102,6 +102,8 @@
     <Compile Include="ViewModel\Structure\TrainingScheduleViewStructure.cs" />
     <Compile Include="ViewModel\TrainingListViewModel.cs" />
     <Compile Include="ViewModel\TrainingMasterViewModel.cs" />
+    <Compile Include="ViewModel\TrainingReportListViewModel.cs" />
+    <Compile Include="ViewModel\TrainingReportViewModel.cs" />
     <Compile Include="ViewModel\TrainingScheduleListViewModel.cs" />
     <Compile Include="ViewModel\TrainingViewModel.cs" />
     <Compile Include="ViewModel\Util\Timer.cs" />
@@ -150,6 +152,12 @@
     </Compile>
     <Compile Include="View\TrainingMasterView.xaml.cs">
       <DependentUpon>TrainingMasterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TrainingReportListView.xaml.cs">
+      <DependentUpon>TrainingReportListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TrainingReportView.xaml.cs">
+      <DependentUpon>TrainingReportView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TrainingScheduleListView.xaml.cs">
       <DependentUpon>TrainingScheduleListView.xaml</DependentUpon>
@@ -376,6 +384,18 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Common\Other\Data\Test\basic_data_test.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="View\TrainingReportListView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="View\TrainingReportView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
