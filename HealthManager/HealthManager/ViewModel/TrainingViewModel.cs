@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -8,8 +10,11 @@ using HealthManager.Common;
 using HealthManager.Common.Constant;
 using HealthManager.Common.Enum;
 using HealthManager.Common.Language;
+using HealthManager.Model;
 using HealthManager.Model.Service;
+using HealthManager.ViewModel.Structure;
 using HealthManager.ViewModel.Util;
+using Newtonsoft.Json;
 using Xamarin.Forms;
 
 namespace HealthManager.ViewModel
@@ -21,6 +26,8 @@ namespace HealthManager.ViewModel
     {
 
         private int _week;
+
+        private TrainingScheduleSViewtructure trainingScheduleSViewtructure;
 
         private DateTime _pageOpenDateTime;
 
@@ -52,11 +59,16 @@ namespace HealthManager.ViewModel
             _week = (int) DateTime.Now.DayOfWeek;
             _timer = new Timer(TimeSpan.FromSeconds(1), CountDown);
             TotalSeconds = _totalSeconds;
-            TrainingMenu = ViewModelCommonUtil.CreateTrainingScheduleSViewtructure((WeekEnum) _week).ToString();
+            trainingScheduleSViewtructure = ViewModelCommonUtil.CreateTrainingScheduleSViewtructure((WeekEnum) _week);
+            TrainingMenu = trainingScheduleSViewtructure.ToString();
+            Items = trainingScheduleSViewtructure.TrainingContentList;
+            WeekLabel = trainingScheduleSViewtructure.WeekName;
             TrainingStartButtonVisible = true;
         }
 
         public string TrainingMenuLabel => LanguageUtils.Get(LanguageKeys.TodayTrainingMenu);
+
+        public string WeekLabel { get; set; }
 
         public string TrainingMenu { get; set; }
 
@@ -81,6 +93,9 @@ namespace HealthManager.ViewModel
         public ICommand CancleCommand { get; set; }
 
         public ICommand TrainingCompleteCommand { get; set; }
+
+        public List<TrainingListViewStructure> Items { protected set; get; } = new List<TrainingListViewStructure>();
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -125,7 +140,7 @@ namespace HealthManager.ViewModel
             if (result)
             {
                 _trainingEndDateTime = DateTime.Now;
-                TrainingResultService.RegistTrainingResult(trainingContent: TrainingMenu, weather: null,
+                TrainingResultService.RegistTrainingResult(trainingContent: JsonConvert.SerializeObject(trainingScheduleSViewtructure), weather: null,
                     targetDate: _pageOpenDateTime, startDate: _trainingStartDateTime, endDate: _trainingEndDateTime);
 
                 // 遷移元画面をリロードする

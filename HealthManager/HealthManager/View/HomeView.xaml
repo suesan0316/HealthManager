@@ -69,20 +69,20 @@
                         <Label Text="{Binding MoveToRegistBasicDataLabel}" HorizontalOptions="Center" />
                     </StackLayout>
                     <StackLayout Orientation="Vertical">
-                        <controls:ImageButton Command="{Binding MoveToDataChartCommand}"
-                                              Style="{StaticResource HomeImageButtonStyle}" Source="chart.png" />
+                        <Button Command="{Binding MoveToDataChartCommand}"
+                                              Style="{StaticResource HomeImageButtonStyle}" Image="chart.png" />
                         <Label Text="{Binding MoveToDataChartLabel}" HorizontalOptions="Center" />
                     </StackLayout>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,30,0,0">
                     <StackLayout Orientation="Vertical" Margin="0, 0, 40, 0">
-                        <controls:ImageButton Command="{Binding MoveToBodyImageListCommand}"
-                                              Source="bodyImage.png" Style="{StaticResource HomeImageButtonStyle}" />
+                        <Button Command="{Binding MoveToBodyImageListCommand}"
+                                Image="bodyImage.png" Style="{StaticResource HomeImageButtonStyle}" />
                         <Label Text="{Binding MoveToBodyImageListLabel}" HorizontalOptions="Center" />
                     </StackLayout>
                     <StackLayout Orientation="Vertical">
-                        <controls:ImageButton Command="{Binding MoveToRegistBodyImageCommand}"
-                                              Source="camera.png" Style="{StaticResource HomeImageButtonStyle}" />
+                        <Button Command="{Binding MoveToRegistBodyImageCommand}"
+                                Image="camera.png" Style="{StaticResource HomeImageButtonStyle}" />
                         <Label Text="{Binding MoveToRegistBodyImageLabel}" HorizontalOptions="Center" />
                     </StackLayout>
                 </StackLayout>

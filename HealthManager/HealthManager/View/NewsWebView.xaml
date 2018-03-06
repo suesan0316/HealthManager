@@ -7,7 +7,7 @@
         <vm:NewsWebViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Margin="30">
             <WebView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"  x:Name="WebView"></WebView>
             <Button Text="{Binding BackHomeLabel}" Command="{Binding BackHomeCommand}" Style="{StaticResource ReturnButtonStyle}"></Button>
         </StackLayout>

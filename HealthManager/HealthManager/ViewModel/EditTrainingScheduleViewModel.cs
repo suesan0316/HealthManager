@@ -99,7 +99,7 @@ namespace HealthManager.ViewModel
         public void AddTrainingStack()
         {
             var mainStack = new StackLayout();
-            var trainingLabel = new Label {Text = LanguageUtils.Get(LanguageKeys.TrainingName)};
+            var trainingLabel = new Label {Text = LanguageUtils.Get(LanguageKeys.TrainingName),FontAttributes = FontAttributes.Bold,Margin = new Thickness(0,20,0,0)};
             mainStack.Children.Add(trainingLabel);
             var trainingPicker = new Picker
             {
@@ -109,7 +109,7 @@ namespace HealthManager.ViewModel
             trainingPicker.SelectedIndex = 0;
             mainStack.Children.Add(trainingPicker);
 
-            var trainingSetCountLabel = new Label {Text = LanguageUtils.Get(LanguageKeys.SetCount)};
+            var trainingSetCountLabel = new Label {Text = LanguageUtils.Get(LanguageKeys.SetCount), FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0) };
             mainStack.Children.Add(trainingSetCountLabel);
 
             var trainingSetCountEntry = new Entry {Keyboard = Keyboard.Numeric};
@@ -122,7 +122,7 @@ namespace HealthManager.ViewModel
             foreach (var load in defaultLoad.LoadList)
             {
                 var loadStack = new StackLayout();
-                loadStack.Children.Add(new Label {Text = load.LoadName});
+                loadStack.Children.Add(new Label {Text = load.LoadName, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0) });
                 loadStack.Children.Add(new Entry {Keyboard = Keyboard.Numeric});
                 loadStack.Children.Add(new Picker
                 {
@@ -142,7 +142,7 @@ namespace HealthManager.ViewModel
                 foreach (var load in loadList.LoadList)
                 {
                     var loadStack = new StackLayout();
-                    loadStack.Children.Add(new Label {Text = load.LoadName});
+                    loadStack.Children.Add(new Label {Text = load.LoadName, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0) });
                     loadStack.Children.Add(new Entry {Keyboard = Keyboard.Numeric});
                     loadStack.Children.Add(new Picker
                     {
@@ -162,7 +162,7 @@ namespace HealthManager.ViewModel
         public void AddTrainingStack(TrainingListStructure training)
         {
             var mainStack = new StackLayout();
-            var trainingLabel = new Label {Text = LanguageUtils.Get(LanguageKeys.TrainingName)};
+            var trainingLabel = new Label {Text = LanguageUtils.Get(LanguageKeys.TrainingName), FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 20, 0, 0) };
             mainStack.Children.Add(trainingLabel);
             var trainingPicker = new Picker
             {
@@ -172,7 +172,7 @@ namespace HealthManager.ViewModel
             trainingPicker.SelectedIndex = 0;
             mainStack.Children.Add(trainingPicker);
 
-            var trainingSetCountLabel = new Label {Text = LanguageUtils.Get(LanguageKeys.SetCount)};
+            var trainingSetCountLabel = new Label {Text = LanguageUtils.Get(LanguageKeys.SetCount), FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0) };
             mainStack.Children.Add(trainingSetCountLabel);
 
             var trainingSetCountEntry =
@@ -191,7 +191,7 @@ namespace HealthManager.ViewModel
                 var loadUnitModel = LoadUnitService.GetLoadUnit(load.LoadUnitId);
 
                 var loadStack = new StackLayout();
-                loadStack.Children.Add(new Label {Text = loadModdel.LoadName});
+                loadStack.Children.Add(new Label {Text = loadModdel.LoadName, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0) });
                 loadStack.Children.Add(new Entry {Text = load.Nums.ToString(), Keyboard = Keyboard.Numeric});
                 var loadUnitPick = new Picker
                 {
@@ -214,7 +214,7 @@ namespace HealthManager.ViewModel
                 foreach (var load in loadList.LoadList)
                 {
                     var loadStack = new StackLayout();
-                    loadStack.Children.Add(new Label {Text = load.LoadName});
+                    loadStack.Children.Add(new Label {Text = load.LoadName, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0) });
                     loadStack.Children.Add(new Entry {Keyboard = Keyboard.Numeric});
                     loadStack.Children.Add(new Picker
                     {

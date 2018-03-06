@@ -16,22 +16,22 @@
                 <StackLayout Margin="30">
                     <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,30,0,0">
                         <StackLayout Orientation="Vertical" Margin="0, 0, 40, 0">
-                            <controls:ImageButton Command="{Binding EditTrainingCommand}"
-                                                  Source="training.png"
+                            <Button Command="{Binding EditTrainingCommand}"
+                                    Image="training.png"
                                                   Style="{StaticResource HomeImageButtonStyle}" />
                             <Label Text="{Binding EditTrainingLabel}" HorizontalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Vertical">
-                            <controls:ImageButton Command="{Binding EditTrainingScheduleCommand}"
+                            <Button Command="{Binding EditTrainingScheduleCommand}"
                                                   Style="{StaticResource HomeImageButtonStyle}"
-                                                  Source="schedule.png"/>
+                                    Image="schedule.png"/>
                             <Label Text="{Binding EditTrainingScheduleLabel}" HorizontalOptions="Center" />
                         </StackLayout>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,30,0,0">
                         <StackLayout Orientation="Vertical" Margin="0, 0, 40, 0">
-                            <controls:ImageButton Command="{Binding StartTrainingCommand}"
-                                                  Source="training_start.png"
+                            <Button Command="{Binding StartTrainingCommand}"
+                                    Image="training_start.png"
                                                   Style="{StaticResource HomeImageButtonStyle}" />
                             <Label Text="{Binding StrartTrainingLabel}" HorizontalOptions="Center" />
                         </StackLayout>
@@ -44,7 +44,7 @@
                     <Label Text="{Binding TrainingNewsListTitleLabel}" HorizontalOptions="Center" Margin="0,0,0,0" />
                 </StackLayout>
                 <ActivityIndicator IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" />
-                <ListView ItemsSource="{Binding Items}" VerticalOptions="FillAndExpand" Margin="15" HeightRequest="150">
+                <ListView ItemsSource="{Binding Items}" VerticalOptions="FillAndExpand" Margin="15" HeightRequest="150" HasUnevenRows="True">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>

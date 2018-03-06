@@ -13,15 +13,15 @@
             <StackLayout Margin="30">
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,30,0,0">
                     <StackLayout Orientation="Vertical" Margin="0, 0, 40, 0">
-                        <controls:ImageButton Command="{Binding TakeImageCameraCommand}"
-                                              Source="camera.png"
+                        <Button Command="{Binding TakeImageCameraCommand}"
+                                              Image="camera.png"
                                               Style="{StaticResource HomeImageButtonStyle}" />
                         <Label Text="{Binding TakeImageCameraLabel}" HorizontalOptions="Center" />
                     </StackLayout>
                     <StackLayout Orientation="Vertical">
-                        <controls:ImageButton Command="{Binding TakeImageLibraryaCommand}"
+                        <Button Command="{Binding TakeImageLibraryaCommand}"
                                               Style="{StaticResource HomeImageButtonStyle}"
-                                              Source="library.png" />
+                                              Image="library.png" />
                         <Label Text="{Binding TakeImageLibraryLabel}" HorizontalOptions="Center" />
                     </StackLayout>
                 </StackLayout>
