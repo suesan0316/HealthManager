@@ -5,7 +5,6 @@
              xmlns:forms="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
              x:Class="HealthManager.View.DataChartView">
     <StackLayout Margin="30">
-        <Button Text="{Binding BackHomeLabel}" Command="{Binding BackHomeCommand}"  Style="{StaticResource ReturnButtonStyle}"/>
         <ScrollView Orientation="Horizontal"  HeightRequest="450">
             <forms:ChartView WidthRequest="{Binding ChartWidth}"  HeightRequest="450"  Chart="{Binding Chart}" />
         </ScrollView>
@@ -14,5 +13,6 @@
         <Label Text="{Binding TermMinText}" />
         <Label Text="{Binding TermAverageText}" />
         <ListView ItemsSource="{Binding DataList}" VerticalOptions="FillAndExpand" />
+        <Button Text="{Binding BackHomeLabel}" Command="{Binding BackHomeCommand}"  Style="{StaticResource ReturnButtonStyle}"/>
     </StackLayout>
 </ContentPage>

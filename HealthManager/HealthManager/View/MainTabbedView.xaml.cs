@@ -11,12 +11,12 @@ namespace HealthManager.View
 
             var navigationPageHome = new NavigationPage(new HomeView())
             {
-                //Title = "Schedule"
+                Icon = "home_icon.png"
             };
             
             var navigationPageTraining = new NavigationPage(new TrainingHomeView())
             {
-                //Title = "Schedule"
+                Icon = "training_icon.png"
             };
             Children.Add(navigationPageHome);
             Children[0].Title = "データ";

@@ -6,7 +6,6 @@
              x:Class="HealthManager.View.TrainingScheduleListView">
     <ContentPage.Content>
         <StackLayout Margin="30">
-            <Button Text="{Binding BackPageLabel}" Command="{Binding BackPageCommand}" Style="{StaticResource ReturnButtonStyle}"></Button>
             <ListView ItemsSource="{Binding Items}"  Margin="15" HasUnevenRows="True"> 
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -17,6 +16,7 @@
                     <extention:ItemTappedBehavior Command="{Binding TrainingScheduleListItemTappedCommand}" />
                 </ListView.Behaviors>
             </ListView>
+            <Button Text="{Binding BackPageLabel}" Command="{Binding BackPageCommand}" Style="{StaticResource ReturnButtonStyle}"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

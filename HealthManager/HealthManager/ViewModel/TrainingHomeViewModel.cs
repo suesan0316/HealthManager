@@ -43,7 +43,7 @@ namespace HealthManager.ViewModel
                 ViewModelConst.TrainingPageNavigation.PushAsync(new NewsWebView(item.NewsUrl,ViewModelConst.TrainingPageNavigation));
             });
 
-            Task.Run(SetNewsSourceTask);
+            Task.Run(SetNewsSourceTask).Wait();
         }
 
         /// <summary>

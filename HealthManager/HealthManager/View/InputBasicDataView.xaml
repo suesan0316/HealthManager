@@ -12,39 +12,39 @@
             <StackLayout Margin="30">
                 <StackLayout x:Name="ErrorStack" />
 
-                <Label Text="{Binding NameLabel}" />
+                <Label Text="{Binding NameLabel}" Style="{StaticResource ColumnLabelStyle}" />
                 <Entry Placeholder="{Binding NamePlaceholderLabel}" Text="{Binding Name}"
                        IsEnabled="{Binding IsDisable}" />
-                <Label Text="{Binding GenderLabel}" />
+                <Label Text="{Binding GenderLabel}" Style="{StaticResource ColumnLabelStyle}" />
                 <Picker ItemsSource="{Binding GenderItemSrouce}" SelectedIndex="{Binding Gender}"
                         IsEnabled="{Binding IsDisable}" />
-                <Label Text="{Binding AgeLabel}" />
+                <Label Text="{Binding AgeLabel}" Style="{StaticResource ColumnLabelStyle}" />
                 <Entry Placeholder="{Binding AgePlaceholderLabel}" Keyboard="Numeric" Text="{Binding Age}"
                        IsEnabled="{Binding IsDisable}" />
-                <Label Text="{Binding HeightLabel}" />
+                <Label Text="{Binding HeightLabel}" Style="{StaticResource ColumnLabelStyle}" />
                 <Entry Placeholder="{Binding HeightPlaceholderLabel}" Keyboard="Numeric" Text="{Binding Height}"
                        IsEnabled="{Binding IsDisable}" />
-                <Label Text="{Binding BodyWeightLabel}" />
+                <Label Text="{Binding BodyWeightLabel}" Style="{StaticResource ColumnLabelStyle}" />
                 <Entry Placeholder="{Binding BodyWeightPlaceholderLabel}" Keyboard="Numeric"
                        Text="{Binding BodyWeight}"
                        IsEnabled="{Binding IsDisable}" />
-                <Label Text="{Binding BmiLabel}" />
+                <Label Text="{Binding BmiLabel}" Style="{StaticResource ColumnLabelStyle}" />
                 <Label Text="{Binding Bmi}" />
-                <Label Text="{Binding  BodyFatPercentageLabel}" />
+                <Label Text="{Binding  BodyFatPercentageLabel}" Style="{StaticResource ColumnLabelStyle}" />
                 <Entry Placeholder="{Binding BodyFatPercentagePlaceholderLabel}" Keyboard="Numeric"
                        Text="{Binding BodyFatPercentage}"
                        IsEnabled="{Binding IsDisable}" />
-                <Label Text="{Binding BloodPressureLabel}" />
+                <Label Text="{Binding BloodPressureLabel}" Style="{StaticResource ColumnLabelStyle}" />
                 <StackLayout Orientation="Horizontal">
                     <Entry Placeholder="{Binding MaxBloodPressurePlaceholderLabel}" Keyboard="Numeric"
                            WidthRequest="100" Text="{Binding MaxBloodPressure} "
                            IsEnabled="{Binding IsDisable}" />
-                    <Label Text="/" VerticalOptions="End" />
+                    <Label Text="/" VerticalOptions="End"/>
                     <Entry Placeholder="{Binding MinBloodPressurePlaceholderLabel}" Keyboard="Numeric"
                            WidthRequest="100" Text="{Binding MinBloodPressure}"
                            IsEnabled="{Binding IsDisable}" />
                 </StackLayout>
-                <Label Text="{Binding BasalMetabolismLabel}" />
+                <Label Text="{Binding BasalMetabolismLabel}" Style="{StaticResource ColumnLabelStyle}" />
                 <Entry Placeholder="{Binding BasalMetabolismPlaceholderLabel}" Keyboard="Numeric"
                        Text="{Binding BasalMetabolism}"
                        IsEnabled="{Binding IsDisable}" />

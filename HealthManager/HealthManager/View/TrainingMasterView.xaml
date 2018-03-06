@@ -8,18 +8,18 @@
             <ScrollView x:Name="ControlScroll">
                 <StackLayout Margin="30">
                     <StackLayout x:Name="ErrorStack" />
-                    <Label Text="{Binding TrainingNameLabel}" />
+                    <Label Text="{Binding TrainingNameLabel}" Style="{StaticResource ColumnLabelStyle}"  />
                     <Entry Placeholder="{Binding NamePlaceholderLabel}" Text="{Binding TrainingName}"
                            IsEnabled="{Binding IsDisable}" />
-                    <Label Text="{Binding TrainingPartLabel}"></Label>
+                    <Label Text="{Binding TrainingPartLabel}" Style="{StaticResource ColumnLabelStyle}"></Label>
                     <StackLayout x:Name="PartStack" />
                     <Button Style="{StaticResource EventButtonStyle}" Text="{Binding AddPartButtonLabel}" Command="{Binding AddPartStackCommand}" />
                     <Button Style="{StaticResource EventButtonStyle}" Text="{Binding DeletePartButtonLabel}" Command="{Binding DeletePartStackCommand}" />
-                    <Label Text="{Binding TrainingLoadLabel}"></Label>
+                    <Label Text="{Binding TrainingLoadLabel}" Style="{StaticResource ColumnLabelStyle}"></Label>
                     <StackLayout x:Name="LoadStack" />
                     <Button Style="{StaticResource EventButtonStyle}" Text="{Binding AddLoadButtonLabel}" Command="{Binding AddLoadStackCommand}" />
                     <Button Style="{StaticResource EventButtonStyle}" Text="{Binding DeleteLoadButtonLabel}" Command="{Binding DeleteLoadStackCommand}" />
-                    <Label HorizontalOptions="Center" Text="{Binding LoadingLabel}" IsVisible="{Binding IsLoading}" />
+                    <Label HorizontalOptions="Center" Text="{Binding LoadingLabel}" IsVisible="{Binding IsLoading}" Style="{StaticResource ColumnLabelStyle}" />
                     <ActivityIndicator IsRunning="{Binding IsLoading}" />
                     <Button IsEnabled="{Binding IsDisable}" Text="{Binding SaveButtonLabel}"
                             Command="{Binding SaveTrainingMasterCommand}" Style="{StaticResource NormalButtonStyle}" />

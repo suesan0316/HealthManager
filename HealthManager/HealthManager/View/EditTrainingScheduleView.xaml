@@ -9,9 +9,9 @@
             <ScrollView x:Name="ControlScroll">
                 <StackLayout Margin="30">
                     <StackLayout x:Name="ErrorStack" />
-                    <Label Text="{Binding WeekLabel}" />
+                    <Label Text="{Binding WeekLabel}"  Style="{StaticResource ColumnLabelStyle}" />
                     <StackLayout>
-                        <Label Text="{Binding OffSwitchLabel}" />
+                        <Label Text="{Binding OffSwitchLabel}"  Style="{StaticResource ColumnLabelStyle}" />
                         <Switch IsToggled="{Binding Off}" />
                     </StackLayout>
                     <StackLayout x:Name="TrainingStack" />

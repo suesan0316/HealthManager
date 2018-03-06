@@ -8,11 +8,12 @@
             <vm:DataSelectViewModel />
         </ContentPage.BindingContext>
     <StackLayout Margin="30">
-        <Button Text="{Binding BackPageLabel}" Command="{Binding BackPageCommand}" Style="{StaticResource ReturnButtonStyle}"></Button>
+        
         <ListView ItemsSource="{Binding Items}" VerticalOptions="FillAndExpand">
                 <ListView.Behaviors>
                     <extention:ItemTappedBehavior Command="{Binding BasicDataItemTappedCommand}" />
                 </ListView.Behaviors>
             </ListView>
+        <Button Text="{Binding BackPageLabel}" Command="{Binding BackPageCommand}" Style="{StaticResource ReturnButtonStyle}"></Button>
         </StackLayout>
 </ContentPage>

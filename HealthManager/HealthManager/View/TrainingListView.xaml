@@ -8,8 +8,6 @@
         <viewModel:TrainingListViewModel />
     </ContentPage.BindingContext>
     <StackLayout Margin="30">
-        <Button Text="{Binding BackPageLabel}" Command="{Binding BackPageCommand}" Style="{StaticResource ReturnButtonStyle}"></Button>
-        <Button Text="{Binding TrainingAddLabel}" Command="{Binding TrainingAddCommand}" Style="{StaticResource EventButtonStyle}"></Button>
         <ListView ItemsSource="{Binding Items}"  VerticalOptions="FillAndExpand">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -20,5 +18,7 @@
                 <extention:ItemTappedBehavior Command="{Binding TrainingMasterItemTappedCommand}" />
             </ListView.Behaviors>
         </ListView>
+        <Button Text="{Binding TrainingAddLabel}" Command="{Binding TrainingAddCommand}" Style="{StaticResource EventButtonStyle}"></Button>
+        <Button Text="{Binding BackPageLabel}" Command="{Binding BackPageCommand}" Style="{StaticResource ReturnButtonStyle}"></Button>
     </StackLayout>
 </ContentPage>

@@ -63,8 +63,8 @@
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,30,0,0">
                     <StackLayout Orientation="Vertical" Margin="0, 0, 40, 0">
-                        <controls:ImageButton Command="{Binding MoveToRegistBasicDataCommand}"
-                                              Source="{Binding MoveTioRegistBasicDataImageSource}"
+                        <Button Command="{Binding MoveToRegistBasicDataCommand}"
+                                              Image="{Binding MoveTioRegistBasicDataImageSource}"
                                               Style="{StaticResource HomeImageButtonStyle}" />
                         <Label Text="{Binding MoveToRegistBasicDataLabel}" HorizontalOptions="Center" />
                     </StackLayout>

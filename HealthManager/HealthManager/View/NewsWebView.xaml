@@ -8,8 +8,8 @@
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout>
-            <Button Text="{Binding BackHomeLabel}" Command="{Binding BackHomeCommand}" Style="{StaticResource ReturnButtonStyle}"></Button>
             <WebView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"  x:Name="WebView"></WebView>
+            <Button Text="{Binding BackHomeLabel}" Command="{Binding BackHomeCommand}" Style="{StaticResource ReturnButtonStyle}"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

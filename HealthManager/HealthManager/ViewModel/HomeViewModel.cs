@@ -159,7 +159,7 @@ namespace HealthManager.ViewModel
             }
 
             // ニュース一覧を取得
-            Task.Run(SetNewsSourceTask);
+            Task.Run(SetNewsSourceTask).Wait();
         }
 
         /// <summary>

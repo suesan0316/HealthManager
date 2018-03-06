@@ -5,8 +5,8 @@
                     x:Class="HealthManager.View.Resources.AppTheme">
     <Style x:Key="HomeImageButtonStyle" TargetType="controls:ImageButton">
         <Setter Property="Orientation" Value="ImageToLeft" />
-        <Setter Property="ImageHeightRequest" Value="200" />
-        <Setter Property="ImageWidthRequest" Value="200"/>
+        <Setter Property="ImageHeightRequest" Value="100" />
+        <Setter Property="ImageWidthRequest" Value="100"/>
         <Setter Property="HeightRequest" Value="130"/>
         <Setter Property="WidthRequest" Value="125"/>
         <Setter Property="BackgroundColor" Value="AliceBlue"/>
@@ -33,5 +33,9 @@
         <Setter Property="TextColor" Value="White" />
         <Setter Property="BackgroundColor" Value="#B0C4DE" />
         <Setter Property="BorderRadius" Value="5"/>
+    </Style>
+    <Style x:Key="ColumnLabelStyle" TargetType="Label">
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="Margin" Value="0, 20, 0, 0"/>
     </Style>
 </ResourceDictionary>
