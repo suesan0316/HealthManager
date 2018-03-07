@@ -13,11 +13,11 @@
                            IsEnabled="{Binding IsDisable}" />
                     <Label Text="{Binding TrainingPartLabel}" Style="{StaticResource ColumnLabelStyle}"></Label>
                     <StackLayout x:Name="PartStack" />
-                    <Button Style="{StaticResource EventButtonStyle}" Text="{Binding AddPartButtonLabel}" Command="{Binding AddPartStackCommand}" />
+                    <Button Style="{StaticResource EventButtonStyle}" Text="{Binding AddPartButtonLabel}" Command="{Binding AddPartStackCommand}"  Margin="0,15,0,0"/>
                     <Button Style="{StaticResource NegativeEventButtonStyle}" Text="{Binding DeletePartButtonLabel}" Command="{Binding DeletePartStackCommand}" />
                     <Label Text="{Binding TrainingLoadLabel}" Style="{StaticResource ColumnLabelStyle}"></Label>
                     <StackLayout x:Name="LoadStack" />
-                    <Button Style="{StaticResource EventButtonStyle}" Text="{Binding AddLoadButtonLabel}" Command="{Binding AddLoadStackCommand}" />
+                    <Button Style="{StaticResource EventButtonStyle}" Text="{Binding AddLoadButtonLabel}" Command="{Binding AddLoadStackCommand}" Margin="0,15,0,0"/>
                     <Button Style="{StaticResource NegativeEventButtonStyle}" Text="{Binding DeleteLoadButtonLabel}" Command="{Binding DeleteLoadStackCommand}" />
                     <Label HorizontalOptions="Center" Text="{Binding LoadingLabel}" IsVisible="{Binding IsLoading}" Style="{StaticResource ColumnLabelStyle}" />
                     <ActivityIndicator IsRunning="{Binding IsLoading}" />
