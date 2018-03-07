@@ -123,13 +123,17 @@ namespace HealthManager.ViewModel
             {
                 var loadStack = new StackLayout();
                 loadStack.Children.Add(new Label {Text = load.LoadName, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0) });
-                loadStack.Children.Add(new Entry {Keyboard = Keyboard.Numeric});
-                loadStack.Children.Add(new Picker
+
+                var subLoadStack = new StackLayout() { Orientation = StackOrientation.Horizontal };
+                subLoadStack.Children.Add(new Entry {Keyboard = Keyboard.Numeric, WidthRequest = 145 });
+                subLoadStack.Children.Add(new Picker
                 {
                     ItemsSource = LoadUnitService.GetLoadUnitList(load.Id),
                     ItemDisplayBinding = new Binding("UnitName"),
                     SelectedIndex = 0
                 });
+                loadStack.Children.Add(subLoadStack);
+
                 trainingLoadStack.Children.Add(loadStack);
             }
 
@@ -142,14 +146,18 @@ namespace HealthManager.ViewModel
                 foreach (var load in loadList.LoadList)
                 {
                     var loadStack = new StackLayout();
-                    loadStack.Children.Add(new Label {Text = load.LoadName, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0) });
-                    loadStack.Children.Add(new Entry {Keyboard = Keyboard.Numeric});
-                    loadStack.Children.Add(new Picker
+                    loadStack.Children.Add(new Label { Text = load.LoadName, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0) });
+
+                    var subLoadStack = new StackLayout() { Orientation = StackOrientation.Horizontal };
+                    subLoadStack.Children.Add(new Entry { Keyboard = Keyboard.Numeric, WidthRequest = 145 });
+                    subLoadStack.Children.Add(new Picker
                     {
                         ItemsSource = LoadUnitService.GetLoadUnitList(load.Id),
                         ItemDisplayBinding = new Binding("UnitName"),
-                        SelectedIndex = 0
+                        SelectedIndex = 0,
+                        WidthRequest = 145
                     });
+                    loadStack.Children.Add(subLoadStack);
                     trainingLoadStack.Children.Add(loadStack);
                 }
             };
@@ -192,16 +200,22 @@ namespace HealthManager.ViewModel
 
                 var loadStack = new StackLayout();
                 loadStack.Children.Add(new Label {Text = loadModdel.LoadName, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0) });
-                loadStack.Children.Add(new Entry {Text = load.Nums.ToString(), Keyboard = Keyboard.Numeric});
+
+                var subLoadStack = new StackLayout() { Orientation = StackOrientation.Horizontal };
+                subLoadStack.Children.Add(new Entry {Text = load.Nums.ToString(), Keyboard = Keyboard.Numeric,WidthRequest = 145});
                 var loadUnitPick = new Picker
                 {
                     ItemsSource = LoadUnitService.GetLoadUnitList(load.LoadId),
                     ItemDisplayBinding = new Binding("UnitName"),
-                    SelectedIndex = 0
+                    SelectedIndex = 0,
+                    WidthRequest = 145
                 };
                 loadUnitPick.SelectedItem =
                     ((List<LoadUnitModel>) loadUnitPick.ItemsSource).First(data => data.Id == load.LoadUnitId);
-                loadStack.Children.Add(loadUnitPick);
+
+                subLoadStack.Children.Add(loadUnitPick);
+
+                loadStack.Children.Add(subLoadStack);
                 trainingLoadStack.Children.Add(loadStack);
             }
 
@@ -214,14 +228,18 @@ namespace HealthManager.ViewModel
                 foreach (var load in loadList.LoadList)
                 {
                     var loadStack = new StackLayout();
-                    loadStack.Children.Add(new Label {Text = load.LoadName, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0) });
-                    loadStack.Children.Add(new Entry {Keyboard = Keyboard.Numeric});
-                    loadStack.Children.Add(new Picker
+                    loadStack.Children.Add(new Label { Text = load.LoadName, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0) });
+
+                    var subLoadStack = new StackLayout() { Orientation = StackOrientation.Horizontal };
+                    subLoadStack.Children.Add(new Entry { Keyboard = Keyboard.Numeric, WidthRequest = 145 });
+                    subLoadStack.Children.Add(new Picker
                     {
                         ItemsSource = LoadUnitService.GetLoadUnitList(load.Id),
                         ItemDisplayBinding = new Binding("UnitName"),
-                        SelectedIndex = 0
+                        SelectedIndex = 0,
+                        WidthRequest = 145
                     });
+                    loadStack.Children.Add(subLoadStack);
                     trainingLoadStack.Children.Add(loadStack);
                 }
             };
@@ -269,9 +287,10 @@ namespace HealthManager.ViewModel
                     foreach (var load in loadStack)
                     {
                         var insertload = new LoadContentStructure();
-                        var loadId = ((LoadUnitModel) ((Picker) ((StackLayout) load).Children[2]).SelectedItem).LoadId;
-                        var nums = ((Entry) ((StackLayout) load).Children[1]).Text;
-                        var loadUnitId = ((LoadUnitModel) ((Picker) ((StackLayout) load).Children[2]).SelectedItem).Id;
+                        var subLoad = ((StackLayout)load).Children[1];
+                        var loadId = ((LoadUnitModel) ((Picker) ((StackLayout)subLoad).Children[1]).SelectedItem).LoadId;
+                        var nums = ((Entry) ((StackLayout)subLoad).Children[0]).Text;
+                        var loadUnitId = ((LoadUnitModel) ((Picker) ((StackLayout)subLoad).Children[1]).SelectedItem).Id;
                         insertload.LoadId = loadId;
                         insertload.LoadUnitId = loadUnitId;
                         insertload.Nums = float.Parse(nums);
@@ -333,7 +352,8 @@ namespace HealthManager.ViewModel
                 var loadStack = ((StackLayout) ((StackLayout) training).Children[4]).Children;
                 foreach (var load in loadStack)
                 {
-                    var nums = ((Entry) ((StackLayout) load).Children[1]).Text;
+                    var subLoad = ((StackLayout) load).Children[1];
+                    var nums = ((Entry) ((StackLayout)subLoad).Children[0]).Text;
                     if (StringUtils.IsEmpty(nums))
                     {
                         ErrorStack.Add(CreateErrorLabel(LanguageKeys.LoadNum, LanguageKeys.NotInputRequireData));

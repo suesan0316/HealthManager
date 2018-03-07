@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using HealthManager.Common.Constant;
+using Newtonsoft.Json;
 using SQLite;
 
 namespace HealthManager.Model.Service
@@ -49,6 +51,8 @@ namespace HealthManager.Model.Service
                 ImageBase64String = base64String,
                 RegistedDate = DateTime.Now
             };
+            var s = JsonConvert.SerializeObject(model);
+            Debug.WriteLine(s);
             using (var db = new SQLiteConnection(DbConst.DbPath))
             {
                 var result = db.Update(model);

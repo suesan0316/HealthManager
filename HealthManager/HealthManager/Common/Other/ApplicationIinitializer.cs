@@ -85,6 +85,7 @@ namespace HealthManager.Common.Other
 
             //TODO 消す
             //TestDataReadOfBasicData();
+            //TestDataReadOfBodyData();
         }
 
         public static void ReadingPartMaster()
@@ -218,6 +219,25 @@ namespace HealthManager.Common.Other
                         var row = reader.ReadLine();
                         var models = JsonConvert.DeserializeObject<List<BasicDataModel>>(row);
                         models.ForEach(data => db.Insert(data));
+                    }
+                }
+            }
+        }
+
+        public static void TestDataReadOfBodyData()
+        {
+            // ロケーションマスタを読み込む
+            var assembly = typeof(App).GetTypeInfo().Assembly;
+            var stream = assembly.GetManifestResourceStream(typeof(ApplicationIinitializer).Namespace + ".Data.Test.body_data_test.txt");
+            using (var reader = new System.IO.StreamReader(stream))
+            {
+                using (var db = new SQLiteConnection(DependencyService.Get<ISqliteDeviceInform>().GetDbPath()))
+                {
+                    while (!reader.EndOfStream)
+                    {
+                        var row = reader.ReadLine();
+                        var models = JsonConvert.DeserializeObject<BodyImageModel>(row);
+                        db.Insert(models);
                     }
                 }
             }
