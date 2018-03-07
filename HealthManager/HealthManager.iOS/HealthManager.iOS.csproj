@@ -106,11 +106,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\Default-568h%402x.png" />
-    <BundleResource Include="Resources\Default-Portrait.png" />
-    <BundleResource Include="Resources\Default-Portrait%402x.png" />
-    <BundleResource Include="Resources\Default.png" />
-    <BundleResource Include="Resources\Default%402x.png" />
     <BundleResource Include="Resources\Icon-60%402x.png" />
     <BundleResource Include="Resources\Icon-60%403x.png" />
     <BundleResource Include="Resources\Icon-76.png" />
@@ -122,6 +117,7 @@
     <BundleResource Include="Resources\Icon-Small%402x.png" />
     <BundleResource Include="Resources\Icon-Small%403x.png" />
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
+    <InterfaceDefinition Include="Resources\MyLaunchScreen.storyboard" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="AiForms.Effects, Version=1.0.6568.33233, Culture=neutral, processorArchitecture=MSIL">
@@ -214,7 +210,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HealthManager\HealthManager.csproj">
-      <Project>{ec0e4a23-a6f1-414a-add4-15a0e610b41e}</Project>
+      <Project>{16101EC5-FD9D-4295-828C-3DFD5B2BD127}</Project>
       <Name>HealthManager</Name>
     </ProjectReference>
   </ItemGroup>
@@ -276,6 +272,7 @@
     <ImageAsset Include="Resources\Media.xcassets\LaunchImages.launchimage\Contents.json">
       <Visible>false</Visible>
     </ImageAsset>
+    <ImageAsset Include="Resources\Media.xcassets\LaunchImage.launchimage\Contents.json" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
