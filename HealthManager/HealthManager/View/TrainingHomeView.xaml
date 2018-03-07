@@ -28,12 +28,18 @@
                             <Label Text="{Binding EditTrainingScheduleLabel}" HorizontalOptions="Center" />
                         </StackLayout>
                     </StackLayout>
-                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,30,0,0">
+                    <StackLayout Orientation="Horizontal" Margin="0,30,0,0">
                         <StackLayout Orientation="Vertical" Margin="0, 0, 40, 0">
                             <Button Command="{Binding StartTrainingCommand}"
                                     Image="training_start.png"
                                                   Style="{StaticResource HomeImageButtonStyle}" />
                             <Label Text="{Binding StrartTrainingLabel}" HorizontalOptions="Center" />
+                        </StackLayout>
+                        <StackLayout Orientation="Vertical">
+                            <Button Command="{Binding TrainingReportCommand}"
+                                    Style="{StaticResource HomeImageButtonStyle}"
+                                    Image="report.png"/>
+                            <Label Text="{Binding TrainingReportLabel}" HorizontalOptions="Center" />
                         </StackLayout>
                     </StackLayout>
                 </StackLayout>

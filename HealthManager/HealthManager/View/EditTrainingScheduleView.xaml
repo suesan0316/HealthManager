@@ -16,7 +16,7 @@
                     </StackLayout>
                     <StackLayout x:Name="TrainingStack" />
                     <Button Style="{StaticResource EventButtonStyle}" Text="{Binding AddTrainingButtonLabel}" Command="{Binding AddTrainingStackCommand}" />
-                    <Button Style="{StaticResource EventButtonStyle}" Text="{Binding DeleteTrainingButtonLabel}" Command="{Binding DeleteTrainingStackCommand}" />
+                    <Button Style="{StaticResource NegativeEventButtonStyle}" Text="{Binding DeleteTrainingButtonLabel}" Command="{Binding DeleteTrainingStackCommand}" />
                     <ActivityIndicator IsRunning="{Binding IsLoading}" />
                     <Button IsEnabled="{Binding IsDisable}" Text="{Binding SaveButtonLabel}"
                             Command="{Binding SaveTrainingScheduleCommand}" Style="{StaticResource NormalButtonStyle}" />

@@ -37,6 +37,7 @@ namespace HealthManager.ViewModel
             EditTrainingScheduleCommand = new Command(MoveToTrainingSchedule);
             StartTrainingCommand = new Command(MoveToTraining);
             EditTrainingCommand = new Command(MoveToTrainingList);
+            TrainingReportCommand = new Command(MoveToTrainingReport);
 
             NewsListItemTappedCommand = new Command<NewsStructure>(item =>
             {
@@ -65,6 +66,8 @@ namespace HealthManager.ViewModel
         ///     ニュース一覧アイテムタップコマンド
         /// </summary>
         public ICommand NewsListItemTappedCommand { get; set; }
+
+        public ICommand TrainingReportCommand { get; set; }
 
         /// <summary>
         ///     ニュース一覧のアイテムリスト
@@ -101,6 +104,8 @@ namespace HealthManager.ViewModel
         /// トレーニングスタートのボタンイメージ
         /// </summary>
         public string TrainingStartButtonImage => ViewModelConst.TrainingStartImage;
+
+        public string TrainingReportLabel => LanguageUtils.Get(LanguageKeys.ConfirmTrainingReport);
 
         /// <summary>
         /// トレーニングニュース一覧のラベル
@@ -155,6 +160,21 @@ namespace HealthManager.ViewModel
         private static void MoveToTrainingSchedule()
         {
             ViewModelConst.TrainingPageNavigation.PushAsync(new TrainingScheduleListView());
+        }
+
+        private static void MoveToTrainingReport()
+        {
+            var check = TrainingResultService.GeTrainingResultDataList();
+
+            if (check.Count == 0)
+            {
+                Application.Current.MainPage.DisplayAlert(LanguageUtils.Get(LanguageKeys.Confirm),
+                    LanguageUtils.Get(LanguageKeys.NotExistTrainingReport), LanguageUtils.Get(LanguageKeys.OK));
+            }
+            else
+            {
+                ViewModelConst.TrainingPageNavigation.PushAsync(new TrainingReportListView());
+            }
         }
 
         /// <summary>

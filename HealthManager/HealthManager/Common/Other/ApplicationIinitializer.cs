@@ -35,7 +35,7 @@ namespace HealthManager.Common.Other
                     //db.DropTable<TrainingMasterModel>();
                     //db.DropTable<TrainingMenuModel>();
                     //db.DropTable<TrainingScheduleModel>();
-                    db.DropTable<TrainingResultModel>();
+                    //db.DropTable<TrainingResultModel>();
 
                 }
                 catch (NotNullConstraintViolationException e)

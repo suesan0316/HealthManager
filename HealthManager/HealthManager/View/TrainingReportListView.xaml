@@ -1,12 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModel="clr-namespace:HealthManager.ViewModel;assembly=HealthManager"
+             xmlns:extention="clr-namespace:HealthManager.Common.Extention;assembly=HealthManager"
              x:Class="HealthManager.View.TrainingReportListView">
+    <ContentPage.BindingContext>
+        <viewModel:TrainingReportListViewModel />
+    </ContentPage.BindingContext>
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout Margin="30">
+            <ListView ItemsSource="{Binding Items}"  VerticalOptions="FillAndExpand">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding TargetDate, StringFormat='{0:yyyy/MM/dd}'}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.Behaviors>
+                    <extention:ItemTappedBehavior Command="{Binding TrainingResultItemTappedCommand}" />
+                </ListView.Behaviors>
+            </ListView>
+            <Button Text="{Binding BackPageLabel}" Command="{Binding BackPageCommand}" Style="{StaticResource ReturnButtonStyle}"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

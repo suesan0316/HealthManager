@@ -24,6 +24,8 @@ namespace HealthManager.Common
 	    public static string DateTimeFormatString = "yyyy/MM/dd";
         /// <summary>日付記号なし規定フォーマット</summary>
         public static string DateTimeFormatWithoutSymbolString = "yyyyMMdd";
+        /// <summary>日付記号あり規定フォーマット</summary>
+        public static string DateTimeContainFormatString = "yyyy/MM/dd hh:mm:ss";
 
         /// <summary>
         /// ホーム画面遷移の共通処理

@@ -334,5 +334,29 @@
         /// トレーニングスケジュールが未設定です。
         /// </summary>
         public const string NotSettingTrainingSchedule = "NotSettingTrainingSchedule";
+        /// <summary>
+        /// トレーニングの記録を確認する
+        /// </summary>
+        public const string ConfirmTrainingReport = "ConfirmTrainingReport";
+        /// <summary>
+        /// トレーニングの記録がありません。
+        /// </summary>
+        public const string NotExistTrainingReport = "NotExistTrainingReport";
+        /// <summary>
+        /// 開始時刻
+        /// </summary>
+        public const string TrainingStartTime = "TrainingStartTime";
+        /// <summary>
+        /// 終了時刻
+        /// </summary>
+        public const string TrainingEndTime = "TrainingEndTime";
+        /// <summary>
+        /// トレーニング時間
+        /// </summary>
+        public const string TrainingSpendTime = "TrainingSpendTime";
+        /// <summary>
+        /// 実施したトレーニングメニュー
+        /// </summary>
+        public const string ExecutedTrainingMenu = "ExecutedTrainingMenu";
     }
 }

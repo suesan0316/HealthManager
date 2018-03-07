@@ -143,7 +143,7 @@ namespace HealthManager.ViewModel
                 };
                 childStackLayout.Children.Add(bodyImage);
 
-                var registedDateLabel = new Label { Text = value.RegistedDate.ToString(), HorizontalOptions = LayoutOptions.Center };
+                var registedDateLabel = new Label { Text = value.RegistedDate.ToString(ViewModelCommonUtil.DateTimeFormatString), HorizontalOptions = LayoutOptions.Center };
                 childStackLayout.Children.Add(registedDateLabel);
 
                 OnPropertyChanged(nameof(PageCountLabel));
