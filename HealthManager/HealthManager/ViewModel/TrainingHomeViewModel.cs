@@ -44,7 +44,7 @@ namespace HealthManager.ViewModel
                 ViewModelConst.TrainingPageNavigation.PushAsync(new NewsWebView(item.NewsUrl,ViewModelConst.TrainingPageNavigation));
             });
 
-            Task.Run(SetNewsSourceTask).Wait();
+            Task.Run(SetNewsSourceTask);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace HealthManager.ViewModel
         /// <summary>
         ///     ニュース一覧のアイテムリスト
         /// </summary>
-        public ObservableCollection<NewsStructure> Items { protected set; get; } =
+        public ObservableCollection<NewsStructure> Items { set; get; } =
             new ObservableCollection<NewsStructure>();
 
         /// <summary>
@@ -142,7 +142,9 @@ namespace HealthManager.ViewModel
             IsLoading = true;
             var service = NewsServiceFactory.CreateNewsService();
             var structures = await service.GetTrainingNewsData();
-            structures.ForEach(data => Items.Add(data));
+            //structures.ForEach(data => Items.Add(data));
+            Items = new ObservableCollection<NewsStructure>(structures);
+            OnPropertyChanged(nameof(Items));
             IsLoading = false;
         }
 

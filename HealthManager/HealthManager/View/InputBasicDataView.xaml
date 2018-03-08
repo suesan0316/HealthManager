@@ -36,12 +36,12 @@
                        IsEnabled="{Binding IsDisable}" />
                 <Label Text="{Binding BloodPressureLabel}" Style="{StaticResource ColumnLabelStyle}" />
                 <StackLayout Orientation="Horizontal">
-                    <Entry Placeholder="{Binding MaxBloodPressurePlaceholderLabel}" Keyboard="Numeric"
-                           WidthRequest="100" Text="{Binding MaxBloodPressure} "
-                           IsEnabled="{Binding IsDisable}" />
-                    <Label Text="/" VerticalOptions="End"/>
                     <Entry Placeholder="{Binding MinBloodPressurePlaceholderLabel}" Keyboard="Numeric"
                            WidthRequest="100" Text="{Binding MinBloodPressure}"
+                           IsEnabled="{Binding IsDisable}" />
+                    <Label Text="/" VerticalOptions="End"/>
+                    <Entry Placeholder="{Binding MaxBloodPressurePlaceholderLabel}" Keyboard="Numeric"
+                           WidthRequest="100" Text="{Binding MaxBloodPressure} "
                            IsEnabled="{Binding IsDisable}" />
                 </StackLayout>
                 <Label Text="{Binding BasalMetabolismLabel}" Style="{StaticResource ColumnLabelStyle}" />

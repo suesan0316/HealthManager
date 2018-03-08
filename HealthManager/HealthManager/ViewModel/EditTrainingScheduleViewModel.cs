@@ -49,7 +49,15 @@ namespace HealthManager.ViewModel
 
                 Off = trainingScheduleStructure.Off;
 
-                foreach (var training in trainingScheduleStructure.TrainingContentList) AddTrainingStack(training);
+                if (!Off)
+                {
+
+                    foreach (var training in trainingScheduleStructure.TrainingContentList) AddTrainingStack(training);
+                }
+                else
+                {
+                    AddTrainingStack();
+                }
             }
             else
             {
@@ -130,7 +138,8 @@ namespace HealthManager.ViewModel
                 {
                     ItemsSource = LoadUnitService.GetLoadUnitList(load.Id),
                     ItemDisplayBinding = new Binding("UnitName"),
-                    SelectedIndex = 0
+                    SelectedIndex = 0,
+                    WidthRequest = 145
                 });
                 loadStack.Children.Add(subLoadStack);
 
@@ -273,34 +282,39 @@ namespace HealthManager.ViewModel
                 isLoading = true;
                 var trainingContentList = new List<TrainingListStructure>();
 
-                // トレーニング一覧
-                var trainingStack = TrainingStack.Children;
-                foreach (var training in trainingStack)
+                if (!Off)
                 {
-                    var insert = new TrainingListStructure();
-                    var trainingId =
-                        ((TrainingMasterModel) ((Picker) ((StackLayout) training).Children[1]).SelectedItem).Id;
-                    var trainingseCount = ((Entry) ((StackLayout) training).Children[3]).Text;
-
-                    var loadContentList = new List<LoadContentStructure>();
-                    var loadStack = ((StackLayout) ((StackLayout) training).Children[4]).Children;
-                    foreach (var load in loadStack)
+                    // トレーニング一覧
+                    var trainingStack = TrainingStack.Children;
+                    foreach (var training in trainingStack)
                     {
-                        var insertload = new LoadContentStructure();
-                        var subLoad = ((StackLayout)load).Children[1];
-                        var loadId = ((LoadUnitModel) ((Picker) ((StackLayout)subLoad).Children[1]).SelectedItem).LoadId;
-                        var nums = ((Entry) ((StackLayout)subLoad).Children[0]).Text;
-                        var loadUnitId = ((LoadUnitModel) ((Picker) ((StackLayout)subLoad).Children[1]).SelectedItem).Id;
-                        insertload.LoadId = loadId;
-                        insertload.LoadUnitId = loadUnitId;
-                        insertload.Nums = float.Parse(nums);
-                        loadContentList.Add(insertload);
-                    }
+                        var insert = new TrainingListStructure();
+                        var trainingId =
+                            ((TrainingMasterModel) ((Picker) ((StackLayout) training).Children[1]).SelectedItem).Id;
+                        var trainingseCount = ((Entry) ((StackLayout) training).Children[3]).Text;
 
-                    insert.LoadContentList = loadContentList;
-                    insert.TrainingId = trainingId;
-                    insert.TrainingSetCount = int.Parse(trainingseCount);
-                    trainingContentList.Add(insert);
+                        var loadContentList = new List<LoadContentStructure>();
+                        var loadStack = ((StackLayout) ((StackLayout) training).Children[4]).Children;
+                        foreach (var load in loadStack)
+                        {
+                            var insertload = new LoadContentStructure();
+                            var subLoad = ((StackLayout) load).Children[1];
+                            var loadId = ((LoadUnitModel) ((Picker) ((StackLayout) subLoad).Children[1]).SelectedItem)
+                                .LoadId;
+                            var nums = ((Entry) ((StackLayout) subLoad).Children[0]).Text;
+                            var loadUnitId =
+                                ((LoadUnitModel) ((Picker) ((StackLayout) subLoad).Children[1]).SelectedItem).Id;
+                            insertload.LoadId = loadId;
+                            insertload.LoadUnitId = loadUnitId;
+                            insertload.Nums = float.Parse(nums);
+                            loadContentList.Add(insertload);
+                        }
+
+                        insert.LoadContentList = loadContentList;
+                        insert.TrainingId = trainingId;
+                        insert.TrainingSetCount = int.Parse(trainingseCount);
+                        trainingContentList.Add(insert);
+                    }
                 }
 
                 var trainingScheduleStructure = new TrainingScheduleStructure();
@@ -334,6 +348,11 @@ namespace HealthManager.ViewModel
         private bool Validate()
         {
             ErrorStack.Clear();
+
+            if (Off)
+            {
+                return true;
+            }
 
             var trainingStack = TrainingStack.Children;
             foreach (var training in trainingStack)

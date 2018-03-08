@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="HealthManager.View.ViewCell.TrainingScheduleStructureViewCell">
   <ViewCell.View>
-      <StackLayout>
+      <StackLayout Padding="0,15,0,15">
             <Label Text="{Binding DisplayText}" LineBreakMode="WordWrap" />
       </StackLayout>
   </ViewCell.View>

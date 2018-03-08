@@ -400,6 +400,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Common\Other\Data\Test\body_data_test.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Common\Other\Data\Test\training_data_test.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
