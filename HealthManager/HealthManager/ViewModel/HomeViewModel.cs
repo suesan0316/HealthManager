@@ -8,7 +8,6 @@ using System.Windows.Input;
 using HealthManager.Common;
 using HealthManager.Common.Constant;
 using HealthManager.Common.Enum;
-using HealthManager.Common.Extention;
 using HealthManager.Common.Language;
 using HealthManager.Model.Service;
 using HealthManager.Properties;
@@ -81,6 +80,8 @@ namespace HealthManager.ViewModel
 
         private string _moveTioRegistBasicDataImageSource;
 
+        private DateTime _birthday;
+
         /// <summary>
         ///     名前
         /// </summary>
@@ -137,7 +138,7 @@ namespace HealthManager.ViewModel
             {
                 Name = model.Name;
                 Gender = ((GenderEnum) model.Gender).ToString();
-                Age = model.Age;
+                _birthday = model.BirthDay;
                 Height = model.Height;
                 BodyWeight = model.BodyWeight;
                 BodyFatPercentage = model.BodyFatPercentage;
@@ -260,12 +261,7 @@ namespace HealthManager.ViewModel
         /// </summary>
         public int Age
         {
-            get => _age;
-            set
-            {
-                _age = value;
-                OnPropertyChanged(nameof(Age));
-            }
+            get => (int)((double) (DateTime.Now - _birthday).Days / 365.2425);
         }
 
         /// <summary>
@@ -520,7 +516,7 @@ namespace HealthManager.ViewModel
             {
                 Name = model.Name;
                 Gender = ((GenderEnum) model.Gender).ToString();
-                Age = model.Age;
+                _birthday = model.BirthDay;
                 Height = model.Height;
                 BodyWeight = model.BodyWeight;
                 BodyFatPercentage = model.BodyFatPercentage;
@@ -539,6 +535,8 @@ namespace HealthManager.ViewModel
                         MoveTioRegistBasicDataImageSource = ViewModelConst.PersonImage;
                         break;
                 }
+                OnPropertyChanged(nameof(Bmi));
+                OnPropertyChanged(nameof(Age));
             }
         }
 

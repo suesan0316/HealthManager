@@ -3,6 +3,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:HealthManager.ViewModel"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
              x:Class="HealthManager.View.InputBasicDataView">
     <ContentPage.BindingContext>
         <vm:InputBasicDataViewModel />
@@ -11,16 +12,27 @@
         <ScrollView x:Name="ControlScroll">
             <StackLayout Margin="30">
                 <StackLayout x:Name="ErrorStack" />
-
                 <Label Text="{Binding NameLabel}" Style="{StaticResource ColumnLabelStyle}" />
                 <Entry Placeholder="{Binding NamePlaceholderLabel}" Text="{Binding Name}"
                        IsEnabled="{Binding IsDisable}" />
                 <Label Text="{Binding GenderLabel}" Style="{StaticResource ColumnLabelStyle}" />
                 <Picker ItemsSource="{Binding GenderItemSrouce}" SelectedIndex="{Binding Gender}"
                         IsEnabled="{Binding IsDisable}" />
-                <Label Text="{Binding AgeLabel}" Style="{StaticResource ColumnLabelStyle}" />
-                <Entry Placeholder="{Binding AgePlaceholderLabel}" Keyboard="Numeric" Text="{Binding Age}"
-                       IsEnabled="{Binding IsDisable}" />
+                <Label Text="{Binding BirthdayLabel}" Style="{StaticResource ColumnLabelStyle}" />
+                <DatePicker VerticalOptions="CenterAndExpand" Date="{Binding Birthday}" >
+                    <DatePicker.Format>yyyy-MM-dd</DatePicker.Format>
+                    <DatePicker.MinimumDate>
+                        <system:DateTime x:FactoryMethod="Parse">
+                            <x:Arguments>
+                                <x:String>Jan 1 1900</x:String>
+                            </x:Arguments>
+                        </system:DateTime>
+                    </DatePicker.MinimumDate>
+                    <DatePicker.MaximumDate>
+                        <system:DateTime x:FactoryMethod="get_Now">
+                        </system:DateTime>
+                    </DatePicker.MaximumDate>
+                </DatePicker>
                 <Label Text="{Binding HeightLabel}" Style="{StaticResource ColumnLabelStyle}" />
                 <Entry Placeholder="{Binding HeightPlaceholderLabel}" Keyboard="Numeric" Text="{Binding Height}"
                        IsEnabled="{Binding IsDisable}" />
@@ -52,7 +64,7 @@
                 <ActivityIndicator IsRunning="{Binding IsLoading}" />
                 <Button IsEnabled="{Binding IsDisable}" Text="{Binding SaveButtonLabel}"
                         Command="{Binding SaveBaisicDataCommand}" Style="{StaticResource NormalButtonStyle}" />
-                <Button Text="{Binding CancelButtonLabel}" Command="{Binding CancleCommand}"
+                <Button Text="{Binding CancelButtonLabel}" Command="{Binding CancleCommand}" IsVisible="{Binding CancelButtonIsVisible}"
                         Style="{StaticResource ReturnButtonStyle}" />
             </StackLayout>
         </ScrollView>

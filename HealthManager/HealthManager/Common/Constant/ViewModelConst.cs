@@ -85,5 +85,7 @@ namespace HealthManager.Common.Constant
         /// MessageCenter識別子:画面参照渡し
         /// </summary>
         public const string MessagingPassingView = "view";
+
+        public const string DefaultTimePick = "Jan 1 1980";
     }
 }

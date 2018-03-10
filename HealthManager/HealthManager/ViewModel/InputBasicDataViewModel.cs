@@ -48,7 +48,9 @@ namespace HealthManager.ViewModel
         /// <summary>
         /// 更新フラグ
         /// </summary>
-        private readonly bool _isUpdate;        
+        private readonly bool _isUpdate;
+
+        private DateTime _birthday;
 
         /// <summary>
         /// コンストラクタ
@@ -76,7 +78,7 @@ namespace HealthManager.ViewModel
                     _id = model.Id;
                     Name = model.Name;
                     Gender = model.Gender;
-                    Age = model.Age;
+                    Birthday = model.BirthDay;
                     Height = model.Height;
                     BodyWeight = model.BodyWeight;
                     BodyFatPercentage = model.BodyFatPercentage;
@@ -88,6 +90,7 @@ namespace HealthManager.ViewModel
                 }
                 else
                 {
+                    Birthday = DateTime.Parse(ViewModelConst.DefaultTimePick);
                     CancelButtonIsVisible = false;
                 }
 
@@ -132,12 +135,7 @@ namespace HealthManager.ViewModel
         /// <summary>
         /// 年齢ラベル
         /// </summary>
-        public string AgeLabel => LanguageUtils.Get(LanguageKeys.Age);
-
-        /// <summary>
-        /// 年齢プレースホルダーラベル
-        /// </summary>
-        public string AgePlaceholderLabel => LanguageUtils.Get(LanguageKeys.AgePlaceholder);
+        public string BirthdayLabel => LanguageUtils.Get(LanguageKeys.Birthday);
 
         /// <summary>
         /// 性別リストボックスアイテム
@@ -286,6 +284,8 @@ namespace HealthManager.ViewModel
         /// </summary>
         public string BasalMetabolismPlaceholderLabel => LanguageUtils.Get(LanguageKeys.BasalMetabolismPlaceholder);
 
+        public DateTime Birthday { get; set; }
+
         /// <summary>
         /// 読み込みフラグ
         /// </summary>
@@ -368,7 +368,7 @@ namespace HealthManager.ViewModel
                             LanguageUtils.Get(LanguageKeys.Cancel));
                     if (result)
                     {
-                        BasicDataService.UpdateBasicData(_id, name:Name,locationId:1, gender: Gender, height: Height, age: Age,
+                        BasicDataService.UpdateBasicData(_id, name:Name,locationId:1, gender: Gender, height: Height, birthday: Birthday,
                             bodyWeight: BodyWeight, bodyFatPercentage: BodyFatPercentage,
                             maxBloodPressure: MaxBloodPressure,
                             minBloodPressure: MinBloodPressure, basalMetabolism: BasalMetabolism);
@@ -381,7 +381,7 @@ namespace HealthManager.ViewModel
                 }
                 else
                 {
-                    BasicDataService.RegistBasicData(name:Name,locationId:1, gender:Gender, height: Height, age: Age,
+                    BasicDataService.RegistBasicData(name:Name,locationId:1, gender:Gender, height: Height, birthday: Birthday,
                         bodyWeight: BodyWeight, bodyFatPercentage: BodyFatPercentage,
                         maxBloodPressure: MaxBloodPressure,
                         minBloodPressure: MinBloodPressure, basalMetabolism: BasalMetabolism);
@@ -440,12 +440,7 @@ namespace HealthManager.ViewModel
             if (StringUtils.IsEmpty(name))
             {
                 ErrorStack.Add(CreateErrorLabel(LanguageKeys.Name,LanguageKeys.NotInputRequireData));
-            }
-
-            if (age <= 0)
-            {
-                ErrorStack.Add(CreateErrorLabel(LanguageKeys.Age, LanguageKeys.NotAvailableDataInput));
-            }
+            }         
 
             if (height <= 0)
             {

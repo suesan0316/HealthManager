@@ -14,8 +14,8 @@ namespace HealthManager.Model
         public int LocationId { get; set; }
         [Column("Gender")]
         public int Gender { get; set; }
-        [Column("Age")]
-        public int Age { get; set; }
+        [Column("BirthDay")]
+        public DateTime BirthDay { get; set; }
         [Column("Height")]
         public float Height { get; set; }
         [Column("BodyWeight")]

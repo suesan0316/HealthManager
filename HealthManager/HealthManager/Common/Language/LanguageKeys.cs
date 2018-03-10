@@ -358,5 +358,9 @@
         /// 実施したトレーニングメニュー
         /// </summary>
         public const string ExecutedTrainingMenu = "ExecutedTrainingMenu";
+        /// <summary>
+        /// 生年月日
+        /// </summary>
+        public const string Birthday = "Birthday";
     }
 }

@@ -17,7 +17,7 @@ namespace HealthManager.Model.Service
         /// <param name="name"></param>
         /// <param name="locationId"></param>
         /// <param name="gender"></param>
-        /// <param name="age"></param>
+        /// <param name="birthday"></param>
         /// <param name="height"></param>
         /// <param name="bodyWeight"></param>
         /// <param name="bodyFatPercentage"></param>
@@ -25,7 +25,7 @@ namespace HealthManager.Model.Service
         /// <param name="minBloodPressure"></param>
         /// <param name="basalMetabolism"></param>
         /// <returns></returns>
-        public static bool RegistBasicData(string name, int locationId, int gender, int age, float height, float bodyWeight,
+        public static bool RegistBasicData(string name, int locationId, int gender, DateTime birthday, float height, float bodyWeight,
             float bodyFatPercentage,
             int maxBloodPressure, int minBloodPressure, int basalMetabolism)
         {
@@ -34,7 +34,7 @@ namespace HealthManager.Model.Service
                 Name = name,
                 LocationId = locationId,
                 Gender = gender,
-                Age = age,
+                BirthDay = birthday,
                 Height = height,
                 BodyWeight = bodyWeight,
                 BodyFatPercentage = bodyFatPercentage,
@@ -62,7 +62,7 @@ namespace HealthManager.Model.Service
         /// <param name="name"></param>
         /// <param name="locationId"></param>
         /// <param name="gender"></param>
-        /// <param name="age"></param>
+        /// <param name="birthday"></param>
         /// <param name="height"></param>
         /// <param name="bodyWeight"></param>
         /// <param name="bodyFatPercentage"></param>
@@ -70,7 +70,7 @@ namespace HealthManager.Model.Service
         /// <param name="minBloodPressure"></param>
         /// <param name="basalMetabolism"></param>
         /// <returns></returns>
-        public static bool UpdateBasicData(int id, string name,int locationId ,int gender, int age, float height, float bodyWeight, float bodyFatPercentage,
+        public static bool UpdateBasicData(int id, string name,int locationId ,int gender, DateTime  birthday, float height, float bodyWeight, float bodyFatPercentage,
             int maxBloodPressure, int minBloodPressure, int basalMetabolism)
         {
             var model = new BasicDataModel
@@ -79,7 +79,7 @@ namespace HealthManager.Model.Service
                 Name = name,
                 LocationId = locationId,
                 Gender = gender,
-                Age = age,
+                BirthDay = birthday,
                 Height = height,
                 BodyWeight = bodyWeight,
                 BodyFatPercentage = bodyFatPercentage,
