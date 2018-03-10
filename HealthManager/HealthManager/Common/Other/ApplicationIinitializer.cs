@@ -24,17 +24,18 @@ namespace HealthManager.Common.Other
                 try
                 {
                     db.DropTable<InitModel>();
-                    db.DropTable<BodyImageModel>();
-                    //db.DropTable<BasicDataModel>();
                     db.DropTable<LoadModel>();
                     db.DropTable<PartModel>();
                     db.DropTable<SubPartModel>();
                     db.DropTable<LoadUnitModel>();
                     db.DropTable<LocationModel>();
-                   db.DropTable<TrainingMasterModel>();
-                    db.DropTable<TrainingMenuModel>();
-                    db.DropTable<TrainingScheduleModel>();
-                    db.DropTable<TrainingResultModel>();
+
+                    //db.DropTable<BodyImageModel>();
+                    //db.DropTable<BasicDataModel>();
+                    //db.DropTable<TrainingMasterModel>();
+                    //db.DropTable<TrainingMenuModel>();
+                    //db.DropTable<TrainingScheduleModel>();
+                    //db.DropTable<TrainingResultModel>();
 
                 }
                 catch (NotNullConstraintViolationException e)
