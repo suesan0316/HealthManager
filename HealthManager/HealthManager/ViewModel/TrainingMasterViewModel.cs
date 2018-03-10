@@ -472,6 +472,12 @@ namespace HealthManager.ViewModel
                 subPartPicker.SelectedIndex = 0;
             };
 
+            subPartPicker.ItemsSource = SubPartService.GetSubPartDataList(
+                ((PartModel)partPicker.SelectedItem).Id);
+
+            partPicker.SelectedItem = ((List<PartModel>)partPicker.ItemsSource).First(data => data.Id == partId);
+            subPartPicker.SelectedItem = ((List<SubPartModel>)subPartPicker.ItemsSource).First(data => data.Id == subPartId);
+
             stack.Children.Add(partPicker);
             stack.Children.Add(subPartPicker);
             return stack;
