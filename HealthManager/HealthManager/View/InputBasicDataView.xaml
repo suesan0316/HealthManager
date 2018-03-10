@@ -14,7 +14,7 @@
                 <StackLayout x:Name="ErrorStack" />
                 <Label Text="{Binding NameLabel}" Style="{StaticResource ColumnLabelStyle}" />
                 <Entry Placeholder="{Binding NamePlaceholderLabel}" Text="{Binding Name}"
-                       IsEnabled="{Binding IsDisable}" />
+                       IsEnabled="{Binding IsDisable}"  />
                 <Label Text="{Binding GenderLabel}" Style="{StaticResource ColumnLabelStyle}" />
                 <Picker ItemsSource="{Binding GenderItemSrouce}" SelectedIndex="{Binding Gender}"
                         IsEnabled="{Binding IsDisable}" />

@@ -5,7 +5,6 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using HealthManager.Common.Constant;
-using HealthManager.Common.Extention;
 using HealthManager.Common.Language;
 using HealthManager.Model.Service;
 using HealthManager.Model.Structure;
@@ -23,7 +22,6 @@ namespace HealthManager.ViewModel
     /// </summary>
     public class TrainingHomeViewModel : INotifyPropertyChanged
     {
-
         /// <summary>
         ///     読み込み中フラグ
         /// </summary>
@@ -41,7 +39,8 @@ namespace HealthManager.ViewModel
 
             NewsListItemTappedCommand = new Command<NewsStructure>(item =>
             {
-                ViewModelConst.TrainingPageNavigation.PushAsync(new NewsWebView(item.NewsUrl,ViewModelConst.TrainingPageNavigation));
+                ViewModelConst.TrainingPageNavigation.PushAsync(new NewsWebView(item.NewsUrl,
+                    ViewModelConst.TrainingPageNavigation));
             });
 
             Task.Run(SetNewsSourceTask);
@@ -91,34 +90,26 @@ namespace HealthManager.ViewModel
         public string StrartTrainingLabel => LanguageUtils.Get(LanguageKeys.StartTraining);
 
         /// <summary>
-        /// トレーニングリストのボタンイメージ
+        ///     トレーニングリストのボタンイメージ
         /// </summary>
         public string TrainingListButtonImage => ViewModelConst.TrainingListImage;
 
         /// <summary>
-        /// トレーニングスケジュールのボタンイメージ
+        ///     トレーニングスケジュールのボタンイメージ
         /// </summary>
         public string TrainingScheduleButtonImage => ViewModelConst.TrainingScheduleImage;
 
         /// <summary>
-        /// トレーニングスタートのボタンイメージ
+        ///     トレーニングスタートのボタンイメージ
         /// </summary>
         public string TrainingStartButtonImage => ViewModelConst.TrainingStartImage;
 
         public string TrainingReportLabel => LanguageUtils.Get(LanguageKeys.ConfirmTrainingReport);
 
         /// <summary>
-        /// トレーニングニュース一覧のラベル
+        ///     トレーニングニュース一覧のラベル
         /// </summary>
         public string TrainingNewsListTitleLabel => LanguageUtils.Get(LanguageKeys.TrainingNewsListTitle);
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
         /// <summary>
         ///     読み込み中フラグ
@@ -131,6 +122,14 @@ namespace HealthManager.ViewModel
                 _isLoading = value;
                 OnPropertyChanged(nameof(IsLoading));
             }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         /// <summary>
@@ -149,11 +148,20 @@ namespace HealthManager.ViewModel
         }
 
         /// <summary>
-        /// トレーニング一覧画面遷移
+        ///     トレーニング一覧画面遷移
         /// </summary>
         private static void MoveToTrainingList()
         {
-            ViewModelConst.TrainingPageNavigation.PushAsync(new TrainingListView());
+            var check = TrainingMasterService.GetTrainingMasterDataList();
+
+            if (check == null || check.Count == 0)
+            {
+                ViewModelConst.TrainingPageNavigation.PushAsync(new TrainingMasterView());
+            }
+            else
+            {
+                ViewModelConst.TrainingPageNavigation.PushAsync(new TrainingListView());
+            }
         }
 
         /// <summary>
@@ -161,6 +169,15 @@ namespace HealthManager.ViewModel
         /// </summary>
         private static void MoveToTrainingSchedule()
         {
+            var check = TrainingMasterService.GetTrainingMasterDataList();
+
+            if (check == null || check.Count == 0)
+            {
+                Application.Current.MainPage.DisplayAlert(LanguageUtils.Get(LanguageKeys.Confirm),
+                    LanguageUtils.Get(LanguageKeys.NotExistTraining), LanguageUtils.Get(LanguageKeys.OK));
+                return;
+            }
+
             ViewModelConst.TrainingPageNavigation.PushAsync(new TrainingScheduleListView());
         }
 
@@ -169,14 +186,10 @@ namespace HealthManager.ViewModel
             var check = TrainingResultService.GeTrainingResultDataList();
 
             if (check.Count == 0)
-            {
                 Application.Current.MainPage.DisplayAlert(LanguageUtils.Get(LanguageKeys.Confirm),
                     LanguageUtils.Get(LanguageKeys.NotExistTrainingReport), LanguageUtils.Get(LanguageKeys.OK));
-            }
             else
-            {
                 ViewModelConst.TrainingPageNavigation.PushAsync(new TrainingReportListView());
-            }
         }
 
         /// <summary>
@@ -202,22 +215,17 @@ namespace HealthManager.ViewModel
                 }
                 else
                 {
-
                     var training = JsonConvert
                         .DeserializeObject<TrainingScheduleStructure>(
                             TrainingScheduleService.GetTrainingSchedule((int) DateTime.Now.DayOfWeek).TrainingMenu);
 
                     if (training.Off)
-                    {
                         Application.Current.MainPage.DisplayAlert(LanguageUtils.Get(LanguageKeys.Confirm),
                             LanguageUtils.Get(LanguageKeys.TodayIsRest), LanguageUtils.Get(LanguageKeys.OK));
-                    }
                     else
-                    {
                         ViewModelConst.TrainingPageNavigation.PushAsync(new TrainingView());
-                    }
                 }
-            }           
+            }
         }
     }
 }

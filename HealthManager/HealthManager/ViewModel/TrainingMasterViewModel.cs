@@ -134,7 +134,11 @@ namespace HealthManager.ViewModel
             get => _trainingName;
             set
             {
-                _trainingName = value;
+                if (value.Length < 30)
+                {
+                    _trainingName = value;
+                }
+
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TrainingName)));
             }
         }

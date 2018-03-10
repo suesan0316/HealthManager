@@ -50,14 +50,10 @@ namespace HealthManager.ViewModel
                 Off = trainingScheduleStructure.Off;
 
                 if (!Off)
-                {
-
-                    foreach (var training in trainingScheduleStructure.TrainingContentList) AddTrainingStack(training);
-                }
+                    foreach (var training in trainingScheduleStructure.TrainingContentList)
+                        AddTrainingStack(training);
                 else
-                {
                     AddTrainingStack();
-                }
             }
             else
             {
@@ -107,7 +103,12 @@ namespace HealthManager.ViewModel
         public void AddTrainingStack()
         {
             var mainStack = new StackLayout();
-            var trainingLabel = new Label {Text = LanguageUtils.Get(LanguageKeys.TrainingName),FontAttributes = FontAttributes.Bold,Margin = new Thickness(0,20,0,0)};
+            var trainingLabel = new Label
+            {
+                Text = LanguageUtils.Get(LanguageKeys.TrainingName),
+                FontAttributes = FontAttributes.Bold,
+                Margin = new Thickness(0, 20, 0, 0)
+            };
             mainStack.Children.Add(trainingLabel);
             var trainingPicker = new Picker
             {
@@ -117,7 +118,12 @@ namespace HealthManager.ViewModel
             trainingPicker.SelectedIndex = 0;
             mainStack.Children.Add(trainingPicker);
 
-            var trainingSetCountLabel = new Label {Text = LanguageUtils.Get(LanguageKeys.SetCount), FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0) };
+            var trainingSetCountLabel = new Label
+            {
+                Text = LanguageUtils.Get(LanguageKeys.SetCount),
+                FontAttributes = FontAttributes.Bold,
+                Margin = new Thickness(0, 0, 0, 0)
+            };
             mainStack.Children.Add(trainingSetCountLabel);
 
             var trainingSetCountEntry = new Entry {Keyboard = Keyboard.Numeric};
@@ -130,10 +136,15 @@ namespace HealthManager.ViewModel
             foreach (var load in defaultLoad.LoadList)
             {
                 var loadStack = new StackLayout();
-                loadStack.Children.Add(new Label {Text = load.LoadName, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0) });
+                loadStack.Children.Add(new Label
+                {
+                    Text = load.LoadName,
+                    FontAttributes = FontAttributes.Bold,
+                    Margin = new Thickness(0, 0, 0, 0)
+                });
 
-                var subLoadStack = new StackLayout() { Orientation = StackOrientation.Horizontal };
-                subLoadStack.Children.Add(new Entry {Keyboard = Keyboard.Numeric, WidthRequest = 145 });
+                var subLoadStack = new StackLayout {Orientation = StackOrientation.Horizontal};
+                subLoadStack.Children.Add(new Entry {Keyboard = Keyboard.Numeric, WidthRequest = 145});
                 subLoadStack.Children.Add(new Picker
                 {
                     ItemsSource = LoadUnitService.GetLoadUnitList(load.Id),
@@ -155,10 +166,15 @@ namespace HealthManager.ViewModel
                 foreach (var load in loadList.LoadList)
                 {
                     var loadStack = new StackLayout();
-                    loadStack.Children.Add(new Label { Text = load.LoadName, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0) });
+                    loadStack.Children.Add(new Label
+                    {
+                        Text = load.LoadName,
+                        FontAttributes = FontAttributes.Bold,
+                        Margin = new Thickness(0, 0, 0, 0)
+                    });
 
-                    var subLoadStack = new StackLayout() { Orientation = StackOrientation.Horizontal };
-                    subLoadStack.Children.Add(new Entry { Keyboard = Keyboard.Numeric, WidthRequest = 145 });
+                    var subLoadStack = new StackLayout {Orientation = StackOrientation.Horizontal};
+                    subLoadStack.Children.Add(new Entry {Keyboard = Keyboard.Numeric, WidthRequest = 145});
                     subLoadStack.Children.Add(new Picker
                     {
                         ItemsSource = LoadUnitService.GetLoadUnitList(load.Id),
@@ -179,7 +195,12 @@ namespace HealthManager.ViewModel
         public void AddTrainingStack(TrainingListStructure training)
         {
             var mainStack = new StackLayout();
-            var trainingLabel = new Label {Text = LanguageUtils.Get(LanguageKeys.TrainingName), FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 20, 0, 0) };
+            var trainingLabel = new Label
+            {
+                Text = LanguageUtils.Get(LanguageKeys.TrainingName),
+                FontAttributes = FontAttributes.Bold,
+                Margin = new Thickness(0, 20, 0, 0)
+            };
             mainStack.Children.Add(trainingLabel);
             var trainingPicker = new Picker
             {
@@ -189,7 +210,12 @@ namespace HealthManager.ViewModel
             trainingPicker.SelectedIndex = 0;
             mainStack.Children.Add(trainingPicker);
 
-            var trainingSetCountLabel = new Label {Text = LanguageUtils.Get(LanguageKeys.SetCount), FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0) };
+            var trainingSetCountLabel = new Label
+            {
+                Text = LanguageUtils.Get(LanguageKeys.SetCount),
+                FontAttributes = FontAttributes.Bold,
+                Margin = new Thickness(0, 0, 0, 0)
+            };
             mainStack.Children.Add(trainingSetCountLabel);
 
             var trainingSetCountEntry =
@@ -208,10 +234,20 @@ namespace HealthManager.ViewModel
                 var loadUnitModel = LoadUnitService.GetLoadUnit(load.LoadUnitId);
 
                 var loadStack = new StackLayout();
-                loadStack.Children.Add(new Label {Text = loadModdel.LoadName, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0) });
+                loadStack.Children.Add(new Label
+                {
+                    Text = loadModdel.LoadName,
+                    FontAttributes = FontAttributes.Bold,
+                    Margin = new Thickness(0, 0, 0, 0)
+                });
 
-                var subLoadStack = new StackLayout() { Orientation = StackOrientation.Horizontal };
-                subLoadStack.Children.Add(new Entry {Text = load.Nums.ToString(), Keyboard = Keyboard.Numeric,WidthRequest = 145});
+                var subLoadStack = new StackLayout {Orientation = StackOrientation.Horizontal};
+                subLoadStack.Children.Add(new Entry
+                {
+                    Text = load.Nums.ToString(),
+                    Keyboard = Keyboard.Numeric,
+                    WidthRequest = 145
+                });
                 var loadUnitPick = new Picker
                 {
                     ItemsSource = LoadUnitService.GetLoadUnitList(load.LoadId),
@@ -237,10 +273,15 @@ namespace HealthManager.ViewModel
                 foreach (var load in loadList.LoadList)
                 {
                     var loadStack = new StackLayout();
-                    loadStack.Children.Add(new Label { Text = load.LoadName, FontAttributes = FontAttributes.Bold, Margin = new Thickness(0, 0, 0, 0) });
+                    loadStack.Children.Add(new Label
+                    {
+                        Text = load.LoadName,
+                        FontAttributes = FontAttributes.Bold,
+                        Margin = new Thickness(0, 0, 0, 0)
+                    });
 
-                    var subLoadStack = new StackLayout() { Orientation = StackOrientation.Horizontal };
-                    subLoadStack.Children.Add(new Entry { Keyboard = Keyboard.Numeric, WidthRequest = 145 });
+                    var subLoadStack = new StackLayout {Orientation = StackOrientation.Horizontal};
+                    subLoadStack.Children.Add(new Entry {Keyboard = Keyboard.Numeric, WidthRequest = 145});
                     subLoadStack.Children.Add(new Picker
                     {
                         ItemsSource = LoadUnitService.GetLoadUnitList(load.Id),
@@ -349,10 +390,7 @@ namespace HealthManager.ViewModel
         {
             ErrorStack.Clear();
 
-            if (Off)
-            {
-                return true;
-            }
+            if (Off) return true;
 
             var trainingStack = TrainingStack.Children;
             foreach (var training in trainingStack)
@@ -372,7 +410,7 @@ namespace HealthManager.ViewModel
                 foreach (var load in loadStack)
                 {
                     var subLoad = ((StackLayout) load).Children[1];
-                    var nums = ((Entry) ((StackLayout)subLoad).Children[0]).Text;
+                    var nums = ((Entry) ((StackLayout) subLoad).Children[0]).Text;
                     if (StringUtils.IsEmpty(nums))
                     {
                         ErrorStack.Add(CreateErrorLabel(LanguageKeys.LoadNum, LanguageKeys.NotInputRequireData));

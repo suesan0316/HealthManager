@@ -362,5 +362,13 @@
         /// 生年月日
         /// </summary>
         public const string Birthday = "Birthday";
+        /// <summary>
+        /// トレーニングが登録されていません。
+        /// </summary>
+        public const string NotExistTraining = "NotExistTraining";
+        /// <summary>
+        /// 体格画像が登録されていません。
+        /// </summary>
+        public const string NotExistBodyImage = "NotExistBodyImage";
     }
 }

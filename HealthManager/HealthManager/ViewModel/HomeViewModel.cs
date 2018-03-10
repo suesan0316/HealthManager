@@ -24,11 +24,6 @@ namespace HealthManager.ViewModel
     public class HomeViewModel : INotifyPropertyChanged
     {
         /// <summary>
-        ///     年齢
-        /// </summary>
-        private int _age;
-
-        /// <summary>
         ///     基礎代謝
         /// </summary>
         private int _basalMetabolism;
@@ -101,6 +96,8 @@ namespace HealthManager.ViewModel
             MoveToRegistBodyImageCommand = new Command(MoveToRegistBodyImage);
             MoveToRegistBasicDataCommand = new Command(MoveToRegistBasicData);
             MoveToDataChartCommand = new Command(MoveToDataChart);
+            MoveToBodyImageListCommand = new Command(async ()=> await MoveToBodyImageList());
+
             NewsListItemTappedCommand = new Command<NewsStructure>(item =>
             {
                 ViewModelConst.DataPageNavigation.PushAsync(new NewsWebView(item.NewsUrl,ViewModelConst.DataPageNavigation));
@@ -117,8 +114,6 @@ namespace HealthManager.ViewModel
                 BodyImageRegistedDateString =
                     LanguageUtils.Get(LanguageKeys.RegistedDate) +
                     ViewModelCommonUtil.FormatDateString(bodyImageModel.RegistedDate);
-
-                MoveToBodyImageListCommand = new Command(MoveToBodyImageList);
             }
             else
             {
@@ -128,8 +123,6 @@ namespace HealthManager.ViewModel
                     new MemoryStream(ViewModelCommonUtil.GetResizeImageBytes(imageAsBytes, 300, 425)));
                 BodyImageRegistedDateString =
                     LanguageUtils.Get(LanguageKeys.RegistedDate) + StringConst.Empty;
-
-                MoveToBodyImageListCommand = new Command(MoveToRegistBodyImage);
             }
 
             // 基本データを取得
@@ -500,9 +493,20 @@ namespace HealthManager.ViewModel
         /// <summary>
         ///     体格遷移画面遷移
         /// </summary>
-        public void MoveToBodyImageList()
+        public async Task MoveToBodyImageList()
         {
-            ViewModelConst.DataPageNavigation.PushAsync(new BodyImageView());
+            var check = BodyImageService.GetBodyImageList();
+            if (check == null || check.Count == 0)
+            {
+                await Application.Current.MainPage.DisplayAlert(LanguageUtils.Get(LanguageKeys.Confirm),
+                    LanguageUtils.Get(LanguageKeys.NotExistBodyImage), LanguageUtils.Get(LanguageKeys.OK));
+
+                await ViewModelConst.DataPageNavigation.PushAsync(new RegistBodyImageView());
+            }
+            else
+            {
+                await ViewModelConst.DataPageNavigation.PushAsync(new BodyImageView());
+            }
         }
 
         /// <summary>
@@ -555,10 +559,7 @@ namespace HealthManager.ViewModel
                     new MemoryStream(ViewModelCommonUtil.GetResizeImageBytes(imageAsBytes, 300, 425)));
                 BodyImageRegistedDateString =
                     LanguageUtils.Get(LanguageKeys.RegistedDate) +
-                    ViewModelCommonUtil.FormatDateString(bodyImageModel.RegistedDate);
-
-                MoveToBodyImageListCommand = new Command(MoveToBodyImageList);
-                OnPropertyChanged(nameof(MoveToBodyImageListCommand));
+                    ViewModelCommonUtil.FormatDateString(bodyImageModel.RegistedDate);               
             }
             else
             {
@@ -568,9 +569,7 @@ namespace HealthManager.ViewModel
                     new MemoryStream(ViewModelCommonUtil.GetResizeImageBytes(imageAsBytes, 300, 425)));
                 BodyImageRegistedDateString =
                     LanguageUtils.Get(LanguageKeys.RegistedDate) + StringConst.Empty;
-
-                MoveToBodyImageListCommand = new Command(MoveToRegistBodyImage);
-                OnPropertyChanged(nameof(MoveToBodyImageListCommand));
+                
             }
         }
     }
