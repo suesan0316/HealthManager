@@ -21,28 +21,6 @@ namespace HealthManager.Common.Other
         {
             using (var db = new SQLiteConnection(DependencyService.Get<ISqliteDeviceInform>().GetDbPath()))
             {
-                try
-                {
-                    db.DropTable<InitModel>();
-                    db.DropTable<LoadModel>();
-                    db.DropTable<PartModel>();
-                    db.DropTable<SubPartModel>();
-                    db.DropTable<LoadUnitModel>();
-                    db.DropTable<LocationModel>();
-
-                    //db.DropTable<BodyImageModel>();
-                    //db.DropTable<BasicDataModel>();
-                    //db.DropTable<TrainingMasterModel>();
-                    //db.DropTable<TrainingMenuModel>();
-                    //db.DropTable<TrainingScheduleModel>();
-                    //db.DropTable<TrainingResultModel>();
-
-                }
-                catch (NotNullConstraintViolationException e)
-                {
-
-                }
-
                 db.CreateTable<InitModel>();
                 if (!(from record in db.Table<InitModel>() select record).Any())
                 {
@@ -82,11 +60,6 @@ namespace HealthManager.Common.Other
             ReadingLoadUnitMaster();
             // ロケーションマスタを読み込み
             ReadingLocationMaster();
-
-            //TODO 消す
-            //TestDataReadOfBasicData();
-            //TestDataReadOfBodyData();
-            //TestDataReadOfTrainingData();
         }
 
         public static void ReadingPartMaster()

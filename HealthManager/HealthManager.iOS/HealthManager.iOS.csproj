@@ -279,6 +279,36 @@
   <ItemGroup>
     <BundleResource Include="Resources\report.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Icon-72.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Icon-72%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Icon-83.5%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Icon-Notification.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Icon-Notification%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Icon-Small-50.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Icon-Small-50%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ITunesArtwork Include="Resources\iTunesArtwork.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ITunesArtwork Include="Resources\iTunesArtwork%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Icon%402x.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
