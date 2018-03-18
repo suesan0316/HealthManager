@@ -24,10 +24,10 @@ namespace HealthManager.Common.Extention
             switch (request.RequestType)
             {
                 case ScrollRequestType.RequestTypeToTop:
-                    self.ScrollToAsync(self, ScrollToPosition.Start, false);
+                    self.ScrollToAsync(self, ScrollToPosition.Start, request.Animation);
                     break;
                 case ScrollRequestType.RequestTypeToBottom:
-                    self.ScrollToAsync(SearchLast(self.Children,self.Orientation, new SearchLastStruct()).ReturnElement, ScrollToPosition.End, false);
+                    self.ScrollToAsync(SearchLast(self.Children,self.Orientation, new SearchLastStruct()).ReturnElement, ScrollToPosition.End, request.Animation);
                     break;
                 default:
                     break;
@@ -84,10 +84,12 @@ namespace HealthManager.Common.Extention
 
         public int RequestType { get; set; }
 
-        public static ScrollRequest SendScrollRequest(int requestType)
+        public bool Animation { get; set; }
+
+        public static ScrollRequest SendScrollRequest(int requestType, bool animation = false)
         {
             GC.Collect();
-            return new ScrollRequest {RequestType = requestType};
+            return new ScrollRequest {RequestType = requestType,Animation = animation};
         }
     }
 
