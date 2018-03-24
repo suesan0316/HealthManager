@@ -2,7 +2,6 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:HealthManager.ViewModel"
              x:Class="HealthManager.View.EditTrainingScheduleView">
     <ContentPage.Content>
         <StackLayout>
@@ -11,16 +10,16 @@
                     <StackLayout x:Name="ErrorStack" />
                     <Label Text="{Binding WeekLabel}"  Style="{StaticResource ColumnLabelStyle}" />
                     <StackLayout>
-                        <Label Text="{Binding OffSwitchLabel}"  Style="{StaticResource ColumnLabelStyle}" />
+                        <Label Text="{Binding DisplayLabelOff}"  Style="{StaticResource ColumnLabelStyle}" />
                         <Switch IsToggled="{Binding Off}" />
                     </StackLayout>
                     <StackLayout x:Name="TrainingStack" />
-                    <Button Style="{StaticResource EventButtonStyle}" Text="{Binding AddTrainingButtonLabel}" Command="{Binding AddTrainingStackCommand}" />
-                    <Button Style="{StaticResource NegativeEventButtonStyle}" Text="{Binding DeleteTrainingButtonLabel}" Command="{Binding DeleteTrainingStackCommand}" />
+                    <Button Style="{StaticResource EventButtonStyle}" Text="{Binding DisplayLabelAddTraining}" Command="{Binding CommandAddTraining}" />
+                    <Button Style="{StaticResource NegativeEventButtonStyle}" Text="{Binding DisplayLabelDeleteTraining}" Command="{Binding CommandDeleteTraining}" />
                     <ActivityIndicator IsRunning="{Binding IsLoading}" />
-                    <Button IsEnabled="{Binding IsDisable}" Text="{Binding SaveButtonLabel}"
-                            Command="{Binding SaveTrainingScheduleCommand}" Style="{StaticResource NormalButtonStyle}" />
-                    <Button Text="{Binding CancelButtonLabel}" Command="{Binding CancleCommand}"
+                    <Button  Text="{Binding DisplayLabelSave}"
+                            Command="{Binding CommandSave}" Style="{StaticResource NormalButtonStyle}" />
+                    <Button Text="{Binding DisplayLabelCancel}" Command="{Binding CommandCancel}"
                              Style="{StaticResource ReturnButtonStyle}" />
                 </StackLayout>
             </ScrollView>

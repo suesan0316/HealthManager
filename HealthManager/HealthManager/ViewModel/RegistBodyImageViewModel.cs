@@ -1,16 +1,15 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using HealthManager.Common;
 using HealthManager.Common.Constant;
 using HealthManager.Common.Language;
+using HealthManager.DependencyInterface;
 using HealthManager.Model.Service;
-using HealthManager.Properties;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
+using PropertyChanged;
 using Xamarin.Forms;
 
 namespace HealthManager.ViewModel
@@ -18,8 +17,16 @@ namespace HealthManager.ViewModel
     /// <summary>
     /// 体格画像登録画面VMクラス
     /// </summary>
-    public class RegistBodyImageViewModel : INotifyPropertyChanged
+    [AddINotifyPropertyChangedInterface]
+    public class RegistBodyImageViewModel
     {
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Class Variable
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Class Variable
+
         /// <summary>
         /// 画像ファイル格納フォルダ
         /// </summary>
@@ -35,115 +42,94 @@ namespace HealthManager.ViewModel
         /// </summary>
         private const string BodyImageExtension = ".jpg";
 
-        /// <summary>
-        /// 体格画像ID
-        /// </summary>
+        #endregion Class Variable
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Instance Private Variables
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Instance Private Variables
+            
+        private string _filePath;
+        private bool _takePhotoFromCamera;
         private readonly int _id;
-
-        /// <summary>
-        /// 画像Base64変換文字
-        /// </summary>
         private string _base64String;
 
-        /// <summary>
-        /// カメラで撮影またはライブラリから選択された画像
-        /// </summary>
-        private ImageSource _bodyImage;
+        #endregion Instance Private Variables
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Constractor
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Constractor
 
-        /// <summary>
-        /// カメラ選択フラグ
-        /// </summary>
-        private bool _takePhotoFromCamera;
-
-        /// <summary>
-        /// コンストラクタ
-        /// </summary>
         public RegistBodyImageViewModel()
-        {
-            TakeImageCameraCommand = new Command(async () => await TakeImageCamera());
-            TakeImageLibraryaCommand = new Command(async () => await TakeImageLibrary());
-            RegistBodyImageCommand = new Command(async () => await RegistBodyImage());
-            BackHomeCommand = new Command(ViewModelCommonUtil.DataBackPage);
-
+        {           
+            InitCommands();
             var model = BodyImageService.GetBodyImage();
             _id = model?.Id ?? 0;
         }
 
-        /// <summary>
-        /// カメラで撮るボタンコマンド
-        /// </summary>
-        public ICommand TakeImageCameraCommand { get; set; }
-
-        /// <summary>
-        /// ライブラリから選択するボタンコマンド
-        /// </summary>
-        public ICommand TakeImageLibraryaCommand { get; set; }
-
-        /// <summary>
-        /// 登録するボタンコマンド
-        /// </summary>
-        public ICommand RegistBodyImageCommand { get; set; }
-
-        /// <summary>
-        /// キャンセルボタンコマンド
-        /// </summary>
-        public ICommand BackHomeCommand { get; set; }
+        #endregion Constractor
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Binding Variables
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Binding Variables
 
         /// <summary>
         /// カメラで撮影またはライブラリから選択された画像
         /// </summary>
-        public ImageSource BodyImage
-        {
-            get => _bodyImage;
-            set
-            {
-                _bodyImage = value;
-                RegistButtonIsVisible = true;
-                OnPropertyChanged(nameof(BodyImage));
-                OnPropertyChanged(nameof(RegistButtonIsVisible));
-            }
-        }
+        public ImageSource BodyImage { get; set; }
 
         /// <summary>
         /// 登録ボタン表示フラグ
         /// </summary>
-        public bool RegistButtonIsVisible { get; set; }
+        public bool RegistButtonIsVisible => BodyImage != null;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        #endregion Binding Variables
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Binding DisplayLabels
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Binding DisplayLabels
 
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        public string DisplayLabelCancel => LanguageUtils.Get(LanguageKeys.Cancel);
+        public string DisplayLabelRegist => LanguageUtils.Get(LanguageKeys.Regist);
+        public string DisplayLabelTakeCamera => LanguageUtils.Get(LanguageKeys.SnapFromCamera);
+        public string DisplayLabelTakeLibrary => LanguageUtils.Get(LanguageKeys.SelectFromLibrary);
 
-        /// <summary>
-        /// カメラで取るボタンラベル
-        /// </summary>
-        public string TakeImageCameraLabel => LanguageUtils.Get(LanguageKeys.SnapFromCamera);
+        #endregion Binding DisplayLabels
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Binding Commands
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Binding Commands
 
-        /// <summary>
-        /// ライブラリから選択するボタンラベル
-        /// </summary>
-        public string TakeImageLibraryLabel => LanguageUtils.Get(LanguageKeys.SelectFromLibrary);
+        public ICommand CommandCancel { get; set; }
+        public ICommand CommandRegist { get; set; }
+        public ICommand CommandTakeCamera { get; set; }
+        public ICommand CommandTakeLibrary { get; set; }
 
-        /// <summary>
-        /// 登録するボタンラベル
-        /// </summary>
-        public string RegistButtonLabel => LanguageUtils.Get(LanguageKeys.Regist);
-
-        /// <summary>
-        /// キャンセルボタンラベル
-        /// </summary>
-        public string CancelButtonLabel => LanguageUtils.Get(LanguageKeys.Cancel);
+        #endregion Binding Commands
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Command Actions
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Command Actions
 
         /// <summary>
         /// カメラ撮影アクション
         /// </summary>
         /// <returns></returns>
-        private async Task TakeImageCamera()
+        private async Task CommandTakeCameraAction()
         {
-            // TODO カメラから写真を登録した場合は撮った写真は削除する処理を追加する
+            _takePhotoFromCamera = true;
+
             try
             {
                 // カメラが有効であるか判定
@@ -168,6 +154,8 @@ namespace HealthManager.ViewModel
                 if (file == null)
                     return;
 
+                _filePath = file.Path;
+
                 BodyImage = ImageSource.FromStream(() =>
                 {
                     var stream = file.GetStream();
@@ -177,8 +165,6 @@ namespace HealthManager.ViewModel
 
                 var imgData = ViewModelCommonUtil.ConvertToByteArrayFromStream(file.GetStream());
                 _base64String = Convert.ToBase64String(imgData);
-
-                _takePhotoFromCamera = true;
             }
             catch (Exception e)
             {
@@ -190,8 +176,10 @@ namespace HealthManager.ViewModel
         /// フォトライブラリ選択アクション
         /// </summary>
         /// <returns></returns>
-        private async Task TakeImageLibrary()
+        private async Task CommandTakeLibraryAction()
         {
+            _takePhotoFromCamera = false;
+
             if (!CrossMedia.Current.IsPickPhotoSupported)
             {
                 await Application.Current.MainPage.DisplayAlert(LanguageUtils.Get(LanguageKeys.Error),
@@ -202,7 +190,6 @@ namespace HealthManager.ViewModel
             {
                 PhotoSize = PhotoSize.Medium
             });
-
 
             if (file == null)
                 return;
@@ -216,11 +203,9 @@ namespace HealthManager.ViewModel
 
             var imgData = ViewModelCommonUtil.ConvertToByteArrayFromStream(file.GetStream());
             _base64String = Convert.ToBase64String(imgData);
-
-            _takePhotoFromCamera = false;
         }
 
-        private async Task RegistBodyImage()
+        private async Task CommandRegistAction()
         {
             if (BodyImageService.CheckExitTargetDayData(DateTime.Now))
             {
@@ -236,9 +221,64 @@ namespace HealthManager.ViewModel
                 BodyImageService.RegistBodyImage(_base64String);
             }
 
+            if (_takePhotoFromCamera)
+            {
+                //TODO 確認のダイアログを表示する
+                //TODO ViewModelCommonUtilに移動する？
+                DependencyService.Get<IImageService>().DeleteImageFile(_filePath);
+            }
+
             // ホーム画面をリロードする
             ViewModelCommonUtil.SendMessage(ViewModelConst.MessagingHomeReload);
             ViewModelCommonUtil.DataBackPage();
         }
+
+        #endregion Command Actions
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Init Commands
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Init Commands
+
+        private void InitCommands()
+        {
+            CommandTakeCamera = new Command(async () => await CommandTakeCameraAction());
+            CommandTakeLibrary = new Command(async () => await CommandTakeLibraryAction());
+            CommandRegist = new Command(async () => await CommandRegistAction());
+            CommandCancel = new Command(ViewModelCommonUtil.DataBackPage);
+        }
+
+        #endregion Init Commands
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // ViewModel Logic
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region ViewModel Logic
+
+        #endregion ViewModel Logic
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Init MessageSubscribe
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Init MessageSubscribe
+
+        //private void InitMessageSubscribe()
+        //{
+
+        //}
+
+        #endregion Init MessageSubscribe
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Default 
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Default
+            
+        #endregion Default
+
     }
 }

@@ -51,14 +51,14 @@ namespace HealthManager.Model.Service
         /// <summary>
         /// 部位更新
         /// </summary>
-        /// <param name="Id"></param>
+        /// <param name="id"></param>
         /// <param name="partName"></param>
         /// <returns></returns>
-        public static bool UpdatePart(int Id ,string partName)
+        public static bool UpdatePart(int id ,string partName)
         {
             var model = new PartModel
             {
-                Id = Id,
+                Id = id,
                 PartName = partName
             };
             using (var db = new SQLiteConnection(DbConst.DbPath))

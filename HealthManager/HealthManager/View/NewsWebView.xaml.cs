@@ -7,13 +7,6 @@ namespace HealthManager.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class NewsWebView : ContentPage
     {
-        public NewsWebView()
-        {
-            InitializeComponent();
-            BindingContext = new NewsWebViewModel();
-            NavigationPage.SetHasNavigationBar(this, false);
-        }
-
         public NewsWebView(string url,INavigation navigation)
         {
             InitializeComponent();

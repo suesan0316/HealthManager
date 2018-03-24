@@ -3,7 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:extention="clr-namespace:HealthManager.Common.Extention;assembly=HealthManager"
              xmlns:viewCell="clr-namespace:HealthManager.View.ViewCell;assembly=HealthManager"
+             xmlns:viewModel="clr-namespace:HealthManager.ViewModel;assembly=HealthManager"
              x:Class="HealthManager.View.TrainingScheduleListView">
+    <ContentPage.BindingContext>
+        <viewModel:TrainingScheduleListViewModel />
+    </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout Margin="30">
             <ListView ItemsSource="{Binding Items}"  Margin="15" HasUnevenRows="True"> 
@@ -13,10 +17,10 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
                 <ListView.Behaviors>
-                    <extention:ItemTappedBehavior Command="{Binding TrainingScheduleListItemTappedCommand}" />
+                    <extention:ItemTappedBehavior Command="{Binding CommandTrainingScheduleListItemTapped}" />
                 </ListView.Behaviors>
             </ListView>
-            <Button Text="{Binding BackPageLabel}" Command="{Binding BackPageCommand}" Style="{StaticResource ReturnButtonStyle}"></Button>
+            <Button Text="{Binding DisplayLabelReturn}" Command="{Binding CommandReturn}" Style="{StaticResource ReturnButtonStyle}"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -1,84 +1,69 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using HealthManager.Common;
 using HealthManager.Common.Constant;
 using HealthManager.Common.Enum;
+using HealthManager.Common.Extention;
 using HealthManager.Common.Language;
-using HealthManager.Model.Service;
-using HealthManager.Properties;
+using HealthManager.Model.Service.Interface;
+using PropertyChanged;
 using Xamarin.Forms;
 
 namespace HealthManager.ViewModel
 {
     /// <summary>
-    ///     基本情報登録画面VMクラス
+    ///  基本情報登録画面VMクラス
     /// </summary>
-    public class InputBasicDataViewModel : INotifyPropertyChanged
+    [AddINotifyPropertyChangedInterface]
+    public class InputBasicDataViewModel
     {
-        /// <summary>
-        ///     基本情報ID
-        /// </summary>
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Class Variable
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Class Variable
+
+        #endregion Class Variable
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Instance Private Variables
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Instance Private Variables
+            
+        private readonly bool _isUpdate;
         private readonly int _id;
 
-        /// <summary>
-        ///     更新フラグ
-        /// </summary>
-        private readonly bool _isUpdate;
+        private readonly IBasicDataService _basicDataService;
 
-        private int _basalMetabolism;
+        #endregion Instance Private Variables
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Constractor
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Constractor
 
-        private float _bodyFatPercentage;
-
-        /// <summary>
-        ///     体重
-        /// </summary>
-        private float _bodyWeight;
-
-        /// <summary>
-        ///     キャンセルボタン表示フラグ
-        /// </summary>
-        private bool _cancelButtonIsVisible;
-
-        /// <summary>
-        ///     身長
-        /// </summary>
-        private float _height;
-
-        /// <summary>
-        ///     読み込み中フラグ
-        /// </summary>
-        private bool _isLoading;
-
-        private int _maxBloodPressure;
-
-
-        private int _minBloodPressure;
-
-        private string _name;
-
-        /// <summary>
-        ///     コンストラクタ
-        ///     基本データが存在しない場合はキャンセルボタンを非表示
-        /// </summary>
-        public InputBasicDataViewModel()
+        public InputBasicDataViewModel(IBasicDataService basicDataService)
         {
             try
             {
-                SaveBaisicDataCommand = new Command(async () => await SaveBasicData());
-                CancleCommand = new Command(CancelAction);
-                GenderItemSrouce = new List<GenderEnum>();
-                foreach (var gender in Enum.GetValues(typeof(GenderEnum))) GenderItemSrouce.Add((GenderEnum) gender);
+                _basicDataService = basicDataService;
 
-                Gender = (int) GenderEnum.未選択;
+                InitCommands();
+                 GenderItemSrouce = new List<GenderEnum>();
+                foreach (var gender in Enum.GetValues(typeof(GenderEnum))) GenderItemSrouce.Add((GenderEnum)gender);
+
+                Gender = (int)GenderEnum.未選択;
 
                 CancelButtonIsVisible = true;
 
-                var model = BasicDataService.GetBasicData();
+                var model = _basicDataService.GetBasicData();
                 if (model != null)
                 {
                     _id = model.Id;
@@ -98,9 +83,9 @@ namespace HealthManager.ViewModel
                 {
                     Birthday = DateTime.Parse(ViewModelConst.DefaultTimePick);
                     CancelButtonIsVisible = false;
-                }
+                }             
 
-                ErrorStack.Clear();
+                ErrorStack = new ObservableCollection<Xamarin.Forms.View>();
             }
             catch (Exception e)
             {
@@ -108,121 +93,48 @@ namespace HealthManager.ViewModel
             }
         }
 
-        /// <summary>
-        ///     保存ボタンコマンド
-        /// </summary>
-        public ICommand SaveBaisicDataCommand { get; }
+        #endregion Constractor
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Binding Variables
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Binding Variables
+
+        public ScrollRequest ScrollRequest { get; set; }
 
         /// <summary>
-        ///     キャンセルボタンコマンド
+        ///  名前
         /// </summary>
-        public ICommand CancleCommand { get; }
+        public string Name { get; set; }
 
         /// <summary>
-        ///     名前
-        /// </summary>
-        public string Name
-        {
-            get => _name;
-            set
-            {
-                if (value.Length < 15) _name = value;
-                OnPropertyChanged(nameof(Name));
-            }
-        }
-
-        /// <summary>
-        ///     名前ラベル
-        /// </summary>
-        public string NameLabel => LanguageUtils.Get(LanguageKeys.Name);
-
-        /// <summary>
-        ///     名前プレースホルダーラベル
-        /// </summary>
-        public string NamePlaceholderLabel => LanguageUtils.Get(LanguageKeys.NamePlaceholder);
-
-        /// <summary>
-        ///     年齢ラベル
-        /// </summary>
-        public string BirthdayLabel => LanguageUtils.Get(LanguageKeys.Birthday);
-
-        /// <summary>
-        ///     性別リストボックスアイテム
+        ///  性別リストボックスアイテム
         /// </summary>
         public List<GenderEnum> GenderItemSrouce { get; }
 
         /// <summary>
-        ///     性別
+        ///  性別
         /// </summary>
         public int Gender { get; set; }
 
         /// <summary>
-        ///     性別ラベル
+        ///  エラーラベルをスタックするレイアウトのChildren
         /// </summary>
-        public string GenderLabel => LanguageUtils.Get(LanguageKeys.Gender);
+        public ObservableCollection<Xamarin.Forms.View> ErrorStack { get; set; }
 
         /// <summary>
-        ///     エラーラベルをスタックするレイアウトのChildren
+        ///  身長
         /// </summary>
-        public IList<Xamarin.Forms.View> ErrorStack { get; set; }
+        public float Height { get; set; }
 
         /// <summary>
-        ///     身長
+        ///  体重
         /// </summary>
-        public float Height
-        {
-            get => _height;
-            set
-            {
-                if (value < 1000)
-                {
-                    _height = value;
-                    OnPropertyChanged(nameof(Bmi));
-                }
-                    OnPropertyChanged(nameof(Height));
-                
-            }
-        }
+        public float BodyWeight { get; set; }
 
         /// <summary>
-        ///     身長ラベル
-        /// </summary>
-        public string HeightLabel => LanguageUtils.Get(LanguageKeys.Height);
-
-        /// <summary>
-        ///     身長プレースホルダーラベル
-        /// </summary>
-        public string HeightPlaceholderLabel => LanguageUtils.Get(LanguageKeys.HeightPlaceholder);
-
-        /// <summary>
-        ///     体重
-        /// </summary>
-        public float BodyWeight
-        {
-            get => _bodyWeight;
-            set
-            {
-                if (value < 1000)
-                {
-                    _bodyWeight = value;
-                    OnPropertyChanged(nameof(Bmi));
-                }
-                    OnPropertyChanged(nameof(BodyWeight));            
-            }
-        }
-
-        /// <summary>
-        ///     体重ラベル
-        /// </summary>
-        public string BodyWeightLabel => LanguageUtils.Get(LanguageKeys.BodyWeight);
-
-        /// <summary>
-        ///     体重プレースホルダーラベル
-        /// </summary>
-        public string BodyWeightPlaceholderLabel => LanguageUtils.Get(LanguageKeys.BodyWeightPlaceHolder);
-
-        /// <summary>
-        ///     BMI(自動計算項目)
+        ///  BMI(自動計算項目)
         /// </summary>
         public string Bmi
         {
@@ -230,7 +142,7 @@ namespace HealthManager.ViewModel
             {
                 try
                 {
-                    var tmp = _bodyWeight / Math.Pow(_height / 100f, 2);
+                    var tmp = BodyWeight / Math.Pow(Height / 100f, 2);
                     return CommonUtil.GetDecimalFormatString(double.IsNaN(tmp) ? 0 : tmp);
                 }
                 catch (Exception)
@@ -241,159 +153,97 @@ namespace HealthManager.ViewModel
         }
 
         /// <summary>
-        ///     BMIラベル
+        ///  体脂肪率
         /// </summary>
-        public string BmiLabel => LanguageUtils.Get(LanguageKeys.BMI);
+        public float BodyFatPercentage { get; set; }
 
         /// <summary>
-        ///     体脂肪率
+        ///  上の血圧
         /// </summary>
-        public float BodyFatPercentage
-        {
-            get => _bodyFatPercentage;
-            set
-            {
-                if (value < 100) _bodyFatPercentage = value;
-                OnPropertyChanged(nameof(BodyFatPercentage));
-            }
-        }
+        public int MaxBloodPressure { get; set; }
 
         /// <summary>
-        ///     体脂肪率ラベル
+        ///  下の血圧
         /// </summary>
-        public string BodyFatPercentageLabel => LanguageUtils.Get(LanguageKeys.BodyFatPercentage);
+        public int MinBloodPressure { get; set; }
 
         /// <summary>
-        ///     体脂肪率プレースホルダーラベル
+        ///  基礎代謝
         /// </summary>
-        public string BodyFatPercentagePlaceholderLabel => LanguageUtils.Get(LanguageKeys.BodyFatPercentagePlaceholder);
+        public int BasalMetabolism { get; set; }
 
         /// <summary>
-        ///     血圧ラベル
+        /// 生年月日
         /// </summary>
-        public string BloodPressureLabel => LanguageUtils.Get(LanguageKeys.BloodPressure);
-
-        /// <summary>
-        ///     上の血圧
-        /// </summary>
-        public int MaxBloodPressure
-        {
-            get => _maxBloodPressure;
-            set
-            {
-                if (value < 1000) _maxBloodPressure = value;
-                OnPropertyChanged(nameof(MaxBloodPressure));
-            }
-        }
-
-        /// <summary>
-        ///     上の血圧プレースホルダーラベル
-        /// </summary>
-        public string MaxBloodPressurePlaceholderLabel => LanguageUtils.Get(LanguageKeys.MaxBloodPressure);
-
-        /// <summary>
-        ///     下の血圧
-        /// </summary>
-        public int MinBloodPressure
-        {
-            get => _minBloodPressure;
-            set
-            {
-                if (value < 1000) _minBloodPressure = value;
-                OnPropertyChanged(nameof(MinBloodPressure));
-            }
-        }
-
-        /// <summary>
-        ///     下の血圧プレースホルダーラベル
-        /// </summary>
-        public string MinBloodPressurePlaceholderLabel => LanguageUtils.Get(LanguageKeys.MinBloodPressure);
-
-        /// <summary>
-        ///     基礎代謝
-        /// </summary>
-        public int BasalMetabolism
-        {
-            get => _basalMetabolism;
-            set
-            {
-                if (value < 10000) _basalMetabolism = value;
-                OnPropertyChanged(nameof(BasalMetabolism));
-            }
-        }
-
-        /// <summary>
-        ///     基礎代謝ラベル
-        /// </summary>
-        public string BasalMetabolismLabel => LanguageUtils.Get(LanguageKeys.BasicMetabolism);
-
-        /// <summary>
-        ///     基礎代謝プレースホルダーラベル
-        /// </summary>
-        public string BasalMetabolismPlaceholderLabel => LanguageUtils.Get(LanguageKeys.BasalMetabolismPlaceholder);
-
         public DateTime Birthday { get; set; }
 
         /// <summary>
-        ///     読み込みフラグ
+        ///  読み込みフラグ
         /// </summary>
-        public bool IsLoading
-        {
-            get => _isLoading;
-            set
-            {
-                _isLoading = value;
-                OnPropertyChanged(nameof(IsLoading));
-                OnPropertyChanged(nameof(IsDisable));
-            }
-        }
+        public bool IsLoading { get; set; }
 
         /// <summary>
-        ///     処理中ラベル
+        ///  キャンセルボタン非表示・表示
         /// </summary>
-        public string LoadingLabel => LanguageUtils.Get(LanguageKeys.Loading);
+        public bool CancelButtonIsVisible { get; set; }
 
         /// <summary>
-        ///     保存ボタンラベル
+        ///  無効フラグ
         /// </summary>
-        public string SaveButtonLabel => LanguageUtils.Get(LanguageKeys.Save);
+        public bool IsDisable => !IsLoading;
+
+        #endregion Binding Variables
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Binding DisplayLabels
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Binding DisplayLabels
+
+        public string DisplayLabelBasalMetabolism => LanguageUtils.Get(LanguageKeys.BasicMetabolism);
+        public string DisplayLabelBasalMetabolismPlaceholder => LanguageUtils.Get(LanguageKeys.BasalMetabolismPlaceholder);
+        public string DisplayLabelBirthday => LanguageUtils.Get(LanguageKeys.Birthday);
+        public string DisplayLabelBloodPressure => LanguageUtils.Get(LanguageKeys.BloodPressure);
+        public string DisplayLabelBmi => LanguageUtils.Get(LanguageKeys.BMI);
+        public string DisplayLabelBodyFatPercentage => LanguageUtils.Get(LanguageKeys.BodyFatPercentage);
+        public string DisplayLabelBodyFatPercentagePlaceholder => LanguageUtils.Get(LanguageKeys.BodyFatPercentagePlaceholder);
+        public string DisplayLabelBodyWeight => LanguageUtils.Get(LanguageKeys.BodyWeight);
+        public string DisplayLabelBodyWeightPlaceholder => LanguageUtils.Get(LanguageKeys.BodyWeightPlaceHolder);
+        public string DisplayLabelCancel => LanguageUtils.Get(LanguageKeys.Cancel);
+        public string DisplayLabelGender => LanguageUtils.Get(LanguageKeys.Gender);
+        public string DisplayLabelHeight => LanguageUtils.Get(LanguageKeys.Height);
+        public string DisplayLabelHeightPlaceholder => LanguageUtils.Get(LanguageKeys.HeightPlaceholder);
+        public string DisplayLabelLoading => LanguageUtils.Get(LanguageKeys.Loading);
+        public string DisplayLabelMaxBloodPressurePlaceholder => LanguageUtils.Get(LanguageKeys.MaxBloodPressure);
+        public string DisplayLabelMinBloodPressurePlaceholder => LanguageUtils.Get(LanguageKeys.MinBloodPressure);
+        public string DisplayLabelName => LanguageUtils.Get(LanguageKeys.Name);
+        public string DisplayLabelNamePlaceholder => LanguageUtils.Get(LanguageKeys.NamePlaceholder);
+        public string DisplayLabelSave => LanguageUtils.Get(LanguageKeys.Save);
+
+        #endregion Binding DisplayLabels
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Binding Commands
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Binding Commands
+
+        public ICommand CommandCancel { get; set; }
+        public ICommand CommandSave { get; set; }
+
+        #endregion Binding Commands
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Command Actions
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Command Actions
 
         /// <summary>
-        ///     キャンセルボタンラベル
-        /// </summary>
-        public string CancelButtonLabel => LanguageUtils.Get(LanguageKeys.Cancel);
-
-        /// <summary>
-        ///     キャンセルボタン非表示・表示
-        /// </summary>
-        public bool CancelButtonIsVisible
-        {
-            get => _cancelButtonIsVisible;
-            set
-            {
-                _cancelButtonIsVisible = value;
-                OnPropertyChanged(nameof(CancelButtonIsVisible));
-            }
-        }
-
-        /// <summary>
-        ///     無効フラグ
-        /// </summary>
-        public bool IsDisable => !_isLoading;
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        /// <summary>
-        ///     基本データ保存アクション
+        ///  基本データ保存アクション
         /// </summary>
         /// <returns></returns>
-        private async Task SaveBasicData()
+        private async Task CommandSaveAction()
         {
             try
             {
@@ -402,12 +252,12 @@ namespace HealthManager.ViewModel
                     MaxBloodPressure,
                     MinBloodPressure, BasalMetabolism))
                 {
-                    ViewModelCommonUtil.SendMessage(ViewModelConst.MessagingSelfScroll);
+                    ScrollRequest = ScrollRequest.SendScrollRequest(ScrollRequestType.RequestTypeToTop);
                     return;
                 }
 
                 IsLoading = true;
-                if (BasicDataService.CheckExitTargetDayData(DateTime.Now))
+                if (_basicDataService.CheckExitTargetDayData(DateTime.Now))
                 {
                     var result =
                         await Application.Current.MainPage.DisplayAlert(LanguageUtils.Get(LanguageKeys.Confirm),
@@ -415,7 +265,7 @@ namespace HealthManager.ViewModel
                             LanguageUtils.Get(LanguageKeys.Cancel));
                     if (result)
                     {
-                        BasicDataService.UpdateBasicData(_id, Name, 1, Gender, height: Height, birthday: Birthday,
+                        _basicDataService.UpdateBasicData(_id, Name, 1, Gender, height: Height, birthday: Birthday,
                             bodyWeight: BodyWeight, bodyFatPercentage: BodyFatPercentage,
                             maxBloodPressure: MaxBloodPressure,
                             minBloodPressure: MinBloodPressure, basalMetabolism: BasalMetabolism);
@@ -428,7 +278,7 @@ namespace HealthManager.ViewModel
                 }
                 else
                 {
-                    BasicDataService.RegistBasicData(Name, 1, Gender, height: Height, birthday: Birthday,
+                    _basicDataService.RegistBasicData(Name, 1, Gender, height: Height, birthday: Birthday,
                         bodyWeight: BodyWeight, bodyFatPercentage: BodyFatPercentage,
                         maxBloodPressure: MaxBloodPressure,
                         minBloodPressure: MinBloodPressure, basalMetabolism: BasalMetabolism);
@@ -455,17 +305,39 @@ namespace HealthManager.ViewModel
         }
 
         /// <summary>
-        ///     キャンセルアクション
+        ///  キャンセルアクション
         /// </summary>
-        public void CancelAction()
+        public void CommandCancelAction()
         {
             // ホーム画面をリロードする
             ViewModelCommonUtil.SendMessage(ViewModelConst.MessagingHomeReload);
             ViewModelCommonUtil.DataBackPage();
         }
 
+        #endregion Command Actions
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Init Commands
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Init Commands
+
+        private void InitCommands()
+        {
+            CommandSave = new Command(async () => await CommandSaveAction());
+            CommandCancel = new Command(CommandCancelAction);
+        }
+
+        #endregion Init Commands
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // ViewModel Logic
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region ViewModel Logic
+
         /// <summary>
-        ///     入力項目のバリデーションチェックを実施します
+        ///  入力項目のバリデーションチェックを実施します
         /// </summary>
         /// <param name="name"></param>
         /// <param name="gender"></param>
@@ -494,7 +366,7 @@ namespace HealthManager.ViewModel
         }
 
         /// <summary>
-        ///     エラーラベルを生成します
+        ///  エラーラベルを生成します
         /// </summary>
         /// <param name="key"></param>
         /// <param name="errorType"></param>
@@ -507,5 +379,29 @@ namespace HealthManager.ViewModel
                 TextColor = Color.Red
             };
         }
+
+        #endregion ViewModel Logic
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Init MessageSubscribe
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Init MessageSubscribe
+
+/*
+        private void InitMessageSubscribe()
+        {
+
+        }
+*/
+
+        #endregion Init MessageSubscribe
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Default 
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Default
+        #endregion Default
     }
 }

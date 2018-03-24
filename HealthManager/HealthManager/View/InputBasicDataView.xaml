@@ -2,24 +2,27 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:HealthManager.ViewModel"
              xmlns:system="clr-namespace:System;assembly=System.Runtime"
-             x:Class="HealthManager.View.InputBasicDataView">
-    <ContentPage.BindingContext>
-        <vm:InputBasicDataViewModel />
-    </ContentPage.BindingContext>
+             xmlns:extention="clr-namespace:HealthManager.Common.Extention;assembly=HealthManager"
+             xmlns:behavior="clr-namespace:HealthManager.View.Behavior;assembly=HealthManager"
+             x:Class="HealthManager.View.InputBasicDataView"
+             BindingContext="{Binding InputBasicDataViewModel, Source={StaticResource Locator}}">
     <ContentPage.Content>
-        <ScrollView x:Name="ControlScroll">
+        <extention:ReciveRequestScrollView RecivedRequest="{Binding ScrollRequest}">
             <StackLayout Margin="30">
-                <StackLayout x:Name="ErrorStack" />
-                <Label Text="{Binding NameLabel}" Style="{StaticResource ColumnLabelStyle}" />
-                <Entry Placeholder="{Binding NamePlaceholderLabel}" Text="{Binding Name}"
-                       IsEnabled="{Binding IsDisable}"  />
-                <Label Text="{Binding GenderLabel}" Style="{StaticResource ColumnLabelStyle}" />
+                <extention:BindableStackLayout Items="{Binding ErrorStack}" />
+                <Label Text="{Binding DisplayLabelName}" Style="{StaticResource ColumnLabelStyle}" />
+                <Entry Placeholder="{Binding DisplayLabelNamePlaceholder}" Text="{Binding Name}"
+                       IsEnabled="{Binding IsDisable}">
+                    <Entry.Behaviors>
+                        <behavior:EntryValueValidatorBehavior MaxLength="15" CheckMaxLength="True" />
+                    </Entry.Behaviors>
+                </Entry>
+                <Label Text="{Binding DisplayLabelGender}" Style="{StaticResource ColumnLabelStyle}" />
                 <Picker ItemsSource="{Binding GenderItemSrouce}" SelectedIndex="{Binding Gender}"
                         IsEnabled="{Binding IsDisable}" />
-                <Label Text="{Binding BirthdayLabel}" Style="{StaticResource ColumnLabelStyle}" />
-                <DatePicker VerticalOptions="CenterAndExpand" Date="{Binding Birthday}" >
+                <Label Text="{Binding DisplayLabelBirthday}" Style="{StaticResource ColumnLabelStyle}" />
+                <DatePicker VerticalOptions="CenterAndExpand" Date="{Binding Birthday}">
                     <DatePicker.Format>yyyy-MM-dd</DatePicker.Format>
                     <DatePicker.MinimumDate>
                         <system:DateTime x:FactoryMethod="Parse">
@@ -29,44 +32,68 @@
                         </system:DateTime>
                     </DatePicker.MinimumDate>
                     <DatePicker.MaximumDate>
-                        <system:DateTime x:FactoryMethod="get_Now">
-                        </system:DateTime>
+                        <system:DateTime x:FactoryMethod="get_Now" />
                     </DatePicker.MaximumDate>
                 </DatePicker>
-                <Label Text="{Binding HeightLabel}" Style="{StaticResource ColumnLabelStyle}" />
-                <Entry Placeholder="{Binding HeightPlaceholderLabel}" Keyboard="Numeric" Text="{Binding Height}"
-                       IsEnabled="{Binding IsDisable}" />
-                <Label Text="{Binding BodyWeightLabel}" Style="{StaticResource ColumnLabelStyle}" />
-                <Entry Placeholder="{Binding BodyWeightPlaceholderLabel}" Keyboard="Numeric"
+                <Label Text="{Binding DisplayLabelHeight}" Style="{StaticResource ColumnLabelStyle}" />
+                <Entry Placeholder="{Binding DisplayLabelHeightPlaceholder}" Keyboard="Numeric" Text="{Binding Height}"
+                       IsEnabled="{Binding IsDisable}">
+                    <Entry.Behaviors>
+                        <behavior:EntryValueValidatorBehavior MaxValue="1000" CheckMaxValue="True" />
+                    </Entry.Behaviors>
+                </Entry>
+                <Label Text="{Binding DisplayLabelBodyWeight}" Style="{StaticResource ColumnLabelStyle}" />
+                <Entry Placeholder="{Binding DisplayLabelBodyWeightPlaceholder}" Keyboard="Numeric"
                        Text="{Binding BodyWeight}"
-                       IsEnabled="{Binding IsDisable}" />
-                <Label Text="{Binding BmiLabel}" Style="{StaticResource ColumnLabelStyle}" />
+                       IsEnabled="{Binding IsDisable}">
+                    <Entry.Behaviors>
+                        <behavior:EntryValueValidatorBehavior MaxValue="1000" CheckMaxValue="True" />
+                    </Entry.Behaviors>
+                </Entry>
+                <Label Text="{Binding DisplayLabelBmi}" Style="{StaticResource ColumnLabelStyle}" />
                 <Label Text="{Binding Bmi}" />
-                <Label Text="{Binding  BodyFatPercentageLabel}" Style="{StaticResource ColumnLabelStyle}" />
-                <Entry Placeholder="{Binding BodyFatPercentagePlaceholderLabel}" Keyboard="Numeric"
+                <Label Text="{Binding  DisplayLabelBodyFatPercentage}" Style="{StaticResource ColumnLabelStyle}" />
+                <Entry Placeholder="{Binding DisplayLabelBodyFatPercentagePlaceholder}" Keyboard="Numeric"
                        Text="{Binding BodyFatPercentage}"
-                       IsEnabled="{Binding IsDisable}" />
-                <Label Text="{Binding BloodPressureLabel}" Style="{StaticResource ColumnLabelStyle}" />
+                       IsEnabled="{Binding IsDisable}">
+                    <Entry.Behaviors>
+                        <behavior:EntryValueValidatorBehavior MaxValue="100" CheckMaxValue="True" />
+                    </Entry.Behaviors>
+                </Entry>
+                <Label Text="{Binding DisplayLabelBloodPressure}" Style="{StaticResource ColumnLabelStyle}" />
                 <StackLayout Orientation="Horizontal">
-                    <Entry Placeholder="{Binding MinBloodPressurePlaceholderLabel}" Keyboard="Numeric"
+                    <Entry Placeholder="{Binding DisplayLabelMinBloodPressurePlaceholder}" Keyboard="Numeric"
                            WidthRequest="100" Text="{Binding MinBloodPressure}"
-                           IsEnabled="{Binding IsDisable}" />
-                    <Label Text="/" VerticalOptions="End"/>
-                    <Entry Placeholder="{Binding MaxBloodPressurePlaceholderLabel}" Keyboard="Numeric"
+                           IsEnabled="{Binding IsDisable}">
+                        <Entry.Behaviors>
+                            <behavior:EntryValueValidatorBehavior MaxValue="1000" CheckMaxValue="True" />
+                        </Entry.Behaviors>
+                    </Entry>
+                    <Label Text="/" VerticalOptions="End" />
+                    <Entry Placeholder="{Binding DisplayLabelMaxBloodPressurePlaceholder}" Keyboard="Numeric"
                            WidthRequest="100" Text="{Binding MaxBloodPressure} "
-                           IsEnabled="{Binding IsDisable}" />
+                           IsEnabled="{Binding IsDisable}">
+                        <Entry.Behaviors>
+                            <behavior:EntryValueValidatorBehavior MaxValue="1000" CheckMaxValue="True" />
+                        </Entry.Behaviors>
+                    </Entry>
                 </StackLayout>
-                <Label Text="{Binding BasalMetabolismLabel}" Style="{StaticResource ColumnLabelStyle}" />
-                <Entry Placeholder="{Binding BasalMetabolismPlaceholderLabel}" Keyboard="Numeric"
+                <Label Text="{Binding DisplayLabelBasalMetabolism}" Style="{StaticResource ColumnLabelStyle}" />
+                <Entry Placeholder="{Binding DisplayLabelBasalMetabolismPlaceholder}" Keyboard="Numeric"
                        Text="{Binding BasalMetabolism}"
-                       IsEnabled="{Binding IsDisable}" />
-                <Label HorizontalOptions="Center" Text="{Binding LoadingLabel}" IsVisible="{Binding IsLoading}" />
+                       IsEnabled="{Binding IsDisable}">
+                    <Entry.Behaviors>
+                        <behavior:EntryValueValidatorBehavior MaxValue="10000" CheckMaxValue="True" />
+                    </Entry.Behaviors>
+                </Entry>
+                <Label HorizontalOptions="Center" Text="{Binding DisplayLabelLoading}" IsVisible="{Binding IsLoading}" />
                 <ActivityIndicator IsRunning="{Binding IsLoading}" />
-                <Button IsEnabled="{Binding IsDisable}" Text="{Binding SaveButtonLabel}"
-                        Command="{Binding SaveBaisicDataCommand}" Style="{StaticResource NormalButtonStyle}" />
-                <Button Text="{Binding CancelButtonLabel}" Command="{Binding CancleCommand}" IsVisible="{Binding CancelButtonIsVisible}"
+                <Button IsEnabled="{Binding IsDisable}" Text="{Binding DisplayLabelSave}"
+                        Command="{Binding CommandSave}" Style="{StaticResource NormalButtonStyle}" />
+                <Button Text="{Binding DisplayLabelCancel}" Command="{Binding CommandCancel}"
+                        IsVisible="{Binding CancelButtonIsVisible}"
                         Style="{StaticResource ReturnButtonStyle}" />
             </StackLayout>
-        </ScrollView>
+        </extention:ReciveRequestScrollView>
     </ContentPage.Content>
 </ContentPage>

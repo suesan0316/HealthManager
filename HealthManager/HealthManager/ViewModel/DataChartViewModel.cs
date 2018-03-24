@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using HealthManager.Common;
 using HealthManager.Common.Constant;
@@ -10,8 +8,8 @@ using HealthManager.Common.Enum;
 using HealthManager.Common.Extention;
 using HealthManager.Common.Language;
 using HealthManager.Model.Service;
-using HealthManager.Properties;
 using Microcharts;
+using PropertyChanged;
 using SkiaSharp;
 using Xamarin.Forms;
 using Entry = Microcharts.Entry;
@@ -21,11 +19,26 @@ namespace HealthManager.ViewModel
     /// <summary>
     /// データチャート画面のVMクラス
     /// </summary>
-    internal class DataChartViewModel : INotifyPropertyChanged
+    [AddINotifyPropertyChangedInterface]
+    internal class DataChartViewModel
     {
-        private const int MinChartWidth = 250;
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Class Variable
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Class Variable
 
+        private const int MinChartWidth = 250;
         private const int IncreaseChartWidth = 55;
+
+        #endregion Class Variable
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Instance Private Variables
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Instance Private Variables
 
         /// <summary>
         /// データチャートエントリーリスト
@@ -36,6 +49,14 @@ namespace HealthManager.ViewModel
         /// 対象の基本情報列挙
         /// </summary>
         private readonly BasicDataEnum _targetBasicDataEnum;
+
+        #endregion Instance Private Variables
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Constractor
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Constractor
 
         /// <summary>
         /// デフォルトのコンストラクタは使用しない想定
@@ -48,8 +69,8 @@ namespace HealthManager.ViewModel
         /// <param name="targetBasicDataEnum"></param>
         public DataChartViewModel(BasicDataEnum targetBasicDataEnum)
         {
-            BackHomeCommand = new Command(ViewModelCommonUtil.DataBackPage);
-
+            
+            InitCommands();
             _targetBasicDataEnum = targetBasicDataEnum;
 
             // 一度全データを取得
@@ -62,7 +83,6 @@ namespace HealthManager.ViewModel
                     _entries = list.Select(value => CreateNewEntry(value.BodyWeight, value.RegistedDate))
                         .ToList();
                     break;
-
                 case BasicDataEnum.BodyFatPercentage:
                     _entries = list.Select(value => CreateNewEntry(value.BodyFatPercentage, value.RegistedDate))
                         .ToList();
@@ -89,17 +109,21 @@ namespace HealthManager.ViewModel
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            Chart = new LineChart {Entries = _entries};
+            Chart = new LineChart { Entries = _entries };
             DataList = _entries.Select(data => data.Label + StringConst.Blank + data.Value + _targetBasicDataEnum.DisplayUnit());
 
             var width = IncreaseChartWidth * list.Count;
             ChartWidth = width < MinChartWidth ? MinChartWidth : width;
         }
 
-        /// <summary>
-        /// 戻るボタンコマンド
-        /// </summary>
-        public ICommand BackHomeCommand { get; set; }
+        #endregion Constractor
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Binding Variables
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Binding Variables
+
 
         /// <summary>
         /// 画面に表示されるチャート
@@ -111,11 +135,12 @@ namespace HealthManager.ViewModel
         /// </summary>
         public string TermText
         {
-            get {
-				return LanguageUtils.Get(LanguageKeys.Terms)
-					+ _entries.Min(data => data.Label) 
-					+ StringConst.WavyLine 
-					+ _entries.Max(data => data.Label); 
+            get
+            {
+                return LanguageUtils.Get(LanguageKeys.Terms)
+                       + _entries.Min(data => data.Label)
+                       + StringConst.WavyLine
+                       + _entries.Max(data => data.Label);
             }
         }
 
@@ -132,7 +157,7 @@ namespace HealthManager.ViewModel
         /// </summary>
         public string TermMaxText
         {
-            get { return LanguageUtils.Get(LanguageKeys.TermsMax) +　 _entries.Max(data => data.Value) + _targetBasicDataEnum.DisplayUnit(); }
+            get { return LanguageUtils.Get(LanguageKeys.TermsMax) + _entries.Max(data => data.Value) + _targetBasicDataEnum.DisplayUnit(); }
         }
 
         /// <summary>
@@ -153,18 +178,55 @@ namespace HealthManager.ViewModel
         /// </summary>
         public int ChartWidth { get; set; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        #endregion Binding Variables
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Binding DisplayLabels
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Binding DisplayLabels
 
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        public string DisplayLabelReturn => LanguageUtils.Get(LanguageKeys.Return);
+
+        #endregion Binding DisplayLabels
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Binding Commands
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Binding Commands
+
+        public ICommand CommandReturn { get; set; }
+
+        #endregion Binding Commands
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Command Actions
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Command Actions
+
+        #endregion Command Actions
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Init Commands
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Init Commands
+
+        private void InitCommands()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            CommandReturn = new Command(ViewModelCommonUtil.DataBackPage);
         }
 
-        /// <summary>
-        /// 戻るボタンラベル
-        /// </summary>
-        public string BackHomeLabel => LanguageUtils.Get(LanguageKeys.Return);
+        #endregion Init Commands
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // ViewModel Logic
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region ViewModel Logic
+
 
         /// <summary>
         /// データチャートに使用するエントリーを生成
@@ -182,5 +244,28 @@ namespace HealthManager.ViewModel
                 ValueLabel = value.ToString()
             };
         }
+
+        #endregion ViewModel Logic
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Init MessageSubscribe
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Init MessageSubscribe
+
+        //private void InitMessageSubscribe()
+        //{
+
+        //}
+
+        #endregion Init MessageSubscribe
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Default 
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Default
+
+        #endregion Default
     }
 }

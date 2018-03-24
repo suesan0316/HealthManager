@@ -11,9 +11,9 @@
         
         <ListView ItemsSource="{Binding Items}" VerticalOptions="FillAndExpand">
                 <ListView.Behaviors>
-                    <extention:ItemTappedBehavior Command="{Binding BasicDataItemTappedCommand}" />
+                    <extention:ItemTappedBehavior Command="{Binding CommandBasicDataItemTapped}" />
                 </ListView.Behaviors>
             </ListView>
-        <Button Text="{Binding BackPageLabel}" Command="{Binding BackPageCommand}" Style="{StaticResource ReturnButtonStyle}"></Button>
+        <Button Text="{Binding DisplayLabelReturn}" Command="{Binding CommandReturn}" Style="{StaticResource ReturnButtonStyle}"></Button>
         </StackLayout>
 </ContentPage>

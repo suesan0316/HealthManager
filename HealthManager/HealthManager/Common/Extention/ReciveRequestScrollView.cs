@@ -64,7 +64,6 @@ namespace HealthManager.Common.Extention
                             }
                         }
                 }
-
             return current;
         }
 

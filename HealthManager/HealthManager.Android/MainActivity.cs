@@ -2,6 +2,9 @@
 using Android.Content.PM;
 using Android.OS;
 using Plugin.Permissions;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 
 namespace HealthManager.Droid
 {
@@ -10,6 +13,7 @@ namespace HealthManager.Droid
     {        
         protected override void OnCreate(Bundle bundle)
         {
+            AppCenter.Start("75267511-edba-4c0b-9dcb-a82769c18d84", typeof(Analytics), typeof(Crashes));
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 

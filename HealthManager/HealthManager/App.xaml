@@ -1,12 +1,55 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:theme="clr-namespace:HealthManager.View.Resources;assembly=HealthManager"
+             xmlns:locator="clr-namespace:HealthManager.ViewModel.Locator;assembly=HealthManager"
+             xmlns:controls="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms"
              x:Class="HealthManager.App">
-	<Application.Resources>
-
-		<!-- Application resource dictionary -->
-
-        <theme:AppTheme/>
+    <Application.Resources>
+        <ResourceDictionary>
+            <locator:ViewModelLocator x:Key="Locator" />
+            <theme:AppTheme x:Key="Theme"/>
+            <Style x:Key="HomeImageButtonStyle" TargetType="controls:ImageButton">
+                <Setter Property="Orientation" Value="ImageToLeft" />
+                <Setter Property="ImageHeightRequest" Value="50" />
+                <Setter Property="ImageWidthRequest" Value="50"/>
+                <Setter Property="HeightRequest" Value="130"/>
+                <Setter Property="WidthRequest" Value="125"/>
+                <Setter Property="BackgroundColor" Value="AliceBlue"/>
+                <Setter Property="BorderWidth" Value="1"/>
+                <Setter Property="BorderColor" Value="Black"/>
+                <Setter Property="BorderRadius" Value="10"/>
+            </Style>
+            <Style x:Key="FNormalButtonStyle" TargetType="Button">
+                <Setter Property="BorderWidth" Value="1"/>
+                <Setter Property="BorderColor" Value="Black"/>
+                <Setter Property="BorderRadius" Value="10"/>
+            </Style>
+            <Style x:Key="NormalButtonStyle" TargetType="Button">
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="BackgroundColor" Value="#49d849" />
+                <Setter Property="BorderRadius" Value="5"/>
+            </Style>
+            <Style x:Key="ReturnButtonStyle" TargetType="Button">
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="BackgroundColor" Value="#B0C4DE" />
+                <Setter Property="BorderRadius" Value="5"/>
+            </Style>
+            <Style x:Key="EventButtonStyle" TargetType="Button">
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="BackgroundColor" Value="#00BFFF" />
+                <Setter Property="BorderRadius" Value="5"/>
+            </Style>
+            <Style x:Key="NegativeEventButtonStyle" TargetType="Button">
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="BackgroundColor" Value="#F08080" />
+                <Setter Property="BorderRadius" Value="5"/>
+            </Style>
+            <Style x:Key="ColumnLabelStyle" TargetType="Label">
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="Margin" Value="0, 20, 0, 0"/>
+            </Style>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

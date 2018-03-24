@@ -2,29 +2,34 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:behavior="clr-namespace:HealthManager.View.Behavior;assembly=HealthManager"
              x:Class="HealthManager.View.TrainingMasterView">
     <ContentPage.Content>
         <StackLayout>
             <ScrollView x:Name="ControlScroll">
                 <StackLayout Margin="30">
                     <StackLayout x:Name="ErrorStack" />
-                    <Label Text="{Binding TrainingNameLabel}" Style="{StaticResource ColumnLabelStyle}"  />
-                    <Entry Placeholder="{Binding NamePlaceholderLabel}" Text="{Binding TrainingName}"
-                           IsEnabled="{Binding IsDisable}" />
-                    <Label Text="{Binding TrainingPartLabel}" Style="{StaticResource ColumnLabelStyle}"></Label>
+                    <Label Text="{Binding DisplayLabelTrainingName}" Style="{StaticResource ColumnLabelStyle}"  />
+                    <Entry Placeholder="{Binding DisplayLabelTrainingNamePlaceholder}" Text="{Binding TrainingName}"
+                           IsEnabled="{Binding IsDisable}" >
+                        <Entry.Behaviors>
+                            <behavior:EntryValueValidatorBehavior MaxLength="30" CheckMaxLength="True" />
+                        </Entry.Behaviors>
+                    </Entry>
+                    <Label Text="{Binding DisplayLabelPart}" Style="{StaticResource ColumnLabelStyle}"></Label>
                     <StackLayout x:Name="PartStack" />
-                    <Button Style="{StaticResource EventButtonStyle}" Text="{Binding AddPartButtonLabel}" Command="{Binding AddPartStackCommand}"  Margin="0,15,0,0"/>
-                    <Button Style="{StaticResource NegativeEventButtonStyle}" Text="{Binding DeletePartButtonLabel}" Command="{Binding DeletePartStackCommand}" />
-                    <Label Text="{Binding TrainingLoadLabel}" Style="{StaticResource ColumnLabelStyle}"></Label>
+                    <Button Style="{StaticResource EventButtonStyle}" Text="{Binding DisplayLabelAddPart}" Command="{Binding CommandAddPart}"  Margin="0,15,0,0"/>
+                    <Button Style="{StaticResource NegativeEventButtonStyle}" Text="{Binding DisplayLabelDeletePart}" Command="{Binding CommandDeletePart}" />
+                    <Label Text="{Binding DisplayLabelLoad}" Style="{StaticResource ColumnLabelStyle}"></Label>
                     <StackLayout x:Name="LoadStack" />
-                    <Button Style="{StaticResource EventButtonStyle}" Text="{Binding AddLoadButtonLabel}" Command="{Binding AddLoadStackCommand}" Margin="0,15,0,0"/>
-                    <Button Style="{StaticResource NegativeEventButtonStyle}" Text="{Binding DeleteLoadButtonLabel}" Command="{Binding DeleteLoadStackCommand}" />
-                    <Label HorizontalOptions="Center" Text="{Binding LoadingLabel}" IsVisible="{Binding IsLoading}" Style="{StaticResource ColumnLabelStyle}" />
+                    <Button Style="{StaticResource EventButtonStyle}" Text="{Binding DisplayLabelAddLoad}" Command="{Binding CommandAddLoad}" Margin="0,15,0,0"/>
+                    <Button Style="{StaticResource NegativeEventButtonStyle}" Text="{Binding DisplayLabelDeleteLoad}" Command="{Binding CommandDeleteLoad}" />
+                    <Label HorizontalOptions="Center" Text="{Binding DisplayLabelLoading}" IsVisible="{Binding IsLoading}" Style="{StaticResource ColumnLabelStyle}" />
                     <ActivityIndicator IsRunning="{Binding IsLoading}" />
-                    <Button IsEnabled="{Binding IsDisable}" Text="{Binding SaveButtonLabel}"
-                            Command="{Binding SaveTrainingMasterCommand}" Style="{StaticResource NormalButtonStyle}" />
-                    <Button Text="{Binding CancelButtonLabel}" Command="{Binding CancleCommand}"
-                            IsVisible="{Binding CancelButtonIsVisible}" Style="{StaticResource ReturnButtonStyle}" />
+                    <Button IsEnabled="{Binding IsDisable}" Text="{Binding DisplayLabelSave}"
+                            Command="{Binding CommandSave}" Style="{StaticResource NormalButtonStyle}" />
+                    <Button Text="{Binding DisplayLabelCancel}" Command="{Binding CommandCancel}"
+                             Style="{StaticResource ReturnButtonStyle}" />
                 </StackLayout>
             </ScrollView>
         </StackLayout>

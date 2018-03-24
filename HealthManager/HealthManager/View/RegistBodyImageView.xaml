@@ -13,22 +13,22 @@
             <StackLayout Margin="30">
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,30,0,0">
                     <StackLayout Orientation="Vertical" Margin="0, 0, 40, 0">
-                        <Button Command="{Binding TakeImageCameraCommand}"
+                        <Button Command="{Binding CommandTakeCamera}"
                                               Image="camera.png"
                                               Style="{StaticResource HomeImageButtonStyle}" />
-                        <Label Text="{Binding TakeImageCameraLabel}" HorizontalOptions="Center" />
+                        <Label Text="{Binding DisplayLabelTakeCamera}" HorizontalOptions="Center" />
                     </StackLayout>
                     <StackLayout Orientation="Vertical">
-                        <Button Command="{Binding TakeImageLibraryaCommand}"
+                        <Button Command="{Binding CommandTakeLibrary}"
                                               Style="{StaticResource HomeImageButtonStyle}"
                                               Image="library.png" />
-                        <Label Text="{Binding TakeImageLibraryLabel}" HorizontalOptions="Center" />
+                        <Label Text="{Binding DisplayLabelTakeLibrary}" HorizontalOptions="Center" />
                     </StackLayout>
                 </StackLayout>
                 <Image Source="{Binding BodyImage}" />
-                <Button Text="{Binding RegistButtonLabel}" IsVisible="{Binding RegistButtonIsVisible}"
-                        Command="{Binding RegistBodyImageCommand}" Style="{StaticResource NormalButtonStyle}" />
-                <Button Text="{Binding CancelButtonLabel}" Command="{Binding BackHomeCommand}"
+                <Button Text="{Binding DisplayLabelRegist}" IsVisible="{Binding RegistButtonIsVisible}"
+                        Command="{Binding CommandRegist}" Style="{StaticResource NormalButtonStyle}" />
+                <Button Text="{Binding DisplayLabelCancel}" Command="{Binding CommandCancel}"
                         Style="{StaticResource ReturnButtonStyle}" />
             </StackLayout>
         </ScrollView>

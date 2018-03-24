@@ -26,5 +26,10 @@ namespace HealthManager.Droid.DependencyImplement
             }
             
         }
+
+        public void DeleteImageFile(string filePath)
+        {
+            File.Delete(filePath);
+        }
     }
 }

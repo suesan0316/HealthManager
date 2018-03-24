@@ -6,6 +6,9 @@ using Foundation;
 using UIKit;
 using Xamarin.Forms;
 using XLabs.Forms.Controls;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 
 namespace HealthManager.iOS
 {
@@ -24,8 +27,7 @@ namespace HealthManager.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
-
-            
+            AppCenter.Start("8bcf8409-9380-414a-b0af-9d4b325d2926", typeof(Analytics), typeof(Crashes));
 
             global::Xamarin.Forms.Forms.Init();
             DependencyService.Register<ImageButtonRenderer>();

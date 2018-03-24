@@ -1,8 +1,6 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using HealthManager.Common.Language;
-using HealthManager.Properties;
+using PropertyChanged;
 using Xamarin.Forms;
 
 namespace HealthManager.ViewModel
@@ -10,69 +8,139 @@ namespace HealthManager.ViewModel
     /// <summary>
     ///  ニュース画面VMクラス
     /// </summary>
-    internal class NewsWebViewModel : INotifyPropertyChanged
+    [AddINotifyPropertyChangedInterface]
+    internal class NewsWebViewModel
 
     {
-        /// <summary>
-        /// 表示するサイトのURL
-        /// </summary>
-        private string _webSource;
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Class Variable
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Class Variable
 
+        #endregion Class Variable
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Instance Private Variables
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Instance Private Variables
+
+        /// <summary>
+        /// 通常はConstクラスのナビゲーションを使用するが、データとトレーニング側両方で使用するため、
+        /// 判定が出来ないため引数として渡す
+        /// </summary>
         private readonly INavigation _navigation;
 
-        /// <summary>
-        /// デフォルトのコンストラクタは使用しない想定
-        /// </summary>
-        public NewsWebViewModel()
-        {
-        }
+        #endregion Instance Private Variables
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Constractor
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Constractor
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="url"></param>
         /// <param name="navigation"></param>
-        public NewsWebViewModel(string url,INavigation navigation)
+        public NewsWebViewModel(string url, INavigation navigation)
         {
-            BackHomeCommand = new Command(ReturnHome);
-            this._navigation = navigation;
+            InitCommands();
+            _navigation = navigation;
             WebSource = url;
         }
 
-        /// <summary>
-        /// 戻るボタンコマンド
-        /// </summary>
-        public ICommand BackHomeCommand { get; set; }
+        #endregion Constractor
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Binding Variables
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Binding Variables
 
         /// <summary>
         /// 表示するサイトのURL
         /// </summary>
-        public string WebSource
-        {
-            get => _webSource;
-            set
-            {
-                _webSource = value;
-                OnPropertyChanged(nameof(WebSource));
-            }
-        }
+        public string WebSource { get; set; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        #endregion Binding Variables
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Binding DisplayLabels
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Binding DisplayLabels
 
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        public string DisplayLabelReturn => LanguageUtils.Get(LanguageKeys.Return);
 
-        /// <summary>
-        /// 戻るボタンラベル
-        /// </summary>
-        public string BackHomeLabel => LanguageUtils.Get(LanguageKeys.Return);
+        #endregion Binding DisplayLabels
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Binding Commands
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Binding Commands
 
-        private void ReturnHome()
+        public ICommand CommandReturn { get; set; }
+
+        #endregion Binding Commands
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Command Actions
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Command Actions
+
+        private void CommandReturnAction()
         {
             _navigation.PopAsync();
         }
+
+        #endregion Command Actions
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Init Commands
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Init Commands
+
+        private void InitCommands()
+        {
+            CommandReturn = new Command(CommandReturnAction);
+        }
+
+        #endregion Init Commands
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // ViewModel Logic
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region ViewModel Logic
+
+        #endregion ViewModel Logic
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Init MessageSubscribe
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Init MessageSubscribe
+
+        //private void InitMessageSubscribe()
+        //{
+
+        //}
+
+        #endregion Init MessageSubscribe
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Default 
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Default
+
+        #endregion Default
     }
 }

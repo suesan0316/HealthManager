@@ -3,7 +3,6 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:HealthManager.ViewModel"
-             xmlns:extention="clr-namespace:HealthManager.Common.Extention;assembly=HealthManager"
              xmlns:viewCell="clr-namespace:HealthManager.View.ViewCell;assembly=HealthManager"
              x:Class="HealthManager.View.TrainingView">
     <ContentPage.BindingContext>
@@ -14,21 +13,25 @@
             <StackLayout Margin="30">
                 <Label Text="{Binding TrainingMenuLabel}" Style="{StaticResource ColumnLabelStyle}" />
                 <Label Text="{Binding WeekLabel}" Style="{StaticResource ColumnLabelStyle}" />
-                <ListView ItemsSource="{Binding Items}"  VerticalOptions="FillAndExpand"  HasUnevenRows="True">
+                <ListView ItemsSource="{Binding Items}" VerticalOptions="FillAndExpand" HasUnevenRows="True">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <viewCell:TrainingScheduleStructureViewCell BindingContext = "{Binding}" />
+                            <viewCell:TrainingScheduleStructureViewCell BindingContext="{Binding}" />
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <Label HorizontalOptions="Center" Text="{Binding TimeCountLabel}" IsVisible="{Binding TimeCountVisible}"/>
-                    <Label HorizontalOptions="Center" FontSize="35" Text="{Binding TimeCount}"  IsVisible="{Binding TimeCountVisible}"/>
-                    <Button IsEnabled="{Binding IsDisable}" Text="{Binding TrainingStartButtonLabel}"
-                            Command="{Binding TrainingStartCommand}" Style="{StaticResource NormalButtonStyle}" IsVisible="{Binding TrainingStartButtonVisible}" />
-                    <Button IsEnabled="{Binding IsDisable}" Text="{Binding TrainingCompleteButtonLabel}"
-                            Command="{Binding TrainingCompleteCommand}" Style="{StaticResource NormalButtonStyle}" IsVisible="{Binding TrainingCompleteButtonVisible}"/>
+                <Label HorizontalOptions="Center" Text="{Binding TimeCountLabel}"
+                       IsVisible="{Binding TimeCountVisible}" />
+                <Label HorizontalOptions="Center" FontSize="35" Text="{Binding TimeCount}"
+                       IsVisible="{Binding TimeCountVisible}" />
+                <Button Text="{Binding TrainingStartButtonLabel}"
+                        Command="{Binding TrainingStartCommand}" Style="{StaticResource NormalButtonStyle}"
+                        IsVisible="{Binding TrainingStartButtonVisible}" />
+                <Button Text="{Binding TrainingCompleteButtonLabel}"
+                        Command="{Binding TrainingCompleteCommand}" Style="{StaticResource NormalButtonStyle}"
+                        IsVisible="{Binding TrainingCompleteButtonVisible}" />
                 <Button Text="{Binding CancelButtonLabel}" Command="{Binding CancleCommand}"
-                            IsVisible="{Binding CancelButtonIsVisible}" Style="{StaticResource ReturnButtonStyle}"  />
+                        Style="{StaticResource ReturnButtonStyle}" />
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

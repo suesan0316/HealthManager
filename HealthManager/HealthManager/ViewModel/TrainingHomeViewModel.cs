@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using HealthManager.Common.Constant;
 using HealthManager.Common.Language;
 using HealthManager.Model.Service;
 using HealthManager.Model.Structure;
-using HealthManager.Properties;
 using HealthManager.View;
 using HealthManager.ViewModel.Logic.News.Factory;
 using HealthManager.ViewModel.Structure;
 using Newtonsoft.Json;
+using PropertyChanged;
 using Xamarin.Forms;
 
 namespace HealthManager.ViewModel
@@ -20,74 +18,51 @@ namespace HealthManager.ViewModel
     /// <summary>
     ///     トレーニングホーム画面VMクラス
     /// </summary>
-    public class TrainingHomeViewModel : INotifyPropertyChanged
+    [AddINotifyPropertyChangedInterface]
+    public class TrainingHomeViewModel
     {
-        /// <summary>
-        ///     読み込み中フラグ
-        /// </summary>
-        private bool _isLoading;
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Class Variable
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Class Variable
 
-        /// <summary>
-        ///     コンストラクタ
-        /// </summary>
+        #endregion Class Variable
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Instance Private Variables
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Instance Private Variables
+
+        #endregion Instance Private Variables
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Constractor
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Constractor
+
         public TrainingHomeViewModel()
-        {
-            EditTrainingScheduleCommand = new Command(MoveToTrainingSchedule);
-            StartTrainingCommand = new Command(MoveToTraining);
-            EditTrainingCommand = new Command(MoveToTrainingList);
-            TrainingReportCommand = new Command(MoveToTrainingReport);
-
-            NewsListItemTappedCommand = new Command<NewsStructure>(item =>
-            {
-                ViewModelConst.TrainingPageNavigation.PushAsync(new NewsWebView(item.NewsUrl,
-                    ViewModelConst.TrainingPageNavigation));
-            });
-
+        {          
+            InitCommands();
             Task.Run(SetNewsSourceTask);
         }
 
-        /// <summary>
-        ///     トレーニングを編集するコマンド
-        /// </summary>
-        public ICommand EditTrainingCommand { get; set; }
-
-        /// <summary>
-        ///     トレーニングスケジュールを編集するコマンド
-        /// </summary>
-        public ICommand EditTrainingScheduleCommand { get; set; }
-
-        /// <summary>
-        ///     トレーニングを開始するコマンド
-        /// </summary>
-        public ICommand StartTrainingCommand { get; set; }
-
-        /// <summary>
-        ///     ニュース一覧アイテムタップコマンド
-        /// </summary>
-        public ICommand NewsListItemTappedCommand { get; set; }
-
-        public ICommand TrainingReportCommand { get; set; }
+        #endregion Constractor
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Binding Variables
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Binding Variables
 
         /// <summary>
         ///     ニュース一覧のアイテムリスト
         /// </summary>
         public ObservableCollection<NewsStructure> Items { set; get; } =
             new ObservableCollection<NewsStructure>();
-
-        /// <summary>
-        ///     トレーニングスケジュールを編集するボタンラベル
-        /// </summary>
-        public string EditTrainingScheduleLabel => LanguageUtils.Get(LanguageKeys.EditTrainingSchedule);
-
-        /// <summary>
-        ///     トレーニングスケジュールを編集するボタンラベル
-        /// </summary>
-        public string EditTrainingLabel => LanguageUtils.Get(LanguageKeys.EditTraining);
-
-        /// <summary>
-        ///     トレーニングを開始するボタンラベル
-        /// </summary>
-        public string StrartTrainingLabel => LanguageUtils.Get(LanguageKeys.StartTraining);
 
         /// <summary>
         ///     トレーニングリストのボタンイメージ
@@ -104,53 +79,51 @@ namespace HealthManager.ViewModel
         /// </summary>
         public string TrainingStartButtonImage => ViewModelConst.TrainingStartImage;
 
-        public string TrainingReportLabel => LanguageUtils.Get(LanguageKeys.ConfirmTrainingReport);
-
-        /// <summary>
-        ///     トレーニングニュース一覧のラベル
-        /// </summary>
-        public string TrainingNewsListTitleLabel => LanguageUtils.Get(LanguageKeys.TrainingNewsListTitle);
-
         /// <summary>
         ///     読み込み中フラグ
         /// </summary>
-        public bool IsLoading
-        {
-            get => _isLoading;
-            set
-            {
-                _isLoading = value;
-                OnPropertyChanged(nameof(IsLoading));
-            }
-        }
+        public bool IsLoading { get; set; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        #endregion Binding Variables
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Binding DisplayLabels
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Binding DisplayLabels
 
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        public string DisplayLabelEditTraining => LanguageUtils.Get(LanguageKeys.EditTraining);
+        public string DisplayLabelEditTrainingSchedule => LanguageUtils.Get(LanguageKeys.EditTrainingSchedule);
+        public string DisplayLabelStrartTraining => LanguageUtils.Get(LanguageKeys.StartTraining);
+        public string DisplayLabelTrainingNewsListTitle => LanguageUtils.Get(LanguageKeys.TrainingNewsListTitle);
+        public string DisplayLabelTrainingReport => LanguageUtils.Get(LanguageKeys.ConfirmTrainingReport);
 
-        /// <summary>
-        ///     ニュース一覧を取得
-        /// </summary>
-        /// <returns></returns>
-        private async Task SetNewsSourceTask()
-        {
-            IsLoading = true;
-            var service = NewsServiceFactory.CreateNewsService();
-            var structures = await service.GetTrainingNewsData();
-            //structures.ForEach(data => Items.Add(data));
-            Items = new ObservableCollection<NewsStructure>(structures);
-            OnPropertyChanged(nameof(Items));
-            IsLoading = false;
-        }
+        #endregion Binding DisplayLabels
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Binding Commands
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Binding Commands
+
+        public ICommand CommandEditTraining { get; set; }
+        public ICommand CommandEditTrainingSchedule { get; set; }
+        public ICommand CommandNewsListItemTapped { get; set; }
+        public ICommand CommandStartTraining { get; set; }
+        public ICommand CommandTrainingReport { get; set; }
+
+        #endregion Binding Commands
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Command Actions
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Command Actions
 
         /// <summary>
         ///     トレーニング一覧画面遷移
         /// </summary>
-        private static void MoveToTrainingList()
+        private static void CommandEditTrainingAction()
         {
             var check = TrainingMasterService.GetTrainingMasterDataList();
 
@@ -167,7 +140,7 @@ namespace HealthManager.ViewModel
         /// <summary>
         ///     トレーニングスケジュール画面遷移
         /// </summary>
-        private static void MoveToTrainingSchedule()
+        private static void CommandEditTrainingScheduleAction()
         {
             var check = TrainingMasterService.GetTrainingMasterDataList();
 
@@ -181,7 +154,7 @@ namespace HealthManager.ViewModel
             ViewModelConst.TrainingPageNavigation.PushAsync(new TrainingScheduleListView());
         }
 
-        private static void MoveToTrainingReport()
+        private static void CommandTrainingReportAction()
         {
             var check = TrainingResultService.GeTrainingResultDataList();
 
@@ -195,7 +168,7 @@ namespace HealthManager.ViewModel
         /// <summary>
         ///     トレーニング画面遷移
         /// </summary>
-        private static void MoveToTraining()
+        private static void CommandStartTrainingAction()
         {
             var check = TrainingResultService.CheckExitTargetDayData(DateTime.Now);
 
@@ -206,7 +179,7 @@ namespace HealthManager.ViewModel
             }
             else
             {
-                var exits = TrainingScheduleService.GetTrainingSchedule((int) DateTime.Now.DayOfWeek);
+                var exits = TrainingScheduleService.GetTrainingSchedule((int)DateTime.Now.DayOfWeek);
 
                 if (exits == null)
                 {
@@ -217,7 +190,7 @@ namespace HealthManager.ViewModel
                 {
                     var training = JsonConvert
                         .DeserializeObject<TrainingScheduleStructure>(
-                            TrainingScheduleService.GetTrainingSchedule((int) DateTime.Now.DayOfWeek).TrainingMenu);
+                            TrainingScheduleService.GetTrainingSchedule((int)DateTime.Now.DayOfWeek).TrainingMenu);
 
                     if (training.Off)
                         Application.Current.MainPage.DisplayAlert(LanguageUtils.Get(LanguageKeys.Confirm),
@@ -227,5 +200,76 @@ namespace HealthManager.ViewModel
                 }
             }
         }
+
+        #endregion Command Actions
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Init Commands
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Init Commands
+
+        private void InitCommands()
+        {
+            CommandEditTrainingSchedule = new Command(CommandEditTrainingScheduleAction);
+            CommandStartTraining = new Command(CommandStartTrainingAction);
+            CommandEditTraining = new Command(CommandEditTrainingAction);
+            CommandTrainingReport = new Command(CommandTrainingReportAction);
+
+            CommandNewsListItemTapped = new Command<NewsStructure>(item =>
+            {
+                ViewModelConst.TrainingPageNavigation.PushAsync(new NewsWebView(item.NewsUrl,
+                    ViewModelConst.TrainingPageNavigation));
+            });
+        }
+
+        #endregion Init Commands
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // ViewModel Logic
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region ViewModel Logic
+
+        /// <summary>
+        ///     ニュース一覧を取得
+        /// </summary>
+        /// <returns></returns>
+        private async Task SetNewsSourceTask()
+        {
+            IsLoading = true;
+            var service = NewsServiceFactory.CreateNewsService();
+            var structures = await service.GetTrainingNewsData();
+            //structures.ForEach(data => RecivedRequest.Add(data));
+            Items = new ObservableCollection<NewsStructure>(structures);
+            IsLoading = false;
+        }
+
+        #endregion ViewModel Logic
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Init MessageSubscribe
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Init MessageSubscribe
+
+        //private void InitMessageSubscribe()
+        //{
+
+        //}
+
+        #endregion Init MessageSubscribe
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Default 
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Default
+
+        #endregion Default
+
+ 
+
+        
     }
 }

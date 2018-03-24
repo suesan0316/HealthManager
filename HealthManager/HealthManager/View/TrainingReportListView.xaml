@@ -16,10 +16,10 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
                 <ListView.Behaviors>
-                    <extention:ItemTappedBehavior Command="{Binding TrainingResultItemTappedCommand}" />
+                    <extention:ItemTappedBehavior Command="{Binding CommandTrainingResultItemTapped}" />
                 </ListView.Behaviors>
             </ListView>
-            <Button Text="{Binding BackPageLabel}" Command="{Binding BackPageCommand}" Style="{StaticResource ReturnButtonStyle}"></Button>
+            <Button Text="{Binding DisplayLabelReturn}" Command="{Binding CommandReturn}" Style="{StaticResource ReturnButtonStyle}"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

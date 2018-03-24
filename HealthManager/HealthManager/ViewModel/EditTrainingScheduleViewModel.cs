@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using HealthManager.Annotations;
 using HealthManager.Common;
 using HealthManager.Common.Constant;
 using HealthManager.Common.Enum;
@@ -14,6 +12,7 @@ using HealthManager.Model;
 using HealthManager.Model.Service;
 using HealthManager.Model.Structure;
 using Newtonsoft.Json;
+using PropertyChanged;
 using Xamarin.Forms;
 
 namespace HealthManager.ViewModel
@@ -21,22 +20,41 @@ namespace HealthManager.ViewModel
     /// <summary>
     ///     トレーニングスケジュール編集画面VM
     /// </summary>
-    public class EditTrainingScheduleViewModel : INotifyPropertyChanged
+    [AddINotifyPropertyChangedInterface]
+    public class EditTrainingScheduleViewModel
     {
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Class Variable
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Class Variable
+
+        #endregion Class Variable
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Instance Private Variables
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Instance Private Variables
+
         private readonly int _id;
-
         private readonly bool _isUpdate;
-
         private readonly int _week;
+
+        #endregion Instance Private Variables
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Constractor
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Constractor
 
         public EditTrainingScheduleViewModel(int week, StackLayout trainingStack)
         {
-            AddTrainingStackCommand = new Command(AddTrainingStack);
-            DeleteTrainingStackCommand = new Command(DeleteTrainingStack);
-            SaveTrainingScheduleCommand = new Command(async () => await SaveTrainingSchedule());
-            CancleCommand = new Command(CancelAction);
+            InitCommands();
             TrainingStack = trainingStack;
-            WeekLabel = ((WeekEnum) week).ToString();
+            WeekLabel = ((WeekEnum)week).ToString();
             _week = week;
 
             var target = TrainingScheduleService.GetTrainingSchedule(week);
@@ -51,56 +69,69 @@ namespace HealthManager.ViewModel
 
                 if (!Off)
                     foreach (var training in trainingScheduleStructure.TrainingContentList)
-                        AddTrainingStack(training);
+                        CommandAddTrainingAction(training);
                 else
-                    AddTrainingStack();
+                    CommandAddTrainingAction();
             }
             else
             {
-                AddTrainingStack();
+                CommandAddTrainingAction();
             }
         }
 
-        public string WeekLabel { get; set; }
-
+        #endregion Constractor
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Binding Variables
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Binding Variables
+       
         /// <summary>
         ///     エラーラベルをスタックするレイアウトのChildren
         /// </summary>
         public IList<Xamarin.Forms.View> ErrorStack { get; set; }
-
-        public string OffSwitchLabel => LanguageUtils.Get(LanguageKeys.Rest);
-
+        public bool IsLoading { get; set; }
         public bool Off { get; set; }
-
         public StackLayout TrainingStack { get; set; }
+        public string WeekLabel { get; set; }
 
-        public string AddTrainingButtonLabel => LanguageUtils.Get(LanguageKeys.AddTraining);
+        #endregion Binding Variables
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Binding DisplayLabels
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Binding DisplayLabels
 
-        public string DeleteTrainingButtonLabel => LanguageUtils.Get(LanguageKeys.DeleteTraining);
+        public string DisplayLabelOff => LanguageUtils.Get(LanguageKeys.Rest);
+        public string DisplayLabelAddTraining => LanguageUtils.Get(LanguageKeys.AddTraining);
+        public string DisplayLabelDeleteTraining => LanguageUtils.Get(LanguageKeys.DeleteTraining);
+        public string DisplayLabelSave => LanguageUtils.Get(LanguageKeys.Save);
+        public string DisplayLabelCancel => LanguageUtils.Get(LanguageKeys.Cancel);
 
-        public ICommand AddTrainingStackCommand { get; set; }
+        #endregion Binding DisplayLabels
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Binding Commands
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Binding Commands
 
-        public ICommand DeleteTrainingStackCommand { get; set; }
+        public ICommand CommandAddTraining { get; set; }
+        public ICommand CommandDeleteTraining { get; set; }
+        public ICommand CommandSave { get; set; }
+        public ICommand CommandCancel { get; set; }
 
-        public string SaveButtonLabel => LanguageUtils.Get(LanguageKeys.Save);
+        #endregion Binding Commands
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Command Actions
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Command Actions
 
-        public string CancelButtonLabel => LanguageUtils.Get(LanguageKeys.Cancel);
-
-        public ICommand SaveTrainingScheduleCommand { get; set; }
-
-        public ICommand CancleCommand { get; set; }
-
-        public bool isLoading { get; set; }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public void AddTrainingStack()
+        public void CommandAddTrainingAction()
         {
             var mainStack = new StackLayout();
             var trainingLabel = new Label
@@ -113,9 +144,9 @@ namespace HealthManager.ViewModel
             var trainingPicker = new Picker
             {
                 ItemsSource = TrainingMasterService.GetTrainingMasterDataList(),
-                ItemDisplayBinding = new Binding("TrainingName")
+                ItemDisplayBinding = new Binding("TrainingName"),
+                SelectedIndex = 0
             };
-            trainingPicker.SelectedIndex = 0;
             mainStack.Children.Add(trainingPicker);
 
             var trainingSetCountLabel = new Label
@@ -126,13 +157,13 @@ namespace HealthManager.ViewModel
             };
             mainStack.Children.Add(trainingSetCountLabel);
 
-            var trainingSetCountEntry = new Entry {Keyboard = Keyboard.Numeric};
+            var trainingSetCountEntry = new Entry { Keyboard = Keyboard.Numeric };
             mainStack.Children.Add(trainingSetCountEntry);
 
             var trainingLoadStack = new StackLayout();
 
             var defaultLoad =
-                JsonConvert.DeserializeObject<LoadStructure>(((TrainingMasterModel) trainingPicker.SelectedItem).Load);
+                JsonConvert.DeserializeObject<LoadStructure>(((TrainingMasterModel)trainingPicker.SelectedItem).Load);
             foreach (var load in defaultLoad.LoadList)
             {
                 var loadStack = new StackLayout();
@@ -143,8 +174,8 @@ namespace HealthManager.ViewModel
                     Margin = new Thickness(0, 0, 0, 0)
                 });
 
-                var subLoadStack = new StackLayout {Orientation = StackOrientation.Horizontal};
-                subLoadStack.Children.Add(new Entry {Keyboard = Keyboard.Numeric, WidthRequest = 145});
+                var subLoadStack = new StackLayout { Orientation = StackOrientation.Horizontal };
+                subLoadStack.Children.Add(new Entry { Keyboard = Keyboard.Numeric, WidthRequest = 145 });
                 subLoadStack.Children.Add(new Picker
                 {
                     ItemsSource = LoadUnitService.GetLoadUnitList(load.Id),
@@ -161,7 +192,7 @@ namespace HealthManager.ViewModel
             {
                 trainingLoadStack.Children.Clear();
                 var loadList =
-                    JsonConvert.DeserializeObject<LoadStructure>(((TrainingMasterModel) trainingPicker.SelectedItem)
+                    JsonConvert.DeserializeObject<LoadStructure>(((TrainingMasterModel)trainingPicker.SelectedItem)
                         .Load);
                 foreach (var load in loadList.LoadList)
                 {
@@ -173,8 +204,8 @@ namespace HealthManager.ViewModel
                         Margin = new Thickness(0, 0, 0, 0)
                     });
 
-                    var subLoadStack = new StackLayout {Orientation = StackOrientation.Horizontal};
-                    subLoadStack.Children.Add(new Entry {Keyboard = Keyboard.Numeric, WidthRequest = 145});
+                    var subLoadStack = new StackLayout { Orientation = StackOrientation.Horizontal };
+                    subLoadStack.Children.Add(new Entry { Keyboard = Keyboard.Numeric, WidthRequest = 145 });
                     subLoadStack.Children.Add(new Picker
                     {
                         ItemsSource = LoadUnitService.GetLoadUnitList(load.Id),
@@ -192,7 +223,7 @@ namespace HealthManager.ViewModel
             trainingPicker.SelectedIndex = 0;
         }
 
-        public void AddTrainingStack(TrainingListStructure training)
+        public void CommandAddTrainingAction(TrainingListStructure training)
         {
             var mainStack = new StackLayout();
             var trainingLabel = new Label
@@ -205,9 +236,9 @@ namespace HealthManager.ViewModel
             var trainingPicker = new Picker
             {
                 ItemsSource = TrainingMasterService.GetTrainingMasterDataList(),
-                ItemDisplayBinding = new Binding("TrainingName")
+                ItemDisplayBinding = new Binding("TrainingName"),
+                SelectedIndex = 0
             };
-            trainingPicker.SelectedIndex = 0;
             mainStack.Children.Add(trainingPicker);
 
             var trainingSetCountLabel = new Label
@@ -219,19 +250,18 @@ namespace HealthManager.ViewModel
             mainStack.Children.Add(trainingSetCountLabel);
 
             var trainingSetCountEntry =
-                new Entry {Text = training.TrainingSetCount.ToString(), Keyboard = Keyboard.Numeric};
+                new Entry { Text = training.TrainingSetCount.ToString(), Keyboard = Keyboard.Numeric };
             mainStack.Children.Add(trainingSetCountEntry);
 
             var trainingLoadStack = new StackLayout();
 
 
             trainingPicker.SelectedItem =
-                ((List<TrainingMasterModel>) trainingPicker.ItemsSource).First(data => data.Id == training.TrainingId);
+                ((List<TrainingMasterModel>)trainingPicker.ItemsSource).First(data => data.Id == training.TrainingId);
 
             foreach (var load in training.LoadContentList)
             {
                 var loadModdel = LoadService.GetLoad(load.LoadId);
-                var loadUnitModel = LoadUnitService.GetLoadUnit(load.LoadUnitId);
 
                 var loadStack = new StackLayout();
                 loadStack.Children.Add(new Label
@@ -241,7 +271,7 @@ namespace HealthManager.ViewModel
                     Margin = new Thickness(0, 0, 0, 0)
                 });
 
-                var subLoadStack = new StackLayout {Orientation = StackOrientation.Horizontal};
+                var subLoadStack = new StackLayout { Orientation = StackOrientation.Horizontal };
                 subLoadStack.Children.Add(new Entry
                 {
                     Text = load.Nums.ToString(),
@@ -256,7 +286,7 @@ namespace HealthManager.ViewModel
                     WidthRequest = 145
                 };
                 loadUnitPick.SelectedItem =
-                    ((List<LoadUnitModel>) loadUnitPick.ItemsSource).First(data => data.Id == load.LoadUnitId);
+                    ((List<LoadUnitModel>)loadUnitPick.ItemsSource).First(data => data.Id == load.LoadUnitId);
 
                 subLoadStack.Children.Add(loadUnitPick);
 
@@ -268,7 +298,7 @@ namespace HealthManager.ViewModel
             {
                 trainingLoadStack.Children.Clear();
                 var loadList =
-                    JsonConvert.DeserializeObject<LoadStructure>(((TrainingMasterModel) trainingPicker.SelectedItem)
+                    JsonConvert.DeserializeObject<LoadStructure>(((TrainingMasterModel)trainingPicker.SelectedItem)
                         .Load);
                 foreach (var load in loadList.LoadList)
                 {
@@ -280,8 +310,8 @@ namespace HealthManager.ViewModel
                         Margin = new Thickness(0, 0, 0, 0)
                     });
 
-                    var subLoadStack = new StackLayout {Orientation = StackOrientation.Horizontal};
-                    subLoadStack.Children.Add(new Entry {Keyboard = Keyboard.Numeric, WidthRequest = 145});
+                    var subLoadStack = new StackLayout { Orientation = StackOrientation.Horizontal };
+                    subLoadStack.Children.Add(new Entry { Keyboard = Keyboard.Numeric, WidthRequest = 145 });
                     subLoadStack.Children.Add(new Picker
                     {
                         ItemsSource = LoadUnitService.GetLoadUnitList(load.Id),
@@ -298,19 +328,19 @@ namespace HealthManager.ViewModel
             TrainingStack.Children.Add(mainStack);
         }
 
-        public void DeleteTrainingStack()
+        public void CommandDeleteTrainingAction()
         {
             if (TrainingStack.Children.Count != 1) TrainingStack.Children.RemoveAt(TrainingStack.Children.Count - 1);
         }
 
-        public void CancelAction()
+        public void CommandCancelAction()
         {
             // 遷移元画面をリロードする
             ViewModelCommonUtil.SendMessage(ViewModelConst.MessagingTrainingPrevPageReload);
             ViewModelConst.TrainingPageNavigation.PopAsync();
         }
 
-        private async Task SaveTrainingSchedule()
+        private async Task CommandSaveAction()
         {
             try
             {
@@ -320,7 +350,7 @@ namespace HealthManager.ViewModel
                     return;
                 }
 
-                isLoading = true;
+                IsLoading = true;
                 var trainingContentList = new List<TrainingListStructure>();
 
                 if (!Off)
@@ -331,20 +361,20 @@ namespace HealthManager.ViewModel
                     {
                         var insert = new TrainingListStructure();
                         var trainingId =
-                            ((TrainingMasterModel) ((Picker) ((StackLayout) training).Children[1]).SelectedItem).Id;
-                        var trainingseCount = ((Entry) ((StackLayout) training).Children[3]).Text;
+                            ((TrainingMasterModel)((Picker)((StackLayout)training).Children[1]).SelectedItem).Id;
+                        var trainingseCount = ((Entry)((StackLayout)training).Children[3]).Text;
 
                         var loadContentList = new List<LoadContentStructure>();
-                        var loadStack = ((StackLayout) ((StackLayout) training).Children[4]).Children;
+                        var loadStack = ((StackLayout)((StackLayout)training).Children[4]).Children;
                         foreach (var load in loadStack)
                         {
                             var insertload = new LoadContentStructure();
-                            var subLoad = ((StackLayout) load).Children[1];
-                            var loadId = ((LoadUnitModel) ((Picker) ((StackLayout) subLoad).Children[1]).SelectedItem)
+                            var subLoad = ((StackLayout)load).Children[1];
+                            var loadId = ((LoadUnitModel)((Picker)((StackLayout)subLoad).Children[1]).SelectedItem)
                                 .LoadId;
-                            var nums = ((Entry) ((StackLayout) subLoad).Children[0]).Text;
+                            var nums = ((Entry)((StackLayout)subLoad).Children[0]).Text;
                             var loadUnitId =
-                                ((LoadUnitModel) ((Picker) ((StackLayout) subLoad).Children[1]).SelectedItem).Id;
+                                ((LoadUnitModel)((Picker)((StackLayout)subLoad).Children[1]).SelectedItem).Id;
                             insertload.LoadId = loadId;
                             insertload.LoadUnitId = loadUnitId;
                             insertload.Nums = float.Parse(nums);
@@ -358,10 +388,13 @@ namespace HealthManager.ViewModel
                     }
                 }
 
-                var trainingScheduleStructure = new TrainingScheduleStructure();
-                trainingScheduleStructure.TrainingContentList = trainingContentList;
-                trainingScheduleStructure.Off = Off;
-                trainingScheduleStructure.Week = _week;
+                var trainingScheduleStructure =
+                    new TrainingScheduleStructure
+                    {
+                        TrainingContentList = trainingContentList,
+                        Off = Off,
+                        Week = _week
+                    };
 
                 var trainingScheduleStructureJson = JsonConvert.SerializeObject(trainingScheduleStructure);
 
@@ -372,7 +405,7 @@ namespace HealthManager.ViewModel
                     TrainingScheduleService.RegistTrainingSchedule(trainingScheduleStructureJson,
                         _week);
 
-                isLoading = false;
+                IsLoading = false;
 
                 await Application.Current.MainPage.DisplayAlert(LanguageUtils.Get(LanguageKeys.Complete),
                     LanguageUtils.Get(LanguageKeys.SaveComplete), LanguageUtils.Get(LanguageKeys.OK));
@@ -383,8 +416,33 @@ namespace HealthManager.ViewModel
             }
             catch (Exception e)
             {
+                Debug.WriteLine(e);
             }
         }
+
+        #endregion Command Actions
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Init Commands
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Init Commands
+
+        private void InitCommands()
+        {
+            CommandAddTraining = new Command(CommandAddTrainingAction);
+            CommandDeleteTraining = new Command(CommandDeleteTrainingAction);
+            CommandSave = new Command(async () => await CommandSaveAction());
+            CommandCancel = new Command(CommandCancelAction);
+        }
+
+        #endregion Init Commands
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // ViewModel Logic
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region ViewModel Logic
 
         private bool Validate()
         {
@@ -395,29 +453,29 @@ namespace HealthManager.ViewModel
             var trainingStack = TrainingStack.Children;
             foreach (var training in trainingStack)
             {
-                var trainingseCount = ((Entry) ((StackLayout) training).Children[3]).Text;
+                var trainingseCount = ((Entry)((StackLayout)training).Children[3]).Text;
                 if (StringUtils.IsEmpty(trainingseCount))
                 {
                     ErrorStack.Add(CreateErrorLabel(LanguageKeys.SetCount, LanguageKeys.NotInputRequireData));
                 }
                 else
                 {
-                    if (!int.TryParse(trainingseCount, out var result))
+                    if (!int.TryParse(trainingseCount, out var _))
                         ErrorStack.Add(CreateErrorLabel(LanguageKeys.SetCount, LanguageKeys.NotAvailableDataInput));
                 }
 
-                var loadStack = ((StackLayout) ((StackLayout) training).Children[4]).Children;
+                var loadStack = ((StackLayout)((StackLayout)training).Children[4]).Children;
                 foreach (var load in loadStack)
                 {
-                    var subLoad = ((StackLayout) load).Children[1];
-                    var nums = ((Entry) ((StackLayout) subLoad).Children[0]).Text;
+                    var subLoad = ((StackLayout)load).Children[1];
+                    var nums = ((Entry)((StackLayout)subLoad).Children[0]).Text;
                     if (StringUtils.IsEmpty(nums))
                     {
                         ErrorStack.Add(CreateErrorLabel(LanguageKeys.LoadNum, LanguageKeys.NotInputRequireData));
                     }
                     else
                     {
-                        if (!float.TryParse(nums, out var result))
+                        if (!float.TryParse(nums, out var _))
                             ErrorStack.Add(CreateErrorLabel(LanguageKeys.LoadNum, LanguageKeys.NotAvailableDataInput));
                     }
                 }
@@ -442,5 +500,28 @@ namespace HealthManager.ViewModel
                 TextColor = Color.Red
             };
         }
+
+        #endregion ViewModel Logic
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Init MessageSubscribe
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Init MessageSubscribe
+
+        //private void InitMessageSubscribe()
+        //{
+
+        //}
+
+        #endregion Init MessageSubscribe
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Default 
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Default
+
+        #endregion Default
     }
 }

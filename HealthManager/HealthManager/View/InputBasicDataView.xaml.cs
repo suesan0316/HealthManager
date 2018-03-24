@@ -1,6 +1,7 @@
-﻿using HealthManager.Common;
-using HealthManager.Common.Constant;
+﻿using System;
+using CommonServiceLocator;
 using HealthManager.ViewModel;
+using Microsoft.AppCenter.Crashes;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,15 +12,19 @@ namespace HealthManager.View
     {
         public InputBasicDataView()
         {
-            InitializeComponent();
-            MessagingCenter.Subscribe<ViewModelCommonUtil>(this, ViewModelConst.MessagingSelfScroll,
-                (sender) => { ControlScroll.ScrollToAsync(ControlScroll, ScrollToPosition.Start, false); });
+            try
+            {
+                InitializeComponent();
+                //BindingContext = BindingContext = ServiceLocator.Current.GetInstance(typeof(InputBasicDataViewModel));
+            }
+            catch (Exception e)
+            {
+                Crashes.TrackError(e);
+            }
             if (Navigation != null)
             {
                 NavigationPage.SetHasNavigationBar(this, false);
             }
-            var vm = new InputBasicDataViewModel {ErrorStack = ErrorStack.Children};
-            BindingContext = vm;
         }
     }
 }

@@ -1,141 +1,122 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using HealthManager.Annotations;
 using HealthManager.Common;
 using HealthManager.Common.Constant;
 using HealthManager.Common.Enum;
 using HealthManager.Common.Language;
-using HealthManager.Model.Service;
-using HealthManager.Model.Structure;
 using HealthManager.View;
 using HealthManager.ViewModel.Structure;
-using Newtonsoft.Json;
+using PropertyChanged;
 using Xamarin.Forms;
 
 namespace HealthManager.ViewModel
 {
     /// <summary>
-    ///     トレーニングスケジュール一覧画面VMクラス
+    ///  トレーニングスケジュール一覧画面VMクラス
     /// </summary>
-    public class TrainingScheduleListViewModel : INotifyPropertyChanged
+    [AddINotifyPropertyChangedInterface]
+    public class TrainingScheduleListViewModel
     {
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Class Variable
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Class Variable
+
+        #endregion Class Variable
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Instance Private Variables
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Instance Private Variables
+
         private List<WeekEnum> _weekList;
 
+        #endregion Instance Private Variables
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Constractor
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Constractor
+
         public TrainingScheduleListViewModel()
-        {
-            // 遷移先画面から戻ってきた際に情報をリロードする
-            MessagingCenter.Subscribe<ViewModelCommonUtil>(this, ViewModelConst.MessagingTrainingPrevPageReload,
-                (sender) => { ReloadList(); });
-
-            BackPageCommand = new Command(ViewModelCommonUtil.TrainingBackPage);
-            TrainingScheduleListItemTappedCommand = new Command<TrainingScheduleSViewtructure>(item =>
-            {
-                ViewModelConst.TrainingPageNavigation.PushAsync(new EditTrainingScheduleView(item.Week));
-            });
-
-            _weekList = new List<WeekEnum>();
-            foreach (var week in Enum.GetValues(typeof(WeekEnum)))
-            {
-                _weekList.Add((WeekEnum) week);
-               Items.Add(ViewModelCommonUtil.CreateTrainingScheduleSViewtructure((WeekEnum)week));
-               // CreateTrainingScheduleListItem((WeekEnum) week);
-            }
+        {           
+            InitMessageSubscribe();
+            InitCommands();
+            LoadList();
         }
+
+        #endregion Constractor
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Binding Variables
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Binding Variables
 
         public ObservableCollection<TrainingScheduleSViewtructure> Items { protected set; get; } =
             new ObservableCollection<TrainingScheduleSViewtructure>();
 
-        /// <summary>
-        ///     戻るボタンコマンド
-        /// </summary>
-        public ICommand BackPageCommand { get; set; }
+        #endregion Binding Variables
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Binding DisplayLabels
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Binding DisplayLabels
 
-        public ICommand TrainingScheduleListItemTappedCommand { get; set; }
+        public string DisplayLabelReturn => LanguageUtils.Get(LanguageKeys.Return);
 
-        /// <summary>
-        ///     戻るボタンラベル
-        /// </summary>
-        public string BackPageLabel => LanguageUtils.Get(LanguageKeys.Return);
+        #endregion Binding DisplayLabels
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Binding Commands
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Binding Commands
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public ICommand CommandReturn { get; set; }
+        public ICommand CommandTrainingScheduleListItemTapped { get; set; }
 
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        #endregion Binding Commands
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Command Actions
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Command Actions
+
+        #endregion Command Actions
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Init Commands
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Init Commands
+
+        private void InitCommands()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            CommandReturn = new Command(ViewModelCommonUtil.TrainingBackPage);
+            CommandTrainingScheduleListItemTapped = new Command<TrainingScheduleSViewtructure>(item =>
+            {
+                ViewModelConst.TrainingPageNavigation.PushAsync(new EditTrainingScheduleView(item.Week));
+            });
         }
 
+        #endregion Init Commands
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // ViewModel Logic
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region ViewModel Logic
 
-        // TODO 後で消す
-        private void CreateTrainingScheduleListItem(WeekEnum week)
-        {
-
-            var model = TrainingScheduleService.GetTrainingSchedule((int) week);
-
-            if (model == null)
-            {
-                var empty = new TrainingScheduleSViewtructure
-                {
-                    Week = (int)week,
-                    WeekName = week.ToString(),
-                    Off = false
-                };
-                Items.Add(empty);
-                return;
-            }
-
-            var trainingScheduleStructure =
-                JsonConvert.DeserializeObject<TrainingScheduleStructure>(model.TrainingMenu);
-
-            var trainingScheduleViewStructure = new TrainingScheduleSViewtructure
-            {
-                Week = (int) week,
-                WeekName = week.ToString(),
-                Off = trainingScheduleStructure.Off
-            };
-
-            var trainingListViewStructureList = new List<TrainingListViewStructure>();
-
-            int count = 1;
-            foreach (var training in trainingScheduleStructure.TrainingContentList)
-            {
-                var trainingListViewStructure = new TrainingListViewStructure
-                {
-                    TrainingId = training.TrainingId,
-                    TrainingNo = count,
-                    TrainingName = TrainingMasterService.GetTrainingMasterData(training.TrainingId).TrainingName,
-                    TrainingSetCount = training.TrainingSetCount
-                };
-                var loadContentViewStructureList = new List<LoadContentViewStructure>();
-
-                foreach (var load in training.LoadContentList)
-                {
-                    var loadContentViewStructure = new LoadContentViewStructure
-                    {
-                        LoadId = load.LoadId,
-                        LoadName = LoadService.GetLoad(load.LoadId).LoadName,
-                        Nums =load.Nums.ToString(),
-                        LoadUnitId = load.LoadUnitId,
-                        LoadUnitName = LoadUnitService.GetLoadUnit(load.LoadUnitId).UnitName
-                    };
-                    loadContentViewStructureList.Add(loadContentViewStructure);
-                }
-
-                trainingListViewStructure.LoadContentList = loadContentViewStructureList;
-
-                trainingListViewStructureList.Add(trainingListViewStructure);
-                count++;
-            }
-
-            trainingScheduleViewStructure.TrainingContentList = trainingListViewStructureList;
-
-            Items.Add(trainingScheduleViewStructure);
-        }
-        public void ReloadList()
+        public void LoadList()
         {
             Items.Clear();
             _weekList = new List<WeekEnum>();
@@ -143,8 +124,32 @@ namespace HealthManager.ViewModel
             {
                 _weekList.Add((WeekEnum)week);
                 Items.Add(ViewModelCommonUtil.CreateTrainingScheduleSViewtructure((WeekEnum)week));
-                // CreateTrainingScheduleListItem((WeekEnum) week);
             }
         }
+
+        #endregion ViewModel Logic
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Init MessageSubscribe
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Init MessageSubscribe
+
+        private void InitMessageSubscribe()
+        {
+            // 遷移先画面から戻ってきた際に情報をリロードする
+            MessagingCenter.Subscribe<ViewModelCommonUtil>(this, ViewModelConst.MessagingTrainingPrevPageReload,
+                (sender) => { LoadList(); });
+        }
+
+        #endregion Init MessageSubscribe
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Default 
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        #region Default
+
+        #endregion Default       
     }
 }

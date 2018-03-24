@@ -1,8 +1,5 @@
 ﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using HealthManager.Annotations;
 using HealthManager.Common;
 using HealthManager.Common.Constant;
 using HealthManager.Common.Extention;
@@ -10,77 +7,96 @@ using HealthManager.Common.Language;
 using HealthManager.Model;
 using HealthManager.Model.Service;
 using HealthManager.View;
+using PropertyChanged;
 using Xamarin.Forms;
 
 namespace HealthManager.ViewModel
 {
     /// <summary>
-    /// トレーニング一覧画面VMクラス
+    ///     トレーニング一覧画面VMクラス
     /// </summary>
-    public class TrainingListViewModel : INotifyPropertyChanged
+    [AddINotifyPropertyChangedInterface]
+    public class TrainingListViewModel
     {
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Constractor
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+
+        #region Constractor
+
         public TrainingListViewModel()
         {
-            // 遷移先画面から戻ってきた際に情報をリロードする
-            MessagingCenter.Subscribe<ViewModelCommonUtil>(this, ViewModelConst.MessagingTrainingPrevPageReload,
-                (sender) => { ReloadList(); });
-
-            BackPageCommand = new Command(ViewModelCommonUtil.TrainingBackPage);
-            TrainingAddCommand = new Command(MoveToTrainingMaster);
-            TrainingMasterItemTappedCommand = new Command<TrainingMasterModel>(item =>
-            {
-                ViewModelConst.TrainingPageNavigation.PushAsync(new TrainingMasterView(item.Id));
-            });
+            InitMessageSubscribe();
+            InitCommands();
             var items = TrainingMasterService.GetTrainingMasterDataList();
             items?.ForEach(data => Items.Add(data));
         }
 
-        /// <summary>
-        /// トレーニングリストアイテムソース
-        /// </summary>
-        public ObservableCollection<TrainingMasterModel> Items { protected set; get; } = new ObservableCollection<TrainingMasterModel>();
+        #endregion Constractor
+
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Binding Variables
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+
+        #region Binding Variables
 
         /// <summary>
-        /// 戻るボタンコマンド
+        ///     トレーニングリストアイテムソース
         /// </summary>
-        public ICommand BackPageCommand { get; set; }
+        public ObservableCollection<TrainingMasterModel> Items { protected set; get; } =
+            new ObservableCollection<TrainingMasterModel>();
 
-        /// <summary>
-        /// トレーニングを追加するコマンド
-        /// </summary>
-        public ICommand TrainingAddCommand { get; set; }
+        #endregion Binding Variables
 
-        /// <summary>
-        /// トレーニングリストタップコマンド
-        /// </summary>
-        public ICommand TrainingMasterItemTappedCommand { get; set; }
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Command Actions
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        /// <summary>
-        /// トレーニングを追加するボタンラベル
-        /// </summary>
-        public string TrainingAddLabel => LanguageUtils.Get(LanguageKeys.AddTraining);
-
-        /// <summary>
-        /// 戻るボタンラベル
-        /// </summary>
-        public string BackPageLabel => LanguageUtils.Get(LanguageKeys.Return);
+        #region Command Actions
 
         /// <summary>
         ///     トレーニングマスター画面遷移
         /// </summary>
-        private static void MoveToTrainingMaster()
+        private static void CommandTrainingAddAction()
         {
             ViewModelConst.TrainingPageNavigation.PushAsync(new TrainingMasterView());
-//            ((App)Application.Current).ChangeScreen(new TrainingMasterView());
         }
+
+        #endregion Command Actions
+
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Init Commands
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+
+        #region Init Commands
+
+        private void InitCommands()
+        {
+            CommandReturn = new Command(ViewModelCommonUtil.TrainingBackPage);
+            CommandTrainingAdd = new Command(CommandTrainingAddAction);
+            CommandTrainingMasterItemTapped = new Command<TrainingMasterModel>(item =>
+            {
+                ViewModelConst.TrainingPageNavigation.PushAsync(new TrainingMasterView(item.Id));
+            });
+        }
+
+        #endregion Init Commands
+
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // ViewModel Logic
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+
+        #region ViewModel Logic
 
         public void ReloadList()
         {
@@ -88,5 +104,91 @@ namespace HealthManager.ViewModel
             var items = TrainingMasterService.GetTrainingMasterDataList();
             items?.ForEach(data => Items.Add(data));
         }
+
+        #endregion ViewModel Logic
+
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Init MessageSubscribe
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+
+        #region Init MessageSubscribe
+
+        private void InitMessageSubscribe()
+        {
+            MessagingCenter.Subscribe<ViewModelCommonUtil>(this, ViewModelConst.MessagingTrainingPrevPageReload,
+                sender => { ReloadList(); });
+        }
+
+        #endregion Init MessageSubscribe
+
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Class Variable
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+
+        #region Class Variable
+
+        #endregion Class Variable
+
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Instance Private Variables
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+
+        #region Instance Private Variables
+
+        #endregion Instance Private Variables
+
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Binding DisplayLabels
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+
+        #region Binding DisplayLabels
+
+        public string DisplayLabelReturn => LanguageUtils.Get(LanguageKeys.Return);
+        public string DisplayLabelTrainingAdd => LanguageUtils.Get(LanguageKeys.AddTraining);
+
+        #endregion Binding DisplayLabels
+
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Binding Commands
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+
+        #region Binding Commands
+
+        /// <summary>
+        ///     戻るボタンコマンド
+        /// </summary>
+        public ICommand CommandReturn { get; set; }
+
+        /// <summary>
+        ///     トレーニングを追加するコマンド
+        /// </summary>
+        public ICommand CommandTrainingAdd { get; set; }
+
+        /// <summary>
+        ///     トレーニングリストタップコマンド
+        /// </summary>
+        public ICommand CommandTrainingMasterItemTapped { get; set; }
+
+        #endregion Binding Commands
+
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+        //
+        // Default 
+        //
+        /*----------------------------------------------------------------------------------------------------------------------------------------*/
+
+        #region Default
+
+        #endregion Default
     }
 }

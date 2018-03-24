@@ -21,41 +21,41 @@
                     <ScrollView HeightRequest="200">
                         <StackLayout Orientation="Vertical">
                             <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding NameLabel}" />
+                                <Label Text="{Binding DisplayLabelName}" />
                                 <Label Text="{Binding Name}" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding GenderLabel}" />
+                                <Label Text="{Binding DisplayLabelGender}" />
                                 <Label Text="{Binding Gender}" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding AgeLabel}" />
+                                <Label Text="{Binding DisplayLabelAge}" />
                                 <Label Text="{Binding Age}" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding HeightLabel}" />
+                                <Label Text="{Binding DisplayLabelHeight}" />
                                 <Label Text="{Binding Height}" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding BodyWeightLabel}" />
+                                <Label Text="{Binding DisplayLabelBodyWeight}" />
                                 <Label Text="{Binding BodyWeight}" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding BmiLabel}" />
+                                <Label Text="{Binding DisplayLabelBmi}" />
                                 <Label Text="{Binding Bmi}" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding BodyFatPercentageLabel}" />
+                                <Label Text="{Binding DisplayLabelBodyFatPercentage}" />
                                 <Label Text="{Binding BodyFatPercentage}" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding BloodPressureLabel} " />
+                                <Label Text="{Binding DisplayLabelBloodPressure} " />
                                 <Label Text="{Binding MaxBloodPressure} " />
                                 <Label Text="/" VerticalOptions="End" />
                                 <Label Text="{Binding MinBloodPressure}" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding BasalMetabolismLabel}" />
+                                <Label Text="{Binding DisplayLabelBasalMetabolism}" />
                                 <Label Text="{Binding BasalMetabolism}" />
                             </StackLayout>
                         </StackLayout>
@@ -64,27 +64,27 @@
                 
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,30,0,0">
                     <StackLayout Orientation="Vertical" Margin="0, 0, 40, 0">
-                        <Button Command="{Binding MoveToRegistBasicDataCommand}"
+                        <Button Command="{Binding CommandBasicData}"
                                               Image="{Binding MoveTioRegistBasicDataImageSource}"  
                                               Style="{StaticResource HomeImageButtonStyle}" />
-                        <Label Text="{Binding MoveToRegistBasicDataLabel}" HorizontalOptions="Center" />
+                        <Label Text="{Binding DisplayLabelBasicData}" HorizontalOptions="Center" />
                     </StackLayout>
                     <StackLayout Orientation="Vertical">
-                        <Button Command="{Binding MoveToDataChartCommand}"
+                        <Button Command="{Binding CommandDataChart}"
                                               Style="{StaticResource HomeImageButtonStyle}" Image="chart.png" />
-                        <Label Text="{Binding MoveToDataChartLabel}" HorizontalOptions="Center" />
+                        <Label Text="{Binding DisplayLabelDataChart}" HorizontalOptions="Center" />
                     </StackLayout>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,30,0,0">
                     <StackLayout Orientation="Vertical" Margin="0, 0, 40, 0">
-                        <Button Command="{Binding MoveToBodyImageListCommand}"
+                        <Button Command="{Binding CommandBodyImageList}"
                                 Image="bodyImage.png" Style="{StaticResource HomeImageButtonStyle}" />
-                        <Label Text="{Binding MoveToBodyImageListLabel}" HorizontalOptions="Center" />
+                        <Label Text="{Binding DisplayLabelBodyImageList}" HorizontalOptions="Center" />
                     </StackLayout>
                     <StackLayout Orientation="Vertical">
-                        <Button Command="{Binding MoveToRegistBodyImageCommand}"
+                        <Button Command="{Binding CommandBodyImage}"
                                 Image="camera.png" Style="{StaticResource HomeImageButtonStyle}" />
-                        <Label Text="{Binding MoveToRegistBodyImageLabel}" HorizontalOptions="Center" />
+                        <Label Text="{Binding DisplayLabelBodyImage}" HorizontalOptions="Center" />
                     </StackLayout>
                 </StackLayout>
             </StackLayout>
@@ -92,7 +92,7 @@
         <StackLayout Margin="20,20,20,20">
             <StackLayout BackgroundColor="LavenderBlush" ef:Border.Width="2" ef:Border.Radius="6"
                          ef:Border.Color="Black">
-                <Label Text="{Binding NewsListTitleLabel}" HorizontalOptions="Center" Margin="0,0,0,0" />
+                <Label Text="{Binding DisplayLabelNewsListTitle}" HorizontalOptions="Center" Margin="0,0,0,0" />
             </StackLayout>
             <ActivityIndicator IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" />
             <ListView ItemsSource="{Binding Items}" VerticalOptions="FillAndExpand" Margin="15" HeightRequest="150">
@@ -106,7 +106,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
                 <ListView.Behaviors>
-                    <extention:ItemTappedBehavior Command="{Binding NewsListItemTappedCommand}" />
+                    <extention:ItemTappedBehavior Command="{Binding CommandNewsListItemTapped}" />
                 </ListView.Behaviors>
             </ListView>
         </StackLayout>

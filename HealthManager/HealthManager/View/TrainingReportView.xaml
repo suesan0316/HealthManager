@@ -1,18 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:extention="clr-namespace:HealthManager.Common.Extention;assembly=HealthManager"
              xmlns:viewCell="clr-namespace:HealthManager.View.ViewCell;assembly=HealthManager"
              x:Class="HealthManager.View.TrainingReportView">
     <ContentPage.Content>
         <StackLayout Margin="30">
-            <Label Text="{Binding TrainingStartLabel}" Style="{StaticResource ColumnLabelStyle}" />
+            <Label Text="{Binding DisplayLabelTrainingStart}" Style="{StaticResource ColumnLabelStyle}" />
             <Label Text="{Binding TrainingStart}"/>
-            <Label Text="{Binding TrainingEndLabel}" Style="{StaticResource ColumnLabelStyle}" />
+            <Label Text="{Binding DisplayLabelTrainingEnd}" Style="{StaticResource ColumnLabelStyle}" />
             <Label Text="{Binding TrainingEnd}"/>
-            <Label Text="{Binding TrainingTimeLabel}" Style="{StaticResource ColumnLabelStyle}" />
+            <Label Text="{Binding DisplayLabelTrainingTime}" Style="{StaticResource ColumnLabelStyle}" />
             <Label Text="{Binding TrainingTimel}"/>
-            <Label Text="{Binding TrainingMenuLabel}" Style="{StaticResource ColumnLabelStyle}" />
+            <Label Text="{Binding DisplayLabelTrainingMenu}" Style="{StaticResource ColumnLabelStyle}" />
             <ListView ItemsSource="{Binding Items}"  VerticalOptions="FillAndExpand"  HasUnevenRows="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -20,7 +19,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Button Text="{Binding BackPageLabel}" Command="{Binding BackPageCommand}" Style="{StaticResource ReturnButtonStyle}"></Button>
+            <Button Text="{Binding DisplayLabelReturn}" Command="{Binding CommandReturn}" Style="{StaticResource ReturnButtonStyle}"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

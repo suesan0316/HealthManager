@@ -3,7 +3,6 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:HealthManager.ViewModel"
-             xmlns:controls="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms"
              xmlns:ef="clr-namespace:AiForms.Effects;assembly=AiForms.Effects"
              xmlns:extention="clr-namespace:HealthManager.Common.Extention;assembly=HealthManager"
              x:Class="HealthManager.View.TrainingHomeView">
@@ -16,30 +15,30 @@
                 <StackLayout Margin="30">
                     <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,30,0,0">
                         <StackLayout Orientation="Vertical" Margin="0, 0, 40, 0">
-                            <Button Command="{Binding EditTrainingCommand}"
+                            <Button Command="{Binding CommandEditTraining}"
                                     Image="training.png"
                                                   Style="{StaticResource HomeImageButtonStyle}" />
-                            <Label Text="{Binding EditTrainingLabel}" HorizontalOptions="Center" />
+                            <Label Text="{Binding DisplayLabelEditTraining}" HorizontalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Vertical">
-                            <Button Command="{Binding EditTrainingScheduleCommand}"
+                            <Button Command="{Binding CommandEditTrainingSchedule}"
                                                   Style="{StaticResource HomeImageButtonStyle}"
                                     Image="schedule.png"/>
-                            <Label Text="{Binding EditTrainingScheduleLabel}" HorizontalOptions="Center" />
+                            <Label Text="{Binding DisplayLabelEditTrainingSchedule}" HorizontalOptions="Center" />
                         </StackLayout>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal" Margin="0,30,0,0">
                         <StackLayout Orientation="Vertical" Margin="0, 0, 40, 0">
-                            <Button Command="{Binding StartTrainingCommand}"
+                            <Button Command="{Binding CommandStartTraining}"
                                     Image="training_start.png"
                                                   Style="{StaticResource HomeImageButtonStyle}" />
-                            <Label Text="{Binding StrartTrainingLabel}" HorizontalOptions="Center" />
+                            <Label Text="{Binding DisplayLabelStrartTraining}" HorizontalOptions="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Vertical">
-                            <Button Command="{Binding TrainingReportCommand}"
+                            <Button Command="{Binding CommandTrainingReport}"
                                     Style="{StaticResource HomeImageButtonStyle}"
                                     Image="report.png"/>
-                            <Label Text="{Binding TrainingReportLabel}" HorizontalOptions="Center" />
+                            <Label Text="{Binding DisplayLabelTrainingReport}" HorizontalOptions="Center" />
                         </StackLayout>
                     </StackLayout>
                 </StackLayout>
@@ -47,7 +46,7 @@
             <StackLayout Margin="20,20,20,20">
                 <StackLayout BackgroundColor="LavenderBlush" ef:Border.Width="2" ef:Border.Radius="6"
                              ef:Border.Color="Black">
-                    <Label Text="{Binding TrainingNewsListTitleLabel}" HorizontalOptions="Center" Margin="0,0,0,0" />
+                    <Label Text="{Binding DisplayLabelTrainingNewsListTitle}" HorizontalOptions="Center" Margin="0,0,0,0" />
                 </StackLayout>
                 <ActivityIndicator IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" />
                 <ListView ItemsSource="{Binding Items}" VerticalOptions="FillAndExpand" Margin="15" HeightRequest="150" HasUnevenRows="True">
@@ -61,7 +60,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                     <ListView.Behaviors>
-                        <extention:ItemTappedBehavior Command="{Binding NewsListItemTappedCommand}" />
+                        <extention:ItemTappedBehavior Command="{Binding CommandNewsListItemTapped}" />
                     </ListView.Behaviors>
                 </ListView>
             </StackLayout>

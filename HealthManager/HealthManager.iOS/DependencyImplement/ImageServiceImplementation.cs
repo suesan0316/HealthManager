@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using CoreGraphics;
 using HealthManager.DependencyInterface;
 using HealthManager.iOS.DependencyImplement;
@@ -37,8 +38,12 @@ namespace HealthManager.iOS.DependencyImplement
             }
         }
 
+        public void DeleteImageFile(string filePath)
+        {
+            File.Delete(filePath);
+        }
 
-       /* public byte[] ResizeImage(byte[] imageData, float width, float height)
+        /* public byte[] ResizeImage(byte[] imageData, float width, float height)
         {
             var originalImage = ImageFromByteArray(imageData);
             var orientation = originalImage.Orientation;

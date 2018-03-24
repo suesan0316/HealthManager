@@ -3,13 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:HealthManager.ViewModel"
              x:Class="HealthManager.View.NewsWebView">
-    <ContentPage.BindingContext>
-        <vm:NewsWebViewModel />
-    </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout Margin="30">
             <WebView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"  x:Name="WebView"></WebView>
-            <Button Text="{Binding BackHomeLabel}" Command="{Binding BackHomeCommand}" Style="{StaticResource ReturnButtonStyle}"></Button>
+            <Button Text="{Binding DisplayLabelReturn}" Command="{Binding CommandReturn}" Style="{StaticResource ReturnButtonStyle}"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

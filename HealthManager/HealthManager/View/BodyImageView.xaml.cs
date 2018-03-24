@@ -1,5 +1,4 @@
-﻿using HealthManager.Common.Constant;
-using HealthManager.ViewModel;
+﻿using HealthManager.ViewModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,8 +10,8 @@ namespace HealthManager.View
         public BodyImageView()
         {
             InitializeComponent();
-            BindingContext = new BodyImageViewModel(ImageStack.Children);
             NavigationPage.SetHasNavigationBar(this, false);
+            BindingContext = new BodyImageViewModel(ImageStack.Children);
         }
     }
 }
