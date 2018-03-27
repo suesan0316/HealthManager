@@ -6,7 +6,7 @@
     <ContentPage.Content>
         <StackLayout>
             <ScrollView>
-                <StackLayout Margin="30">
+                <StackLayout Style="{StaticResource BaseStackLayoutStyle}" >
                     <ScrollView Orientation="Horizontal">
                         <StackLayout x:Name="ImageStack"  Orientation="Horizontal"
                                                        VerticalOptions="FillAndExpand" />

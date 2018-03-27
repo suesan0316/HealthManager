@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace HealthManager.Model.Service.Interface
 {
-    internal interface IBodyImageService
+    public interface IBodyImageService
     {
         bool RegistBodyImage(string base64String);
 

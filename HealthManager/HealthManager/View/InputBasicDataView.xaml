@@ -9,7 +9,7 @@
              BindingContext="{Binding InputBasicDataViewModel, Source={StaticResource Locator}}">
     <ContentPage.Content>
         <extention:ReciveRequestScrollView RecivedRequest="{Binding ScrollRequest}">
-            <StackLayout Margin="30">
+            <StackLayout Style="{StaticResource BaseStackLayoutStyle}">
                 <extention:BindableStackLayout Items="{Binding ErrorStack}" />
                 <Label Text="{Binding DisplayLabelName}" Style="{StaticResource ColumnLabelStyle}" />
                 <Entry Placeholder="{Binding DisplayLabelNamePlaceholder}" Text="{Binding Name}"
@@ -91,7 +91,6 @@
                 <Button IsEnabled="{Binding IsDisable}" Text="{Binding DisplayLabelSave}"
                         Command="{Binding CommandSave}" Style="{StaticResource NormalButtonStyle}" />
                 <Button Text="{Binding DisplayLabelCancel}" Command="{Binding CommandCancel}"
-                        IsVisible="{Binding CancelButtonIsVisible}"
                         Style="{StaticResource ReturnButtonStyle}" />
             </StackLayout>
         </extention:ReciveRequestScrollView>

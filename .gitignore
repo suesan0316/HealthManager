@@ -259,3 +259,7 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/HealthManager/HealthManager/ViewModel/VMClass1.cs
+/HealthManager/HealthManager/ViewModel/VMClass2.cs
+/HealthManager/HealthManager/ViewModel/i.txt
+/HealthManager/HealthManager/Model/Service/Interface/i.txt

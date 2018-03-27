@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using HealthManager.Common.Constant;
+using HealthManager.Model.Service.Interface;
 using SQLite;
 
 namespace HealthManager.Model.Service.Implement
 {
-    public class TrainingResultService
+    public class TrainingResultService : ITrainingResultService
     {
         public bool RegistTrainingResult(string trainingContent, string weather, DateTime targetDate,
             DateTime startDate, DateTime endDate)

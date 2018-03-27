@@ -3,14 +3,11 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:HealthManager.ViewModel"
-             xmlns:controls="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms"
-             x:Class="HealthManager.View.RegistBodyImageView">
-    <ContentPage.BindingContext>
-        <vm:RegistBodyImageViewModel />
-    </ContentPage.BindingContext>
+             x:Class="HealthManager.View.RegistBodyImageView"
+             BindingContext="{Binding RegistBodyImageViewModel, Source={StaticResource Locator}}">
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout Margin="30">
+            <StackLayout Style="{StaticResource BaseStackLayoutStyle}">
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,30,0,0">
                     <StackLayout Orientation="Vertical" Margin="0, 0, 40, 0">
                         <Button Command="{Binding CommandTakeCamera}"

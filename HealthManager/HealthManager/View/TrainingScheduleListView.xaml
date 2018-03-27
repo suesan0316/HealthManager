@@ -9,7 +9,7 @@
         <viewModel:TrainingScheduleListViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
-        <StackLayout Margin="30">
+        <StackLayout Style="{StaticResource BaseStackLayoutStyle}">
             <ListView ItemsSource="{Binding Items}"  Margin="15" HasUnevenRows="True"> 
                 <ListView.ItemTemplate>
                     <DataTemplate>

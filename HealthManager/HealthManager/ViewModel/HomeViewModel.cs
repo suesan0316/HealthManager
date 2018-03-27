@@ -80,8 +80,7 @@ namespace HealthManager.ViewModel
             {
                 try
                 {
-                    var tmp = BodyWeight / Math.Pow(Height / 100f, 2);
-                    return CommonUtil.GetDecimalFormatString(double.IsNaN(tmp) ? 0 : tmp);
+                    return ViewModelCommonUtil.GetBmiValueString(height:Height, bodyWeight:BodyWeight);
                 }
                 catch (Exception)
                 {
@@ -93,6 +92,10 @@ namespace HealthManager.ViewModel
         public int MaxBloodPressure { get; set; }
         public int MinBloodPressure { get; set; }
         public int BasalMetabolism { get; set; }
+
+        // 基本情報の登録が1件もない場合は値を表示しない
+        public bool IsVisibleBasicDataValues { get; set; }
+
         public string MoveTioRegistBasicDataImageSource { get; set; }
         public bool IsLoading { get; set; }
 
@@ -160,9 +163,20 @@ namespace HealthManager.ViewModel
         /// <summary>
         ///  データチャート画面遷移
         /// </summary>
-        public void CommandDataChartAction()
+        public async  Task CommandDataChartAction()
         {
-            ViewModelConst.DataPageNavigation.PushAsync(new DataSelectView());
+            var check = BasicDataService.GetBasicData();
+            if (check != null)
+            {
+                await ViewModelConst.DataPageNavigation.PushAsync(new DataSelectView());
+            }
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert(LanguageUtils.Get(LanguageKeys.Confirm),
+                    LanguageUtils.Get(LanguageKeys.NotExistBasicData), LanguageUtils.Get(LanguageKeys.OK));
+
+                await ViewModelConst.DataPageNavigation.PushAsync(new InputBasicDataView());
+            }
         }
 
         /// <summary>
@@ -196,7 +210,7 @@ namespace HealthManager.ViewModel
         {
             CommandBodyImage = new Command(CommandBodyImageAction);
             CommandBasicData = new Command(CommandBasicDataAction);
-            CommandDataChart = new Command(CommandDataChartAction);
+            CommandDataChart = new Command(async() => await CommandDataChartAction());
             CommandBodyImageList = new Command(async () => await CommandBodyImageListAction());
             CommandNewsListItemTapped = new Command<NewsStructure>(item =>
             {
@@ -256,6 +270,13 @@ namespace HealthManager.ViewModel
                         MoveTioRegistBasicDataImageSource = ViewModelConst.PersonImage;
                         break;
                 }
+
+                IsVisibleBasicDataValues = true;
+            }
+            else
+            {
+                MoveTioRegistBasicDataImageSource = ViewModelConst.PersonImage;
+                IsVisibleBasicDataValues = false;
             }
         }
 

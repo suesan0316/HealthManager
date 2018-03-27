@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace HealthManager.Model.Service.Interface
 {
-    internal interface ITrainingResultService
+    public interface ITrainingResultService
     {
         bool RegistTrainingResult(string trainingContent, string weather, DateTime targetDate, DateTime startDate,
             DateTime endDate);

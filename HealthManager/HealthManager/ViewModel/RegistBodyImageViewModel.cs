@@ -6,7 +6,7 @@ using HealthManager.Common;
 using HealthManager.Common.Constant;
 using HealthManager.Common.Language;
 using HealthManager.DependencyInterface;
-using HealthManager.Model.Service;
+using HealthManager.Model.Service.Interface;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using PropertyChanged;
@@ -54,6 +54,7 @@ namespace HealthManager.ViewModel
         private bool _takePhotoFromCamera;
         private readonly int _id;
         private string _base64String;
+        private readonly IBodyImageService _bodyImageService;
 
         #endregion Instance Private Variables
         /*----------------------------------------------------------------------------------------------------------------------------------------*/
@@ -63,10 +64,11 @@ namespace HealthManager.ViewModel
         /*----------------------------------------------------------------------------------------------------------------------------------------*/
         #region Constractor
 
-        public RegistBodyImageViewModel()
-        {           
+        public RegistBodyImageViewModel(IBodyImageService bodyImageService)
+        {
+            _bodyImageService = bodyImageService;
             InitCommands();
-            var model = BodyImageService.GetBodyImage();
+            var model = _bodyImageService.GetBodyImage();
             _id = model?.Id ?? 0;
         }
 
@@ -207,18 +209,18 @@ namespace HealthManager.ViewModel
 
         private async Task CommandRegistAction()
         {
-            if (BodyImageService.CheckExitTargetDayData(DateTime.Now))
+            if (_bodyImageService.CheckExitTargetDayData(DateTime.Now))
             {
                 var result =
                     await Application.Current.MainPage.DisplayAlert(LanguageUtils.Get(LanguageKeys.Confirm),
                         LanguageUtils.Get(LanguageKeys.TodayDataUpdateConfirm), LanguageUtils.Get(LanguageKeys.OK),
                         LanguageUtils.Get(LanguageKeys.Cancel));
                 if (result)
-                    BodyImageService.UpdateBodyImage(_id, _base64String);
+                    _bodyImageService.UpdateBodyImage(_id, _base64String);
             }
             else
             {
-                BodyImageService.RegistBodyImage(_base64String);
+                _bodyImageService.RegistBodyImage(_base64String);
             }
 
             if (_takePhotoFromCamera)

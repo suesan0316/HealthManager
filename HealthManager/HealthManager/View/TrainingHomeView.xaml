@@ -12,33 +12,34 @@
     <ContentPage.Content>
         <StackLayout>
             <ScrollView>
-                <StackLayout Margin="30">
+                <StackLayout Style="{StaticResource BaseStackLayoutStyle}">
+
                     <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,30,0,0">
                         <StackLayout Orientation="Vertical" Margin="0, 0, 40, 0">
                             <Button Command="{Binding CommandEditTraining}"
                                     Image="training.png"
                                                   Style="{StaticResource HomeImageButtonStyle}" />
-                            <Label Text="{Binding DisplayLabelEditTraining}" HorizontalOptions="Center" />
+                            <Label Text="{Binding DisplayLabelEditTraining}" Style="{StaticResource HomeButtonLabelStyle}" />
                         </StackLayout>
                         <StackLayout Orientation="Vertical">
                             <Button Command="{Binding CommandEditTrainingSchedule}"
                                                   Style="{StaticResource HomeImageButtonStyle}"
                                     Image="schedule.png"/>
-                            <Label Text="{Binding DisplayLabelEditTrainingSchedule}" HorizontalOptions="Center" />
+                            <Label Text="{Binding DisplayLabelEditTrainingSchedule}" Style="{StaticResource HomeButtonLabelStyle}"/>
                         </StackLayout>
                     </StackLayout>
-                    <StackLayout Orientation="Horizontal" Margin="0,30,0,0">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,30,0,0">
                         <StackLayout Orientation="Vertical" Margin="0, 0, 40, 0">
                             <Button Command="{Binding CommandStartTraining}"
                                     Image="training_start.png"
                                                   Style="{StaticResource HomeImageButtonStyle}" />
-                            <Label Text="{Binding DisplayLabelStrartTraining}" HorizontalOptions="Center" />
+                            <Label Text="{Binding DisplayLabelStrartTraining}" Style="{StaticResource HomeButtonLabelStyle}" />
                         </StackLayout>
                         <StackLayout Orientation="Vertical">
                             <Button Command="{Binding CommandTrainingReport}"
                                     Style="{StaticResource HomeImageButtonStyle}"
                                     Image="report.png"/>
-                            <Label Text="{Binding DisplayLabelTrainingReport}" HorizontalOptions="Center" />
+                            <Label Text="{Binding DisplayLabelTrainingReport}"  Style="{StaticResource HomeButtonLabelStyle}" />
                         </StackLayout>
                     </StackLayout>
                 </StackLayout>

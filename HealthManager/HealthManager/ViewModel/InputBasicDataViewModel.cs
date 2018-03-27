@@ -61,8 +61,6 @@ namespace HealthManager.ViewModel
 
                 Gender = (int)GenderEnum.未選択;
 
-                CancelButtonIsVisible = true;
-
                 var model = _basicDataService.GetBasicData();
                 if (model != null)
                 {
@@ -82,7 +80,6 @@ namespace HealthManager.ViewModel
                 else
                 {
                     Birthday = DateTime.Parse(ViewModelConst.DefaultTimePick);
-                    CancelButtonIsVisible = false;
                 }             
 
                 ErrorStack = new ObservableCollection<Xamarin.Forms.View>();
@@ -142,8 +139,7 @@ namespace HealthManager.ViewModel
             {
                 try
                 {
-                    var tmp = BodyWeight / Math.Pow(Height / 100f, 2);
-                    return CommonUtil.GetDecimalFormatString(double.IsNaN(tmp) ? 0 : tmp);
+                    return ViewModelCommonUtil.GetBmiValueString(height: Height, bodyWeight: BodyWeight);
                 }
                 catch (Exception)
                 {
@@ -180,12 +176,7 @@ namespace HealthManager.ViewModel
         /// <summary>
         ///  読み込みフラグ
         /// </summary>
-        public bool IsLoading { get; set; }
-
-        /// <summary>
-        ///  キャンセルボタン非表示・表示
-        /// </summary>
-        public bool CancelButtonIsVisible { get; set; }
+        public bool IsLoading { get; set; }        
 
         /// <summary>
         ///  無効フラグ

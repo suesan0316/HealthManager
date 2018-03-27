@@ -4,7 +4,7 @@
              xmlns:viewCell="clr-namespace:HealthManager.View.ViewCell;assembly=HealthManager"
              x:Class="HealthManager.View.TrainingReportView">
     <ContentPage.Content>
-        <StackLayout Margin="30">
+        <StackLayout Style="{StaticResource BaseStackLayoutStyle}">
             <Label Text="{Binding DisplayLabelTrainingStart}" Style="{StaticResource ColumnLabelStyle}" />
             <Label Text="{Binding TrainingStart}"/>
             <Label Text="{Binding DisplayLabelTrainingEnd}" Style="{StaticResource ColumnLabelStyle}" />

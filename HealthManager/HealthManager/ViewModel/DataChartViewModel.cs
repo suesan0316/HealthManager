@@ -8,6 +8,8 @@ using HealthManager.Common.Enum;
 using HealthManager.Common.Extention;
 using HealthManager.Common.Language;
 using HealthManager.Model.Service;
+using HealthManager.ViewModel.Logic.Analysis.Factory;
+using HealthManager.ViewModel.Logic.Analysis.Service;
 using Microcharts;
 using PropertyChanged;
 using SkiaSharp;
@@ -20,7 +22,7 @@ namespace HealthManager.ViewModel
     /// データチャート画面のVMクラス
     /// </summary>
     [AddINotifyPropertyChangedInterface]
-    internal class DataChartViewModel
+    public class DataChartViewModel
     {
         /*----------------------------------------------------------------------------------------------------------------------------------------*/
         //
@@ -50,6 +52,8 @@ namespace HealthManager.ViewModel
         /// </summary>
         private readonly BasicDataEnum _targetBasicDataEnum;
 
+        private IAnalysisService _analysisService;
+
         #endregion Instance Private Variables
         /*----------------------------------------------------------------------------------------------------------------------------------------*/
         //
@@ -71,6 +75,8 @@ namespace HealthManager.ViewModel
         {
             
             InitCommands();
+
+            _analysisService = AnalysisServiceFactory.Create(targetBasicDataEnum);
             _targetBasicDataEnum = targetBasicDataEnum;
 
             // 一度全データを取得
@@ -114,6 +120,7 @@ namespace HealthManager.ViewModel
 
             var width = IncreaseChartWidth * list.Count;
             ChartWidth = width < MinChartWidth ? MinChartWidth : width;
+            Analysis = _analysisService.Analy();
         }
 
         #endregion Constractor
@@ -177,6 +184,8 @@ namespace HealthManager.ViewModel
         /// チャートの横幅
         /// </summary>
         public int ChartWidth { get; set; }
+
+        public string Analysis { get; set; }
 
         #endregion Binding Variables
         /*----------------------------------------------------------------------------------------------------------------------------------------*/

@@ -91,11 +91,11 @@ namespace HealthManager.ViewModel
         /*----------------------------------------------------------------------------------------------------------------------------------------*/
         #region Binding DisplayLabels
 
-        public string TrainingMenuLabel => LanguageUtils.Get(LanguageKeys.TodayTrainingMenu);
-        public string TimeCountLabel => LanguageUtils.Get(LanguageKeys.TrainingTime);
-        public string TrainingStartButtonLabel => LanguageUtils.Get(LanguageKeys.StartTraining);
-        public string CancelButtonLabel => LanguageUtils.Get(LanguageKeys.Cancel);
-        public string TrainingCompleteButtonLabel => LanguageUtils.Get(LanguageKeys.CompleteTraining);
+        public string DisplayLabelTrainingMenu => LanguageUtils.Get(LanguageKeys.TodayTrainingMenu);
+        public string DisplayLabelTimeCount => LanguageUtils.Get(LanguageKeys.TrainingTime);
+        public string DisplayLabelTrainingStart => LanguageUtils.Get(LanguageKeys.StartTraining);
+        public string DisplayLabelCancel => LanguageUtils.Get(LanguageKeys.Cancel);
+        public string DisplayLabelTrainingComplete => LanguageUtils.Get(LanguageKeys.CompleteTraining);
 
         #endregion Binding DisplayLabels
         /*----------------------------------------------------------------------------------------------------------------------------------------*/
@@ -105,9 +105,9 @@ namespace HealthManager.ViewModel
         /*----------------------------------------------------------------------------------------------------------------------------------------*/
         #region Binding Commands
 
-        public ICommand TrainingStartCommand { get; set; }
-        public ICommand CancleCommand { get; set; }
-        public ICommand TrainingCompleteCommand { get; set; }
+        public ICommand CommandTrainingStart { get; set; }
+        public ICommand CommandCacel { get; set; }
+        public ICommand CommandTrainingComplete { get; set; }
 
         #endregion Binding Commands
         /*----------------------------------------------------------------------------------------------------------------------------------------*/
@@ -117,14 +117,14 @@ namespace HealthManager.ViewModel
         /*----------------------------------------------------------------------------------------------------------------------------------------*/
         #region Command Actions
 
-        public void CancelAction()
+        public void CommandCancelAction()
         {
             // 遷移元画面をリロードする
             ViewModelCommonUtil.SendMessage(ViewModelConst.MessagingTrainingHomeReload);
             ViewModelConst.TrainingPageNavigation.PopAsync();
         }
 
-        public void TrainingStart()
+        public void CommandTrainingStartAction()
         {
             TrainingStartButtonVisible = false;
             TrainingCompleteButtonVisible = true;
@@ -133,7 +133,7 @@ namespace HealthManager.ViewModel
             _timer.Start();
         }
 
-        private async Task CompleteTraining()
+        private async Task CommandCompleteTrainingAction()
         {
             PauseTimer();
 
@@ -168,9 +168,9 @@ namespace HealthManager.ViewModel
 
         private void InitCommands()
         {
-            CancleCommand = new Command(CancelAction);
-            TrainingStartCommand = new Command(TrainingStart);
-            TrainingCompleteCommand = new Command(async () => await CompleteTraining());
+            CommandCacel = new Command(CommandCancelAction);
+            CommandTrainingStart = new Command(CommandTrainingStartAction);
+            CommandTrainingComplete = new Command(async () => await CommandCompleteTrainingAction());
         }
 
         #endregion Init Commands

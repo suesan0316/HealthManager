@@ -128,6 +128,18 @@ namespace HealthManager.Common
             MessagingCenter.Send(_instance, messageKey);
         }
 
+        public static double CulculateBmi(float height, float bodyWeight)
+        {
+            var bmi = bodyWeight / Math.Pow(height / 100f, 2);
+            return bmi;
+        }
+
+        public static string GetBmiValueString(float height, float bodyWeight)
+        {
+            var bmi = CulculateBmi(height, bodyWeight);
+            return CommonUtil.GetDecimalFormatString(double.IsNaN(bmi) ? 0 : bmi);
+        }
+
         public static TrainingScheduleSViewtructure CreateTrainingScheduleSViewtructure(WeekEnum week)
         {
 

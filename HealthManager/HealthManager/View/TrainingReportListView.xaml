@@ -8,7 +8,7 @@
         <viewModel:TrainingReportListViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
-        <StackLayout Margin="30">
+        <StackLayout Style="{StaticResource BaseStackLayoutStyle}">
             <ListView ItemsSource="{Binding Items}"  VerticalOptions="FillAndExpand">
                 <ListView.ItemTemplate>
                     <DataTemplate>

@@ -41,13 +41,13 @@ namespace HealthManager.Common.Language
         /// <param name="key"></param>
         /// <param name="replace"></param>
         /// <returns></returns>
-        public static string Get(string key, params  string[]  replace)
+        public static string Get(string key, params  object[]  replace)
         {
             var  returnLang = LanguageMap[key];
 
             for (var i=0; i < replace.Length; i++)
             {
-                returnLang = returnLang.Replace("{" + i + "}", replace[i]);
+                returnLang = returnLang.Replace("{" + i + "}", replace[i].ToString());
             }
 
             return returnLang;

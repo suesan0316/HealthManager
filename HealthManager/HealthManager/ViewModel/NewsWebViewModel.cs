@@ -9,7 +9,7 @@ namespace HealthManager.ViewModel
     ///  ニュース画面VMクラス
     /// </summary>
     [AddINotifyPropertyChangedInterface]
-    internal class NewsWebViewModel
+    public class NewsWebViewModel
 
     {
         /*----------------------------------------------------------------------------------------------------------------------------------------*/

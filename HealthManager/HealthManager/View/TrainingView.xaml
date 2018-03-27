@@ -10,8 +10,8 @@
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout>
-            <StackLayout Margin="30">
-                <Label Text="{Binding TrainingMenuLabel}" Style="{StaticResource ColumnLabelStyle}" />
+            <StackLayout Style="{StaticResource BaseStackLayoutStyle}">
+                <Label Text="{Binding DisplayLabelTrainingMenu}" Style="{StaticResource ColumnLabelStyle}" />
                 <Label Text="{Binding WeekLabel}" Style="{StaticResource ColumnLabelStyle}" />
                 <ListView ItemsSource="{Binding Items}" VerticalOptions="FillAndExpand" HasUnevenRows="True">
                     <ListView.ItemTemplate>
@@ -20,17 +20,17 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <Label HorizontalOptions="Center" Text="{Binding TimeCountLabel}"
+                <Label HorizontalOptions="Center" Text="{Binding DisplayLabelTimeCount}"
                        IsVisible="{Binding TimeCountVisible}" />
                 <Label HorizontalOptions="Center" FontSize="35" Text="{Binding TimeCount}"
                        IsVisible="{Binding TimeCountVisible}" />
-                <Button Text="{Binding TrainingStartButtonLabel}"
-                        Command="{Binding TrainingStartCommand}" Style="{StaticResource NormalButtonStyle}"
+                <Button Text="{Binding DisplayLabelTrainingStart}"
+                        Command="{Binding CommandTrainingStart}" Style="{StaticResource NormalButtonStyle}"
                         IsVisible="{Binding TrainingStartButtonVisible}" />
-                <Button Text="{Binding TrainingCompleteButtonLabel}"
-                        Command="{Binding TrainingCompleteCommand}" Style="{StaticResource NormalButtonStyle}"
+                <Button Text="{Binding DisplayLabelTrainingComplete}"
+                        Command="{Binding CommandTrainingComplete}" Style="{StaticResource NormalButtonStyle}"
                         IsVisible="{Binding TrainingCompleteButtonVisible}" />
-                <Button Text="{Binding CancelButtonLabel}" Command="{Binding CancleCommand}"
+                <Button Text="{Binding DisplayLabelCancel}" Command="{Binding CommandCacel}"
                         Style="{StaticResource ReturnButtonStyle}" />
             </StackLayout>
         </StackLayout>

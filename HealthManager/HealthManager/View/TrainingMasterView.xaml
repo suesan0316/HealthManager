@@ -7,7 +7,7 @@
     <ContentPage.Content>
         <StackLayout>
             <ScrollView x:Name="ControlScroll">
-                <StackLayout Margin="30">
+                <StackLayout Style="{StaticResource BaseStackLayoutStyle}">
                     <StackLayout x:Name="ErrorStack" />
                     <Label Text="{Binding DisplayLabelTrainingName}" Style="{StaticResource ColumnLabelStyle}"  />
                     <Entry Placeholder="{Binding DisplayLabelTrainingNamePlaceholder}" Text="{Binding TrainingName}"

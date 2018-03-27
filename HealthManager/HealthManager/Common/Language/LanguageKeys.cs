@@ -83,11 +83,11 @@
         /// </summary>
         public const string Age = "Age";
         /// <summary>
-        /// 身長
+        /// 身長(cm)
         /// </summary>
         public const string Height = "Height";
         /// <summary>
-        /// 体重
+        /// 体重(kg)
         /// </summary>
         public const string BodyWeight = "BodyWeight";
         /// <summary>
@@ -95,11 +95,11 @@
         /// </summary>
         public const string BMI = "BMI";
         /// <summary>
-        /// 体脂肪率
+        /// 体脂肪率(%)
         /// </summary>
         public const string BodyFatPercentage = "BodyFatPercentage";
         /// <summary>
-        /// 血圧
+        /// 血圧(最低 / 最高)
         /// </summary>
         public const string BloodPressure = "BloodPressure";
         /// <summary>
@@ -107,11 +107,11 @@
         /// </summary>
         public const string BasicMetabolism = "BasicMetabolism";
         /// <summary>
-        /// 上の血圧
+        /// 最高血圧
         /// </summary>
         public const string MaxBloodPressure = "MaxBloodPressure";
         /// <summary>
-        /// 下の血圧
+        /// 最低血圧
         /// </summary>
         public const string MinBloodPressure = "MinBloodPressure";
         /// <summary>
@@ -370,5 +370,41 @@
         /// 体格画像が登録されていません。
         /// </summary>
         public const string NotExistBodyImage = "NotExistBodyImage";
+        /// <summary>
+        /// 基本情報が登録されていません。
+        /// </summary>
+        public const string NotExistBasicData = "NotExistBasicData";
+        /// <summary>
+        /// あなたの身長({0}cm)の適正体重は{1}kgです。
+        /// </summary>
+        public const string BodyWeightAnalysisFormat1 = "BodyWeightAnalysisFormat1";
+        /// <summary>
+        /// 適正体重との差は{0}で、BMIは{1}です。
+        /// </summary>
+        public const string BodyWeightAnalysisFormat2 = "BodyWeightAnalysisFormat2";
+        /// <summary>
+        /// BMIの理想的な数値は18.5~25未満です。
+        /// </summary>
+        public const string BodyWeightAnalysisFormat3 = "BodyWeightAnalysisFormat3";
+        /// <summary>
+        /// BMIが25を超えると肥満の傾向があります。
+        /// </summary>
+        public const string BodyWeightAnalysisFormat4 = "BodyWeightAnalysisFormat4";
+        /// <summary>
+        /// 現在の体重は理想的な数値なので、これを維持するようにしましょう。
+        /// </summary>
+        public const string BodyWeightAnalysisFormat5 = "BodyWeightAnalysisFormat5";
+        /// <summary>
+        /// BMIが18.5を下回ると低体重のの傾向があります。
+        /// </summary>
+        public const string BodyWeightAnalysisFormat6 = "BodyWeightAnalysisFormat6";
+        /// <summary>
+        /// 筋力が衰えている可能性がありますので、ウェイトトレーニングを取り入れていきましょう。
+        /// </summary>
+        public const string BodyWeightAnalysisFormat7 = "BodyWeightAnalysisFormat7";
+        /// <summary>
+        /// 体重を下げるにはカロリー制限と有酸素運動をトレーニングに取り入れることが効果的です。
+        /// </summary>
+        public const string BodyWeightAnalysisFormat8 = "BodyWeightAnalysisFormat8";
     }
 }

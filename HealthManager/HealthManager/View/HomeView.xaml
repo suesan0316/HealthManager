@@ -3,7 +3,6 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:HealthManager.ViewModel"
-             xmlns:controls="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms"
              xmlns:ef="clr-namespace:AiForms.Effects;assembly=AiForms.Effects"
              xmlns:extention="clr-namespace:HealthManager.Common.Extention;assembly=HealthManager"
              x:Class="HealthManager.View.HomeView">
@@ -12,7 +11,7 @@
     </ContentPage.BindingContext>
     <StackLayout>
         <ScrollView x:Name="ControlScroll">
-            <StackLayout Margin="30" VerticalOptions="FillAndExpand">
+            <StackLayout Style="{StaticResource BaseStackLayoutStyle}" VerticalOptions="FillAndExpand">
                 <StackLayout Orientation="Horizontal">
                     <StackLayout>
                         <Image Source="{Binding BodyImage}" />
@@ -21,70 +20,85 @@
                     <ScrollView HeightRequest="200">
                         <StackLayout Orientation="Vertical">
                             <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding DisplayLabelName}" />
-                                <Label Text="{Binding Name}" />
+                                <Label Text="{Binding DisplayLabelName}" Style="{StaticResource ValueLabelStyle}" />
+                                <Label Text="{Binding Name}" IsVisible="{Binding IsVisibleBasicDataValues}"
+                                       Style="{StaticResource ValueLabelStyle}" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding DisplayLabelGender}" />
-                                <Label Text="{Binding Gender}" />
+                                <Label Text="{Binding DisplayLabelGender}" Style="{StaticResource ValueLabelStyle}" />
+                                <Label Text="{Binding Gender}" IsVisible="{Binding IsVisibleBasicDataValues}"
+                                       Style="{StaticResource ValueLabelStyle}" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding DisplayLabelAge}" />
-                                <Label Text="{Binding Age}" />
+                                <Label Text="{Binding DisplayLabelAge}" Style="{StaticResource ValueLabelStyle}" />
+                                <Label Text="{Binding Age}" IsVisible="{Binding IsVisibleBasicDataValues}"
+                                       Style="{StaticResource ValueLabelStyle}" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding DisplayLabelHeight}" />
-                                <Label Text="{Binding Height}" />
+                                <Label Text="{Binding DisplayLabelHeight}" Style="{StaticResource ValueLabelStyle}" />
+                                <Label Text="{Binding Height}" IsVisible="{Binding IsVisibleBasicDataValues}"
+                                       Style="{StaticResource ValueLabelStyle}" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding DisplayLabelBodyWeight}" />
-                                <Label Text="{Binding BodyWeight}" />
+                                <Label Text="{Binding DisplayLabelBodyWeight}" Style="{StaticResource ValueLabelStyle}" />
+                                <Label Text="{Binding BodyWeight}" IsVisible="{Binding IsVisibleBasicDataValues}"
+                                       Style="{StaticResource ValueLabelStyle}" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding DisplayLabelBmi}" />
-                                <Label Text="{Binding Bmi}" />
+                                <Label Text="{Binding DisplayLabelBmi}" Style="{StaticResource ValueLabelStyle}" />
+                                <Label Text="{Binding Bmi}" IsVisible="{Binding IsVisibleBasicDataValues}"
+                                       Style="{StaticResource ValueLabelStyle}" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding DisplayLabelBodyFatPercentage}" />
-                                <Label Text="{Binding BodyFatPercentage}" />
+                                <Label Text="{Binding DisplayLabelBodyFatPercentage}"
+                                       Style="{StaticResource ValueLabelStyle}" />
+                                <Label Text="{Binding BodyFatPercentage}"
+                                       IsVisible="{Binding IsVisibleBasicDataValues}"
+                                       Style="{StaticResource ValueLabelStyle}" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding DisplayLabelBloodPressure} " />
-                                <Label Text="{Binding MaxBloodPressure} " />
-                                <Label Text="/" VerticalOptions="End" />
-                                <Label Text="{Binding MinBloodPressure}" />
+                                <Label Text="{Binding DisplayLabelBloodPressure} "
+                                       Style="{StaticResource ValueLabelStyle}" />
+                                <Label Text="{Binding MinBloodPressure}" IsVisible="{Binding IsVisibleBasicDataValues}"
+                                       Style="{StaticResource ValueLabelStyle}" />
+                                <Label Text="/" VerticalOptions="End" Style="{StaticResource ValueLabelStyle}" />
+                                <Label Text="{Binding MaxBloodPressure} "
+                                       IsVisible="{Binding IsVisibleBasicDataValues}"
+                                       Style="{StaticResource ValueLabelStyle}" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding DisplayLabelBasalMetabolism}" />
-                                <Label Text="{Binding BasalMetabolism}" />
+                                <Label Text="{Binding DisplayLabelBasalMetabolism}"
+                                       Style="{StaticResource ValueLabelStyle}" />
+                                <Label Text="{Binding BasalMetabolism}" IsVisible="{Binding IsVisibleBasicDataValues}"
+                                       Style="{StaticResource ValueLabelStyle}" />
                             </StackLayout>
                         </StackLayout>
                     </ScrollView>
                 </StackLayout>
-                
+
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,30,0,0">
                     <StackLayout Orientation="Vertical" Margin="0, 0, 40, 0">
                         <Button Command="{Binding CommandBasicData}"
-                                              Image="{Binding MoveTioRegistBasicDataImageSource}"  
-                                              Style="{StaticResource HomeImageButtonStyle}" />
-                        <Label Text="{Binding DisplayLabelBasicData}" HorizontalOptions="Center" />
+                                Image="{Binding MoveTioRegistBasicDataImageSource}"
+                                Style="{StaticResource HomeImageButtonStyle}" />
+                        <Label Text="{Binding DisplayLabelBasicData}" Style="{StaticResource HomeButtonLabelStyle}" />
                     </StackLayout>
                     <StackLayout Orientation="Vertical">
                         <Button Command="{Binding CommandDataChart}"
-                                              Style="{StaticResource HomeImageButtonStyle}" Image="chart.png" />
-                        <Label Text="{Binding DisplayLabelDataChart}" HorizontalOptions="Center" />
+                                Style="{StaticResource HomeImageButtonStyle}" Image="chart.png" />
+                        <Label Text="{Binding DisplayLabelDataChart}" Style="{StaticResource HomeButtonLabelStyle}" />
                     </StackLayout>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,30,0,0">
                     <StackLayout Orientation="Vertical" Margin="0, 0, 40, 0">
                         <Button Command="{Binding CommandBodyImageList}"
                                 Image="bodyImage.png" Style="{StaticResource HomeImageButtonStyle}" />
-                        <Label Text="{Binding DisplayLabelBodyImageList}" HorizontalOptions="Center" />
+                        <Label Text="{Binding DisplayLabelBodyImageList}" Style="{StaticResource HomeButtonLabelStyle}" />
                     </StackLayout>
                     <StackLayout Orientation="Vertical">
                         <Button Command="{Binding CommandBodyImage}"
                                 Image="camera.png" Style="{StaticResource HomeImageButtonStyle}" />
-                        <Label Text="{Binding DisplayLabelBodyImage}" HorizontalOptions="Center" />
+                        <Label Text="{Binding DisplayLabelBodyImage}" Style="{StaticResource HomeButtonLabelStyle}" />
                     </StackLayout>
                 </StackLayout>
             </StackLayout>

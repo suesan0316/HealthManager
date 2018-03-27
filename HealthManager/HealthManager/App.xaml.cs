@@ -1,15 +1,11 @@
 ﻿using CommonServiceLocator;
 using HealthManager.Common.Other;
-using HealthManager.Model.Service.Implement;
-using HealthManager.Model.Service.Interface;
 using HealthManager.View;
-using HealthManager.ViewModel;
-using Xamarin.Forms;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
-using Unity;
 using Unity.ServiceLocation;
+using Xamarin.Forms;
 
 namespace HealthManager
 {
@@ -19,25 +15,12 @@ namespace HealthManager
         {
             InitializeComponent();
 
-            var unityContainer = new UnityContainer();
-            unityContainer.RegisterType<IBasicDataService, BasicDataService>();
-            unityContainer.RegisterInstance(typeof(InputBasicDataViewModel));
+            ApplicationIinitializer.InitDatabase();
 
-            var unityServiceLocator = new UnityServiceLocator(unityContainer);
+            var tabbedPage = new MainTabbedView();
+            MainPage = tabbedPage;
+            var unityServiceLocator = new UnityServiceLocator(ContainerInitializer.InitializeContainer());
             ServiceLocator.SetLocatorProvider(() => unityServiceLocator);
-
-            ApplicationIinitializer. InitDatabase();
-
-            var basicDataService = new BasicDataService();
-
-            if (basicDataService.GetBasicData() != null)
-            {
-                MainPage = new MainTabbedView();
-            }
-            else
-            {
-                MainPage = new InputBasicDataView();
-            }
         }
 
         protected override void OnStart()
@@ -58,6 +41,7 @@ namespace HealthManager
         {
             // Handle when your app resumes
         }
+
         public void ChangeScreen(Page page)
         {
             MainPage = page;

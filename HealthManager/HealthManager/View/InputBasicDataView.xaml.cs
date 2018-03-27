@@ -21,10 +21,7 @@ namespace HealthManager.View
             {
                 Crashes.TrackError(e);
             }
-            if (Navigation != null)
-            {
                 NavigationPage.SetHasNavigationBar(this, false);
-            }
         }
     }
 }

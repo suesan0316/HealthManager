@@ -51,6 +51,7 @@
     <Compile Include="Common\Enum\WeekEnum.cs" />
     <Compile Include="Common\Enum\GenderEnum.cs" />
     <Compile Include="Common\Other\ApplicationIinitializer.cs" />
+    <Compile Include="Common\Other\ContainerInitializer.cs" />
     <Compile Include="Common\StringUtils.cs" />
     <Compile Include="Common\ViewModelCommonUtil.cs" />
     <Compile Include="DependencyInterface\IImageService.cs" />
@@ -96,6 +97,13 @@
     <Compile Include="ViewModel\DataSelectViewModel.cs" />
     <Compile Include="ViewModel\EditTrainingScheduleViewModel.cs" />
     <Compile Include="ViewModel\Locator\ViewModelLocator.cs" />
+    <Compile Include="ViewModel\Logic\Analysis\Factory\AnalysisServiceFactory.cs" />
+    <Compile Include="ViewModel\Logic\Analysis\Implement\BasalMetabolismAnalysisServiceImpl.cs" />
+    <Compile Include="ViewModel\Logic\Analysis\Implement\BodyFatPercentageAnalysisServiceImpl.cs" />
+    <Compile Include="ViewModel\Logic\Analysis\Implement\BodyWeightAnalysisServiceImpl.cs" />
+    <Compile Include="ViewModel\Logic\Analysis\Implement\MaxBloodPressureAnalysisServiceImpl.cs" />
+    <Compile Include="ViewModel\Logic\Analysis\Implement\MinBloodPressureAnalysisServiceImpl.cs" />
+    <Compile Include="ViewModel\Logic\Analysis\Service\IAnalysisService.cs" />
     <Compile Include="ViewModel\Logic\News\Factory\NewsServiceFactory.cs" />
     <Compile Include="ViewModel\Logic\News\Implement\NewsService.cs" />
     <Compile Include="ViewModel\Logic\News\Implement\YahooTrainingNewsService.cs" />
